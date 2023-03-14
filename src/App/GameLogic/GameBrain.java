@@ -1,4 +1,4 @@
-package Main.GameLogic;
+package App.GameLogic;
 
 public class GameBrain {
 }

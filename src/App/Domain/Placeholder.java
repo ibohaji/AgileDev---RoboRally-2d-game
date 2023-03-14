@@ -1,4 +1,4 @@
-package Database;
+package App.Domain;
 
 public class Placeholder {
 }
