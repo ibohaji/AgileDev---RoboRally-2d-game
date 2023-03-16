@@ -2,7 +2,7 @@ package App.Domain;
 
 import App.Domain.Cards.Card;
 
-public class Robot {
+public class Robot extends InGameObject{
 
     // skin graphics
     //

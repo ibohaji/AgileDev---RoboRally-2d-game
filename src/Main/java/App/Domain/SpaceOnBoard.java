@@ -4,12 +4,12 @@ import jdk.jshell.spi.ExecutionControl;
 
 public class SpaceOnBoard {
     
-    // link to graphical element
+    private GraphicalElementEnum graphicalElement;
     public SpaceOnBoard(int xCoordiante, int yCoordinate){
         
     }
-    
-    private boolean isOccupied(){
-        return true;
+
+    protected void putGraphicElementOnSpace(GraphicalElementEnum graphicalElement){
+        this.graphicalElement = graphicalElement;
     }
 }

@@ -1,4 +1,4 @@
 package App.Domain;
 
-public class Obstacle {
+public class Obstacle extends InGameObject{
 }
