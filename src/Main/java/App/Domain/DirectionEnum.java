@@ -1,4 +1,4 @@
-package App.GameLogic;
+package App.Domain;
 
 public enum DirectionEnum {
     NORTH, EAST, WEST, SOUTH
