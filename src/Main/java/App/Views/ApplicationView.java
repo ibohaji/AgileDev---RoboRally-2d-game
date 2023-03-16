@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 public class ApplicationView extends JFrame{
     private final Container contentPane;
-
     private JPanel mainPanel = null;
 
     public ApplicationView() {

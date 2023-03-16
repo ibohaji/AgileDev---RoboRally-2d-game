@@ -1,7 +1,5 @@
 package Main;
 
-import Main.JNIHelper;
-
 public class Main {
 	
 	private String JNIString = "";
