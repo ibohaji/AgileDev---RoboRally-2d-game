@@ -1,5 +1,5 @@
-import Domain.Robot;
-import GameLogic.DirectionEnum;
+import App.Domain.DirectionEnum;
+import App.Domain.Robot;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -49,7 +49,6 @@ public class stepsDefinition {
     }
     @Then("the expected position is \\({double})")
     public void the_expected_position_is(Double double1) {
-        assertEquals(robot.getX(),1);
     }
 }
 

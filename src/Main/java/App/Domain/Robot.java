@@ -15,15 +15,6 @@ public class Robot {
     public Robot(){
         this.currentDirection = null;}
 
-    public void move(int steps) {
-        if(currentDirection == DirectionEnum.NORTH || currentDirection == DirectionEnum.SOUTH) {
-            cords.x+=steps;
-        }
-        else{
-            cords.y = +steps;
-        }
-    }
-
     public void SetDirection(DirectionEnum direction) { currentDirection = direction; }
 
     public DirectionEnum getCurrentDirection() {return this.currentDirection;}
