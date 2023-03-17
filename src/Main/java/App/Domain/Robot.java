@@ -1,24 +1,40 @@
 package App.Domain;
 
-import App.Domain.Cards.Card;
 
-public class Robot extends InGameObject{
+import App.Domain.Cards.ProgrammingCard;
+
+public class Robot {
 
     // skin graphics
-    //
+
     private Integer xCoordinate = 0 ;
     private Integer yCoordinate = 0;
-    private DirectionEnum direction;
 
-    private int lifeCount;
-    public Robot(int lifeCount, DirectionEnum direction){
-        this.lifeCount = lifeCount;
-        this.direction = direction;
-    }
+    private DirectionEnum currentDirection;
+    private int lifeCount = 5;
 
-    protected void makeMove(Card card){
-        // check cardtype
+    public Robot(){
+        this.currentDirection = null;}
+
+    protected void move(ProgrammingCard card) {  }
+
+    public void SetDirection(DirectionEnum direction) { currentDirection = direction; }
+
+    public DirectionEnum getCurrentDirection() {return this.currentDirection;}
+
+
+    public void changeDirection(String direction){
+        switch (direction){
+            case "left" :
+                this.currentDirection = currentDirection.getLeft();
+                break;
+            case "right":
+                this.currentDirection = currentDirection.getRight();
+                break;
+        }
     }
+}
+
 
 
 
@@ -26,4 +42,4 @@ public class Robot extends InGameObject{
     // make movement
     // get direction
     //
-}
+
