@@ -2,13 +2,12 @@ package App.Domain;
 
 
 import App.Domain.Cards.ProgrammingCard;
-
+import java.awt.*;
 public class Robot {
 
     // skin graphics
-
-    private Integer xCoordinate = 0 ;
-    private Integer yCoordinate = 0;
+    //
+    private Point cords = new Point(0,0);
 
     private DirectionEnum currentDirection;
     private int lifeCount = 5;
@@ -16,7 +15,14 @@ public class Robot {
     public Robot(){
         this.currentDirection = null;}
 
-    protected void move(ProgrammingCard card) {  }
+    public void move(int steps) {
+        if(currentDirection == DirectionEnum.NORTH || currentDirection == DirectionEnum.SOUTH) {
+            cords.x+=steps;
+        }
+        else{
+            cords.y = +steps;
+        }
+    }
 
     public void SetDirection(DirectionEnum direction) { currentDirection = direction; }
 
@@ -33,13 +39,20 @@ public class Robot {
                 break;
         }
     }
+
+    public Point getCords(){
+        return cords;
+    }
+
+    public void setCords(Point newCords){
+        cords.x += newCords.x;
+        cords.y+=newCords.y;
+    }
+
+
+
+
+
+
 }
-
-
-
-
-    // TODO
-    // make movement
-    // get direction
-    //
 

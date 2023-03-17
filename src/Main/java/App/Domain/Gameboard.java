@@ -11,6 +11,8 @@ public class Gameboard {
     private ArrayList<Robot> robots = new ArrayList<>();
     private final Tuple<Integer, Integer> dimensions;
     private final GameConfiguration gameConfig;
+
+
     public Gameboard(GameConfiguration config){
         gameConfig = config;
         dimensions = gameConfig.getBoardDimensions();
@@ -21,10 +23,11 @@ public class Gameboard {
     /**
      * Initialize default gameboard spaces
      */
+
     private void initializeGameboard(){
-        for (int i = 0; i < dimensions.first(); i++) {
-            for (int j = 0; j < dimensions.second(); j++) {
-                SpaceOnBoard nextSpace = new SpaceOnBoard(i, j);
+        for (int x = 0; x < dimensions.first(); x++) {
+            for (int y = 0; y < dimensions.second(); y++) {
+                SpaceOnBoard nextSpace = new SpaceOnBoard(x, y);
                 nextSpace.putGraphicElementOnSpace(GraphicalElementEnum.DEFAULT_FLOOR);
                 spacesOnBoard.add(nextSpace);
 
