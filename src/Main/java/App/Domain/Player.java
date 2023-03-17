@@ -1,7 +1,6 @@
 package App.Domain;
 
 import App.Domain.Cards.Card;
-import App.Domain.Cards.UpgradeCard;
 
 import java.util.ArrayList;
 

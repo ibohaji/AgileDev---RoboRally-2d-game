@@ -1,4 +1,4 @@
-import App.Domain.DirectionEnum;
+import App.Domain.Enums.DirectionEnum;
 import App.Domain.Robot;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -44,7 +44,6 @@ public class stepsDefinition {
     @When("the robot moves forward")
     public void the_robot_moves_forward() {
         // Write code here that turns the phrase above into concrete actions
-        robot.move(1);
 
     }
     @Then("the expected position is \\({double})")

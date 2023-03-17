@@ -1,9 +1,9 @@
 package App.Domain;
 
+import App.Domain.Enums.GraphicalElementEnum;
 import Utils.ImageUtils;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class SpaceOnBoard {
     

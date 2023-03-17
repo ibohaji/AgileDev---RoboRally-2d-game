@@ -1,5 +1,6 @@
 package App.Domain;
 
+import App.Domain.Enums.DifficultyEnum;
 import Utils.Tuple;
 
 public class GameConfiguration {

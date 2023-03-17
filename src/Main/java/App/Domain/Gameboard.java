@@ -1,5 +1,7 @@
 package App.Domain;
 
+import App.Domain.Enums.DirectionEnum;
+import App.Domain.Enums.GraphicalElementEnum;
 import Utils.Tuple;
 
 import java.util.ArrayList;

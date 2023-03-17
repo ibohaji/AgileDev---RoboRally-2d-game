@@ -1,4 +1,4 @@
-package App.Domain.Cards;
+package App.Domain.Cards.UpgradeCards;
 
 import App.Domain.Cards.Card;
 

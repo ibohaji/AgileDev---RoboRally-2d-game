@@ -1,6 +1,6 @@
 package App.GameLogic;
 
-import App.Domain.DifficultyEnum;
+import App.Domain.Enums.DifficultyEnum;
 import App.Domain.GameConfiguration;
 import App.Domain.GamePhase;
 import App.Domain.Gameboard;

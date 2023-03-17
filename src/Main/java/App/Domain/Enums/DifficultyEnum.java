@@ -1,4 +1,4 @@
-package App.Domain;
+package App.Domain.Enums;
 
 public enum DifficultyEnum {
     EASY, HARD
