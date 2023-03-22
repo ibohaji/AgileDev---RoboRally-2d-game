@@ -31,7 +31,6 @@ public class Gameboard {
                 Tile nextTile = new Tile(x, y);
                 nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR);
                 tilesOnBoard.add(nextTile);
-
             }
         }
     }

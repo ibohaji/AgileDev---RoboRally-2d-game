@@ -11,8 +11,8 @@ public class GameBrain {
     private final Gameboard gameboard;
 
     private GamePhase currentGamePhase;
-    public GameBrain(int nrOfPlayers, DifficultyEnum difficulty, int boardSizeHorizonal, int boardSizeVertical){
-        gameConfig = new GameConfiguration(nrOfPlayers, difficulty, boardSizeHorizonal, boardSizeVertical);
+    public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
+        gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
         gameboard = new Gameboard(gameConfig);
     }
 
