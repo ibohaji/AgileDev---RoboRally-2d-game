@@ -1,7 +1,7 @@
 package App.Controllers.GameController;
 
 import App.Controllers.ApplicationController.ApplicationController;
-import App.GameLogic.GameBrain;
+import App.Domain.GameBrain;
 import App.Views.Gameplay.GameView;
 
 public class GameController {
