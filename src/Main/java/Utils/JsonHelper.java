@@ -16,4 +16,7 @@ public class JsonHelper {
     public static String readStringFromFile(String filepath){
         return "";
     }
+    public static void main(String[] args) {
+        // one time
+    }
 }
