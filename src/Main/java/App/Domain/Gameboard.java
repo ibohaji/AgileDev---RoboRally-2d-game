@@ -29,7 +29,7 @@ public class Gameboard {
         for (int x = 0; x < dimensions.first(); x++) {
             for (int y = 0; y < dimensions.second(); y++) {
                 Tile nextSpace = new Tile(x, y);
-                nextSpace.putGraphicElementOnSpace(GraphicalElementEnum.DEFAULT_FLOOR);
+                //nextSpace.putGraphicElement(GraphicalElementEnum.DEFAULT_FLOOR);
                 spacesOnBoard.add(nextSpace);
 
             }
