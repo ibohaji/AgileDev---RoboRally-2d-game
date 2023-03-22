@@ -11,7 +11,7 @@ public class Tile {
 
     private Integer xCoordinate;
     private Integer yCoordinate;
-    private TileGraphicalElement graphicalElement;
+    protected TileGraphicalElement graphicalElement;
     public Tile(int xCoordinate, int yCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;

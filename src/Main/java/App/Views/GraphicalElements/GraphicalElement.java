@@ -7,13 +7,25 @@ import javax.swing.*;
 
 public class GraphicalElement {
 
-    private GraphicalElementEnum graphicalElement;
+    private GraphicalElementEnum graphicalElement = null;
     private ImageIcon image = null;
     public GraphicalElement(){
 
     }
-    protected void changeGraphicalElement(GraphicalElementEnum graphicalElement){
+    public void changeGraphicalElement(GraphicalElementEnum graphicalElement){
         this.graphicalElement = graphicalElement;
         this.image = new ImageIcon(ImageUtils.getImage(graphicalElement.getPictureFile()));
+    }
+
+    protected boolean doesGraphicalElementExist(){
+        return image == null;
+    }
+
+    protected ImageIcon getGraphicalElement(){
+        if (doesGraphicalElementExist()){
+            return this.image;
+        }
+        // Throw custom error "graphical element not added"
+        return null;
     }
 }
