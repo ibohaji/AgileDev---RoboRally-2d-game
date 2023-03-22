@@ -5,14 +5,14 @@ import Utils.ImageUtils;
 
 import javax.swing.*;
 
-public class SpaceOnBoard {
+public class Tile {
     
     private GraphicalElementEnum graphicalElement;
     private ImageIcon image = null;
 
     private Integer xCoordinate;
     private Integer yCoordinate;
-    public SpaceOnBoard(int xCoordinate, int yCoordinate){
+    public Tile(int xCoordinate, int yCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
     }

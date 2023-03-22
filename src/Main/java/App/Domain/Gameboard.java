@@ -1,6 +1,5 @@
 package App.Domain;
 
-import App.Domain.Enums.DirectionEnum;
 import App.Domain.Enums.GraphicalElementEnum;
 import Utils.Tuple;
 
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 public class Gameboard {
     // List of obstacles used -> List (Obstacle + Coordinate)
     // List of robots -> List (Robot)
-    private ArrayList<SpaceOnBoard> spacesOnBoard = new ArrayList<>();
+    private ArrayList<Tile> spacesOnBoard = new ArrayList<>();
     private ArrayList<Robot> robots = new ArrayList<>();
     private final Tuple<Integer, Integer> dimensions;
     private final GameConfiguration gameConfig;
@@ -29,7 +28,7 @@ public class Gameboard {
     private void initializeGameboard(){
         for (int x = 0; x < dimensions.first(); x++) {
             for (int y = 0; y < dimensions.second(); y++) {
-                SpaceOnBoard nextSpace = new SpaceOnBoard(x, y);
+                Tile nextSpace = new Tile(x, y);
                 nextSpace.putGraphicElementOnSpace(GraphicalElementEnum.DEFAULT_FLOOR);
                 spacesOnBoard.add(nextSpace);
 
@@ -41,7 +40,7 @@ public class Gameboard {
 
     }
 
-    private ArrayList<SpaceOnBoard> getSpacesOnBoard(){
+    private ArrayList<Tile> getSpacesOnBoard(){
         return this.spacesOnBoard;
     }
 }
