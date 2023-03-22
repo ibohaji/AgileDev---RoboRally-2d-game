@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class GraphicalElement {
 
-    private GraphicalElementEnum graphicalElement = null;
-    private ImageIcon image = null;
+    protected GraphicalElementEnum graphicalElement = null;
+    protected ImageIcon image = null;
     public GraphicalElement(){
 
     }

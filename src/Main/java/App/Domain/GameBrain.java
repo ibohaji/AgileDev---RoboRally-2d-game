@@ -1,4 +1,4 @@
-package App.GameLogic;
+package App.Domain;
 
 import App.Domain.Enums.DifficultyEnum;
 import App.Domain.GameConfiguration;
@@ -19,5 +19,15 @@ public class GameBrain {
     protected void run(){
         // TODO
         // gamerunning logic
+        getMovesFromPlayers();
+        playOutRound();
+    }
+
+    private void playOutRound(){
+
+    }
+
+    private void getMovesFromPlayers(){
+
     }
 }
