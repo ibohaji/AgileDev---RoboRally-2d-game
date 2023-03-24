@@ -6,7 +6,7 @@ import App.Views.Gameplay.GameView;
 
 public class GameController {
     private final ApplicationController applicationController;
-    private final GameBrain gameBrain;
+    protected final GameBrain gameBrain;
     private GameView view;
 
     public GameController(ApplicationController applicationController, GameBrain gameBrain){

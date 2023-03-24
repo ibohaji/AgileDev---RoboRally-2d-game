@@ -1,7 +1,7 @@
 package App.Domain;
 
 import App.DTO.TileDTO;
-import App.Views.GraphicalElements.TileGraphicalElement;
+import App.Domain.GraphicalElements.TileGraphicalElement;
 import Utils.JsonHelper;
 import Utils.Tuple;
 

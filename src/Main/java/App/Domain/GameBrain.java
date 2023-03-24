@@ -55,6 +55,10 @@ public class GameBrain implements serializable{
 
     }
 
+    public GameConfiguration getGameConfig(){
+        return this.gameConfig;
+    }
+
     private void createGameboard(){
         this.gameboard = new Gameboard(gameConfig);
     }
@@ -91,5 +95,14 @@ public class GameBrain implements serializable{
     public String toJson() {
         GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentGamePhase);
         return JsonHelper.serializeObjectToJson(gameBrainDTO);
+    }
+
+    public Tile getTileFromCoordinate(Integer x, Integer y){
+        for (Tile tile: gameboard.getTiles()) {
+            if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(x)){
+                return tile;
+            }
+        }
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package App.Views.GraphicalElements;
+package App.Domain.GraphicalElements;
 
 public class RobotGraphicalElement extends GraphicalElement{
     private String playerName;

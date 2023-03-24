@@ -1,7 +1,8 @@
-package App.Views.GraphicalElements;
+package App.Domain.GraphicalElements;
 
 import App.Domain.Enums.GraphicalElementEnum;
 import Utils.ImageUtils;
+import Utils.NoScalingIcon;
 
 import javax.swing.*;
 
@@ -31,6 +32,10 @@ public class GraphicalElement {
 
     protected boolean doesGraphicalElementExist(){
         return image == null;
+    }
+
+    public ImageIcon getNoScalingIcon(){
+        return new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation()));
     }
 
     protected ImageIcon getGraphicalElement(){

@@ -19,7 +19,7 @@ public class GameConfiguration {
     /**
      * @return board dimensions as tuple where 'first' is horizontal value and 'second' is vertical value
      */
-    protected Tuple<Integer, Integer> getBoardDimensions(){
+    public Tuple<Integer, Integer> getBoardDimensions(){
         return this.boardDimensions;
     }
 }

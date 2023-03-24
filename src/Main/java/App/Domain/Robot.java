@@ -4,7 +4,7 @@ package App.Domain;
 import App.DTO.RobotDTO;
 import App.Domain.Enums.DirectionEnum;
 import App.Domain.Enums.GraphicalElementEnum;
-import App.Views.GraphicalElements.RobotGraphicalElement;
+import App.Domain.GraphicalElements.RobotGraphicalElement;
 import Utils.JsonHelper;
 
 import java.awt.*;
