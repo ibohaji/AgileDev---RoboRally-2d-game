@@ -1,5 +1,9 @@
 package App.Domain;
 
-public class Obstacle extends InGameObject{
+public class Obstacle implements InGameObject{
 
+    @Override
+    public String toJson() {
+        return "";
+    }
 }

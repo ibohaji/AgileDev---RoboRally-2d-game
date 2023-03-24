@@ -1,5 +1,6 @@
 package Utils;
 
+import App.DTO.GameboardDTO;
 import App.DTO.TileDTO;
 import App.Domain.Enums.DifficultyEnum;
 import App.Domain.Enums.GraphicalElementEnum;
@@ -23,14 +24,15 @@ public class JsonHelper {
         return "";
     }
     public static void main(String[] args) {
-        //var gameboard = new Gameboard(new GameConfiguration(4, DifficultyEnum.EASY));
-        var tile = new Tile(10, 10);
-        tile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR);
-        var tileDTO = new TileDTO(tile);
-        var jsonString = serializeObjectToJson(tileDTO);
-        tileDTO = getObjectFromJson(jsonString, tileDTO.getClass());
-        System.out.println(tileDTO.xCoordinate);
-        System.out.println(tileDTO.yCoordinate);
-        System.out.println(tileDTO.graphicalElementPath);
+        // GAMEBOARDS
+        var gameboard = new Gameboard(new GameConfiguration(4, DifficultyEnum.EASY));
+        var gameBoardJson = gameboard.toJson();
+        System.out.println(gameBoardJson);
+        var gameBoardDTO = JsonHelper.getObjectFromJson(gameBoardJson, GameboardDTO.class);
+        System.out.println(gameBoardDTO);
+
+
+
+
     }
 }

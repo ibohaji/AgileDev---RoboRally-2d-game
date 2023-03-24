@@ -27,5 +27,8 @@ public enum GraphicalElementEnum {
         String imageLocationFolder = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java";
         return imageLocationFolder + File.separator + this.pictureFile;
     }
+    public int getElementOrdinal(){
+        return this.ordinal();
+    }
 
 }

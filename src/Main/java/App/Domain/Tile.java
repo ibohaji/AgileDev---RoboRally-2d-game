@@ -1,14 +1,16 @@
 package App.Domain;
 
+import App.DTO.TileDTO;
 import App.Domain.Enums.GraphicalElementEnum;
 import App.Views.GraphicalElements.GraphicalElement;
 import App.Views.GraphicalElements.TileGraphicalElement;
 import Utils.ImageUtils;
+import Utils.JsonHelper;
 import Utils.Tuple;
 
 import javax.swing.*;
 
-public class Tile {
+public class Tile implements InGameObject{
 
     private Integer xCoordinate;
     private Integer yCoordinate;
@@ -23,5 +25,15 @@ public class Tile {
         return new Tuple<>(this.xCoordinate, this.yCoordinate);
     }
 
+    @Override
+    public String toString() {
+        return "Tile object. X coordinate: " + this.xCoordinate + " Y coordinate: " + this.yCoordinate +
+                ". Graphical element on tile: " + this.graphicalElement.getElementName();
+    }
 
+    @Override
+    public String toJson() {
+        TileDTO tileDTO = new TileDTO(this);
+        return JsonHelper.serializeObjectToJson(tileDTO);
+    }
 }

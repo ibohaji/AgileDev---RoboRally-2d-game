@@ -1,20 +1,26 @@
 package App.Domain;
 
 
+import App.DTO.RobotDTO;
 import App.Domain.Enums.DirectionEnum;
+import App.Domain.Enums.GraphicalElementEnum;
+import App.Views.GraphicalElements.GraphicalElement;
+import App.Views.GraphicalElements.RobotGraphicalElement;
+import Utils.JsonHelper;
 
 import java.awt.*;
-public class Robot {
-
-    // skin graphics
-    //
+public class Robot implements InGameObject{
     private Point cords = new Point(0,0);
 
+    private RobotGraphicalElement graphicalElement;
     private DirectionEnum currentDirection;
     private int lifeCount = 5;
 
     public Robot(){
-        this.currentDirection = null;}
+        this.currentDirection = null;
+        this.graphicalElement = new RobotGraphicalElement("PLAYER");
+        this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_ROBOT);
+    }
 
     public void SetDirection(DirectionEnum direction) { currentDirection = direction; }
 
@@ -41,10 +47,20 @@ public class Robot {
         cords.y+=newCords.y;
     }
 
+    public int getNrOfLives(){
+        return this.lifeCount;
+    }
 
+    @Override
+    public String toString() {
+        return "Robot. Direction: " + this.currentDirection.name() + ". X: " + this.cords.x + " Y: " + this.cords.y +
+                ". Lives: " + this.lifeCount;
+    }
 
-
-
-
+    @Override
+    public String toJson() {
+        RobotDTO robotDTO = new RobotDTO(this);
+        return JsonHelper.serializeObjectToJson(robotDTO);
+    }
 }
 

@@ -1,10 +1,12 @@
 package App.Domain;
 
+import App.DTO.PlayerDTO;
 import App.Domain.Cards.Card;
+import Utils.JsonHelper;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements InGameObject{
     private final String displayName;
 
     private ArrayList<Card> cards = new ArrayList<>();
@@ -33,4 +35,9 @@ public class Player {
     }
 
 
+    @Override
+    public String toJson() {
+        PlayerDTO playerDTO = new PlayerDTO(this);
+        return JsonHelper.serializeObjectToJson(playerDTO);
+    }
 }

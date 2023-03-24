@@ -1,5 +1,5 @@
 package App.Domain;
 
-public abstract class InGameObject {
-
+interface InGameObject {
+    String toJson();
 }

@@ -21,6 +21,14 @@ public class GraphicalElement {
         return this.graphicalElement.getPictureFile();
     }
 
+    public int getGraphicalElementOrdinal(){
+        return this.graphicalElement.getElementOrdinal();
+    }
+
+    public String getElementName(){
+        return this.graphicalElement.name();
+    }
+
     protected boolean doesGraphicalElementExist(){
         return image == null;
     }

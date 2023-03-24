@@ -8,8 +8,7 @@ import io.cucumber.java.bs.I;
 public class TileDTO{
     public Integer xCoordinate;
     public Integer yCoordinate;
-
-    public String graphicalElementPath = "";
+    public int graphicalElementOrdinal;
 
     public TileDTO(){
 
@@ -19,6 +18,6 @@ public class TileDTO{
         Tuple<Integer, Integer> coordinates = tile.getCoordinates();
         this.xCoordinate = coordinates.first();
         this.yCoordinate = coordinates.second();
-        this.graphicalElementPath = tile.graphicalElement.getGraphicalElementPath();
+        this.graphicalElementOrdinal = tile.graphicalElement.getGraphicalElementOrdinal();
     }
 }
