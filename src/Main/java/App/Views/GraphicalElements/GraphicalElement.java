@@ -17,6 +17,10 @@ public class GraphicalElement {
         this.image = new ImageIcon(ImageUtils.getImage(graphicalElement.getPictureFile()));
     }
 
+    public String getGraphicalElementPath(){
+        return this.graphicalElement.getPictureFile();
+    }
+
     protected boolean doesGraphicalElementExist(){
         return image == null;
     }

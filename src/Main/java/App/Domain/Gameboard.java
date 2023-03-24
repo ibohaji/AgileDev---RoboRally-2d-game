@@ -10,15 +10,17 @@ public class Gameboard {
     // List of robots -> List (Robot)
     private ArrayList<Tile> tilesOnBoard = new ArrayList<>();
     private ArrayList<Robot> robots = new ArrayList<>();
-    private final Tuple<Integer, Integer> dimensions;
-    private final GameConfiguration gameConfig;
+    private Tuple<Integer, Integer> dimensions;
+    private GameConfiguration gameConfig;
 
 
+    public Gameboard(){
+
+    }
     public Gameboard(GameConfiguration config){
         gameConfig = config;
         dimensions = gameConfig.getBoardDimensions();
         initializeGameboard();
-        initializeObstacles();
     }
 
     /**
@@ -29,14 +31,22 @@ public class Gameboard {
         for (int x = 0; x < dimensions.first(); x++) {
             for (int y = 0; y < dimensions.second(); y++) {
                 Tile nextTile = new Tile(x, y);
+                System.out.println(nextTile.graphicalElement == null);
                 nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR);
                 tilesOnBoard.add(nextTile);
             }
         }
     }
+    public Tuple<Integer, Integer> getGameboardDimensions(){
+        return this.dimensions;
+    }
 
-    private void initializeObstacles(){
+    public GameConfiguration getGameConfig(){
+        return this.gameConfig;
+    }
 
+    public ArrayList<Tile> getTiles(){
+        return this.tilesOnBoard;
     }
 
     private void removeRobotFromBoard(Robot robotToRemove){

@@ -1,5 +1,11 @@
 package Utils;
 
+import App.DTO.TileDTO;
+import App.Domain.Enums.DifficultyEnum;
+import App.Domain.Enums.GraphicalElementEnum;
+import App.Domain.GameConfiguration;
+import App.Domain.Gameboard;
+import App.Domain.Tile;
 import com.google.gson.Gson;
 
 public class JsonHelper {
@@ -17,6 +23,14 @@ public class JsonHelper {
         return "";
     }
     public static void main(String[] args) {
-        // one time
+        //var gameboard = new Gameboard(new GameConfiguration(4, DifficultyEnum.EASY));
+        var tile = new Tile(10, 10);
+        tile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR);
+        var tileDTO = new TileDTO(tile);
+        var jsonString = serializeObjectToJson(tileDTO);
+        tileDTO = getObjectFromJson(jsonString, tileDTO.getClass());
+        System.out.println(tileDTO.xCoordinate);
+        System.out.println(tileDTO.yCoordinate);
+        System.out.println(tileDTO.graphicalElementPath);
     }
 }
