@@ -1,6 +1,6 @@
 package App.Domain;
 
-public class Obstacle implements InGameObject{
+public class Obstacle implements serializable {
 
     @Override
     public String toJson() {

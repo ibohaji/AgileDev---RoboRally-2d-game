@@ -4,12 +4,11 @@ package App.Domain;
 import App.DTO.RobotDTO;
 import App.Domain.Enums.DirectionEnum;
 import App.Domain.Enums.GraphicalElementEnum;
-import App.Views.GraphicalElements.GraphicalElement;
 import App.Views.GraphicalElements.RobotGraphicalElement;
 import Utils.JsonHelper;
 
 import java.awt.*;
-public class Robot implements InGameObject{
+public class Robot implements serializable {
     private Point cords = new Point(0,0);
 
     private RobotGraphicalElement graphicalElement;

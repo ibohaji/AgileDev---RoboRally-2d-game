@@ -6,7 +6,7 @@ import Utils.JsonHelper;
 
 import java.util.ArrayList;
 
-public class Player implements InGameObject{
+public class Player implements serializable {
     private final String displayName;
 
     private ArrayList<Card> cards = new ArrayList<>();
@@ -39,5 +39,9 @@ public class Player implements InGameObject{
     public String toJson() {
         PlayerDTO playerDTO = new PlayerDTO(this);
         return JsonHelper.serializeObjectToJson(playerDTO);
+    }
+
+    public String getDisplayName(){
+        return this.displayName;
     }
 }

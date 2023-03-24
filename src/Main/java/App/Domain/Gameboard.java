@@ -7,7 +7,7 @@ import Utils.Tuple;
 
 import java.util.ArrayList;
 
-public class Gameboard implements InGameObject{
+public class Gameboard implements serializable {
     // List of obstacles used -> List (Obstacle + Coordinate)
     // List of robots -> List (Robot)
     private ArrayList<Tile> tilesOnBoard = new ArrayList<>();
@@ -39,19 +39,6 @@ public class Gameboard implements InGameObject{
             }
         }
     }
-
-    /*private void initializePlayers(){
-        // Create a new player named "player1"
-        Player player = new Player("player1");
-        //Get the robot from the gameboard robot list
-        Robot robot = robots.get(0);
-        //assign the robot to the player
-        boolean robotAssigned = player.assignRobot(robot);
-        //add the player to the player list
-        if(robotAssigned){
-            players.add(player);
-        }
-    }*/
     public Tuple<Integer, Integer> getGameboardDimensions(){
         return this.dimensions;
     }
@@ -68,7 +55,7 @@ public class Gameboard implements InGameObject{
         this.robots.remove(robotToRemove);
     }
 
-    private void addRobots(ArrayList<Robot> robots){
+    public void addRobots(ArrayList<Robot> robots){
         this.robots = robots;
     }
     private ArrayList<Tile> getTilesOnBoard(){

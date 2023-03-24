@@ -1,16 +1,11 @@
 package App.Domain;
 
 import App.DTO.TileDTO;
-import App.Domain.Enums.GraphicalElementEnum;
-import App.Views.GraphicalElements.GraphicalElement;
 import App.Views.GraphicalElements.TileGraphicalElement;
-import Utils.ImageUtils;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
-import javax.swing.*;
-
-public class Tile implements InGameObject{
+public class Tile implements serializable {
 
     private Integer xCoordinate;
     private Integer yCoordinate;

@@ -27,11 +27,6 @@ public class GameboardDTO{
         for (Robot robot: gameboard.getRobots()) {
             this.robots.add(new RobotDTO(robot));
         }
-
-//        for (Robot robot: gameboard.getRobots()){
-//            this.robots.add(new RobotDTO(robot))
-//      }
-
     }
 
     public Gameboard toGameboard(ArrayList<TileDTO> tiles, ArrayList<Robot> robots) {

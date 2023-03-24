@@ -4,10 +4,10 @@ import App.DTO.GameboardDTO;
 import App.DTO.TileDTO;
 import App.Domain.Enums.DifficultyEnum;
 import App.Domain.Enums.GraphicalElementEnum;
-import App.Domain.GameConfiguration;
-import App.Domain.Gameboard;
-import App.Domain.Tile;
 import com.google.gson.Gson;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class JsonHelper {
     public static Gson gson = new Gson();
@@ -24,12 +24,11 @@ public class JsonHelper {
         return "";
     }
     public static void main(String[] args) {
-        // GAMEBOARDS
-        var gameboard = new Gameboard(new GameConfiguration(4, DifficultyEnum.EASY));
-        var gameBoardJson = gameboard.toJson();
-        System.out.println(gameBoardJson);
-        var gameBoardDTO = JsonHelper.getObjectFromJson(gameBoardJson, GameboardDTO.class);
-        System.out.println(gameBoardDTO);
+        var gameBrain = new GameBrain(4, DifficultyEnum.EASY);
+        System.out.println(gameBrain.toJson());
+        var path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator
+                + "java" + File.separator + "App" + File.separator + "Resources" + File.separator + "savedGames.txt";
+        GameStateHelper.writeContentToFile(gameBrain.toJson(), path);
 
 
 

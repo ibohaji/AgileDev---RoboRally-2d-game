@@ -1,5 +1,5 @@
 package App.Domain;
 
-interface InGameObject {
+interface serializable {
     String toJson();
 }
