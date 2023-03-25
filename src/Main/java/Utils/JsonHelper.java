@@ -1,7 +1,9 @@
 package Utils;
 
 import App.DTO.GameboardDTO;
+import App.DTO.RobotDTO;
 import App.DTO.TileDTO;
+import App.Domain.*;
 import App.Domain.Enums.DifficultyEnum;
 import App.Domain.Enums.GraphicalElementEnum;
 import com.google.gson.Gson;

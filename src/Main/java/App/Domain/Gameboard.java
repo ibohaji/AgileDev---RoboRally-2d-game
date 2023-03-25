@@ -15,7 +15,6 @@ public class Gameboard implements serializable {
     private Tuple<Integer, Integer> dimensions;
     private GameConfiguration gameConfig;
 
-
     public Gameboard(){
 
     }

@@ -7,6 +7,8 @@ import Utils.Tuple;
 
 public class Obstacle implements serializable {
 
+    private Integer damage;
+
     private Integer xCoordinate;
     private Integer yCoordinate;
     public ObstacleGraphicalElement graphicalElement;

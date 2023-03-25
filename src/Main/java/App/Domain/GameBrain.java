@@ -66,7 +66,7 @@ public class GameBrain implements serializable{
     private ArrayList<Player> createPlayers(){
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 0; i < this.nrOfPlayers; i++) {
-            players.add(new Player(((Integer)i).toString()));
+            players.add(new Player("player" + (Integer.toString(i + 1))));
         }
         return players;
     }

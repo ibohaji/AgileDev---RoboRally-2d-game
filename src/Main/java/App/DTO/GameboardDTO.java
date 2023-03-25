@@ -13,7 +13,6 @@ public class GameboardDTO{
     public ArrayList<RobotDTO> robots = new ArrayList<>();
     public Tuple<Integer, Integer> dimensions;
     public GameConfiguration gameConfig;
-
     public GameboardDTO() {
 
     }

@@ -17,10 +17,17 @@ public enum DirectionEnum {
         this.uTurnDirection = uTurnDirection;
     }
 
+    /**
+     *
+     * @return Return the next direction to the left
+     */
     public DirectionEnum getLeft(){
         return DirectionEnum.valueOf(leftDirection);
     }
 
+    /**
+     * @return Return the next direction to the left
+     */
     public DirectionEnum getRight(){
         return DirectionEnum.valueOf(rightDirection);
     }
