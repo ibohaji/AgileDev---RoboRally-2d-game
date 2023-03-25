@@ -2,6 +2,7 @@ package App.Domain;
 
 
 import App.DTO.RobotDTO;
+import App.Domain.Enums.DifficultyEnum;
 import App.Domain.Enums.DirectionEnum;
 import App.Domain.Enums.GraphicalElementEnum;
 import App.Domain.GraphicalElements.RobotGraphicalElement;
@@ -18,7 +19,7 @@ public class Robot implements serializable {
     public Robot(){
         this.currentDirection = null;
         this.graphicalElement = new RobotGraphicalElement("PLAYER", null);
-        this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_ROBOT);
+        this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_ROBOT, DifficultyEnum.EASY);
     }
 
     public void SetDirection(DirectionEnum direction) {

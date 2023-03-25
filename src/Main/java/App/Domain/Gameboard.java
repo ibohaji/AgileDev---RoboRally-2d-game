@@ -33,7 +33,7 @@ public class Gameboard implements serializable {
             for (int y = 0; y < dimensions.second(); y++) {
                 Tile nextTile = new Tile(x, y);
                 System.out.println(nextTile.graphicalElement == null);
-                nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR);
+                nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR, this.gameConfig.difficulty);
                 tilesOnBoard.add(nextTile);
             }
         }

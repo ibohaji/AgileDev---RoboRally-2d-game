@@ -29,7 +29,7 @@ public class GameController {
 
     public static void main(String[] args) {
         // Method to see the view
-        var game = new GameBrain(3, DifficultyEnum.EASY);
+        var game = new GameBrain(3, DifficultyEnum.HARD);
         var app = new ApplicationController();
         var gameController = new GameController(app, game);
         gameController.display();

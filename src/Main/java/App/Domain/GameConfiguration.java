@@ -8,7 +8,7 @@ public class GameConfiguration {
     private final int nrOfPlayers;
     private final Tuple<Integer, Integer> boardDimensions;
 
-    private final DifficultyEnum difficulty;
+    protected final DifficultyEnum difficulty;
 
     public GameConfiguration(int nrOfPlayers, DifficultyEnum difficulty){
         this.nrOfPlayers = nrOfPlayers;

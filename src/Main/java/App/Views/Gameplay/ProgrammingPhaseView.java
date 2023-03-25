@@ -3,10 +3,9 @@ package App.Views.Gameplay;
 import App.Controllers.GameController.GameController;
 import App.Domain.GameBrain;
 
-public class FirstView extends GameView{
+public class ProgrammingPhaseView extends GameView{
 
-
-    public FirstView(GameController gameController) {
-        super(gameController);
+    public ProgrammingPhaseView(GameController gameController, GameBrain gameBrain) {
+        super(gameController, gameBrain);
     }
 }

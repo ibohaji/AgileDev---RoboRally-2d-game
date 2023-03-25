@@ -1,5 +1,6 @@
 package App.Domain.GraphicalElements;
 
+import App.Domain.Enums.DifficultyEnum;
 import App.Domain.Enums.GraphicalElementEnum;
 import Utils.ImageUtils;
 import Utils.NoScalingIcon;
@@ -14,9 +15,16 @@ public class GraphicalElement {
     public GraphicalElement(){
 
     }
-    public void changeGraphicalElement(GraphicalElementEnum graphicalElement){
+    public void changeGraphicalElement(GraphicalElementEnum graphicalElement, DifficultyEnum difficultyEnumForScaling){
         this.graphicalElement = graphicalElement;
-        this.image = new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation()));
+        switch (difficultyEnumForScaling){
+            case EASY -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 100, 100);
+            case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 60, 60);
+            case HARD -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 40, 40);
+        }
     }
 
     public String getGraphicalElementPath(){
@@ -33,10 +41,6 @@ public class GraphicalElement {
 
     protected boolean doesGraphicalElementExist(){
         return image == null;
-    }
-
-    protected Tuple<Integer, Integer> getImageDimensions(){
-        return new Tuple<>(this.image.getIconWidth(), this.image.getIconHeight());
     }
 
     public ImageIcon getNoScalingIcon(){
