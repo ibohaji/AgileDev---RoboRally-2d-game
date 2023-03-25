@@ -57,6 +57,7 @@ public class Robot implements serializable {
     public int getNrOfLives(){
         return this.lifeCount;
     }
+    public void setNrOfLives(int lifeCount) {this.lifeCount = lifeCount;}
 
     @Override
     public String toString() {

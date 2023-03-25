@@ -8,7 +8,12 @@ import App.Domain.Enums.TileTypeEnum;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Gameboard implements serializable {
     // List of obstacles used -> List (Obstacle + Coordinate)
@@ -17,6 +22,7 @@ public class Gameboard implements serializable {
     private ArrayList<Robot> robots = new ArrayList<>();
     private Tuple<Integer, Integer> dimensions;
     private GameConfiguration gameConfig;
+    int mapTile[][];
 
     public Gameboard(){
 
