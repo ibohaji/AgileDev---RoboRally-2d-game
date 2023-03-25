@@ -43,4 +43,5 @@ public class NoScalingIcon implements Icon {
 
         g2d.dispose();
     }
+
 }

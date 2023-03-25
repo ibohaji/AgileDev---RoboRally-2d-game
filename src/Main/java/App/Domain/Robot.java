@@ -17,11 +17,13 @@ public class Robot implements serializable {
 
     public Robot(){
         this.currentDirection = null;
-        this.graphicalElement = new RobotGraphicalElement("PLAYER");
+        this.graphicalElement = new RobotGraphicalElement("PLAYER", null);
         this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_ROBOT);
     }
 
-    public void SetDirection(DirectionEnum direction) { currentDirection = direction; }
+    public void SetDirection(DirectionEnum direction) {
+        currentDirection = direction;
+    }
 
     public DirectionEnum getCurrentDirection() {return this.currentDirection;}
 
@@ -33,6 +35,11 @@ public class Robot implements serializable {
                 break;
             case "right":
                 this.currentDirection = currentDirection.getRight();
+                this.graphicalElement.changeDirection(currentDirection.getRight());
+                break;
+            case "u-turn":
+                this.currentDirection = currentDirection.getUTurn();
+                this.graphicalElement.changeDirection(currentDirection.getUTurn());
                 break;
         }
     }

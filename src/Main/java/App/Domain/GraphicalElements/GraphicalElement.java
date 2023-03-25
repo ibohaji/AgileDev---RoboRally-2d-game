@@ -3,6 +3,7 @@ package App.Domain.GraphicalElements;
 import App.Domain.Enums.GraphicalElementEnum;
 import Utils.ImageUtils;
 import Utils.NoScalingIcon;
+import Utils.Tuple;
 
 import javax.swing.*;
 
@@ -15,7 +16,7 @@ public class GraphicalElement {
     }
     public void changeGraphicalElement(GraphicalElementEnum graphicalElement){
         this.graphicalElement = graphicalElement;
-        this.image = new ImageIcon(ImageUtils.getImage(graphicalElement.getPictureFile()));
+        this.image = new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation()));
     }
 
     public String getGraphicalElementPath(){
@@ -34,6 +35,10 @@ public class GraphicalElement {
         return image == null;
     }
 
+    protected Tuple<Integer, Integer> getImageDimensions(){
+        return new Tuple<>(this.image.getIconWidth(), this.image.getIconHeight());
+    }
+
     public ImageIcon getNoScalingIcon(){
         return new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation()));
     }
@@ -42,6 +47,7 @@ public class GraphicalElement {
         if (doesGraphicalElementExist()){
             return this.image;
         }
+        // TODO
         // Throw custom error "graphical element not added"
         return null;
     }
