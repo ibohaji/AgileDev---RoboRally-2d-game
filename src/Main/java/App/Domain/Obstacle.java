@@ -1,27 +1,36 @@
 package App.Domain;
 
+import App.DTO.ObstacleDTO;
+import App.Domain.GraphicalElements.ObstacleGraphicalElement;
+import Utils.JsonHelper;
+import Utils.Tuple;
+
 public class Obstacle implements serializable {
 
-    private Point cords = new Point(0,0);
+    private Integer xCoordinate;
+    private Integer yCoordinate;
+    public ObstacleGraphicalElement graphicalElement;
 
-    private TileGraphicalElement graphicalElement;
-    private int lifeCount = 5;
-
-    public Obstacle() {
-        this.graphicalElement = new TileGraphicalElement();
+    public Obstacle(int xCoordinate, int yCoordinate) {
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        this.graphicalElement = new ObstacleGraphicalElement();
     }
 
-    public Point getCords(){
-        return cords;
+    public Tuple<Integer, Integer> getCoordinates() {
+        return new Tuple<>(this.xCoordinate, this.yCoordinate);
     }
 
-    public void setCords(Point newCords){
-        cords.x += newCords.x;
-        cords.y += newCords.y;
+    @Override
+    public String toString() {
+        return "Obstacle object. X coordinate: " + this.xCoordinate + " Y coordinate: " + this.yCoordinate +
+                ". Graphical element on obstacle: " + this.graphicalElement.getElementName();
     }
 
     @Override
     public String toJson() {
-        return "";
+        ObstacleDTO obstacledto = new ObstacleDTO(this);
+        return JsonHelper.serializeObjectToJson(obstacledto);
     }
+
 }
