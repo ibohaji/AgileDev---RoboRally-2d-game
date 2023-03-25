@@ -64,7 +64,6 @@ public class GameBrain implements serializable{
     }
 
     private ArrayList<Player> createPlayers(){
-        //TODO
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 0; i < this.nrOfPlayers; i++) {
             players.add(new Player(((Integer)i).toString()));
@@ -74,7 +73,6 @@ public class GameBrain implements serializable{
 
     private ArrayList<Robot> createRobots(ArrayList<Player> players){
         ArrayList<Robot> robots = new ArrayList<>();
-        // TODO
         for (Player player: players) {
             Robot newRobot = new Robot();
             newRobot.SetDirection(DirectionEnum.NORTH);

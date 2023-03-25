@@ -29,9 +29,9 @@ public class ImageUtils {
     public static Image getImage(String filepath) {
         //if (filepath.charAt(0) != '/') filepath = "/" + filepath;
         BufferedImage img = null;
-        var imageLocation = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java";
+
         try {
-            img = ImageIO.read(new File(imageLocation + File.separator + filepath));
+            img = ImageIO.read(new File(filepath));
         } catch (IOException e) {
             e.printStackTrace();
         }

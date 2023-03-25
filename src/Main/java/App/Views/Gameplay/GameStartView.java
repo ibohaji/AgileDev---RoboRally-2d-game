@@ -1,6 +1,7 @@
 package App.Views.Gameplay;
 
 import App.Controllers.GameController.GameController;
+import App.Domain.Enums.DifficultyEnum;
 import App.Domain.Enums.GraphicalElementEnum;
 import App.Domain.GameBrain;
 import App.Domain.Tile;
@@ -27,7 +28,8 @@ public class GameStartView extends GameView{
             for (int y = 0; y < gridSize; y++) {
                 try{
                     Tile tileAtCoordinate = super.gameBrain.getTileFromCoordinate(x, y);
-                    add(new JLabel(tileAtCoordinate.graphicalElement.getNoScalingIcon()));
+                    add(new JLabel(tileAtCoordinate.graphicalElement.getNoScalingIcon()),
+                            new GridBagConstraintsBuilder(x + 1, y + 1).build());
                 } catch (NullPointerException exception){
                     throw new RuntimeException("Will never happen");
                 }
