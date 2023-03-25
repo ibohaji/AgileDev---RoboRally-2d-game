@@ -18,7 +18,7 @@ public class RobotDTO {
     public RobotDTO(Robot robot){
         this.nrOfLives = robot.getNrOfLives();
         this.directionEnumOrdinal = robot.getCurrentDirection().ordinal();
-        this.graphicalElementOrdinal = GraphicalElementEnum.DEFAULT_ROBOT.getElementOrdinal();
+        this.graphicalElementOrdinal = GraphicalElementEnum.ROBOT_NORTH.getElementOrdinal();
         this.xCoordinate = robot.getCords().x;
         this.yCoordinate = robot.getCords().y;
     }

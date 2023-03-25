@@ -19,11 +19,11 @@ public class GraphicalElement {
         this.graphicalElement = graphicalElement;
         switch (difficultyEnumForScaling){
             case EASY -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 100, 100);
-            case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
                     new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 60, 60);
+            case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 45, 45);
             case HARD -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 40, 40);
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 35, 35);
         }
     }
 
@@ -43,8 +43,8 @@ public class GraphicalElement {
         return image == null;
     }
 
-    public ImageIcon getNoScalingIcon(){
-        return new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation()));
+    public ImageIcon getImage(){
+        return this.image;
     }
 
     protected ImageIcon getGraphicalElement(){

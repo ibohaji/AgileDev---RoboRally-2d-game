@@ -1,7 +1,6 @@
 package App.Domain.Enums;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public enum GraphicalElementEnum {
 

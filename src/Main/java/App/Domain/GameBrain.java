@@ -9,6 +9,7 @@ import App.Domain.GamePhase;
 import App.Domain.Gameboard;
 import Utils.JsonHelper;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class GameBrain implements serializable{
@@ -97,10 +98,29 @@ public class GameBrain implements serializable{
 
     public Tile getTileFromCoordinate(Integer x, Integer y){
         for (Tile tile: gameboard.getTiles()) {
-            if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(x)){
+            if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(y)){
                 return tile;
             }
         }
         return null;
+    }
+
+    public Robot getRobotFromCoordinate(Integer x, Integer y){
+        for (Robot robot: gameboard.getRobots()) {
+            if(robot.getCords().x == x && robot.getCords().y == y){
+                return robot;
+            }
+        }
+        return null;
+    }
+
+    public boolean isTileOccupiedByRobot(int xCoordinate, int yCoordinate){
+        for (Robot robot:this.gameboard.getRobots()) {
+            Point location = robot.getCords();
+            if(location.x == xCoordinate && location.y == yCoordinate){
+                return true;
+            }
+        }
+        return false;
     }
 }

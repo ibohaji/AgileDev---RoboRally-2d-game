@@ -11,6 +11,23 @@ import java.util.Objects;
 public class ImageUtils {
 
 
+    public static ImageIcon mergeTwoImages(ImageIcon background, ImageIcon foreground){
+        Tuple<Integer, Integer> dimension = getImageDimensions(background);
+        foreground = scaledImageIcon(foreground, dimension.first(), dimension.second());
+        Image backgroundImage = background.getImage();
+        Image foregroundImage = foreground.getImage();
+        BufferedImage bufferedBack = toBufferedImage(backgroundImage);
+        BufferedImage bufferedFront = toBufferedImage(foregroundImage);
+        BufferedImage combinedImage = new BufferedImage(
+                bufferedBack.getWidth(),
+                bufferedBack.getHeight(),
+                BufferedImage.TYPE_INT_ARGB );
+        Graphics2D g = combinedImage.createGraphics();
+        g.drawImage(bufferedBack,0,0,null);
+        g.drawImage(bufferedFront,0,0,null);
+        g.dispose();
+        return new ImageIcon(combinedImage);
+    }
 
     public static ImageIcon scaledImageIcon(ImageIcon imageIcon, int width, int height){
         Image image = imageIcon.getImage(); // transform it
@@ -65,6 +82,25 @@ public class ImageUtils {
 
     public static Tuple<Integer, Integer> getImageDimensions(ImageIcon image){
         return new Tuple<>(image.getIconWidth(), image.getIconHeight());
+    }
+
+    public static BufferedImage toBufferedImage(Image img)
+    {
+        if (img instanceof BufferedImage)
+        {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bimage;
     }
 
 }

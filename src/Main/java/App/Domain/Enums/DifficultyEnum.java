@@ -4,8 +4,8 @@ import Utils.Tuple;
 
 public enum DifficultyEnum {
     EASY(8,8),
-    MEDIUM(14,14),
-    HARD(20,20);
+    MEDIUM(12,12),
+    HARD(16,16);
 
     private int width;
     private int height;

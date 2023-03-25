@@ -19,7 +19,7 @@ public class Robot implements serializable {
     public Robot(){
         this.currentDirection = null;
         this.graphicalElement = new RobotGraphicalElement("PLAYER", null);
-        this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_ROBOT, DifficultyEnum.EASY);
+        this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, DifficultyEnum.HARD);
     }
 
     public void SetDirection(DirectionEnum direction) {

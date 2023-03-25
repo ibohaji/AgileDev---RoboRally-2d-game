@@ -1,6 +1,6 @@
 package App.Domain.Enums;
 
-public enum TileEnum {
+public enum TileTypeEnum {
 
     START,
     FINISH,

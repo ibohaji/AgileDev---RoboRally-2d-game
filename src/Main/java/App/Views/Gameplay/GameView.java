@@ -19,4 +19,8 @@ public abstract class GameView extends JPanel {
         this.gameConfiguration = gameBrain.getGameConfig();
     }
 
+    protected void getGameboardView(){
+
+    }
+
 }
