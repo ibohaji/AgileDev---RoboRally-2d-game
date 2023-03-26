@@ -1,7 +1,7 @@
 package App.Domain.Enums;
 
 public enum ObstacleEnum {
-    EXPLOSIVE_ACID(),
-    EXPLOSIVE_RADIATION(),
-    EXPLOSIVE_UNKNOWN();
+    KNOWN_OBSTACLE,
+    EXPLOSIVE_KNOWN,
+    EXPLOSIVE_UNKNOWN
 }
