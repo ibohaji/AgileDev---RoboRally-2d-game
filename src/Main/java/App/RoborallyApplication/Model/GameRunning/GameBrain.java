@@ -1,27 +1,31 @@
 package App.RoborallyApplication.Model.GameRunning;
 
 import App.DTO.GameBrainDTO;
+import App.RoborallyApplication.Model.Cards.ProgrammingCards.AgainCard;
+import App.RoborallyApplication.Model.Cards.ProgrammingCards.ChangeDirectionCard;
+import App.RoborallyApplication.Model.Cards.ProgrammingCards.MovementCard;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.Enums.GamePhase;
+import App.RoborallyApplication.Model.Enums.TurnEnum;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameObjects.Tile;
-import App.RoborallyApplication.Model.IReloadable;
+import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
+import Utils.Tuple;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
-public class GameBrain implements IReloadable {
+public class GameBrain implements iToDTO {
 
     private UUID id;
 
     private GameConfiguration gameConfig;
     private Gameboard gameboard = null;
-
     private ArrayList<Player> players;
-    private int nrOfPlayers;
     private GamePhase currentGamePhase;
 
     public GameBrain(){
@@ -30,7 +34,6 @@ public class GameBrain implements IReloadable {
     public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
         this.id = UUID.randomUUID();
         gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
-        this.nrOfPlayers = nrOfPlayers;
         createGameboard();
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
@@ -38,43 +41,96 @@ public class GameBrain implements IReloadable {
         currentGamePhase = GamePhase.ROUND_START;
     }
 
+    private void startGame(){
+        // TODO
+        // 1st -> assign robots their starting position
+        // 2nd -> start playing the round
+    }
+
     private void playRound(){
+        //TODO
+        // 1st -> give players their cards for the round
+        // 2nd -> let players choose the order of their cards
+        // 3rd -> make the moves (move robots, do damage, change tiles(if someone goes to explosive tile)
+        givePlayersCardsForRound();
+        /*ArrayList<Tuple<ProgrammingCard, Integer>> playerCardOrderingList = new ArrayList<>();
+        Tuple<ProgrammingCard, Integer> playerChoiceFor1 = new Tuple<>(new MovementCard(1), 0);
+        Tuple<ProgrammingCard, Integer> playerChoiceFor2 = new Tuple<>(new MovementCard(1), 1);
+        Tuple<ProgrammingCard, Integer> playerChoiceFor3 = new Tuple<>(new MovementCard(1), 2);
+        Tuple<ProgrammingCard, Integer> playerChoiceFor4 = new Tuple<>(new MovementCard(1), 3);
+        Tuple<ProgrammingCard, Integer> playerChoiceFor5 = new Tuple<>(new MovementCard(1), 4);*/
 
     }
 
-    private void getProgrammingPhaseChoices(){
+    protected void givePlayersCardsForRound(){
+        Random rnd = new Random();
+        for (Player player : players) {
+            for (int i = 0; i < 5; i++) {
+                int choiceForCard = rnd.nextInt(3);
+                int choiceForSpecific = rnd.nextInt(3);
+                if(choiceForCard == 0){ // againCard
+                    player.assignCardToPlayer(new AgainCard());
+                } else if (choiceForCard == 1) { // movementCard
+                    if(choiceForSpecific == 0) {
+                        player.assignCardToPlayer(new MovementCard(1));
+                    } else if (choiceForSpecific == 1) {
+                        player.assignCardToPlayer(new MovementCard(2));
+                    } else {
+                        player.assignCardToPlayer(new MovementCard(3));
+                    }
+                } else { // turn
+                    if(choiceForSpecific == 0) { // LEFT
+                        player.assignCardToPlayer(new ChangeDirectionCard(TurnEnum.LEFT));
+                    } else if (choiceForSpecific == 1) { // RIGHT
+                        player.assignCardToPlayer(new ChangeDirectionCard(TurnEnum.RIGHT));
+                    } else { // U-TURN
+                        player.assignCardToPlayer(new ChangeDirectionCard(TurnEnum.U_TURN));
+                    }
+                }
+            }
+        }
+    }
 
+    private void getProgrammingCardOrderFromPlayer(Player player){
+        // TODO
+        // 1st -> player chooses the ordering of the cards from the cards that he was given
     }
 
     private void makeMove(Player player, ProgrammingCard card){
         // TODO
+        //card.useCard(player.getRobot(), this);
     }
 
-    private boolean canRobotMakeMoveToCoordinate(){
+    private boolean canRobotMakeMoveToCoordinate(Gameboard gameboard){
         // TODO
+        gameboard.getRobots();
         return true;
     }
 
     private void movePlayerWithCollision(DirectionEnum hitDirection){
         // if overboard then back to beginning
-
+        // TODO
     }
 
     private void getMovesFromPlayers(){
-
+        // TODO
     }
 
     public GameConfiguration getGameConfig(){
         return this.gameConfig;
     }
 
+    public void setGameConfig(GameConfiguration gameConfiguration){
+        this.gameConfig = gameConfiguration;
+    }
+
     private void createGameboard(){
-        this.gameboard = new Gameboard(gameConfig);
+        this.gameboard = new Gameboard(this);
     }
 
     private ArrayList<Player> createPlayers(){
         ArrayList<Player> players = new ArrayList<>();
-        for (int i = 0; i < this.nrOfPlayers; i++) {
+        for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
             players.add(new Player("player" + (Integer.toString(i + 1))));
         }
         return players;
@@ -96,13 +152,22 @@ public class GameBrain implements IReloadable {
     }
 
     @Override
-    public String toJson() {
+    public String DTOasJson() {
         GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentGamePhase, this);
         return JsonHelper.serializeObjectToJson(gameBrainDTO);
     }
+
     @Override
     public UUID getID() {
         return this.id;
+    }
+
+    public Gameboard getGameboard(){
+        return this.gameboard;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
     }
 
     public Tile getTileFromCoordinate(Integer x, Integer y){
@@ -133,7 +198,8 @@ public class GameBrain implements IReloadable {
         return false;
     }
 
-    // TODO
-    // initalize map should go here
-    // reloading of a game should go here
+    public void restore(GameConfiguration gameConfig, ArrayList<Player> players,
+                        GamePhase gamePhase, Gameboard gameboard, ArrayList<Robot> robots, ArrayList<Tile> tiles){
+
+    }
 }

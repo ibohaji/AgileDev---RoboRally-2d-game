@@ -8,33 +8,29 @@ import javax.swing.*;
 
 public class GraphicalElement {
 
-    protected GraphicalElementEnum graphicalElement = null;
+    protected GraphicalElementEnum graphicalElementEnum;
     protected ImageIcon image = null;
     public GraphicalElement(){
 
     }
     public void changeGraphicalElement(GraphicalElementEnum graphicalElement, DifficultyEnum difficultyEnumForScaling){
-        this.graphicalElement = graphicalElement;
+        this.graphicalElementEnum = graphicalElement;
         switch (difficultyEnumForScaling){
             case EASY -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 60, 60);
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElementEnum.getElementLocation())), 60, 60);
             case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 45, 45);
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElementEnum.getElementLocation())), 45, 45);
             case HARD -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.graphicalElement.getElementLocation())), 35, 35);
+                    new ImageIcon(ImageUtils.getImage(this.graphicalElementEnum.getElementLocation())), 35, 35);
         }
     }
 
-    public String getGraphicalElementPath(){
-        return this.graphicalElement.getPictureFile();
-    }
-
     public int getGraphicalElementOrdinal(){
-        return this.graphicalElement.getElementOrdinal();
+        return this.graphicalElementEnum.getElementOrdinal();
     }
 
     public String getElementName(){
-        return this.graphicalElement.name();
+        return this.graphicalElementEnum.name();
     }
 
     protected boolean doesGraphicalElementExist(){
@@ -45,7 +41,7 @@ public class GraphicalElement {
         return this.image;
     }
 
-    protected ImageIcon getGraphicalElement(){
+    protected ImageIcon getGraphicalElementEnum(){
         if (doesGraphicalElementExist()){
             return this.image;
         }

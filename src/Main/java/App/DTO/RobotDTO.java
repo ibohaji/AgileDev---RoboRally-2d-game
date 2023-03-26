@@ -6,27 +6,28 @@ import App.RoborallyApplication.Model.GameObjects.Robot;
 
 import java.awt.*;
 
-public class RobotDTO {
+public class RobotDTO implements iFromDTO{
+
 
     public int xCoordinate;
     public int yCoordinate;
     public int nrOfLives;
-    public int graphicalElementOrdinal;
     public int directionEnumOrdinal;
     public RobotDTO(){}
 
     public RobotDTO(Robot robot){
         this.nrOfLives = robot.getNrOfLives();
         this.directionEnumOrdinal = robot.getCurrentDirection().ordinal();
-        this.graphicalElementOrdinal = GraphicalElementEnum.ROBOT_NORTH.getElementOrdinal();
         this.xCoordinate = robot.getCords().x;
         this.yCoordinate = robot.getCords().y;
     }
 
-    public Robot createRobotFromDto(){
+    @Override
+    public Robot returnObjectFromDTO() {
         Robot newRobot = new Robot();
         newRobot.setCords(new Point(this.xCoordinate, this.yCoordinate));
         newRobot.SetDirection(DirectionEnum.values()[this.directionEnumOrdinal]);
+        newRobot.setNrOfLives(nrOfLives);
         return newRobot;
     }
 }

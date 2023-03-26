@@ -6,35 +6,35 @@ import App.RoborallyApplication.Model.Enums.TileTypeEnum;
 import App.RoborallyApplication.Model.GameObjects.Obstacle;
 import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameObjects.Tile;
-import App.RoborallyApplication.Model.IReloadable;
+import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
-public class Gameboard implements IReloadable {
-
+public class Gameboard implements iToDTO {
     private UUID id;
+    private UUID gameBrainId;
     private ArrayList<Tile> tilesOnBoard = new ArrayList<>();
     private ArrayList<Robot> robots = new ArrayList<>();
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
     private Tuple<Integer, Integer> dimensions;
-    private GameConfiguration gameConfig;
+    //private GameConfiguration gameConfig;
+    private GameBrain gameBrain;
     int mapTile[][];
 
     public Gameboard(){
 
     }
-    public Gameboard(GameConfiguration config){
+    public Gameboard(GameBrain brain){
+        gameBrain = brain;
         id = UUID.randomUUID();
-        gameConfig = config;
-        dimensions = gameConfig.getBoardDimensions();
+        gameBrainId = gameBrain.getID();
+        dimensions = brain.getGameConfig().getBoardDimensions();
         initializeGameboard();
     }
 
@@ -47,7 +47,7 @@ public class Gameboard implements IReloadable {
             for (int y = 0; y < dimensions.second(); y++) {
                 Tile nextTile = new Tile(x, y, TileTypeEnum.DEFAULT_FLOOR);
                 nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
-                        this.gameConfig.difficulty);
+                        this.gameBrain.getGameConfig().difficulty);
                 tilesOnBoard.add(nextTile);
             }
         }
@@ -55,7 +55,7 @@ public class Gameboard implements IReloadable {
 
 
 
-    private void initializeMap(){
+    /*private void initializeMap(){
         int col = 0;
         int row = 0;
         Tuple<Integer,Integer> dim = DifficultyEnum.EASY.getDimensions();
@@ -66,7 +66,7 @@ public class Gameboard implements IReloadable {
             int tileNum = mapTile[col][row];
             Tile nextTile = new Tile(col,row);
             tilesOnBoard.add(nextTile);
-        }
+        }*/
 
         /*
          while (col < gp.getMaxScreenCol() && row < gp.getMaxScreenRow()) {
@@ -84,8 +84,8 @@ public class Gameboard implements IReloadable {
             }
         }
          */
-
-    }
+/*
+    }*/
 
     public void loadMap() {
         try {
@@ -154,8 +154,8 @@ public class Gameboard implements IReloadable {
         return this.dimensions;
     }
 
-    public GameConfiguration getGameConfig(){
-        return this.gameConfig;
+    public GameBrain getGameBrain(){
+        return this.gameBrain;
     }
 
     public ArrayList<Tile> getTiles(){
@@ -168,18 +168,6 @@ public class Gameboard implements IReloadable {
 
     public void addRobots(ArrayList<Robot> robots){
         this.robots = robots;
-        for (int i = 0; i < robots.size(); i++) {
-            robots.get(i).setCords(new Point(i, 1));
-            Random rand = new Random();
-            int r = rand.nextInt(4);
-            switch (r){
-                case 0 -> robots.get(i).SetDirection(DirectionEnum.NORTH);
-                case 1 -> robots.get(i).SetDirection(DirectionEnum.WEST);
-                case 2 -> robots.get(i).SetDirection(DirectionEnum.SOUTH);
-                case 3 -> robots.get(i).SetDirection(DirectionEnum.EAST);
-            }
-
-        }
     }
 
     protected ArrayList<Tile> getTilesOnBoard(){
@@ -191,7 +179,7 @@ public class Gameboard implements IReloadable {
     }
 
     @Override
-    public String toJson() {
+    public String DTOasJson() {
         GameboardDTO gameboardDTO = new GameboardDTO(this);
         return JsonHelper.serializeObjectToJson(gameboardDTO);
     }

@@ -3,14 +3,14 @@ package App.RoborallyApplication.Model.GameObjects;
 import App.DTO.ObstacleDTO;
 import App.RoborallyApplication.Model.Enums.ObstacleEnum;
 import App.RoborallyApplication.Model.Enums.ObstacleTypeEnum;
-import App.RoborallyApplication.Model.IReloadable;
+import App.RoborallyApplication.Model.iToDTO;
 import App.RoborallyApplication.Model.GraphicalElements.ObstacleGraphicalElement;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
 import java.util.UUID;
 
-public class Obstacle implements IReloadable {
+public class Obstacle implements iToDTO {
     private UUID id;
     private Integer damage;
     private Integer xCoordinate;
@@ -46,7 +46,7 @@ public class Obstacle implements IReloadable {
     }
 
     @Override
-    public String toJson() {
+    public String DTOasJson() {
         ObstacleDTO obstacledto = new ObstacleDTO(this);
         return JsonHelper.serializeObjectToJson(obstacledto);
     }

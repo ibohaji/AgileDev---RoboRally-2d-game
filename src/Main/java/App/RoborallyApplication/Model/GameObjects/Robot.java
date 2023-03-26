@@ -4,7 +4,7 @@ package App.RoborallyApplication.Model.GameObjects;
 import App.DTO.RobotDTO;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.IReloadable;
+import App.RoborallyApplication.Model.iToDTO;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
@@ -14,7 +14,7 @@ import Utils.JsonHelper;
 import java.awt.*;
 import java.util.UUID;
 
-public class Robot implements IReloadable {
+public class Robot implements iToDTO {
 
     private UUID id;
     private Point cords = new Point(0,0);
@@ -76,7 +76,7 @@ public class Robot implements IReloadable {
     }
 
     @Override
-    public String toJson() {
+    public String DTOasJson() {
         RobotDTO robotDTO = new RobotDTO(this);
         return JsonHelper.serializeObjectToJson(robotDTO);
     }

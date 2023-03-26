@@ -2,7 +2,7 @@ package App.RoborallyApplication.Model;
 
 import java.util.UUID;
 
-public interface IReloadable {
-    String toJson();
+public interface iToDTO {
+    String DTOasJson();
     UUID getID();
 }

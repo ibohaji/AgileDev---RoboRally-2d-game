@@ -1,7 +1,7 @@
 package App.RoborallyApplication.Model.GameObjects;
 
 import App.DTO.TileDTO;
-import App.RoborallyApplication.Model.IReloadable;
+import App.RoborallyApplication.Model.iToDTO;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
 import App.RoborallyApplication.Model.Enums.TileTypeEnum;
@@ -11,7 +11,7 @@ import Utils.Tuple;
 
 import java.util.UUID;
 
-public class Tile implements IReloadable {
+public class Tile implements iToDTO {
 
     private Integer xCoordinate;
     private Integer yCoordinate;
@@ -19,13 +19,6 @@ public class Tile implements IReloadable {
     protected TileTypeEnum tileTypeEnum;
 
     public Tile(int xCoordinate, int yCoordinate, TileTypeEnum tileTypeEnum){
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.graphicalElement = new TileGraphicalElement();
-        this.tileTypeEnum = tileTypeEnum;
-    }
-
-    public Tile(int xCoordinate, int yCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new TileGraphicalElement();
@@ -43,6 +36,14 @@ public class Tile implements IReloadable {
         return new Tuple<>(this.xCoordinate, this.yCoordinate);
     }
 
+    public TileTypeEnum getTileTypeEnum() {
+        return tileTypeEnum;
+    }
+
+    public TileGraphicalElement getGraphicalElement() {
+        return graphicalElement;
+    }
+
     @Override
     public String toString() {
         return "Tile object. X coordinate: " + this.xCoordinate + " Y coordinate: " + this.yCoordinate +
@@ -50,7 +51,7 @@ public class Tile implements IReloadable {
     }
 
     @Override
-    public String toJson() {
+    public String DTOasJson() {
         TileDTO tileDTO = new TileDTO(this);
         return JsonHelper.serializeObjectToJson(tileDTO);
     }

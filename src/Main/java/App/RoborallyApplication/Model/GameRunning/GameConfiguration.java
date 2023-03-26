@@ -21,4 +21,6 @@ public class GameConfiguration {
     public Tuple<Integer, Integer> getBoardDimensions(){
         return this.boardDimensions;
     }
+
+    public int getNrOfPlayers(){return this.nrOfPlayers;}
 }

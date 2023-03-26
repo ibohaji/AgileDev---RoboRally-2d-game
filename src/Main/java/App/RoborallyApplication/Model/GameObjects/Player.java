@@ -3,13 +3,13 @@ package App.RoborallyApplication.Model.GameObjects;
 import App.DTO.PlayerDTO;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.IReloadable;
+import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Player implements IReloadable {
+public class Player implements iToDTO {
 
     private UUID id;
     private String displayName;
@@ -22,7 +22,7 @@ public class Player implements IReloadable {
         this.displayName = displayName;
     }
 
-    protected void addCardToPlayer(ProgrammingCard card){
+    public void assignCardToPlayer(ProgrammingCard card){
         programmingCards.add(card);
     }
 
@@ -47,7 +47,7 @@ public class Player implements IReloadable {
         return false;
     }
     @Override
-    public String toJson() {
+    public String DTOasJson() {
         PlayerDTO playerDTO = new PlayerDTO(this);
         return JsonHelper.serializeObjectToJson(playerDTO);
     }
