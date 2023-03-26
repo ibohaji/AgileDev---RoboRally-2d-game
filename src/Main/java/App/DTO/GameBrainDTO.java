@@ -1,9 +1,9 @@
 package App.DTO;
 
-import App.Model.GameRunning.GameBrain;
-import App.Model.GameRunning.GameConfiguration;
-import App.Model.Enums.GamePhase;
-import App.Model.GameRunning.Gameboard;
+import App.RoborallyApplication.Model.GameRunning.GameBrain;
+import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
+import App.RoborallyApplication.Model.Enums.GamePhase;
+import App.RoborallyApplication.Model.GameRunning.Gameboard;
 
 import java.util.UUID;
 

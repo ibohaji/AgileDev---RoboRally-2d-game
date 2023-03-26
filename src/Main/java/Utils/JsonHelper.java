@@ -1,7 +1,7 @@
 package Utils;
 
-import App.Model.GameRunning.GameBrain;
-import App.Model.GameRunning.DifficultyEnum;
+import App.RoborallyApplication.Model.GameRunning.GameBrain;
+import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import com.google.gson.Gson;
 
 import java.io.File;

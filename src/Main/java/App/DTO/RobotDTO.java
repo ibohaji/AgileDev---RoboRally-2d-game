@@ -1,8 +1,8 @@
 package App.DTO;
 
-import App.Model.GameRunning.DirectionEnum;
-import App.Model.Enums.GraphicalElementEnum;
-import App.Model.GameObjects.Robot;
+import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
+import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
+import App.RoborallyApplication.Model.GameObjects.Robot;
 
 import java.awt.*;
 

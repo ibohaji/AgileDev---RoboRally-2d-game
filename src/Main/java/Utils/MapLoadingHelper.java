@@ -1,7 +1,7 @@
 package Utils;
 
-import App.Model.GameRunning.DifficultyEnum;
-import App.Model.GameObjects.Tile;
+import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
+import App.RoborallyApplication.Model.GameObjects.Tile;
 
 import java.util.ArrayList;
 

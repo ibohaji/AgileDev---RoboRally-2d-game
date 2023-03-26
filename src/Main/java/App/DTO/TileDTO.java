@@ -1,6 +1,6 @@
 package App.DTO;
 
-import App.Model.GameObjects.Tile;
+import App.RoborallyApplication.Model.GameObjects.Tile;
 import Utils.Tuple;
 
 public class TileDTO{
