@@ -1,10 +1,10 @@
 package App.Views.Gameplay;
 
 import App.Controllers.GameController.GameController;
-import App.Domain.Enums.DirectionEnum;
-import App.Domain.Enums.GraphicalElementEnum;
-import App.Domain.GameBrain;
-import App.Domain.Tile;
+import App.Model.GameRunning.DirectionEnum;
+import App.Model.Enums.GraphicalElementEnum;
+import App.Model.GameRunning.GameBrain;
+import App.Model.GameObjects.Tile;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;

@@ -1,15 +1,10 @@
 package Utils;
 
-import App.DTO.GameboardDTO;
-import App.DTO.RobotDTO;
-import App.DTO.TileDTO;
-import App.Domain.*;
-import App.Domain.Enums.DifficultyEnum;
-import App.Domain.Enums.GraphicalElementEnum;
+import App.Model.GameRunning.GameBrain;
+import App.Model.GameRunning.DifficultyEnum;
 import com.google.gson.Gson;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class JsonHelper {
     public static Gson gson = new Gson();

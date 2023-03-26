@@ -1,9 +1,9 @@
 package App.Controllers.GameController;
 
 import App.Controllers.ApplicationController.ApplicationController;
-import App.Domain.Enums.DifficultyEnum;
-import App.Domain.GameBrain;
-import App.Domain.Tile;
+import App.Model.GameRunning.DifficultyEnum;
+import App.Model.GameRunning.GameBrain;
+import App.Model.GameObjects.Tile;
 import App.Views.Gameplay.GameStartView;
 import App.Views.Gameplay.GameView;
 import Utils.MapLoadingHelper;
@@ -34,7 +34,7 @@ public class GameController {
     public static void main(String[] args) {
         // Method to see the view
         var game = new GameBrain(6, DifficultyEnum.HARD);
-        ArrayList<Tile> map = MapLoadingHelper.loadMap(DifficultyEnum.HARD);
+        // ArrayList<Tile> map = MapLoadingHelper.loadMap(DifficultyEnum.HARD);
         var app = new ApplicationController();
         var gameController = new GameController(app, game);
         gameController.display();

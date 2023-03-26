@@ -3,9 +3,11 @@ package Utils;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.AttributedString;
 import java.util.Objects;
 
 public class ImageUtils {
@@ -103,4 +105,17 @@ public class ImageUtils {
         return bimage;
     }
 
+    public static ImageIcon addTextToImage(ImageIcon imageIcon, Font font, String text){
+        Image img = imageIcon.getImage();
+        BufferedImage image = toBufferedImage(img);
+        Graphics g = image.getGraphics();
+        AttributedString attributedText = new AttributedString(text);
+        attributedText.addAttribute(TextAttribute.FONT, font);
+        FontMetrics metrics = g.getFontMetrics(font);
+        int positionX = (image.getWidth() - metrics.stringWidth(text)) / 2;
+        int positionY = (image.getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
+        g.drawString(attributedText.getIterator(), positionX, positionY);
+        g.dispose();
+        return new ImageIcon(image);
+    }
 }

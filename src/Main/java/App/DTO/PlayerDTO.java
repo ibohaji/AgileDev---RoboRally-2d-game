@@ -1,6 +1,6 @@
 package App.DTO;
 
-import App.Domain.Player;
+import App.Model.GameObjects.Player;
 
 public class PlayerDTO {
 

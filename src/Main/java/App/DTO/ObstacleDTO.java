@@ -1,13 +1,7 @@
 package App.DTO;
 
-import App.Domain.Enums.DirectionEnum;
-import App.Domain.Enums.GraphicalElementEnum;
-import App.Domain.Obstacle;
-import App.Domain.Robot;
-import App.Domain.Tile;
+import App.Model.GameObjects.Obstacle;
 import Utils.Tuple;
-
-import java.awt.*;
 
 public class ObstacleDTO {
 

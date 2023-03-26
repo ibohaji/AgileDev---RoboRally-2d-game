@@ -1,9 +1,9 @@
 package App.DTO;
 
-import App.Domain.GameConfiguration;
-import App.Domain.Gameboard;
-import App.Domain.Robot;
-import App.Domain.Tile;
+import App.Model.GameRunning.GameConfiguration;
+import App.Model.GameRunning.Gameboard;
+import App.Model.GameObjects.Robot;
+import App.Model.GameObjects.Tile;
 import Utils.Tuple;
 
 import java.util.ArrayList;

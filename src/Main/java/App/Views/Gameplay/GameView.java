@@ -1,10 +1,8 @@
 package App.Views.Gameplay;
 
 import App.Controllers.GameController.GameController;
-import App.Controllers.MainMenuController.MainMenuController;
-import App.Domain.GameBrain;
-import App.Domain.GameConfiguration;
-import Utils.Tuple;
+import App.Model.GameRunning.GameBrain;
+import App.Model.GameRunning.GameConfiguration;
 
 import javax.swing.*;
 

@@ -1,5 +1,5 @@
-import App.Domain.Enums.DirectionEnum;
-import App.Domain.Robot;
+import App.Model.Enums.DirectionEnum;
+import App.Model.Robot;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

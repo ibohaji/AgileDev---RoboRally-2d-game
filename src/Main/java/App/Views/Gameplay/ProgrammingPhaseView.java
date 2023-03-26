@@ -1,7 +1,7 @@
 package App.Views.Gameplay;
 
 import App.Controllers.GameController.GameController;
-import App.Domain.GameBrain;
+import App.Model.GameRunning.GameBrain;
 
 public class ProgrammingPhaseView extends GameView{
 

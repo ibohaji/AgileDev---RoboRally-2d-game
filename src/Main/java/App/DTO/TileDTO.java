@@ -1,9 +1,7 @@
 package App.DTO;
 
-import App.Domain.Gameboard;
-import App.Domain.Tile;
+import App.Model.GameObjects.Tile;
 import Utils.Tuple;
-import io.cucumber.java.bs.I;
 
 public class TileDTO{
     public Integer xCoordinate;

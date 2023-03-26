@@ -3,10 +3,10 @@ import java.util.ArrayList;
 
 import App.DTO.GameboardDTO;
 import App.DTO.TileDTO;
-import App.Domain.Enums.DifficultyEnum;
-import App.Domain.GameConfiguration;
-import App.Domain.Gameboard;
-import App.Domain.Robot;
+import App.Model.Enums.DifficultyEnum;
+import App.Model.GameConfiguration;
+import App.Model.Gameboard;
+import App.Model.Robot;
 import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.Test;
 import org.junit.jupiter.api.BeforeEach;
