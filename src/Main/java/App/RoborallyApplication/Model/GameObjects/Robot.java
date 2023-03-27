@@ -3,6 +3,7 @@ package App.RoborallyApplication.Model.GameObjects;
 
 import App.DTO.RobotDTO;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
+import App.RoborallyApplication.Model.Enums.TurnEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.iToDTO;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
@@ -35,16 +36,16 @@ public class Robot implements iToDTO {
 
     public DirectionEnum getCurrentDirection() {return this.currentDirection;}
 
-    public void changeDirection(String direction){
-        switch (direction){
-            case "left" :
+    public void changeDirection(TurnEnum turnEnum){
+        switch (turnEnum){
+            case LEFT:
                 this.currentDirection = currentDirection.getLeft();
                 break;
-            case "right":
+            case RIGHT:
                 this.currentDirection = currentDirection.getRight();
                 this.graphicalElement.changeDirection(currentDirection.getRight());
                 break;
-            case "u-turn":
+            case U_TURN:
                 this.currentDirection = currentDirection.getUTurn();
                 this.graphicalElement.changeDirection(currentDirection.getUTurn());
                 break;

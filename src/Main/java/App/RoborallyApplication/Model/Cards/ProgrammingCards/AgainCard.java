@@ -6,7 +6,12 @@ import App.RoborallyApplication.Model.GameRunning.GameBrain;
 public class AgainCard extends ProgrammingCard{
     @Override
     public void useCard(Robot robot, GameBrain gameBrain) {
-
+        ProgrammingCard lastCardUsed = gameBrain.getLastCardUsedByRobot(robot);
+        // write logic for when first card is the again card then nothing happens
+        // basically return null for last card used
+        if(lastCardUsed != null){
+            robot.useProgrammingCard(lastCardUsed, gameBrain);
+        }
     }
 }
 

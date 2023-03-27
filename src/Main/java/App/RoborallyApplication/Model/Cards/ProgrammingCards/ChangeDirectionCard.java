@@ -4,6 +4,8 @@ import App.RoborallyApplication.Model.Enums.TurnEnum;
 import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 
+import java.awt.*;
+
 public class ChangeDirectionCard extends ProgrammingCard{
 
     private final TurnEnum turn;
@@ -12,6 +14,6 @@ public class ChangeDirectionCard extends ProgrammingCard{
     }
     @Override
     public void useCard(Robot robot, GameBrain gameBrain) {
-
+        robot.changeDirection(turn);
     }
 }

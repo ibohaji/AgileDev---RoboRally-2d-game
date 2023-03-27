@@ -202,4 +202,9 @@ public class GameBrain implements iToDTO {
                         GamePhase gamePhase, Gameboard gameboard, ArrayList<Robot> robots, ArrayList<Tile> tiles){
 
     }
+
+    public ProgrammingCard getLastCardUsedByRobot(Robot robot){
+        // TODO
+        return new MovementCard(1);
+    }
 }
