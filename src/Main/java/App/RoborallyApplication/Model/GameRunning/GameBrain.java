@@ -12,7 +12,6 @@ import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
-import Utils.Tuple;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -101,10 +100,9 @@ public class GameBrain implements iToDTO {
         //card.useCard(player.getRobot(), this);
     }
 
-    private boolean canRobotMakeMoveToCoordinate(Gameboard gameboard){
-        // TODO
-        gameboard.getRobots();
-        return true;
+    public boolean isPositionOnBoard(Point point){
+        return (point.x > -1 && point.x < gameConfig.getBoardDimensions().first() &&
+                point.y > -1 && point.y < gameConfig.getBoardDimensions().second());
     }
 
     private void movePlayerWithCollision(DirectionEnum hitDirection){
@@ -206,5 +204,32 @@ public class GameBrain implements iToDTO {
     public ProgrammingCard getLastCardUsedByRobot(Robot robot){
         // TODO
         return new MovementCard(1);
+    }
+
+    public void pushRobot(Robot robotBeingPushed, DirectionEnum directionOfPushOrigin){
+        Point pos = robotBeingPushed.getCords();
+        switch (directionOfPushOrigin){
+            case WEST -> pos.x += 1;
+            case EAST -> pos.x -= 1;
+            case SOUTH -> pos.y -= 1;
+            case NORTH -> pos.y += 1;
+        }
+        if(!isPositionOnBoard(pos)){
+            robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
+            if(robotBeingPushed.getNrOfLives() < 1){
+                // TODO
+                // remove robot from game
+                // remove player aswell
+            } else {
+                putRobotToRandomStartPoint(robotBeingPushed);
+            }
+        } else {
+            // check if pushes another robot
+        }
+    }
+
+    public void putRobotToRandomStartPoint(Robot robot){
+        // get all available start points
+        // randomly choose one
     }
 }
