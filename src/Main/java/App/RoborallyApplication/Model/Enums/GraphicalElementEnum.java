@@ -10,6 +10,7 @@ public enum GraphicalElementEnum {
     OBSTACLE_EXPLOSIVE_RADIATION("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveRadiationTile.png"),
     OBSTACLE_ACID("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "acid.png"),
     OBSTACLE_PIT("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "pit.png"),
+    OBSTACLE_HEALING("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "HealingTile.png"),
     OBSTACLE_RADIATION("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "radiation.png"),
     ROBOT_NORTH("App" + File.separator + "Resources" + File.separator + "RobotSkins" + File.separator + "robotNorth.png"),
     ROBOT_SOUTH("App" + File.separator + "Resources" + File.separator + "RobotSkins" + File.separator + "robotSouth.png"),

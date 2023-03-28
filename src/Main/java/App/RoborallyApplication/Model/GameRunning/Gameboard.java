@@ -170,7 +170,7 @@ public class Gameboard implements iToDTO {
         this.robots = robots;
     }
 
-    protected ArrayList<Tile> getTilesOnBoard(){
+    public ArrayList<Tile> getTilesOnBoard(){
         return this.tilesOnBoard;
     }
 
