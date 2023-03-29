@@ -11,11 +11,7 @@ public class TileDTO implements iFromDTO{
     public Integer yCoordinate;
     public TileGraphicalElement graphicalElement;
     public TileTypeEnum tileTypeEnum;
-
-    public TileDTO(){
-
-    }
-
+    public TileDTO(){}
     public TileDTO(Tile tile){
         Tuple<Integer, Integer> coordinates = tile.getCoordinates();
         this.xCoordinate = coordinates.first();

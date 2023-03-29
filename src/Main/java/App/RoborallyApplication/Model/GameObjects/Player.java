@@ -1,16 +1,13 @@
 package App.RoborallyApplication.Model.GameObjects;
-
 import App.DTO.PlayerDTO;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Player implements iToDTO {
-
     private UUID id;
     private String displayName;
     private ArrayList<ProgrammingCard> programmingCards = new ArrayList<>();
@@ -51,7 +48,6 @@ public class Player implements iToDTO {
         PlayerDTO playerDTO = new PlayerDTO(this);
         return JsonHelper.serializeObjectToJson(playerDTO);
     }
-
     @Override
     public UUID getID() {
         return this.id;

@@ -18,7 +18,6 @@ public class ObstacleDTO {
     public ObstacleDTO() {
 
     }
-
     public ObstacleDTO(Obstacle obstacle) {
         Tuple<Integer, Integer> coordinates = obstacle.getCoordinates();
         this.xCoordinate = coordinates.first();

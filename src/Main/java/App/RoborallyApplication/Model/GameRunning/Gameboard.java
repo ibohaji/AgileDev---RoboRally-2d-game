@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Gameboard implements iToDTO {
-
     private UUID id;
     private UUID gameBrainId;
     private ArrayList<Tile> tiles = new ArrayList<>();

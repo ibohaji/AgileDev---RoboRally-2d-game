@@ -14,16 +14,13 @@ import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
 public class GameBrain implements iToDTO {
-
     private UUID id;
-
     private GameConfiguration gameConfig;
     private Gameboard gameboard = null;
     private ArrayList<Player> players;
@@ -74,7 +71,7 @@ public class GameBrain implements iToDTO {
         for (Player player : players) {
             for (int i = 0; i < 5; i++) {
                 int choiceForCard = rnd.nextInt(12);
-                int choiceForSpecific = rnd.nextInt(12);
+                int choiceForSpecific = rnd.nextInt(3);
                 if(choiceForCard < 2){ // againCard
                     player.assignCardToPlayer(new AgainCard());
                 } else if (choiceForCard < 7) { // movementCard

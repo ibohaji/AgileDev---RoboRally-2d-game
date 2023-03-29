@@ -10,7 +10,6 @@ import App.RoborallyApplication.Model.GraphicalElements.TileGraphicalElement;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
-import javax.swing.*;
 import java.util.UUID;
 
 public class Tile implements iToDTO {
