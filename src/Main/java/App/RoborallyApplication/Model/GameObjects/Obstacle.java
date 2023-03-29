@@ -17,7 +17,6 @@ public class Obstacle implements iToDTO {
     private Integer yCoordinate;
     public ObstacleGraphicalElement graphicalElement;
     private ObstacleTypeEnum obstacleTypeEnum;
-
     private ObstacleEnum obstacleEnum;
 
     public Obstacle(int xCoordinate, int yCoordinate, int damage) {
@@ -62,5 +61,14 @@ public class Obstacle implements iToDTO {
 
     public ObstacleTypeEnum getObstacleTypeEnum() {
         return obstacleTypeEnum;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass().isInstance(Obstacle.class)){
+            return ((Obstacle) obj).xCoordinate.intValue() == this.xCoordinate.intValue() &&
+                    ((Obstacle) obj).yCoordinate.intValue() == this.yCoordinate.intValue();
+        } else {
+            return false;
+        }
     }
 }

@@ -28,7 +28,7 @@ public class GameboardDTO implements iFromDTO{
             this.robots.add(new RobotDTO(robot));
         }
         this.id = gameboard.getID();
-        this.gamebrainID = gameboard.getGameBrain().getID();
+        this.gamebrainID = gameboard.getGameBrainId();
     }
 
 

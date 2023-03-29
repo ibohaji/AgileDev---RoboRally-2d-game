@@ -17,9 +17,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Gameboard implements iToDTO {
+
     private UUID id;
     private UUID gameBrainId;
-    private ArrayList<Tile> tilesOnBoard = new ArrayList<>();
+    private ArrayList<Tile> tiles = new ArrayList<>();
     private ArrayList<Robot> robots = new ArrayList<>();
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
     private Tuple<Integer, Integer> dimensions;
@@ -32,7 +33,6 @@ public class Gameboard implements iToDTO {
     }
     public Gameboard(GameBrain brain){
         gameBrain = brain;
-        id = UUID.randomUUID();
         gameBrainId = gameBrain.getID();
         dimensions = brain.getGameConfig().getBoardDimensions();
         initializeGameboard();
@@ -48,7 +48,7 @@ public class Gameboard implements iToDTO {
                 Tile nextTile = new Tile(x, y, TileTypeEnum.DEFAULT_FLOOR);
                 nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
                         this.gameBrain.getGameConfig().difficulty);
-                tilesOnBoard.add(nextTile);
+                tiles.add(nextTile);
             }
         }
     }
@@ -149,33 +149,37 @@ public class Gameboard implements iToDTO {
         }
     }*/
 
-
-    public Tuple<Integer, Integer> getGameboardDimensions(){
-        return this.dimensions;
-    }
-
-    public GameBrain getGameBrain(){
-        return this.gameBrain;
-    }
-
-    public ArrayList<Tile> getTiles(){
-        return this.tilesOnBoard;
+    public UUID getGameBrainId(){
+        return this.gameBrain.getID();
     }
 
     private void removeRobotFromBoard(Robot robotToRemove){
         this.robots.remove(robotToRemove);
     }
 
-    public void addRobots(ArrayList<Robot> robots){
-        this.robots = robots;
-    }
+    protected void setRobots(ArrayList<Robot> robots){this.robots = robots;}
 
-    public ArrayList<Tile> getTilesOnBoard(){
-        return this.tilesOnBoard;
+    protected void setTiles(ArrayList<Tile> tiles){this.tiles = tiles;}
+
+    public ArrayList<Tile> getTiles(){
+        return this.tiles;
     }
 
     public ArrayList<Robot> getRobots(){
         return this.robots;
+    }
+
+    public ArrayList<Obstacle> getObstacles(){return this.obstacles;}
+
+    public Obstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
+        for (Obstacle obs: obstacles) {
+            int x = obs.getCoordinates().first();
+            int y = obs.getCoordinates().second();
+            if(x == xCoordinate && y == yCoordinate){
+                return obs;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -186,6 +190,6 @@ public class Gameboard implements iToDTO {
 
     @Override
     public UUID getID() {
-        return this.id;
+        return id;
     }
 }

@@ -17,6 +17,7 @@ public class Tile implements iToDTO {
     private Integer yCoordinate;
     public TileGraphicalElement graphicalElement;
     protected TileTypeEnum tileTypeEnum;
+    private Obstacle obstacle;
 
     public Tile(int xCoordinate, int yCoordinate, TileTypeEnum tileTypeEnum){
         this.xCoordinate = xCoordinate;
@@ -59,5 +60,13 @@ public class Tile implements iToDTO {
     @Override
     public UUID getID() {
         return null;
+    }
+
+    protected Obstacle getObstacle() {
+        return obstacle;
+    }
+
+    protected void setObstacle(Obstacle obstacle) {
+        this.obstacle = obstacle;
     }
 }

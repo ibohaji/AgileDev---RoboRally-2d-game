@@ -7,6 +7,7 @@ import App.RoborallyApplication.Model.Cards.ProgrammingCards.MovementCard;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.Enums.GamePhase;
 import App.RoborallyApplication.Model.Enums.TurnEnum;
+import App.RoborallyApplication.Model.GameObjects.Obstacle;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameObjects.Tile;
@@ -146,7 +147,7 @@ public class GameBrain implements iToDTO {
     }
 
     private void addRobotsToGameboard(ArrayList<Robot> robots){
-        this.gameboard.addRobots(robots);
+        this.gameboard.setRobots(robots);
     }
 
     @Override
@@ -198,6 +199,12 @@ public class GameBrain implements iToDTO {
 
     public void restore(GameConfiguration gameConfig, ArrayList<Player> players,
                         GamePhase gamePhase, Gameboard gameboard, ArrayList<Robot> robots, ArrayList<Tile> tiles){
+        this.gameConfig = gameConfig;
+        this.gameboard = gameboard;
+        this.currentGamePhase = gamePhase;
+        this.players = players;
+        gameboard.setRobots(robots);
+        gameboard.setTiles(tiles);
 
     }
 
@@ -231,5 +238,11 @@ public class GameBrain implements iToDTO {
     public void putRobotToRandomStartPoint(Robot robot){
         // get all available start points
         // randomly choose one
+    }
+
+    public Obstacle chooseUnkownObstacle(){
+        // TODO
+        // when robot lands on unknown obstacle make a choice for the obstacle
+        return null;
     }
 }
