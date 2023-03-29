@@ -6,8 +6,12 @@ public enum ObstacleEnum {
 
     HEALING(2),
 
-    PIT(1);
+    PIT(-1);
     private int damage;
+
+    public int getDamage(){
+        return this.damage;
+    }
     private ObstacleEnum(int damage) {
         this.damage = damage;
     }

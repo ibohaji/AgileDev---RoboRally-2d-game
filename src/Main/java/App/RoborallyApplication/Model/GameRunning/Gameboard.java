@@ -46,8 +46,8 @@ public class Gameboard implements iToDTO {
         for (int x = 0; x < dimensions.first(); x++) {
             for (int y = 0; y < dimensions.second(); y++) {
                 Tile nextTile = new Tile(x, y, TileTypeEnum.DEFAULT_FLOOR);
-                nextTile.graphicalElement.changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
-                        this.gameBrain.getGameConfig().difficulty);
+                nextTile.getGraphicalElement().changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
+                        this.gameBrain.getGameConfig().getDifficulty());
                 tiles.add(nextTile);
             }
         }
@@ -182,6 +182,33 @@ public class Gameboard implements iToDTO {
         return null;
     }
 
+    public ArrayList<Tile> getTilesSurroundingCoordinate(int xCoordinate, int yCoordinate){
+        ArrayList<Tile> surroundingTiles = new ArrayList<>();
+        ArrayList<Tile> surroundingTilesFinal = new ArrayList<>();
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate - 1));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate - 1));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate - 1));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate -1, yCoordinate));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate + 1));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate + 1));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate + 1));
+        for (Tile tile: surroundingTiles) {
+            if(tile != null){
+                surroundingTilesFinal.add(tile);
+            }
+        }
+        return surroundingTilesFinal;
+    }
+    private Tile getTileFromCoordinate(Integer x, Integer y){
+        for (Tile tile: tiles) {
+            if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(y)){
+                return tile;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String DTOasJson() {
         GameboardDTO gameboardDTO = new GameboardDTO(this);
@@ -191,5 +218,8 @@ public class Gameboard implements iToDTO {
     @Override
     public UUID getID() {
         return id;
+    }
+    protected GameBrain getGameBrain() {
+        return gameBrain;
     }
 }

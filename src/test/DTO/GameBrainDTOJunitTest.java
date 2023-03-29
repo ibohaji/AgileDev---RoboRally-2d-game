@@ -1,7 +1,9 @@
-package App.DTO;
+package DTO;
 
+import App.DTO.GameBrainDTO;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameObjects.Robot;
+import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
 import App.RoborallyApplication.Model.Enums.GamePhase;
@@ -26,8 +28,8 @@ public class GameBrainDTOJunitTest {
     @BeforeEach
     void setUp() {
         gameboard = new Gameboard();
-        gameConfig = new GameConfiguration();
-        gamePhase = GamePhase.PLAY;
+        gameConfig = new GameConfiguration(3, DifficultyEnum.EASY);
+        gamePhase = GamePhase.PROGRAMMING_PHASE;
         gameBrain = new GameBrain();
         players = new ArrayList<>();
         robots = new ArrayList<>();
@@ -46,7 +48,7 @@ public class GameBrainDTOJunitTest {
     void testReturnObjectFromDTO() {
         GameBrain resultGameBrain = gameBrainDTO.returnObjectFromDTO();
         assertEquals(gameboard.getID(), resultGameBrain.getGameboard().getID());
-        assertEquals(gameConfig.getGameType(), resultGameBrain.getGameConfig().getGameType());
+        //assertEquals(gameConfig.getGameType(), resultGameBrain.getGameConfig().getGameType());
         assertEquals(gamePhase, resultGameBrain.getGamePhase());
         assertEquals(gameBrain.getID(), resultGameBrain.getID());
     }

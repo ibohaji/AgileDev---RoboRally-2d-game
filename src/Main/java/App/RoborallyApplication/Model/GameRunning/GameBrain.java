@@ -13,6 +13,7 @@ import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
+import Utils.Tuple;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -97,8 +98,7 @@ public class GameBrain implements iToDTO {
     }
 
     private void makeMove(Player player, ProgrammingCard card){
-        // TODO
-        //card.useCard(player.getRobot(), this);
+        card.useCard(player.getRobot(), this);
     }
 
     public boolean isPositionOnBoard(Point point){
@@ -169,6 +169,14 @@ public class GameBrain implements iToDTO {
         return players;
     }
 
+    public GamePhase getGamePhase(){
+        return this.currentGamePhase;
+    }
+
+    public Tuple<Integer, Integer> getDimensions(){
+        return this.gameConfig.getBoardDimensions();
+    }
+
     public Tile getTileFromCoordinate(Integer x, Integer y){
         for (Tile tile: gameboard.getTiles()) {
             if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(y)){
@@ -236,7 +244,7 @@ public class GameBrain implements iToDTO {
     }
 
     public void putRobotToRandomStartPoint(Robot robot){
-        // get all available start points
+        // get all available start points (tiles with startpoint enum)
         // randomly choose one
     }
 
@@ -244,5 +252,9 @@ public class GameBrain implements iToDTO {
         // TODO
         // when robot lands on unknown obstacle make a choice for the obstacle
         return null;
+    }
+
+    private void removePlayer(Player playerToRemove) {
+        //TODO
     }
 }

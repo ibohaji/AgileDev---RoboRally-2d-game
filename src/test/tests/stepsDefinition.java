@@ -1,5 +1,8 @@
-import App.Model.Enums.DirectionEnum;
-import App.Model.Robot;
+package tests;
+
+import App.RoborallyApplication.Model.Enums.TurnEnum;
+import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
+import App.RoborallyApplication.Model.GameObjects.Robot;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -26,7 +29,14 @@ public class stepsDefinition {
     @When("the robot get the {string} card")
     public void the_robot_get_the_left_direction_card(String orientation) {
         // Write code here that turns the phrase above into concrete actions
-        robot.changeDirection("left");
+        if(orientation.equals("left")){
+            robot.changeDirection(TurnEnum.LEFT);
+        } else if (orientation.equals("right")) {
+            robot.changeDirection(TurnEnum.RIGHT);
+        } else {
+            robot.changeDirection(TurnEnum.U_TURN);
+        }
+
 
     }
     @Then("the expected direction get updated to {direction}")

@@ -25,7 +25,7 @@ public class GameStartView extends GameView{
         add(generateGameNameLabel(), new GridBagConstraintsBuilder(0, 0).gridWidth(gridSize).build());
         // Create grid
 
-        // Get all robots ready
+        // Get all robots images ready for pasting
         ImageIcon robotNorth = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_NORTH.getElementLocation()));
         ImageIcon robotSouth = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_SOUTH.getElementLocation()));
         ImageIcon robotEast = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_EAST.getElementLocation()));
@@ -36,7 +36,7 @@ public class GameStartView extends GameView{
                 try{
                     Tile tileAtCoordinate = super.gameBrain.getTileFromCoordinate(x, y);
                     if(gameBrain.isTileOccupiedByRobot(x, y)){
-                        ImageIcon tileImage = tileAtCoordinate.graphicalElement.getImage();
+                        ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                         DirectionEnum directionOfRobot  = gameBrain.getRobotFromCoordinate(x, y).getCurrentDirection();
                         ImageIcon robotImage = null;
                         switch (directionOfRobot){
@@ -47,7 +47,7 @@ public class GameStartView extends GameView{
                         }
                         add(new JLabel(ImageUtils.mergeTwoImages(tileImage, robotImage)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     } else {
-                        add(new JLabel(tileAtCoordinate.graphicalElement.getImage()),
+                        add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
                                 new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     }
 

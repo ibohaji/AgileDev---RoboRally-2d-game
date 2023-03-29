@@ -6,8 +6,7 @@ public class GameConfiguration {
 
     private final int nrOfPlayers;
     private final Tuple<Integer, Integer> boardDimensions;
-
-    protected final DifficultyEnum difficulty;
+    private final DifficultyEnum difficulty;
 
     public GameConfiguration(int nrOfPlayers, DifficultyEnum difficulty){
         this.nrOfPlayers = nrOfPlayers;
@@ -23,4 +22,6 @@ public class GameConfiguration {
     }
 
     public int getNrOfPlayers(){return this.nrOfPlayers;}
+
+    public DifficultyEnum getDifficulty(){return this.difficulty;}
 }

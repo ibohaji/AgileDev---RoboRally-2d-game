@@ -30,7 +30,7 @@ public class Player implements iToDTO {
         robot.useProgrammingCard(card, gameBrain);
     }
 
-    protected ArrayList<ProgrammingCard> getProgrammingPhaseOrdering(){
+    protected ArrayList<ProgrammingCard> getProgrammingPhaseOrdering(Player playerToGetOrderFrom){
         return new ArrayList<>();
     }
 

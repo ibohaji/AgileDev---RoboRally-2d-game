@@ -1,10 +1,13 @@
 package App.RoborallyApplication.Model.GraphicalElements;
 
+import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
+import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import Utils.ImageUtils;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GraphicalElement {
 
@@ -41,12 +44,8 @@ public class GraphicalElement {
         return this.image;
     }
 
-    protected ImageIcon getGraphicalElementEnum(){
-        if (doesGraphicalElementExist()){
-            return this.image;
-        }
-        // TODO
-        // Throw custom error "graphical element not added"
-        return null;
+    private void setImage(Tile tile, GameBrain gameBrain){
+        Point location = new Point(tile.getCoordinates().first(), tile.getCoordinates().second());
+        //tile.graphicalElement
     }
 }

@@ -15,7 +15,7 @@ public class Tile implements iToDTO {
 
     private Integer xCoordinate;
     private Integer yCoordinate;
-    public TileGraphicalElement graphicalElement;
+    private TileGraphicalElement graphicalElement;
     protected TileTypeEnum tileTypeEnum;
     private Obstacle obstacle;
 
@@ -26,11 +26,9 @@ public class Tile implements iToDTO {
         this.tileTypeEnum = tileTypeEnum;
     }
 
-
-
     protected void changeTile(GraphicalElementEnum graphicalElementEnum, TileTypeEnum tileTypeEnum, DifficultyEnum difficultyEnum){
         this.tileTypeEnum = tileTypeEnum;
-        this.graphicalElement.changeGraphicalElement(graphicalElementEnum, difficultyEnum);
+        this.getGraphicalElement().changeGraphicalElement(graphicalElementEnum, difficultyEnum);
     }
 
     public Tuple<Integer, Integer> getCoordinates(){
@@ -69,4 +67,6 @@ public class Tile implements iToDTO {
     protected void setObstacle(Obstacle obstacle) {
         this.obstacle = obstacle;
     }
+
+
 }

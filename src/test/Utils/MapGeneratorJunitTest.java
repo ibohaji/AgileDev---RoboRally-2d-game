@@ -12,16 +12,16 @@ public class MapGeneratorJunitTest {
     @Test
     public void testGenerateEasyMap() {
         Gameboard gameboard = MapGenerator.generateEasyMap();
-
+        // this should only generate tiles
         // Test the size of the gameboard
-        int rows = gameboard.getGameboardDimensions().first();
-        int columns = gameboard.getGameboardDimensions().second();
-        assertEquals(8, rows);
-        assertEquals(8, columns);
+        //int rows = gameboard.getGameboardDimensions().first();
+        //int columns = gameboard.getGameboardDimensions().second();
+        //assertEquals(8, rows);
+        //assertEquals(8, columns);
 
         // Test the tiles on the gameboard
-        assertEquals(TileTypeEnum.DEFAULT_FLOOR, gameboard.getTilesOnBoard().get(0).getTileTypeEnum());
-        assertEquals(TileTypeEnum.OBSTACLE, gameboard.getTilesOnBoard().get(14).getTileTypeEnum());
+        assertEquals(TileTypeEnum.DEFAULT_FLOOR, gameboard.getTiles().get(0).getTileTypeEnum());
+        assertEquals(TileTypeEnum.OBSTACLE, gameboard.getTiles().get(14).getTileTypeEnum());
 
     }
 

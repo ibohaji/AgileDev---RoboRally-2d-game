@@ -16,15 +16,17 @@ public class Obstacle implements iToDTO {
     private Integer xCoordinate;
     private Integer yCoordinate;
     public ObstacleGraphicalElement graphicalElement;
-    private ObstacleTypeEnum obstacleTypeEnum;
-    private ObstacleEnum obstacleEnum;
+    private ObstacleTypeEnum obstacleType;
+    private ObstacleEnum obstacle;
 
-    public Obstacle(int xCoordinate, int yCoordinate, int damage) {
+    public Obstacle(int xCoordinate, int yCoordinate, ObstacleEnum obstacle, ObstacleTypeEnum obstacleType) {
         this.id = UUID.randomUUID();
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
+        this.obstacleType = obstacleType;
+        this.obstacle = obstacle;
         this.graphicalElement = new ObstacleGraphicalElement();
-        this.damage = damage;
+        this.damage = obstacle.getDamage();
     }
 
     public Tuple<Integer, Integer> getCoordinates() {
@@ -56,11 +58,11 @@ public class Obstacle implements iToDTO {
     }
 
     public ObstacleEnum getObstacleEnum() {
-        return obstacleEnum;
+        return obstacle;
     }
 
     public ObstacleTypeEnum getObstacleTypeEnum() {
-        return obstacleTypeEnum;
+        return obstacleType;
     }
     @Override
     public boolean equals(Object obj) {

@@ -16,10 +16,10 @@ public enum GraphicalElementEnum {
     ROBOT_SOUTH("App" + File.separator + "Resources" + File.separator + "RobotSkins" + File.separator + "robotSouth.png"),
     ROBOT_EAST("App" + File.separator + "Resources" + File.separator + "RobotSkins" + File.separator + "robotEast.png"),
     ROBOT_WEST("App" + File.separator + "Resources" + File.separator + "RobotSkins" + File.separator + "robotWest.png"),
-    RIGHT_TREADMIL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "rightTreadmill.png"),
-    LEFT_TREADMIL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "leftTreadmill.png"),
-    FORWARD_TREADMIL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "forwardTreadmill.png"),
-    DOWNARD_TREADMIL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "downwardTreadmill.png");
+    RIGHT_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "rightTreadmill.png"),
+    LEFT_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "leftTreadmill.png"),
+    FORWARD_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "forwardTreadmill.png"),
+    DOWNWARD_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "downwardTreadmill.png");
 
     private String pictureFile;
     private GraphicalElementEnum(String pictureFile) {
