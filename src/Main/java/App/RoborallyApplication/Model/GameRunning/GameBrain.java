@@ -13,6 +13,7 @@ import App.RoborallyApplication.Model.GameObjects.Robot;
 import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
+import Utils.MapGenerator;
 import Utils.Tuple;
 
 import java.awt.*;
@@ -124,7 +125,7 @@ public class GameBrain implements iToDTO {
     }
 
     private void createGameboard(){
-        this.gameboard = new Gameboard(this);
+        this.gameboard = MapGenerator.generateEasyMap(this);
     }
 
     private ArrayList<Player> createPlayers(){
@@ -210,6 +211,17 @@ public class GameBrain implements iToDTO {
         }
     }
 
+    protected void pushRobotOffBoard(Robot robot){
+        int nrOfLives = robot.getNrOfLives();
+        if(nrOfLives == 1){
+            removeRobot(robot);
+            removePlayer(findPlayerByRobot(robot));
+        } else {
+            putRobotToRandomStartPoint(robot);
+            robot.setNrOfLives(nrOfLives - 1);
+        }
+    }
+
     public void putRobotToRandomStartPoint(Robot robot){
         // get all available start points (tiles with startpoint enum)
         // randomly choose one
@@ -221,7 +233,20 @@ public class GameBrain implements iToDTO {
         return null;
     }
 
+    public Player findPlayerByRobot(Robot robot){
+        for (Player player: players) {
+            if (player.getRobot().equals(robot)){
+                return player;
+            }
+        }
+        return null;
+    }
+
     private void removePlayer(Player playerToRemove) {
-        //TODO
+        this.players.remove(playerToRemove);
+    }
+
+    private void removeRobot(Robot robot){
+        this.gameboard.removeRobot(robot);
     }
 }

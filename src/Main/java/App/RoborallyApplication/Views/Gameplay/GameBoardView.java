@@ -1,10 +1,12 @@
 package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
+import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.GameObjects.Tile;
 import Utils.GridBagConstraintsBuilder;
+import Utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +32,10 @@ public class GameBoardView extends GameView{
                         ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                         DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                         add(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                    } else if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {
+                        add(new JLabel(ImageUtils.mergeTwoImages(new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.DEFAULT_FLOOR.getElementLocation())),
+                                tileAtCoordinate.getGraphicalElement().getImage()
+                                )), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     } else {
                         add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
                                 new GridBagConstraintsBuilder(x + 1, y + 1).build());

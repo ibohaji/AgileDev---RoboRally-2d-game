@@ -28,11 +28,6 @@ public class Tile implements iToDTO {
         this.tileTypeEnum = tileTypeEnum;
     }
 
-    protected void changeTile(GraphicalElementEnum graphicalElementEnum, TileTypeEnum tileTypeEnum, DifficultyEnum difficultyEnum){
-        this.tileTypeEnum = tileTypeEnum;
-        this.getGraphicalElement().setGraphicalElement(graphicalElementEnum, difficultyEnum);
-    }
-
     public Tuple<Integer, Integer> getCoordinates(){
         return new Tuple<>(this.xCoordinate, this.yCoordinate);
     }
@@ -43,6 +38,14 @@ public class Tile implements iToDTO {
 
     public TileGraphicalElement getGraphicalElement() {
         return graphicalElement;
+    }
+
+    public void setGraphicalElement(GraphicalElementEnum graphicalElementEnum, DifficultyEnum difficulty){
+        this.graphicalElement.setGraphicalElement(graphicalElementEnum, difficulty);
+    }
+
+    public boolean doesTileHaveObstacle(){
+        return this.obstacle == null;
     }
 
     @Override

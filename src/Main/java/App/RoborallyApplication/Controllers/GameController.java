@@ -28,7 +28,7 @@ public class GameController {
 
     public static void main(String[] args) {
         // Method to see the view
-        var game = new GameBrain(6, DifficultyEnum.HARD);
+        var game = new GameBrain(2, DifficultyEnum.EASY);
         // ArrayList<Tile> map = MapLoadingHelper.loadMap(DifficultyEnum.HARD);
         var app = new ApplicationController();
         var gameController = new GameController(app, game);

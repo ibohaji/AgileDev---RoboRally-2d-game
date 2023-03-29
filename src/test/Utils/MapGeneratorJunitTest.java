@@ -1,6 +1,8 @@
 package Utils;
 import static org.junit.Assert.*;
 
+import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
+import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import org.junit.Test;
 
 import App.RoborallyApplication.Model.GameRunning.Gameboard;
@@ -11,7 +13,7 @@ public class MapGeneratorJunitTest {
 
     @Test
     public void testGenerateEasyMap() {
-        Gameboard gameboard = MapGenerator.generateEasyMap();
+        Gameboard gameboard = MapGenerator.generateEasyMap(new GameBrain(2, DifficultyEnum.EASY));
         // this should only generate tiles
         // Test the size of the gameboard
         //int rows = gameboard.getGameboardDimensions().first();

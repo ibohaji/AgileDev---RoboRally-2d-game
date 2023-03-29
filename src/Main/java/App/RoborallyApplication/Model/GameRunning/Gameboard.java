@@ -24,8 +24,6 @@ public class Gameboard implements iToDTO {
     private ArrayList<Tile> tiles = new ArrayList<>();
     private ArrayList<Robot> robots = new ArrayList<>();
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
-    private Tuple<Integer, Integer> dimensions;
-    //private GameConfiguration gameConfig;
     private GameBrain gameBrain;
     int mapTile[][];
 
@@ -35,120 +33,7 @@ public class Gameboard implements iToDTO {
     public Gameboard(GameBrain brain){
         gameBrain = brain;
         gameBrainId = gameBrain.getID();
-        dimensions = brain.getGameConfig().getBoardDimensions();
-        initializeGameboard();
     }
-
-    /**
-     * Initialize default gameboard spaces
-     */
-
-    private void initializeGameboard() {
-        for (int x = 0; x < dimensions.first(); x++) {
-            for (int y = 0; y < dimensions.second(); y++) {
-                Tile nextTile = new Tile(x, y, TileTypeEnum.DEFAULT_FLOOR);
-                nextTile.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
-                        this.gameBrain.getGameConfig().getDifficulty());
-                tiles.add(nextTile);
-            }
-        }
-    }
-
-
-
-    /*private void initializeMap(){
-        int col = 0;
-        int row = 0;
-        Tuple<Integer,Integer> dim = DifficultyEnum.EASY.getDimensions();
-        int width = dim.first();
-        int height = dim.second();
-
-        while (col < width && row < height){
-            int tileNum = mapTile[col][row];
-            Tile nextTile = new Tile(col,row);
-            tilesOnBoard.add(nextTile);
-        }*/
-
-        /*
-         while (col < gp.getMaxScreenCol() && row < gp.getMaxScreenRow()) {
-            int tileNum = mapTileNum[col][row];
-            g2.drawImage(tile[tileNum].image, x, y, gp.getTileSize(), gp.getTileSize(), null);
-            col++;
-            x += gp.getTileSize();
-
-
-            if (col == gp.getMaxScreenCol()) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.getTileSize();
-            }
-        }
-         */
-/*
-    }*/
-
-    public void loadMap() {
-        try {
-            InputStream is = getClass().getResourceAsStream("/map/Map.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            int col = 0;
-            int row = 0;
-            Tuple<Integer,Integer> dim = DifficultyEnum.EASY.getDimensions();
-            int width = dim.first();
-            int height = dim.second();
-
-            while (col < width && row < height) {
-                String line = br.readLine();
-
-                while (col < width) {
-                    String numbers[] = line.split(" ");
-                    int num = Integer.parseInt(numbers[col]);
-
-                    mapTile[col][row] = num;
-                    col++;
-                }
-                if (col == width) {
-                    col = 0;
-                    row++;
-                }
-
-            }
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    /*public void initMap(){
-        int col = 0;
-        int row = 0;
-        int x = 0;
-        int y = 0;
-        Tuple<Integer,Integer> dim = DifficultyEnum.EASY.getDimensions();
-        int screenCol = dim.first();
-        int screenRow = dim.second();
-
-        while (col < screenCol && row < screenCol) {
-            int tileNum = mapTile[col][row];
-
-
-
-
-            g2.drawImage(tile[tileNum].image, x, y, gp.getTileSize(), gp.getTileSize(), null);
-            col++;
-            x += gp.getTileSize();
-
-
-            if (col == gp.getMaxScreenCol()) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.getTileSize();
-            }
-        }
-    }*/
 
     public UUID getGameBrainId(){
         return this.gameBrain.getID();
@@ -160,10 +45,22 @@ public class Gameboard implements iToDTO {
 
     protected void setRobots(ArrayList<Robot> robots){this.robots = robots;}
 
-    protected void setTiles(ArrayList<Tile> tiles){this.tiles = tiles;}
+    public void setTiles(ArrayList<Tile> tiles){this.tiles = tiles;}
 
     public ArrayList<Tile> getTiles(){
         return this.tiles;
+    }
+
+    public void changeTile(Tile newTile){
+        int xCoordinate = newTile.getCoordinates().first();
+        int yCoordinate = newTile.getCoordinates().second();
+        Tile tile = getTileFromCoordinate(xCoordinate, yCoordinate);
+        for (int i = 0; i < tiles.size(); i++) {
+            if (tiles.get(i).equals(tile)){
+                tiles.remove(i);
+                tiles.add(i, newTile);
+            }
+        }
     }
 
     public ArrayList<Robot> getRobots(){
@@ -227,6 +124,10 @@ public class Gameboard implements iToDTO {
             }
         }
         return false;
+    }
+
+    protected void removeRobot(Robot robot){
+        this.robots.remove(robot);
     }
 
     @Override
