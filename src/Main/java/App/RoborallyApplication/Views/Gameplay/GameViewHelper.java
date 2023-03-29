@@ -21,6 +21,7 @@ public class GameViewHelper {
             case EAST -> labelToReturn = new JLabel(ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotEast));
             case WEST -> labelToReturn = new JLabel(ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotWest));
         }
+        System.out.println(labelToReturn.getIcon().getIconHeight());
         return labelToReturn;
     }
 }

@@ -10,6 +10,8 @@ public enum DifficultyEnum {
     private int width;
     private int height;
 
+    private int tileSizeInPixels;
+
     private DifficultyEnum(int width, int height) {
         this.width = width;
         this.height = height;
@@ -17,4 +19,6 @@ public enum DifficultyEnum {
     public Tuple<Integer, Integer> getDimensions() {
         return new Tuple<>(width, height);
     }
+
+
 }

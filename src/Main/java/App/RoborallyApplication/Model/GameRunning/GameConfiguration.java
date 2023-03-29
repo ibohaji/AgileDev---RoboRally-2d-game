@@ -24,4 +24,14 @@ public class GameConfiguration {
     public int getNrOfPlayers(){return this.nrOfPlayers;}
 
     public DifficultyEnum getDifficulty(){return this.difficulty;}
+
+    public int getScalingSizeForTile(){
+        int scaling = 0;
+        switch (difficulty){
+            case EASY -> scaling = 60;
+            case MEDIUM -> scaling = 45;
+            case HARD -> scaling = 30;
+        }
+        return scaling;
+    }
 }

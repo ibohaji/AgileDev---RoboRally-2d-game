@@ -23,6 +23,11 @@ public class GameBoardView extends GameView{
         // GAME NAME
         add(generateGameNameLabel(), new GridBagConstraintsBuilder(0, 0).gridWidth(gridSize).build());
         // Create grid
+        int scaling = gameConfiguration.getScalingSizeForTile();
+        ImageIcon scaledDefaultFloor = ImageUtils.scaledImageIcon(new ImageIcon(
+                ImageUtils.getImage(GraphicalElementEnum.DEFAULT_FLOOR.getElementLocation())),
+                scaling,
+                scaling);
 
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
@@ -33,7 +38,7 @@ public class GameBoardView extends GameView{
                         DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                         add(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     } else if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {
-                        add(new JLabel(ImageUtils.mergeTwoImages(new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.DEFAULT_FLOOR.getElementLocation())),
+                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,
                                 tileAtCoordinate.getGraphicalElement().getImage()
                                 )), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     } else {
