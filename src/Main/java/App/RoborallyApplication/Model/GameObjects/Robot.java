@@ -27,7 +27,7 @@ public class Robot implements iToDTO {
         this.id = UUID.randomUUID();
         this.currentDirection = null;
         this.graphicalElement = new RobotGraphicalElement("PLAYER", null);
-        this.graphicalElement.changeGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, DifficultyEnum.HARD);
+        this.graphicalElement.setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, DifficultyEnum.HARD);
     }
 
     public void SetDirection(DirectionEnum direction) {

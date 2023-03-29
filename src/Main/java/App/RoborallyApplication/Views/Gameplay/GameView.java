@@ -1,8 +1,11 @@
 package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
+import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
+import Utils.Fonts;
+import Utils.ImageUtils;
 
 import javax.swing.*;
 
@@ -19,6 +22,12 @@ public abstract class GameView extends JPanel {
 
     protected void getGameboardView(){
 
+    }
+
+    protected JLabel generateGameNameLabel(){
+        JLabel gameNameLabel = new JLabel("ROBORALLY");
+        gameNameLabel.setFont(Fonts.TITLE);
+        return gameNameLabel;
     }
 
 }

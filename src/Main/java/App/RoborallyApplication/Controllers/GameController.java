@@ -2,7 +2,7 @@ package App.RoborallyApplication.Controllers;
 
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Views.Gameplay.GameStartView;
+import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 
 public class GameController {
@@ -13,7 +13,7 @@ public class GameController {
     public GameController(ApplicationController applicationController, GameBrain gameBrain){
         this.applicationController = applicationController;
         this.gameBrain = gameBrain;
-        this.view = new GameStartView(this, gameBrain);
+        this.view = new GameBoardView(this, gameBrain);
     }
 
 

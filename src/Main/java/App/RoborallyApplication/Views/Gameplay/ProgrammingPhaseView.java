@@ -7,5 +7,7 @@ public class ProgrammingPhaseView extends GameView{
 
     public ProgrammingPhaseView(GameController gameController, GameBrain gameBrain) {
         super(gameController, gameBrain);
+        // needs leftside carddeck, rightside carddeck
+        // needs gameboardview
     }
 }

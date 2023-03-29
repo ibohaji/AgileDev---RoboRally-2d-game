@@ -16,7 +16,7 @@ public class GraphicalElement {
     public GraphicalElement(){
 
     }
-    public void changeGraphicalElement(GraphicalElementEnum graphicalElement, DifficultyEnum difficultyEnumForScaling){
+    public void setGraphicalElement(GraphicalElementEnum graphicalElement, DifficultyEnum difficultyEnumForScaling){
         this.graphicalElementEnum = graphicalElement;
         switch (difficultyEnumForScaling){
             case EASY -> this.image = ImageUtils.scaledImageIcon(

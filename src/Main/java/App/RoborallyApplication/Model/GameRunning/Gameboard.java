@@ -47,7 +47,7 @@ public class Gameboard implements iToDTO {
         for (int x = 0; x < dimensions.first(); x++) {
             for (int y = 0; y < dimensions.second(); y++) {
                 Tile nextTile = new Tile(x, y, TileTypeEnum.DEFAULT_FLOOR);
-                nextTile.getGraphicalElement().changeGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
+                nextTile.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.DEFAULT_FLOOR,
                         this.gameBrain.getGameConfig().getDifficulty());
                 tiles.add(nextTile);
             }

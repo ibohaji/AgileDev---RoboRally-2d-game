@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Model.GameObjects;
 
 import App.DTO.TileDTO;
+import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.iToDTO;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
@@ -9,6 +10,7 @@ import App.RoborallyApplication.Model.GraphicalElements.TileGraphicalElement;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
+import javax.swing.*;
 import java.util.UUID;
 
 public class Tile implements iToDTO {
@@ -28,7 +30,7 @@ public class Tile implements iToDTO {
 
     protected void changeTile(GraphicalElementEnum graphicalElementEnum, TileTypeEnum tileTypeEnum, DifficultyEnum difficultyEnum){
         this.tileTypeEnum = tileTypeEnum;
-        this.getGraphicalElement().changeGraphicalElement(graphicalElementEnum, difficultyEnum);
+        this.getGraphicalElement().setGraphicalElement(graphicalElementEnum, difficultyEnum);
     }
 
     public Tuple<Integer, Integer> getCoordinates(){

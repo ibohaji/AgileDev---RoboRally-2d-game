@@ -2,18 +2,15 @@ package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.GameObjects.Tile;
-import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
-import Utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GameStartView extends GameView{
-    public GameStartView(GameController controller, GameBrain gameBrain) {
+public class GameBoardView extends GameView{
+    public GameBoardView(GameController controller, GameBrain gameBrain) {
         super(controller, gameBrain);
         createView();
     }
@@ -25,12 +22,6 @@ public class GameStartView extends GameView{
         add(generateGameNameLabel(), new GridBagConstraintsBuilder(0, 0).gridWidth(gridSize).build());
         // Create grid
 
-        // Get all robots images ready for pasting
-        ImageIcon robotNorth = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_NORTH.getElementLocation()));
-        ImageIcon robotSouth = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_SOUTH.getElementLocation()));
-        ImageIcon robotEast = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_EAST.getElementLocation()));
-        ImageIcon robotWest = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_WEST.getElementLocation()));
-
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 try{
@@ -38,14 +29,7 @@ public class GameStartView extends GameView{
                     if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){
                         ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                         DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
-                        ImageIcon robotImage = null;
-                        switch (directionOfRobot){
-                            case NORTH -> robotImage = robotNorth;
-                            case SOUTH -> robotImage = robotSouth;
-                            case EAST -> robotImage = robotEast;
-                            case WEST -> robotImage = robotWest;
-                        }
-                        add(new JLabel(ImageUtils.mergeTwoImages(tileImage, robotImage)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        add(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     } else {
                         add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
                                 new GridBagConstraintsBuilder(x + 1, y + 1).build());
@@ -57,11 +41,5 @@ public class GameStartView extends GameView{
             }
         }
 
-    }
-
-    private JLabel generateGameNameLabel(){
-        JLabel gameNameLabel = new JLabel("ROBORALLY");
-        gameNameLabel.setFont(Fonts.TITLE);
-        return gameNameLabel;
     }
 }
