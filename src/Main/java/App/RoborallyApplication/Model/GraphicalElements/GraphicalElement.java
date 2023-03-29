@@ -31,13 +31,8 @@ public class GraphicalElement {
     public int getGraphicalElementOrdinal(){
         return this.graphicalElementEnum.getElementOrdinal();
     }
-
     public String getElementName(){
         return this.graphicalElementEnum.name();
-    }
-
-    protected boolean doesGraphicalElementExist(){
-        return image == null;
     }
 
     public ImageIcon getImage(){

@@ -64,7 +64,7 @@ public class Tile implements iToDTO {
         return obstacle;
     }
 
-    protected void setObstacle(Obstacle obstacle) {
+    protected void addObstacle(Obstacle obstacle) {
         this.obstacle = obstacle;
     }
 

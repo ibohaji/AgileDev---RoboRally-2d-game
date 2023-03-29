@@ -10,6 +10,7 @@ import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -200,13 +201,32 @@ public class Gameboard implements iToDTO {
         }
         return surroundingTilesFinal;
     }
-    private Tile getTileFromCoordinate(Integer x, Integer y){
+    public Tile getTileFromCoordinate(Integer x, Integer y){
         for (Tile tile: tiles) {
             if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(y)){
                 return tile;
             }
         }
         return null;
+    }
+
+    public Robot getRobotFromCoordinate(Integer x, Integer y){
+        for (Robot robot: robots) {
+            if(robot.getCords().x == x && robot.getCords().y == y){
+                return robot;
+            }
+        }
+        return null;
+    }
+
+    public boolean isTileOccupiedByRobot(int xCoordinate, int yCoordinate){
+        for (Robot robot: robots) {
+            Point location = robot.getCords();
+            if(location.x == xCoordinate && location.y == yCoordinate){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

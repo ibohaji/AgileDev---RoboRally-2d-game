@@ -34,10 +34,10 @@ public class GameStartView extends GameView{
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 try{
-                    Tile tileAtCoordinate = super.gameBrain.getTileFromCoordinate(x, y);
-                    if(gameBrain.isTileOccupiedByRobot(x, y)){
+                    Tile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
+                    if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){
                         ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
-                        DirectionEnum directionOfRobot  = gameBrain.getRobotFromCoordinate(x, y).getCurrentDirection();
+                        DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                         ImageIcon robotImage = null;
                         switch (directionOfRobot){
                             case NORTH -> robotImage = robotNorth;

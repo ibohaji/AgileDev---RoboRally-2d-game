@@ -38,7 +38,7 @@ public class GameBrain implements iToDTO {
         createGameboard();
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
-        addRobotsToGameboard(robots);
+        this.gameboard.setRobots(robots);
         currentGamePhase = GamePhase.ROUND_START;
     }
 
@@ -134,7 +134,6 @@ public class GameBrain implements iToDTO {
         }
         return players;
     }
-
     private ArrayList<Robot> createRobots(ArrayList<Player> players){
         ArrayList<Robot> robots = new ArrayList<>();
         for (Player player: players) {
@@ -144,10 +143,6 @@ public class GameBrain implements iToDTO {
             robots.add(newRobot);
         }
         return robots;
-    }
-
-    private void addRobotsToGameboard(ArrayList<Robot> robots){
-        this.gameboard.setRobots(robots);
     }
 
     @Override
@@ -175,34 +170,6 @@ public class GameBrain implements iToDTO {
 
     public Tuple<Integer, Integer> getDimensions(){
         return this.gameConfig.getBoardDimensions();
-    }
-
-    public Tile getTileFromCoordinate(Integer x, Integer y){
-        for (Tile tile: gameboard.getTiles()) {
-            if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(y)){
-                return tile;
-            }
-        }
-        return null;
-    }
-
-    public Robot getRobotFromCoordinate(Integer x, Integer y){
-        for (Robot robot: gameboard.getRobots()) {
-            if(robot.getCords().x == x && robot.getCords().y == y){
-                return robot;
-            }
-        }
-        return null;
-    }
-
-    public boolean isTileOccupiedByRobot(int xCoordinate, int yCoordinate){
-        for (Robot robot:this.gameboard.getRobots()) {
-            Point location = robot.getCords();
-            if(location.x == xCoordinate && location.y == yCoordinate){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void restore(GameConfiguration gameConfig, ArrayList<Player> players,

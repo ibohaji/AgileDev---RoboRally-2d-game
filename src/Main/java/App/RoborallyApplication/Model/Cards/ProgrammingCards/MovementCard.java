@@ -31,9 +31,9 @@ public class MovementCard extends ProgrammingCard{
                 // remove one lifepoint
                 continue;
             }
-            boolean isTileOccupiedByAnotherRobot = gameBrain.isTileOccupiedByRobot(newPos.x, newPos.y);
+            boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
             if (isTileOccupiedByAnotherRobot){
-                Robot robotAtCoordinate = gameBrain.getRobotFromCoordinate(newPos.x, newPos.y);
+                Robot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
                 // push robotAtCoordinate
                 switch (directionOfRobot){
                     case NORTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
@@ -42,7 +42,7 @@ public class MovementCard extends ProgrammingCard{
                     case WEST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.EAST);
                 }
             }
-            Tile newPositionTile = gameBrain.getTileFromCoordinate(newPos.x, newPos.y);
+            Tile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
             // check for obstacle on tile
 
             // set new coordinate
