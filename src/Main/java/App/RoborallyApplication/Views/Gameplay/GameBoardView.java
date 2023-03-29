@@ -34,9 +34,17 @@ public class GameBoardView extends GameView{
                 try{
                     Tile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
                     if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){
-                        ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
-                        DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
-                        add(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()){
+                            ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
+                            DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
+
+                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        } else {
+                            ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
+                            DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            add(new JLabel(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        }
                     } else if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {
                         add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,
                                 tileAtCoordinate.getGraphicalElement().getImage()

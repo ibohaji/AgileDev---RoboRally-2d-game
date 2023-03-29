@@ -14,7 +14,6 @@ import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
-import Utils.Tuple;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -41,6 +40,12 @@ public class GameBrain implements iToDTO {
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
         currentGamePhase = GamePhase.ROUND_START;
+
+        // Testing
+        players.get(1).getRobot().setCords(new Point(1, 4));
+        players.get(0).getRobot().setCords(new Point(2, 2));
+        players.get(1).getRobot().setDirection(DirectionEnum.EAST);
+        players.get(0).getRobot().setDirection(DirectionEnum.WEST);
     }
 
     private void startGame(){
@@ -139,7 +144,7 @@ public class GameBrain implements iToDTO {
         ArrayList<Robot> robots = new ArrayList<>();
         for (Player player: players) {
             Robot newRobot = new Robot();
-            newRobot.SetDirection(DirectionEnum.NORTH);
+            newRobot.setDirection(DirectionEnum.NORTH);
             player.assignRobot(newRobot);
             robots.add(newRobot);
         }
@@ -167,10 +172,6 @@ public class GameBrain implements iToDTO {
 
     public GamePhase getGamePhase(){
         return this.currentGamePhase;
-    }
-
-    public Tuple<Integer, Integer> getDimensions(){
-        return this.gameConfig.getBoardDimensions();
     }
 
     public void restore(GameConfiguration gameConfig, ArrayList<Player> players,

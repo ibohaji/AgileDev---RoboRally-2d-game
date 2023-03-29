@@ -1,5 +1,6 @@
-package App.DTO;
+package DTO;
 
+import App.DTO.RobotDTO;
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 import App.RoborallyApplication.Model.GameObjects.Robot;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class RobotDTOJunitTest {
         Robot robot = new Robot();
         robot.setNrOfLives(2);
         robot.setCords(new Point(3, 4));
-        robot.SetDirection(DirectionEnum.WEST);
+        robot.setDirection(DirectionEnum.WEST);
 
         RobotDTO robotDTO = new RobotDTO(robot);
 

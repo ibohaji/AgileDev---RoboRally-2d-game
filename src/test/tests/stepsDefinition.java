@@ -24,7 +24,7 @@ public class stepsDefinition {
     @Given("the robot's initial direction as NORTH")
     public void the_robot_s_initial_direction_as() {
         // Write code here that turns the phrase above into concrete actions
-        robot.SetDirection(DirectionEnum.NORTH);
+        robot.setDirection(DirectionEnum.NORTH);
     }
     @When("the robot get the {string} card")
     public void the_robot_get_the_left_direction_card(String orientation) {

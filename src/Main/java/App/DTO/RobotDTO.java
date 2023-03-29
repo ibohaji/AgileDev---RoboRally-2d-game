@@ -1,7 +1,6 @@
 package App.DTO;
 
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
 import App.RoborallyApplication.Model.GameObjects.Robot;
 
 import java.awt.*;
@@ -26,7 +25,7 @@ public class RobotDTO implements iFromDTO{
     public Robot returnObjectFromDTO() {
         Robot newRobot = new Robot();
         newRobot.setCords(new Point(this.xCoordinate, this.yCoordinate));
-        newRobot.SetDirection(DirectionEnum.values()[this.directionEnumOrdinal]);
+        newRobot.setDirection(DirectionEnum.values()[this.directionEnumOrdinal]);
         newRobot.setNrOfLives(nrOfLives);
         return newRobot;
     }

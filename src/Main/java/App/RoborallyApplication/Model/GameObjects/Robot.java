@@ -30,7 +30,7 @@ public class Robot implements iToDTO {
         this.graphicalElement.setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, DifficultyEnum.HARD);
     }
 
-    public void SetDirection(DirectionEnum direction) {
+    public void setDirection(DirectionEnum direction) {
         currentDirection = direction;
     }
 

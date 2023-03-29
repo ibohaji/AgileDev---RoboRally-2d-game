@@ -13,15 +13,14 @@ public class GameViewHelper {
     public static ImageIcon robotEast = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_EAST.getElementLocation()));
     public static ImageIcon robotWest = new ImageIcon(ImageUtils.getImage(GraphicalElementEnum.ROBOT_WEST.getElementLocation()));
 
-    public static JLabel generateImageWithRobot(ImageIcon tileImage, DirectionEnum directionEnum){
-        JLabel labelToReturn = null;
+    public static ImageIcon generateImageWithRobot(ImageIcon tileImage, DirectionEnum directionEnum){
+        ImageIcon imageToReturn = null;
         switch (directionEnum){
-            case NORTH -> labelToReturn = new JLabel(ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotNorth));
-            case SOUTH -> labelToReturn = new JLabel(ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotSouth));
-            case EAST -> labelToReturn = new JLabel(ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotEast));
-            case WEST -> labelToReturn = new JLabel(ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotWest));
+            case NORTH -> imageToReturn = ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotNorth);
+            case SOUTH -> imageToReturn = ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotSouth);
+            case EAST -> imageToReturn = ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotEast);
+            case WEST -> imageToReturn = ImageUtils.mergeTwoImages(tileImage, GameViewHelper.robotWest);
         }
-        System.out.println(labelToReturn.getIcon().getIconHeight());
-        return labelToReturn;
+        return imageToReturn;
     }
 }

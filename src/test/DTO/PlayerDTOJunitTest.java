@@ -7,7 +7,6 @@ import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 //import App.RoborallyApplication.Model.Enums.RobotID;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -35,7 +34,7 @@ public class PlayerDTOJunitTest {
         Robot robot1 = new Robot();
         robot1.setNrOfLives(5);
         robot1.setCords(new Point(1, 5));
-        robot1.SetDirection(DirectionEnum.WEST);
+        robot1.setDirection(DirectionEnum.WEST);
         RobotDTO robotDTO = new RobotDTO(robot1);
         ProgrammingCardDTO cardDTO1 = new ProgrammingCardDTO();
         ProgrammingCardDTO cardDTO2 = new ProgrammingCardDTO();
