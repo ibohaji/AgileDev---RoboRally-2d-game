@@ -66,11 +66,11 @@ public class GameBrain implements iToDTO {
         Random rnd = new Random();
         for (Player player : players) {
             for (int i = 0; i < 5; i++) {
-                int choiceForCard = rnd.nextInt(3);
-                int choiceForSpecific = rnd.nextInt(3);
-                if(choiceForCard == 0){ // againCard
+                int choiceForCard = rnd.nextInt(12);
+                int choiceForSpecific = rnd.nextInt(12);
+                if(choiceForCard < 2){ // againCard
                     player.assignCardToPlayer(new AgainCard());
-                } else if (choiceForCard == 1) { // movementCard
+                } else if (choiceForCard < 7) { // movementCard
                     if(choiceForSpecific == 0) {
                         player.assignCardToPlayer(new MovementCard(1));
                     } else if (choiceForSpecific == 1) {
