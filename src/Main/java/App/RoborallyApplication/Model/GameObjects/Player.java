@@ -60,4 +60,20 @@ public class Player implements iToDTO {
     public String getDisplayName(){
         return this.displayName;
     }
+
+
+    public ArrayList<ProgrammingCard> getCards(){
+        return programmingCards;
+    }
+
+
+    /**
+     * A player's initial starting position can only be accepted if the selected tire is a spawning gear and not occupied
+     * @param x,y the selected coordinates of the player
+     * @Error if the selected cords are invalid, otherwise it is passed to the gamebrain/gameboard
+     */    public void StartingPosition(int x,int y){
+         // TODO
+
+    }
 }
+

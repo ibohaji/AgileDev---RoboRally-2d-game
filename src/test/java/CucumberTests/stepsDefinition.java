@@ -1,4 +1,4 @@
-package tests;
+package CucumberTests;
 
 import App.RoborallyApplication.Model.Enums.TurnEnum;
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;

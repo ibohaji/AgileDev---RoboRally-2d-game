@@ -37,6 +37,7 @@ public class GameBrain implements iToDTO {
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
         currentGamePhase = GamePhase.ROUND_START;
+        givePlayersCardsForRound();
 
         // Testing
         players.get(1).getRobot().setCords(new Point(1, 4));
@@ -180,6 +181,10 @@ public class GameBrain implements iToDTO {
         gameboard.setRobots(robots);
         gameboard.setTiles(tiles);
 
+    }
+
+    public void setCurrentGamePhase(GamePhase phase){
+        this.currentGamePhase = phase;
     }
 
     public ProgrammingCard getLastCardUsedByRobot(Robot robot){
