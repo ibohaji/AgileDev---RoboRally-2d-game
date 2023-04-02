@@ -1,20 +1,20 @@
-Feature: Changing robot's direction
+Feature: Robot Movement on the board
 
-  Scenario: Successfully change the direction of a robot
+  Scenario: Robot turns direction successfully according to the TURN card
     Given the robot's initial direction as NORTH
-    When the robot get the "left direction " card
+    When the robot get the "left direction " TURN card
     Then the expected robot's direction get updated to WEST
 
-  Scenario: Move robot forward
-    Given a robot with initial position at (0,0) and face NORTH
-    When the robot moves forward
-    Then the expected robot's position is (0,1)
+  Scenario: Robot moves according to the MOVEMENT card
+    Given a game board with a robot placed at a position
+    When the robot receives the MOVEMENT card with a specific number of steps
+    Then the robot should move the specific number of steps in its current direction
 
-  Scenario: Use again card
-    Given the card which is used previously is move forward 2 step
-    And robot with initial position at (0,0) and face NORTH
-    When the user get the "again card" card
-    Then the expected robot's position is (0,2)
+  Scenario: Robot repeats its previous movement according to the AGAIN card
+    Given the robot has previously moved a certain number of steps in a certain direction
+    And an AGAIN card is played
+    When the robot receives the AGAIN card
+    Then the robot should move the same number of steps in the same direction as its previous movement
 
   Scenario: Go back to a random starting point when robot fall off the board
     Given the random starting point and its position is (x,y)
@@ -27,4 +27,3 @@ Feature: Changing robot's direction
     When robot1 push robot2 are going to be in the same tile
     Then the expected robot1's position is (x2,y2), robot2's position is (x2,y2+1)
 
-  Scenario: Get programming cards from the gamelogic
