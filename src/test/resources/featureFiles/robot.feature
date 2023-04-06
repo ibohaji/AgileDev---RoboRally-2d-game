@@ -26,3 +26,4 @@ Feature: Robot Movement on the board
     And robot1's direction is NORTH
     When robot1 push robot2 are going to be in the same tile
     Then the expected robot1's position is (x2,y2), robot2's position is (x2,y2+1)
+
