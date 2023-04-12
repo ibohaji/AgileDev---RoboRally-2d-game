@@ -5,6 +5,16 @@ public enum TileTypeEnum {
     FINISH,
     CHECKPOINT,
     OBSTACLE,
-    DEFAULT_FLOOR,
+    DEFAULT_FLOOR;
+
+    private TileTypeEnum(){}
+
+    public boolean equals(TileTypeEnum typeEnum){
+        if(this.ordinal() == typeEnum.ordinal()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

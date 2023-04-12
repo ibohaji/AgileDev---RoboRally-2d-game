@@ -10,6 +10,7 @@ import App.RoborallyApplication.Model.GraphicalElements.TileGraphicalElement;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
+import java.awt.*;
 import java.util.UUID;
 
 public class Tile implements iToDTO {
@@ -27,8 +28,8 @@ public class Tile implements iToDTO {
         this.tileTypeEnum = tileTypeEnum;
     }
 
-    public Tuple<Integer, Integer> getCoordinates(){
-        return new Tuple<>(this.xCoordinate, this.yCoordinate);
+    public Point getCoordinates(){
+        return new Point(this.xCoordinate, this.yCoordinate);
     }
 
     public TileTypeEnum getTileTypeEnum() {
@@ -45,6 +46,18 @@ public class Tile implements iToDTO {
 
     public boolean doesTileHaveObstacle(){
         return this.obstacle == null;
+    }
+
+    public boolean doesTileHaveCheckpoint(){
+        return this.tileTypeEnum.equals(TileTypeEnum.CHECKPOINT);
+    }
+
+    public boolean isTileFinishPoint(){
+        return this.tileTypeEnum.equals(TileTypeEnum.FINISH);
+    }
+
+    public boolean isTileStartPoint(){
+        return this.tileTypeEnum.equals(TileTypeEnum.START);
     }
 
     @Override
@@ -64,7 +77,7 @@ public class Tile implements iToDTO {
         return null;
     }
 
-    protected Obstacle getObstacle() {
+    public Obstacle getObstacle() {
         return obstacle;
     }
 

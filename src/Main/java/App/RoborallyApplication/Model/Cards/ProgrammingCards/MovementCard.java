@@ -9,7 +9,6 @@ import java.awt.*;
 
 public class MovementCard extends ProgrammingCard{
     private final int steps;
-
     public MovementCard(int steps){
         this.steps = steps;
     }
@@ -27,7 +26,6 @@ public class MovementCard extends ProgrammingCard{
                 case WEST -> newPos.x = currentPos.x - 1;
             }
             if(!gameBrain.isPositionOnBoard(newPos)){
-
                 continue;
             }
             boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);

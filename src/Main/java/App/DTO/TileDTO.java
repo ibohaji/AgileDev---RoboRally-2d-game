@@ -6,6 +6,8 @@ import App.RoborallyApplication.Model.GraphicalElements.GraphicalElement;
 import App.RoborallyApplication.Model.GraphicalElements.TileGraphicalElement;
 import Utils.Tuple;
 
+import java.awt.*;
+
 public class TileDTO implements iFromDTO{
     public Integer xCoordinate;
     public Integer yCoordinate;
@@ -13,9 +15,9 @@ public class TileDTO implements iFromDTO{
     public TileTypeEnum tileTypeEnum;
     public TileDTO(){}
     public TileDTO(Tile tile){
-        Tuple<Integer, Integer> coordinates = tile.getCoordinates();
-        this.xCoordinate = coordinates.first();
-        this.yCoordinate = coordinates.second();
+        Point coordinates = tile.getCoordinates();
+        this.xCoordinate = coordinates.x;
+        this.yCoordinate = coordinates.y;
         this.tileTypeEnum = tile.getTileTypeEnum();
         this.graphicalElement = tile.getGraphicalElement();
     }

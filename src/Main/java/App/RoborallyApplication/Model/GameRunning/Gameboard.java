@@ -24,7 +24,6 @@ public class Gameboard implements iToDTO {
     private ArrayList<Robot> robots = new ArrayList<>();
     private ArrayList<Obstacle> obstacles = new ArrayList<>();
     private GameBrain gameBrain;
-    int mapTile[][];
 
     public Gameboard(){
 
@@ -51,8 +50,8 @@ public class Gameboard implements iToDTO {
     }
 
     public void changeTile(Tile newTile){
-        int xCoordinate = newTile.getCoordinates().first();
-        int yCoordinate = newTile.getCoordinates().second();
+        int xCoordinate = newTile.getCoordinates().x;
+        int yCoordinate = newTile.getCoordinates().y;
         Tile tile = getTileFromCoordinate(xCoordinate, yCoordinate);
         for (int i = 0; i < tiles.size(); i++) {
             if (tiles.get(i).equals(tile)){
@@ -69,11 +68,11 @@ public class Gameboard implements iToDTO {
     public ArrayList<Obstacle> getObstacles(){return this.obstacles;}
 
     public Obstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
-        for (Obstacle obs: obstacles) {
-            int x = obs.getCoordinates().first();
-            int y = obs.getCoordinates().second();
-            if(x == xCoordinate && y == yCoordinate){
-                return obs;
+        for(Tile tile: tiles){
+            if(tile.doesTileHaveObstacle()){
+                if(tile.getCoordinates().x == xCoordinate && tile.getCoordinates().y == yCoordinate){
+                    return tile.getObstacle();
+                }
             }
         }
         return null;
@@ -99,7 +98,7 @@ public class Gameboard implements iToDTO {
     }
     public Tile getTileFromCoordinate(Integer x, Integer y){
         for (Tile tile: tiles) {
-            if(tile.getCoordinates().first().equals(x) && tile.getCoordinates().second().equals(y)){
+            if(tile.getCoordinates().x == x && tile.getCoordinates().y == y){
                 return tile;
             }
         }

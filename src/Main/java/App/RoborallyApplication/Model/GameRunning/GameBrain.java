@@ -6,6 +6,8 @@ import App.RoborallyApplication.Model.Cards.ProgrammingCards.ChangeDirectionCard
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.MovementCard;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.Enums.GamePhase;
+import App.RoborallyApplication.Model.Enums.ObstacleEnum;
+import App.RoborallyApplication.Model.Enums.ObstacleTypeEnum;
 import App.RoborallyApplication.Model.Enums.TurnEnum;
 import App.RoborallyApplication.Model.GameObjects.Obstacle;
 import App.RoborallyApplication.Model.GameObjects.Player;
@@ -14,6 +16,7 @@ import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
+import Utils.Tuple;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,8 +39,8 @@ public class GameBrain implements iToDTO {
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
-        currentGamePhase = GamePhase.ROUND_START;
-        givePlayersCardsForRound();
+        setupRobots();
+        startGame();
 
         // Testing
         players.get(1).getRobot().setCords(new Point(1, 4));
@@ -47,24 +50,33 @@ public class GameBrain implements iToDTO {
     }
 
     private void startGame(){
-        // TODO
-        // 1st -> assign robots their starting position
-        // 2nd -> start playing the round
+        setupRobots();
+        currentGamePhase = GamePhase.ROUND_START;
+        givePlayersCardsForRound();
+    }
+
+    private void setupRobots(){
+        ArrayList<Tile> availableStartPoints = getAllStartPoints();
+        for (int i = 0; i < this.players.size(); i++) {
+            players.get(i).getRobot().setCords(availableStartPoints.get(i).getCoordinates());
+        }
     }
 
     private void playRound(){
         //TODO
+        currentGamePhase = GamePhase.ROUND_START;
         // 1st -> give players their cards for the round
-        // 2nd -> let players choose the order of their cards
-        // 3rd -> make the moves (move robots, do damage, change tiles(if someone goes to explosive tile)
         givePlayersCardsForRound();
+        // 2nd -> let players choose the order of their cards
+        currentGamePhase = GamePhase.PROGRAMMING_PHASE;
+        // 3rd -> move the players, constantly checking for winner
+        currentGamePhase = GamePhase.MOVEMENT_PHASE;
         /*ArrayList<Tuple<ProgrammingCard, Integer>> playerCardOrderingList = new ArrayList<>();
         Tuple<ProgrammingCard, Integer> playerChoiceFor1 = new Tuple<>(new MovementCard(1), 0);
         Tuple<ProgrammingCard, Integer> playerChoiceFor2 = new Tuple<>(new MovementCard(1), 1);
         Tuple<ProgrammingCard, Integer> playerChoiceFor3 = new Tuple<>(new MovementCard(1), 2);
         Tuple<ProgrammingCard, Integer> playerChoiceFor4 = new Tuple<>(new MovementCard(1), 3);
         Tuple<ProgrammingCard, Integer> playerChoiceFor5 = new Tuple<>(new MovementCard(1), 4);*/
-
     }
 
     protected void givePlayersCardsForRound(){
@@ -96,9 +108,16 @@ public class GameBrain implements iToDTO {
         }
     }
 
-    private void getProgrammingCardOrderFromPlayer(Player player){
-        // TODO
-        // 1st -> player chooses the ordering of the cards from the cards that he was given
+    /**
+     * @param player Player whose card ordering is being asked for
+     * @return List containing tuples where first item is the ProgrammingCard and the second item is the number
+     * in the ordering
+     */
+    private ArrayList<Tuple<ProgrammingCard, Integer>> getCardSequenceFromPlayer(Player player){
+        ArrayList<Tuple<ProgrammingCard, Integer>> playerMoves = new ArrayList<>();
+
+
+        return playerMoves;
     }
 
     private void makeMove(Player player, ProgrammingCard card){
@@ -112,10 +131,6 @@ public class GameBrain implements iToDTO {
 
     private void movePlayerWithCollision(DirectionEnum hitDirection){
         // if overboard then back to beginning
-        // TODO
-    }
-
-    private void getMovesFromPlayers(){
         // TODO
     }
 
@@ -230,10 +245,17 @@ public class GameBrain implements iToDTO {
         // randomly choose one
     }
 
-    public Obstacle chooseUnkownObstacle(){
+    public Obstacle chooseUnkownObstacle(Tile tile){
         // TODO
-        // when robot lands on unknown obstacle make a choice for the obstacle
-        return null;
+        Random rnd = new Random();
+        float chance = rnd.nextFloat(1);
+        if(chance < 0.6){ // acid
+            return new Obstacle(ObstacleEnum.ACID, ObstacleTypeEnum.KNOWN_OBSTACLE);
+        } else if (chance < 0.8) { // radiation
+            return new Obstacle(ObstacleEnum.RADIATION, ObstacleTypeEnum.KNOWN_OBSTACLE);
+        } else { // pit
+            return new Obstacle(ObstacleEnum.PIT, ObstacleTypeEnum.KNOWN_OBSTACLE);
+        }
     }
 
     public Player findPlayerByRobot(Robot robot){
@@ -252,4 +274,35 @@ public class GameBrain implements iToDTO {
     private void removeRobot(Robot robot){
         this.gameboard.removeRobot(robot);
     }
+
+    private ArrayList<Tile> getAllStartPoints(){
+        ArrayList<Tile> startPoints = new ArrayList<>();
+        for (Tile tile: gameboard.getTiles()) {
+            if (tile.isTileStartPoint()){
+                startPoints.add(tile);
+            }
+        }
+        return startPoints;
+    }
+
+    private ArrayList<Tile> getAllFreeStartPoints(){
+        ArrayList<Tile> allStartPoints = getAllStartPoints();
+        ArrayList<Tile> availableStartPoints = new ArrayList<>();
+        ArrayList<Robot> robots = gameboard.getRobots();
+        for (Tile startpoint: allStartPoints) {
+            boolean isTaken = false;
+            for (Robot robot: robots) {
+                if(robot.getCords().x == startpoint.getCoordinates().x &&
+                        robot.getCords().y == startpoint.getCoordinates().y){
+                    isTaken = true;
+                }
+            }
+            if(!isTaken){
+                availableStartPoints.add(startpoint);
+            }
+        }
+        return availableStartPoints;
+    }
+
+
 }

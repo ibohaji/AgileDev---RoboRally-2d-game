@@ -13,24 +13,16 @@ import java.util.UUID;
 public class Obstacle implements iToDTO {
     private UUID id;
     private Integer damage;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
     public ObstacleGraphicalElement graphicalElement;
     private ObstacleTypeEnum obstacleType;
     private ObstacleEnum obstacle;
 
-    public Obstacle(int xCoordinate, int yCoordinate, ObstacleEnum obstacle, ObstacleTypeEnum obstacleType) {
+    public Obstacle(ObstacleEnum obstacle, ObstacleTypeEnum obstacleType) {
         this.id = UUID.randomUUID();
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
         this.obstacleType = obstacleType;
         this.obstacle = obstacle;
         this.graphicalElement = new ObstacleGraphicalElement();
         this.damage = obstacle.getDamage();
-    }
-
-    public Tuple<Integer, Integer> getCoordinates() {
-        return new Tuple<>(this.xCoordinate, this.yCoordinate);
     }
 
     public Robot DoDamage(Robot targetrobot) {
@@ -42,8 +34,7 @@ public class Obstacle implements iToDTO {
 
     @Override
     public String toString() {
-        return "Obstacle object. X coordinate: " + this.xCoordinate + " Y coordinate: " + this.yCoordinate +
-                ". Graphical element on obstacle: " + this.graphicalElement.getElementName();
+        return "Obstacle object. Graphical element on obstacle: " + this.graphicalElement.getElementName();
     }
 
     @Override
@@ -64,13 +55,5 @@ public class Obstacle implements iToDTO {
     public ObstacleTypeEnum getObstacleTypeEnum() {
         return obstacleType;
     }
-    @Override
-    public boolean equals(Object obj) {
-        if(obj.getClass().isInstance(Obstacle.class)){
-            return ((Obstacle) obj).xCoordinate.intValue() == this.xCoordinate.intValue() &&
-                    ((Obstacle) obj).yCoordinate.intValue() == this.yCoordinate.intValue();
-        } else {
-            return false;
-        }
-    }
+
 }

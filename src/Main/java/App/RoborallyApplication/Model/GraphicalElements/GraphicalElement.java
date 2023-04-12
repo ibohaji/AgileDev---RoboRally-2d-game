@@ -40,7 +40,7 @@ public class GraphicalElement {
     }
 
     private void setImage(Tile tile, GameBrain gameBrain){
-        Point location = new Point(tile.getCoordinates().first(), tile.getCoordinates().second());
+        Point location = new Point(tile.getCoordinates().x, tile.getCoordinates().y);
         //tile.graphicalElement
     }
 }

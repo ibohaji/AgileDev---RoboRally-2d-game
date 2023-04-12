@@ -2,11 +2,11 @@ package App.RoborallyApplication.Model.Enums;
 
 public enum ObstacleEnum {
     ACID(-1),
-    RADIATION(-2),
+    RADIATION(-1),
 
     HEALING(2),
 
-    PIT(-1);
+    PIT(-2);
     private int damage;
 
     public int getDamage(){

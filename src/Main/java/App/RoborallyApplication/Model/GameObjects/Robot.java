@@ -13,6 +13,7 @@ import App.RoborallyApplication.Model.GraphicalElements.RobotGraphicalElement;
 import Utils.JsonHelper;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Robot implements iToDTO {
@@ -20,12 +21,14 @@ public class Robot implements iToDTO {
     private UUID id;
     private Point cords = new Point(0,0);
     private RobotGraphicalElement graphicalElement;
+    private ArrayList<Point> checkpointsDone;
     private DirectionEnum currentDirection;
     private int lifeCount = 5;
 
     public Robot(){
         this.id = UUID.randomUUID();
         this.currentDirection = null;
+
         this.graphicalElement = new RobotGraphicalElement("PLAYER", null);
         this.graphicalElement.setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, DifficultyEnum.HARD);
     }
@@ -50,6 +53,22 @@ public class Robot implements iToDTO {
                 this.graphicalElement.changeDirection(currentDirection.getUTurn());
                 break;
         }
+    }
+
+    protected void addCheckpoint(Point point){
+        boolean isAlreadyChecked = false;
+        for (Point pointDone : checkpointsDone) {
+            if(pointDone.x == point.x && pointDone.y == point.y){
+                isAlreadyChecked = true;
+            }
+        }
+        if(!isAlreadyChecked){
+            checkpointsDone.add(point);
+        }
+    }
+
+    protected ArrayList<Point> getCheckpointsDone(){
+        return this.checkpointsDone;
     }
 
     public Point getCords(){
