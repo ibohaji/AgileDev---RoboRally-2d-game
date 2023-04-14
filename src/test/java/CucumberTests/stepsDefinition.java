@@ -19,9 +19,9 @@ import io.cucumber.java.ParameterType;
 import org.junit.Before;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 
 public class stepsDefinition {
@@ -140,7 +140,6 @@ public class stepsDefinition {
     public void a_game_board_with_difficulty_easy() {
         setup();
         robotOne = brain.getPlayers().get(0).getRobot();
-
     }
     @And("Robot1 at position x={int},y={int}")
     public void robot1_at_position_x_y(Integer int1, Integer int2) {
@@ -169,8 +168,17 @@ public class stepsDefinition {
     public void robot1_should_be_restored_to_a_random_position_on_the_board() {
         assertNotEquals(robot.getCords(),new Point(8,8));
     }
+
     @Then("if Robot1 has no lives left, Robot1 should be removed from the game")
     public void if_robot1_has_no_lives_left_robot1_should_be_removed_from_the_game() {
+        robot.setNrOfLives(1);
+        robot.setCords(new Point(8,8));
+        robot.setDirection(DirectionEnum.EAST);
+        card = new MovementCard(1);
+        card.useCard(robot,brain);
+        Gameboard board = brain.getGameboard();
+        ArrayList<Robot> robots = board.getRobots();
+        assertFalse(robots.contains(robot));
 
     }
 

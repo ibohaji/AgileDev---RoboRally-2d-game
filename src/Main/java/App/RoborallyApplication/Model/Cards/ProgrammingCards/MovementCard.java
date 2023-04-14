@@ -29,7 +29,7 @@ public class MovementCard extends ProgrammingCard{
                 robot.decreaseNumberOfLives();
                 if(robot.getNrOfLives()<1){
                     gameBrain.removeRobot(robot);
-                    gameBrain.removePlayer(robot.getPlayer());
+                    gameBrain.findPlayerByRobot(robot);
                 }
             }
 

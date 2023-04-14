@@ -30,8 +30,9 @@ public class GameBrain implements iToDTO {
     private GamePhase currentGamePhase;
 
     public GameBrain(){
-
     }
+
+
     public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
         this.id = UUID.randomUUID();
         gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
@@ -314,6 +315,8 @@ public class GameBrain implements iToDTO {
         }
         return availableStartPoints;
     }
+
+
 
 
 }
