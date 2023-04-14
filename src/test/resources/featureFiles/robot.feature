@@ -13,7 +13,6 @@ Feature: Robot Movement on the board
   Scenario: Robot repeats its previous movement according to the AGAIN card
     Given the robot has previously moved a certain number of steps in a certain direction
     And an AGAIN card is played
-    When the robot receives the AGAIN card
     Then the robot should move the same number of steps in the same direction as its previous movement
 
   Scenario: Go back to a random starting point when robot fall off the board

@@ -80,9 +80,9 @@ public class MapGenerator {
         //tiles.add(checkPointTiles1);
 
         // add start point tiles
-        //Tile startPointTiles1 = new Tile(2, 0, TileTypeEnum.START);
-        //startPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
-        //tiles.add(startPointTiles1);
+        Tile startPointTiles1 = new Tile(2, 0, TileTypeEnum.START);
+        startPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
+        tiles.add(startPointTiles1);
 
         //Tile startPointTiles2 = new Tile(4, 0, TileTypeEnum.START);
         //startPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);

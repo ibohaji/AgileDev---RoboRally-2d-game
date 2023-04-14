@@ -41,12 +41,6 @@ public class GameBrain implements iToDTO {
         this.gameboard.setRobots(robots);
         setupRobots();
         startGame();
-
-        // Testing
-        players.get(1).getRobot().setCords(new Point(1, 4));
-        players.get(0).getRobot().setCords(new Point(2, 2));
-        players.get(1).getRobot().setDirection(DirectionEnum.EAST);
-        players.get(0).getRobot().setDirection(DirectionEnum.WEST);
     }
 
     private void startGame(){

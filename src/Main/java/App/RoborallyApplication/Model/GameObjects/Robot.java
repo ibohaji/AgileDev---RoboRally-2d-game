@@ -76,8 +76,8 @@ public class Robot implements iToDTO {
     }
 
     public void setCords(Point newCords){
-        cords.x += newCords.x;
-        cords.y+=newCords.y;
+        cords.x = newCords.x;
+        cords.y =newCords.y;
     }
 
     public int getNrOfLives(){

@@ -20,10 +20,10 @@ public class MovementCard extends ProgrammingCard{
         DirectionEnum directionOfRobot= robot.getCurrentDirection();
         for (int i = 0; i < steps; i++) {
             switch (directionOfRobot){
-                case NORTH -> newPos.y = currentPos.y + 1;
-                case SOUTH -> newPos.y = currentPos.y - 1;
-                case EAST -> newPos.x = currentPos.x + 1;
-                case WEST -> newPos.x = currentPos.x - 1;
+                case NORTH -> newPos.y +=   1;
+                case SOUTH -> newPos.y -=   1;
+                case EAST -> newPos.x +=   1;
+                case WEST -> newPos.x -=  1;
             }
             if(!gameBrain.isPositionOnBoard(newPos)){
                 continue;
