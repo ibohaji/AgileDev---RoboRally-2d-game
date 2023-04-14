@@ -21,6 +21,7 @@ import org.junit.Before;
 import java.awt.Point;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 
 public class stepsDefinition {
@@ -29,6 +30,11 @@ public class stepsDefinition {
     DirectionEnum direction;
     Robot robot;
     Point startCords;
+
+
+
+    Robot robotOne;
+    Robot robotTwo;
 
     @Before
     public void setup(){
@@ -45,7 +51,7 @@ public class stepsDefinition {
 
     @Given("the robot's initial direction as NORTH")
     public void the_robot_s_initial_direction_as_north() {
-        robot.setDirection(DirectionEnum.NORTH);
+        setup();
     }
 
     @When("the robot get the LEFT direction card")
@@ -97,7 +103,76 @@ public class stepsDefinition {
         assertEquals(new Point(2,2),robot.getCords());
     }
 
+    @Given("the game board is set up with robots at positions \\({int}, {int}) and \\({int}, {int})")
+    public void the_game_board_is_set_up_with_robots_at_positions_and(Integer int1, Integer int2, Integer int3, Integer int4) {
+        brain = new GameBrain(2, DifficultyEnum.EASY);
+        robotOne = brain.getPlayers().get(0).getRobot();
+        robotTwo = brain.getPlayers().get(1).getRobot();
+        robotTwo.setDirection(DirectionEnum.SOUTH);
+        robotOne.setCords(new Point(int1,int2));
+        robotTwo.setCords(new Point(int3,int4));
 
+    }
+
+    @And("the first robot is facing NORTH")
+    public void the_first_robot_is_facing_north() {
+        robotOne.setDirection(DirectionEnum.NORTH);
+
+    }
+    @And("the first robot uses a movement card with {int} steps")
+    public void the_first_robot_uses_a_movement_card_with_steps(Integer int1) {
+        card = new MovementCard(int1);
+        card.useCard(robotOne,brain);
+
+    }
+    @Then("the second robot should be pushed one tile in the direction of the first robot")
+    public void the_second_robot_should_be_pushed_one_tile_in_the_direction_of_the_first_robot() {
+        Point expected = new Point(2,1);
+        assertEquals(expected,robotTwo.getCords());
+    }
+    @Then("the first robot should end up in the tile previously occupied by the second robot")
+    public void the_first_robot_should_end_up_in_the_tile_previously_occupied_by_the_second_robot() {
+        Point expected = new Point(2,3);
+        assertEquals(expected,robotOne.getCords());
+    }
+
+    @Given("a game board with difficulty Easy")
+    public void a_game_board_with_difficulty_easy() {
+        setup();
+        robotOne = brain.getPlayers().get(0).getRobot();
+
+    }
+    @And("Robot1 at position x={int},y={int}")
+    public void robot1_at_position_x_y(Integer int1, Integer int2) {
+    robot.setCords(new Point(int1,int2));
+    }
+    @Given("Robot1 is facing EAST")
+    public void robot1_is_facing_east() {
+        robot.setDirection(DirectionEnum.EAST);
+    }
+    @When("Robot1 moves forward one step")
+    public void robot1_moves_forward_one_step() {
+        card = new MovementCard(1);
+        card.useCard(robot,brain);
+    }
+    @Then("Robot1 should fall off the board")
+    public void robot1_should_fall_off_the_board() {
+
+    }
+    @Then("Robot1 should lose a life")
+    public void robot1_should_lose_a_life() {
+        int lives = robot.getNrOfLives();
+        int expected = 4;
+        assertEquals(expected,lives);
+    }
+    @Then("Robot1 should be restored to a random position on the board")
+    public void robot1_should_be_restored_to_a_random_position_on_the_board() {
+        assertNotEquals(robot.getCords(),new Point(8,8));
+    }
+    @Then("if Robot1 has no lives left, Robot1 should be removed from the game")
+    public void if_robot1_has_no_lives_left_robot1_should_be_removed_from_the_game() {
+
+    }
 
 }
 

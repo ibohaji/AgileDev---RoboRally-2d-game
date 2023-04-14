@@ -278,11 +278,11 @@ public class GameBrain implements iToDTO {
         return null;
     }
 
-    private void removePlayer(Player playerToRemove) {
+    public void removePlayer(Player playerToRemove) {
         this.players.remove(playerToRemove);
     }
 
-    private void removeRobot(Robot robot){
+    public void removeRobot(Robot robot){
         this.gameboard.removeRobot(robot);
     }
 

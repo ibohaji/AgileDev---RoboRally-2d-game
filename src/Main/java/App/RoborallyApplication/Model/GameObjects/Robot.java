@@ -24,7 +24,7 @@ public class Robot implements iToDTO {
     private ArrayList<Point> checkpointsDone;
     private DirectionEnum currentDirection;
     private int lifeCount = 5;
-
+    Player player;
     public Robot(){
         this.id = UUID.randomUUID();
         this.currentDirection = null;
@@ -81,7 +81,7 @@ public class Robot implements iToDTO {
     }
 
     public int getNrOfLives(){
-        return this.lifeCount;
+        return lifeCount;
     }
     public void setNrOfLives(int lifeCount) {this.lifeCount = lifeCount;}
 
@@ -89,6 +89,16 @@ public class Robot implements iToDTO {
         card.useCard(this, gameBrain);
     }
 
+    public void decreaseNumberOfLives(){
+        lifeCount-=1;
+    }
+
+    public void assignPlayer(Player player){
+        this.player = player;
+    }
+    public Player  getPlayer(){
+        return player;
+    }
     @Override
     public String toString() {
         return "Robot. Direction: " + this.currentDirection.name() + ". X: " + this.cords.x + " Y: " + this.cords.y +

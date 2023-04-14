@@ -26,7 +26,11 @@ public class MovementCard extends ProgrammingCard{
                 case WEST -> newPos.x -=  1;
             }
             if(!gameBrain.isPositionOnBoard(newPos)){
-                continue;
+                robot.decreaseNumberOfLives();
+                if(robot.getNrOfLives()<1){
+                    gameBrain.removeRobot(robot);
+                    gameBrain.removePlayer(robot.getPlayer());
+                }
             }
 
             pushIfOccupied(gameBrain, newPos, directionOfRobot);

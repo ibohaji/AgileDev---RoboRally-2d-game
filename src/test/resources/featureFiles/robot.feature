@@ -22,3 +22,25 @@ Feature: Robot Movement on the board
     Then the second robot should be pushed one tile in the direction of the first robot
     And the first robot should end up in the tile previously occupied by the second robot
 
+
+  Scenario: Robot falls off the board due to its own movemnentCard
+    Given a game board with difficulty Easy
+    And Robot1 at position x=8,y=8
+    And Robot1 is facing EAST
+    When Robot1 moves forward one step
+    Then Robot1 should fall off the board
+    And Robot1 should lose a life
+    And Robot1 should be restored to a random position on the board
+    And if Robot1 has no lives left, Robot1 should be removed from the game
+
+
+
+  Scenario: Robot pushed off the board
+    Given a game board with difficulty EASY
+    And Robot1 at position (6,5) and Robot2 at position (6,5)
+    And Robot1 is facing NORTH and Robot2 is facing SOUTH
+    When Robot1 moves forward one step
+    Then Robot1 should push Robot2 off the board
+    And Robot2 should lose a life
+    And Robot2 should be restored to a random position on the board
+    And if Robot2 has no lives left, Robot2 should be removed from the game
