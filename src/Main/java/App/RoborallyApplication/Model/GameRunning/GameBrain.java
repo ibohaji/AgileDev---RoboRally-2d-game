@@ -39,7 +39,7 @@ public class GameBrain implements iToDTO {
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
-        setupRobots();
+       // setupRobots();   this should be based off of Player input
         startGame();
     }
 
@@ -218,9 +218,26 @@ public class GameBrain implements iToDTO {
             } else {
                 putRobotToRandomStartPoint(robotBeingPushed);
             }
-        } else {
-            // check if pushes another robot
+        } else if(isPositionOnBoard(pos)){
+            robotBeingPushed.setCords(pos);
+
         }
+        // check if pushes another robot
+
+
+    }
+
+
+    private void push(Point newPos, DirectionEnum directionOfRobot) {
+            Robot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
+            // push robotAtCoordinate
+            switch (directionOfRobot){
+                case NORTH -> pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
+                case SOUTH -> pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
+                case EAST -> pushRobot(robotAtCoordinate, DirectionEnum.WEST);
+                case WEST -> pushRobot(robotAtCoordinate, DirectionEnum.EAST);
+            }
+
     }
 
     protected void pushRobotOffBoard(Robot robot){

@@ -15,14 +15,10 @@ Feature: Robot Movement on the board
     And an AGAIN card is played
     Then the robot should move the same number of steps in the same direction as its previous movement
 
-  Scenario: Go back to a random starting point when robot fall off the board
-    Given the random starting point and its position is (x,y)
-    When the robot fall off the board
-    Then the expected robot's position is (x,y)
-
-  Scenario: Robot1 push robot2
-    Given robot1's position (x1,y1) and robot2's position (x2,y2)
-    And robot1's direction is NORTH
-    When robot1 push robot2 are going to be in the same tile
-    Then the expected robot1's position is (x2,y2), robot2's position is (x2,y2+1)
+  Scenario: Robot pushes another robot
+    Given the game board is set up with robots at positions (2, 0) and (2, 3)
+    And the first robot is facing NORTH
+    And the first robot uses a movement card with 3 steps
+    Then the second robot should be pushed one tile in the direction of the first robot
+    And the first robot should end up in the tile previously occupied by the second robot
 

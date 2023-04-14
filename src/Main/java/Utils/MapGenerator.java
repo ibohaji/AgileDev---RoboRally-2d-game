@@ -84,6 +84,11 @@ public class MapGenerator {
         startPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
         tiles.add(startPointTiles1);
 
+        Tile starterPointTiles2 = new Tile(4,0,TileTypeEnum.START);
+        starterPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
+        tiles.add(starterPointTiles2);
+
+
         //Tile startPointTiles2 = new Tile(4, 0, TileTypeEnum.START);
         //startPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
         //tiles.add(startPointTiles2);

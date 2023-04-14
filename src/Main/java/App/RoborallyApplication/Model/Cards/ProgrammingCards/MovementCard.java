@@ -28,17 +28,8 @@ public class MovementCard extends ProgrammingCard{
             if(!gameBrain.isPositionOnBoard(newPos)){
                 continue;
             }
-            boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
-            if (isTileOccupiedByAnotherRobot){
-                Robot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
-                // push robotAtCoordinate
-                switch (directionOfRobot){
-                    case NORTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
-                    case SOUTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
-                    case EAST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.WEST);
-                    case WEST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.EAST);
-                }
-            }
+
+            pushIfOccupied(gameBrain, newPos, directionOfRobot);
             Tile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
             // check for obstacle on tile
 
@@ -46,5 +37,19 @@ public class MovementCard extends ProgrammingCard{
             robot.setCords(newPos);
         }
 
+    }
+
+    private void pushIfOccupied(GameBrain gameBrain, Point newPos, DirectionEnum directionOfRobot) {
+        boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
+        if (isTileOccupiedByAnotherRobot){
+            Robot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
+            // push robotAtCoordinate
+            switch (directionOfRobot){
+                case NORTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
+                case SOUTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
+                case EAST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.WEST);
+                case WEST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.EAST);
+            }
+        }
     }
 }
