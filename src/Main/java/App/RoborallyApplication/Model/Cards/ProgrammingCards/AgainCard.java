@@ -5,6 +5,11 @@ import App.RoborallyApplication.Model.GameRunning.GameBrain;
 
 public class AgainCard extends ProgrammingCard{
     @Override
+    public String getCardImageFileName() {
+        return "App.Resource.Cards.AgainCard.png";
+    }
+
+    @Override
     public void useCard(Robot robot, GameBrain gameBrain) {
         ProgrammingCard lastCardUsed = gameBrain.getLastCardUsedByRobot(robot);
         // write logic for when first card is the again card then nothing happens

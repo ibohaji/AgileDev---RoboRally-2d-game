@@ -14,6 +14,20 @@ public class MovementCard extends ProgrammingCard{
     }
 
     @Override
+    public String getCardImageFileName() {
+        String filename = "App.Resources.Cards.MovementCard";
+        if (steps == 1) {
+            filename += "_1.png";
+        } else if (steps == 2) {
+            filename += "_2.png";
+        } else if (steps == 3) {
+            filename += "_3.png";
+        }
+        return filename;
+    }
+
+
+    @Override
     public void useCard(Robot robot, GameBrain gameBrain) {
         Point currentPos = robot.getCords();
         Point newPos = new Point(currentPos);
