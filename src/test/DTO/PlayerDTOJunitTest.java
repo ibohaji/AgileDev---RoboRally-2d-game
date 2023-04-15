@@ -57,3 +57,46 @@ public class PlayerDTOJunitTest {
         //assertEquals(2, player.getCards().size());
     }
 }
+
+enum numPlayers {
+    Player 1, Player 2, Player 3, Player 4, Player 5
+}
+enum Difficulty {
+    EASY, MEDIUM, HARD
+}
+enum LobbyType {
+    SINGLE, MULTI
+}
+enum numAIPlayers {
+    0, 1, 2, 3, 4
+}
+public class PlayerDTOJunitTest {
+    @Test
+    public void testSetNumPlayer() {
+        Game game = new Game()
+        game.setNumPlayers(3);
+        assertEquals(3, game.getNumPlayers());
+    }
+
+
+    @Test
+    public void testSetDifficuly() {
+        Game game = new Game()
+        game.setDifficulty(MEDIUM);
+        assertEquals(Difficulty.MEDIUM, game.getDifficulty());
+    }
+
+    @Test
+    public void testSetLobbyType() {
+        Game game = new Game()
+        game.SetLobbyType(MULTI);
+        assertEquals(LobbyType.MULTI, game.getLobbyType());
+    }
+
+    @Test
+    public void testSetnumAIPlayers() {
+        Game game = new Game()
+        game.SetnumAIPlayers(2);
+        assertEquals(numAIPlayers .2, game.getnumAIPlayers())
+    }
+}
