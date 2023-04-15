@@ -30,8 +30,9 @@ public class GameBrain implements iToDTO {
     private GamePhase currentGamePhase;
 
     public GameBrain(){
-
     }
+
+
     public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
         this.id = UUID.randomUUID();
         gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
@@ -39,14 +40,8 @@ public class GameBrain implements iToDTO {
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
-        setupRobots();
+       // setupRobots();   this should be based off of Player input
         startGame();
-
-        // Testing
-        players.get(1).getRobot().setCords(new Point(1, 4));
-        players.get(0).getRobot().setCords(new Point(2, 2));
-        players.get(1).getRobot().setDirection(DirectionEnum.EAST);
-        players.get(0).getRobot().setDirection(DirectionEnum.WEST);
     }
 
     private void startGame(){
@@ -224,9 +219,26 @@ public class GameBrain implements iToDTO {
             } else {
                 putRobotToRandomStartPoint(robotBeingPushed);
             }
-        } else {
-            // check if pushes another robot
+        } else if(isPositionOnBoard(pos)){
+            robotBeingPushed.setCords(pos);
+
         }
+        // check if pushes another robot
+
+
+    }
+
+
+    private void push(Point newPos, DirectionEnum directionOfRobot) {
+            Robot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
+            // push robotAtCoordinate
+            switch (directionOfRobot){
+                case NORTH -> pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
+                case SOUTH -> pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
+                case EAST -> pushRobot(robotAtCoordinate, DirectionEnum.WEST);
+                case WEST -> pushRobot(robotAtCoordinate, DirectionEnum.EAST);
+            }
+
     }
 
     protected void pushRobotOffBoard(Robot robot){
@@ -267,11 +279,11 @@ public class GameBrain implements iToDTO {
         return null;
     }
 
-    private void removePlayer(Player playerToRemove) {
+    public void removePlayer(Player playerToRemove) {
         this.players.remove(playerToRemove);
     }
 
-    private void removeRobot(Robot robot){
+    public void removeRobot(Robot robot){
         this.gameboard.removeRobot(robot);
     }
 
@@ -303,6 +315,8 @@ public class GameBrain implements iToDTO {
         }
         return availableStartPoints;
     }
+
+
 
 
 }

@@ -39,6 +39,7 @@ public class Player implements iToDTO {
     public boolean assignRobot(Robot robotToAssign){
         if(robot == null){
             robot = robotToAssign;
+            robot.assignPlayer(this);
             return true;
         }
         return false;

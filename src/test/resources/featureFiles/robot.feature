@@ -13,17 +13,34 @@ Feature: Robot Movement on the board
   Scenario: Robot repeats its previous movement according to the AGAIN card
     Given the robot has previously moved a certain number of steps in a certain direction
     And an AGAIN card is played
-    When the robot receives the AGAIN card
     Then the robot should move the same number of steps in the same direction as its previous movement
 
-  Scenario: Go back to a random starting point when robot fall off the board
-    Given the random starting point and its position is (x,y)
-    When the robot fall off the board
-    Then the expected robot's position is (x,y)
+  Scenario: Robot pushes another robot
+    Given the game board is set up with robots at positions (2, 0) and (2, 3)
+    And the first robot is facing NORTH
+    And the first robot uses a movement card with 3 steps
+    Then the second robot should be pushed one tile in the direction of the first robot
+    And the first robot should end up in the tile previously occupied by the second robot
 
-  Scenario: Robot1 push robot2
-    Given robot1's position (x1,y1) and robot2's position (x2,y2)
-    And robot1's direction is NORTH
-    When robot1 push robot2 are going to be in the same tile
-    Then the expected robot1's position is (x2,y2), robot2's position is (x2,y2+1)
 
+  Scenario: Robot falls off the board due to its own movemnentCard
+    Given a game board with difficulty Easy
+    And Robot1 at position x=8,y=8
+    And Robot1 is facing EAST
+    When Robot1 moves forward one step
+    Then Robot1 should fall off the board
+    And Robot1 should lose a life
+    And Robot1 should be restored to a random position on the board
+    And if Robot1 has no lives left, Robot1 should be removed from the game
+
+
+
+  Scenario: Robot pushed off the board
+    Given a game board with difficulty EASY
+    And Robot1 at position (6,5) and Robot2 at position (6,5)
+    And Robot1 is facing NORTH and Robot2 is facing SOUTH
+    When Robot1 moves forward one step
+    Then Robot1 should push Robot2 off the board
+    And Robot2 should lose a life
+    And Robot2 should be restored to a random position on the board
+    And if Robot2 has no lives left, Robot2 should be removed from the game

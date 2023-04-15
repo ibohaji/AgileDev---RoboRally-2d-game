@@ -34,25 +34,20 @@ public class MovementCard extends ProgrammingCard{
         DirectionEnum directionOfRobot= robot.getCurrentDirection();
         for (int i = 0; i < steps; i++) {
             switch (directionOfRobot){
-                case NORTH -> newPos.y = currentPos.y + 1;
-                case SOUTH -> newPos.y = currentPos.y - 1;
-                case EAST -> newPos.x = currentPos.x + 1;
-                case WEST -> newPos.x = currentPos.x - 1;
+                case NORTH -> newPos.y +=   1;
+                case SOUTH -> newPos.y -=   1;
+                case EAST -> newPos.x +=   1;
+                case WEST -> newPos.x -=  1;
             }
             if(!gameBrain.isPositionOnBoard(newPos)){
-                continue;
-            }
-            boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
-            if (isTileOccupiedByAnotherRobot){
-                Robot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
-                // push robotAtCoordinate
-                switch (directionOfRobot){
-                    case NORTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
-                    case SOUTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
-                    case EAST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.WEST);
-                    case WEST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.EAST);
+                robot.decreaseNumberOfLives();
+                if(robot.getNrOfLives()<1){
+                    gameBrain.removeRobot(robot);
+                    gameBrain.findPlayerByRobot(robot);
                 }
             }
+
+            pushIfOccupied(gameBrain, newPos, directionOfRobot);
             Tile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
             // check for obstacle on tile
 
@@ -60,5 +55,19 @@ public class MovementCard extends ProgrammingCard{
             robot.setCords(newPos);
         }
 
+    }
+
+    private void pushIfOccupied(GameBrain gameBrain, Point newPos, DirectionEnum directionOfRobot) {
+        boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
+        if (isTileOccupiedByAnotherRobot){
+            Robot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
+            // push robotAtCoordinate
+            switch (directionOfRobot){
+                case NORTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
+                case SOUTH -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
+                case EAST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.WEST);
+                case WEST -> gameBrain.pushRobot(robotAtCoordinate, DirectionEnum.EAST);
+            }
+        }
     }
 }
