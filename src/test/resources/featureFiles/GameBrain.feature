@@ -1,13 +1,13 @@
 Feature: GameBrain
 
   Scenario: GameBrain shuffles and assigns cards
-    Given a GameBrain and different types of cards
-    When either the game first starts or after each round ends
+    Given 1 players
+    When a round starts
     Then GameBrain shuffle and assign cards to players
 
   Scenario: GameBrain gets the current game phase
     Given a GameBrain and a game instance
-    When a game is running
+    When during "ROUND_START"
     Then GameBrain get the current game phase
 
   Scenario: GameBrain puts robots at their starting positions

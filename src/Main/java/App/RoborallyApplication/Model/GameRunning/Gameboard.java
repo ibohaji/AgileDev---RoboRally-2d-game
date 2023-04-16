@@ -105,6 +105,15 @@ public class Gameboard implements iToDTO {
         return null;
     }
 
+    public Obstacle getObstacleFromCoordinate(Integer x, Integer y){
+        for (Tile tile: tiles) {
+            if(tile.getCoordinates().x == x && tile.getCoordinates().y == y){
+                return tile.getObstacle();
+            }
+        }
+        return null;
+    }
+
     public Robot getRobotFromCoordinate(Integer x, Integer y){
         for (Robot robot: robots) {
             if(robot.getCords().x == x && robot.getCords().y == y){

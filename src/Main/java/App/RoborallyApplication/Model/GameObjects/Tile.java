@@ -27,6 +27,7 @@ public class Tile implements iToDTO {
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new TileGraphicalElement();
         this.tileTypeEnum = tileTypeEnum;
+        this.id = UUID.randomUUID();
     }
 
     public Point getCoordinates(){
