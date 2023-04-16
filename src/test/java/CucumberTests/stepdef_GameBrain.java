@@ -2,7 +2,6 @@ package CucumberTests;
 
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.Enums.GamePhase;
-import App.RoborallyApplication.Model.Enums.StartPointEnum;
 import App.RoborallyApplication.Model.GameObjects.Obstacle;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameObjects.Robot;
