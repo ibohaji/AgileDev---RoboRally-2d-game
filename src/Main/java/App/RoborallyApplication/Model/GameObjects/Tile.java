@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.UUID;
 
 public class Tile implements iToDTO {
-
+    private UUID id;
     private Integer xCoordinate;
     private Integer yCoordinate;
     private TileGraphicalElement graphicalElement;
@@ -22,6 +22,7 @@ public class Tile implements iToDTO {
     private Obstacle obstacle;
 
     public Tile(int xCoordinate, int yCoordinate, TileTypeEnum tileTypeEnum){
+        this.id = UUID.randomUUID();
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new TileGraphicalElement();

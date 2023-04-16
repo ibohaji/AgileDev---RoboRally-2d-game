@@ -144,6 +144,7 @@ public class MainMenuView extends JPanel {
         difficultyDropdown.setFont(Fonts.LARGE);
         difficultyDropdown.addItem(null);
         difficultyDropdown.addItem("EASY");
+        difficultyDropdown.addItem("MEDIUM");
         difficultyDropdown.addItem("HARD");
         return difficultyDropdown;
     }

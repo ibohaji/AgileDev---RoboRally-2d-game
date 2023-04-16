@@ -40,14 +40,22 @@ public class GameBrain implements iToDTO {
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
-       // setupRobots();   this should be based off of Player input
+        currentGamePhase = GamePhase.ROUND_START;
         startGame();
     }
 
     private void startGame(){
         setupRobots();
+    }
+
+    public void startRound(){
         currentGamePhase = GamePhase.ROUND_START;
         givePlayersCardsForRound();
+        currentGamePhase = GamePhase.PROGRAMMING_PHASE;
+    }
+
+    public void setPlayerCardSequence(){
+
     }
 
     private void setupRobots(){
@@ -58,20 +66,13 @@ public class GameBrain implements iToDTO {
     }
 
     private void playRound(){
-        //TODO
-        currentGamePhase = GamePhase.ROUND_START;
+
         // 1st -> give players their cards for the round
-        givePlayersCardsForRound();
+
         // 2nd -> let players choose the order of their cards
         currentGamePhase = GamePhase.PROGRAMMING_PHASE;
         // 3rd -> move the players, constantly checking for winner
         currentGamePhase = GamePhase.MOVEMENT_PHASE;
-        /*ArrayList<Tuple<ProgrammingCard, Integer>> playerCardOrderingList = new ArrayList<>();
-        Tuple<ProgrammingCard, Integer> playerChoiceFor1 = new Tuple<>(new MovementCard(1), 0);
-        Tuple<ProgrammingCard, Integer> playerChoiceFor2 = new Tuple<>(new MovementCard(1), 1);
-        Tuple<ProgrammingCard, Integer> playerChoiceFor3 = new Tuple<>(new MovementCard(1), 2);
-        Tuple<ProgrammingCard, Integer> playerChoiceFor4 = new Tuple<>(new MovementCard(1), 3);
-        Tuple<ProgrammingCard, Integer> playerChoiceFor5 = new Tuple<>(new MovementCard(1), 4);*/
     }
 
     protected void givePlayersCardsForRound(){
@@ -118,7 +119,7 @@ public class GameBrain implements iToDTO {
      * @return List containing tuples where first item is the ProgrammingCard and the second item is the number
      * in the ordering
      */
-    private ArrayList<Tuple<ProgrammingCard, Integer>> getCardSequenceFromPlayer(Player player){
+    /*private ArrayList<Tuple<ProgrammingCard, Integer>> getCardSequenceFromPlayer(Player player){
         ArrayList<ProgrammingCard> playerCards = player.getProgrammingCards();
         ArrayList<Tuple<ProgrammingCard, Integer>> playerMoves = new ArrayList<>();
 
@@ -131,7 +132,7 @@ public class GameBrain implements iToDTO {
         }
 
         return playerMoves;
-    }
+    }*/
 
     private void makeMove(Player player, ProgrammingCard card){
         card.useCard(player.getRobot(), this);
