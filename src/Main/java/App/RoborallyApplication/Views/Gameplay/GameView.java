@@ -4,10 +4,13 @@ import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
+import App.RoborallyApplication.Views.Gameplay.CardDeck.UserCardDeckView;
 import Utils.Fonts;
+import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class GameView extends JPanel {
     private final GameController controller;
@@ -23,6 +26,12 @@ public abstract class GameView extends JPanel {
     protected void getGameboardView(){
 
     }
+
+    protected void getUserCardDeckView() {
+        UserCardDeckView userCardDeckView = new UserCardDeckView(controller, gameBrain, gameBrain.dealCardsForRound());
+        add(userCardDeckView, new GridBagConstraintsBuilder(0, 1).anchor(GridBagConstraints.NORTH).build());
+    }
+
 
     protected JLabel generateGameNameLabel(){
         JLabel gameNameLabel = new JLabel("ROBORALLY");

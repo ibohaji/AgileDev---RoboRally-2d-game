@@ -31,6 +31,10 @@ public class Player implements iToDTO {
         return new ArrayList<>();
     }
 
+    public ArrayList<ProgrammingCard> getProgrammingCards() {
+        return programmingCards;
+    }
+
     /**
      * Robot can only be assigned to player if he previously doesn't have a robot assigned to them
      * @param robotToAssign robot object to assign to the player

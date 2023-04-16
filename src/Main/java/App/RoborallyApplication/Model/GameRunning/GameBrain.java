@@ -103,14 +103,32 @@ public class GameBrain implements iToDTO {
         }
     }
 
+    public ArrayList<ProgrammingCard> dealCardsForRound() {
+        givePlayersCardsForRound();
+        ArrayList<ProgrammingCard> roundCards = new ArrayList<>();
+        for (Player player : players) {
+            roundCards.addAll(player.getProgrammingCards());
+        }
+        return roundCards;
+    }
+
+
     /**
      * @param player Player whose card ordering is being asked for
      * @return List containing tuples where first item is the ProgrammingCard and the second item is the number
      * in the ordering
      */
     private ArrayList<Tuple<ProgrammingCard, Integer>> getCardSequenceFromPlayer(Player player){
+        ArrayList<ProgrammingCard> playerCards = player.getProgrammingCards();
         ArrayList<Tuple<ProgrammingCard, Integer>> playerMoves = new ArrayList<>();
 
+        // TODO: prompt player to select the card ordering via GUI drag-and-drop interface
+
+        for (int i = 0; i < playerCards.size(); i++) {
+            ProgrammingCard card = playerCards.get(i);
+            int position = // TODO: get the position of the card in the player's selected ordering
+                    playerMoves.add(new Tuple<>(card, position));
+        }
 
         return playerMoves;
     }
