@@ -3,7 +3,7 @@ package CucumberTests;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Views.Menus.LobbyViewHost;
+import App.RoborallyApplication.Views.Menus.LobbyView;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

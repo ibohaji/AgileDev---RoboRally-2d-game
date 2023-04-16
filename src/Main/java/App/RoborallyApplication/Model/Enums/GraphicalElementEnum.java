@@ -3,7 +3,6 @@ package App.RoborallyApplication.Model.Enums;
 import java.io.File;
 
 public enum GraphicalElementEnum {
-
     DEFAULT_FLOOR("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "floor.png"),
     OBSTACLE_UNKNOWN_EXPLOSIVE("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "UnknownExplosiveTile.png"),
     OBSTACLE_EXPLOSIVE_ACID("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveAcidTile.png"),
@@ -19,12 +18,19 @@ public enum GraphicalElementEnum {
     RIGHT_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "rightTreadmill.png"),
     LEFT_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "leftTreadmill.png"),
     FORWARD_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "forwardTreadmill.png"),
-    DOWNWARD_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "downwardTreadmill.png");
+    DOWNWARD_TREADMILL("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "downwardTreadmill.png"),
+    START("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "StartingPoint.png"),
+    CHECKPOINTS_1("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "Checkpoints_1.png"),
+    CHECKPOINTS_2("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "Checkpoints_2.png"),
+    CHECKPOINTS_3("APP"+File.separator +"Resources"+File.separator+"Tiles"+File.separator+"Checkpoints_3.png"),
+    FINISH("APP"+File.separator +"Resources"+File.separator+"Tiles"+File.separator+"finish.png");
 
     private String pictureFile;
+
     private GraphicalElementEnum(String pictureFile) {
         this.pictureFile = pictureFile;
     }
+
     public String getPictureFile() {
         return pictureFile;
     }

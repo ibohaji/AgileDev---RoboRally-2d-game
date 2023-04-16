@@ -34,64 +34,60 @@ public class MapGenerator {
         }
         gameboard.setTiles(tiles);
         // add pit tile
-        Tile pitTile = new Tile(3, 5, TileTypeEnum.OBSTACLE);
+        Tile pitTile = new Tile(4, 2, TileTypeEnum.OBSTACLE);
         pitTile.setGraphicalElement(GraphicalElementEnum.OBSTACLE_PIT, difficulty);
         gameboard.changeTile(pitTile);
 
         // add healing tiles
-        Tile healTile1 = new Tile(7, 4, TileTypeEnum.OBSTACLE);
+        Tile healTile1 = new Tile(7, 6, TileTypeEnum.OBSTACLE);
         healTile1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_HEALING, difficulty);
         gameboard.changeTile(healTile1);
 
 
-        Tile healTile2 = new Tile(0, 1, TileTypeEnum.OBSTACLE);
+        Tile healTile2 = new Tile(0, 3, TileTypeEnum.OBSTACLE);
         healTile2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_HEALING, difficulty);
         gameboard.changeTile(healTile2);
 
         // add treadmill tiles
-        Tile treadmillTile1 = new Tile(3, 7, TileTypeEnum.OBSTACLE);
+        Tile treadmillTile1 = new Tile(4, 0, TileTypeEnum.OBSTACLE);
         treadmillTile1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.RIGHT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile1);
 
-        Tile treadmillTile2 = new Tile(2, 2, TileTypeEnum.OBSTACLE);
+        Tile treadmillTile2 = new Tile(5, 5, TileTypeEnum.OBSTACLE);
         treadmillTile2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.RIGHT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile2);
 
-        Tile treadmillTile3 = new Tile(5, 4, TileTypeEnum.OBSTACLE);
+        Tile treadmillTile3 = new Tile(2, 3, TileTypeEnum.OBSTACLE);
         treadmillTile3.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.DOWNWARD_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile3);
 
-        Tile treadmillTile4 = new Tile(6, 6, TileTypeEnum.OBSTACLE);
+        Tile treadmillTile4 = new Tile(1, 1, TileTypeEnum.OBSTACLE);
         treadmillTile4.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.LEFT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile4);
 
         // add acid tiles
-        Tile acidTiles1 = new Tile(4, 3, TileTypeEnum.OBSTACLE);
+        Tile acidTiles1 = new Tile(3, 4, TileTypeEnum.OBSTACLE);
         acidTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_EXPLOSIVE_ACID, difficulty);
         gameboard.changeTile(acidTiles1);
 
-        Tile acidTiles2 = new Tile(6, 1, TileTypeEnum.OBSTACLE);
+        Tile acidTiles2 = new Tile(1, 6, TileTypeEnum.OBSTACLE);
         acidTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_EXPLOSIVE_ACID, difficulty);
         gameboard.changeTile(acidTiles2);
 
-        // add checkpoint tile
-        //Tile checkPointTiles1 = new Tile(3, 6, TileTypeEnum.CHECKPOINT);
+        //add finish tile
+        //Tile finishPointTiles1 = new Tile(3, 6, TileTypeEnum.CHECKPOINT);
         //checkPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_SOUTH, difficulty);
         //tiles.add(checkPointTiles1);
 
         // add start point tiles
-        Tile startPointTiles1 = new Tile(2, 0, TileTypeEnum.START);
-        startPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
+        Tile startPointTiles1 = new Tile(5, 7, TileTypeEnum.START);
+        //startPointTiles1.setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
         tiles.add(startPointTiles1);
 
-        Tile starterPointTiles2 = new Tile(4,0,TileTypeEnum.START);
+        Tile starterPointTiles2 = new Tile(3,7,TileTypeEnum.START);
         starterPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
         tiles.add(starterPointTiles2);
 
-
-        //Tile startPointTiles2 = new Tile(4, 0, TileTypeEnum.START);
-        //startPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
-        //tiles.add(startPointTiles2);
         return gameboard;
     }
 }
