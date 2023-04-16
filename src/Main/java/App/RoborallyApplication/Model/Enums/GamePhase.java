@@ -4,6 +4,5 @@ public enum GamePhase {
     ROUND_START,
     PROGRAMMING_PHASE,
     MOVEMENT_PHASE,
-    ROUND_END
-
+    ROUND_END;
 }

@@ -5,10 +5,7 @@ import App.RoborallyApplication.Model.Cards.ProgrammingCards.AgainCard;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ChangeDirectionCard;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.MovementCard;
 import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
-import App.RoborallyApplication.Model.Enums.GamePhase;
-import App.RoborallyApplication.Model.Enums.ObstacleEnum;
-import App.RoborallyApplication.Model.Enums.ObstacleTypeEnum;
-import App.RoborallyApplication.Model.Enums.TurnEnum;
+import App.RoborallyApplication.Model.Enums.*;
 import App.RoborallyApplication.Model.GameObjects.Obstacle;
 import App.RoborallyApplication.Model.GameObjects.Player;
 import App.RoborallyApplication.Model.GameObjects.Robot;
@@ -30,8 +27,8 @@ public class GameBrain implements iToDTO {
     private GamePhase currentGamePhase;
 
     public GameBrain(){
-    }
 
+    }
 
     public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
         this.id = UUID.randomUUID();
@@ -148,6 +145,11 @@ public class GameBrain implements iToDTO {
         // TODO
     }
 
+    public Obstacle getObstaclefromboard(Integer x, Integer y) {
+
+        return this.gameboard.getObstacleFromCoordinate(x, y);
+    }
+
     public GameConfiguration getGameConfig(){
         return this.gameConfig;
     }
@@ -197,7 +199,7 @@ public class GameBrain implements iToDTO {
         return players;
     }
 
-    public GamePhase getGamePhase(){
+    public GamePhase getCurrentGamePhase(){
         return this.currentGamePhase;
     }
 
@@ -260,7 +262,7 @@ public class GameBrain implements iToDTO {
 
     }
 
-    protected void pushRobotOffBoard(Robot robot){
+    public void pushRobotOffBoard(Robot robot){
         int nrOfLives = robot.getNrOfLives();
         if(nrOfLives == 1){
             removeRobot(robot);
@@ -334,8 +336,6 @@ public class GameBrain implements iToDTO {
         }
         return availableStartPoints;
     }
-
-
 
 
 }
