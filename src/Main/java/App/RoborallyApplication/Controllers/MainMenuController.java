@@ -1,6 +1,11 @@
 package App.RoborallyApplication.Controllers;
 
 import App.RoborallyApplication.Controllers.ApplicationController;
+import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
+import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
+import App.RoborallyApplication.Views.Menus.LobbyAiView;
+import App.RoborallyApplication.Views.Menus.LobbyRegularView;
+import App.RoborallyApplication.Views.Menus.LobbyView;
 import App.RoborallyApplication.Views.Menus.MainMenuView;
 
 public class MainMenuController {
@@ -13,11 +18,15 @@ public class MainMenuController {
         this.view = new MainMenuView(this);
     }
 
-
-
-    // LOBBY CREATION
-
-    // JOINING A LOBBY
+    public void userClickPlay(DifficultyEnum difficulty, int nrOfPlayers, boolean isRegular){
+        GameConfiguration gameConf = new GameConfiguration(nrOfPlayers, difficulty);
+        LobbyController lobbyController = new LobbyController(this.applicationController, isRegular,gameConf);
+        if(isRegular){
+            applicationController.changePanel(new LobbyRegularView(lobbyController, gameConf));
+        } else {
+            applicationController.changePanel(new LobbyAiView(lobbyController, gameConf));
+        }
+    }
 
     public void display() {
         applicationController.changePanel(view);

@@ -4,6 +4,7 @@ import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
+import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 
 public class GameController {
     private final ApplicationController applicationController;
@@ -14,8 +15,8 @@ public class GameController {
         this.applicationController = applicationController;
         this.gameBrain = gameBrain;
         this.view = new GameBoardView(this, gameBrain);
+        this.view = new ProgrammingPhaseView(this, gameBrain);
     }
-
 
     protected void display() {
         applicationController.changePanel(view);

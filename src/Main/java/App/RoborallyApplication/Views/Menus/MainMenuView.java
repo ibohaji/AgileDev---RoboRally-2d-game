@@ -1,6 +1,8 @@
 package App.RoborallyApplication.Views.Menus;
 
+import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Controllers.MainMenuController;
+import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 
@@ -51,9 +53,12 @@ public class MainMenuView extends JPanel {
         rightPanel.add(difficultyLabel, new GridBagConstraintsBuilder(0, 0).inset(0, 0, 20, 20).anchor(GridBagConstraints.WEST).build());
         difficultyDropdown = getDifficultyDropdown();
         rightPanel.add(difficultyDropdown, new GridBagConstraintsBuilder(1, 0).weightX(0.7).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
+
+
         // Create lobby button
         JButton createLobbyButton = getCreateLobbyButton();
         rightPanel.add(createLobbyButton, new GridBagConstraintsBuilder(0, 1).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
+
         // Play AI button
         JButton playAiButton = getPlayAiButton();
         rightPanel.add(playAiButton, new GridBagConstraintsBuilder(0, 2).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
@@ -79,10 +84,17 @@ public class MainMenuView extends JPanel {
     }
 
     private JButton getCreateLobbyButton(){
-        JButton createGameButton = new JButton("Create lobby");
+        JButton createGameButton = new JButton("Play multiplayer");
         createGameButton.setFont(Fonts.LARGE);
         createGameButton.addActionListener(e -> {
-            // need ip
+                if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
+                    // TODO
+                    controller.userClickPlay(DifficultyEnum.HARD, 2, true);
+                } else if (difficultyDropdown.getSelectedItem().toString().equals("MEDIUM")) {
+                    controller.userClickPlay(DifficultyEnum.MEDIUM, 2, true);
+                } else {
+                    controller.userClickPlay(DifficultyEnum.EASY, 2, true);
+                }
             // need game configuration (nr of players, skin, etc..)
             // controller.userClickCreateLobby();
         });
@@ -142,11 +154,15 @@ public class MainMenuView extends JPanel {
     private JComboBox<String> getDifficultyDropdown(){
         JComboBox<String> difficultyDropdown = new JComboBox<>();
         difficultyDropdown.setFont(Fonts.LARGE);
-        difficultyDropdown.addItem(null);
         difficultyDropdown.addItem("EASY");
         difficultyDropdown.addItem("MEDIUM");
         difficultyDropdown.addItem("HARD");
         return difficultyDropdown;
+    }
+
+
+    public static void main(String[] args) {
+
     }
 
 

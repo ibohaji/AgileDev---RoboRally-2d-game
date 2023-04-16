@@ -5,8 +5,10 @@ import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
 import App.RoborallyApplication.Views.Gameplay.CardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
+import Utils.GridBagConstraintsBuilder;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -21,7 +23,7 @@ public class UserCardDeckView extends GameView {
     public UserCardDeckView(GameController controller, GameBrain gameBrain, ArrayList<ProgrammingCard> cards) {
         super(controller, gameBrain);
         this.cards = cards;
-
+        setLayout(new GridBagLayout());
         cardPanel = new JPanel(new GridLayout(1, 5));
         for (ProgrammingCard card : cards) {
             CardPanel cardPanel = new CardPanel(card);
@@ -29,7 +31,9 @@ public class UserCardDeckView extends GameView {
             cardPanel.setTransferHandler(new CardTransferHandler(card));
             this.cardPanel.add(cardPanel);
         }
-
+        setBorder(new LineBorder(Color.BLACK));
+        JLabel nameForDeck = new JLabel("Player Deck");
+        add(nameForDeck, new GridBagConstraintsBuilder(0,0).weightX(1).inset(0,50,0,50).fill(GridBagConstraints.HORIZONTAL).build());
         add(cardPanel);
     }
 
