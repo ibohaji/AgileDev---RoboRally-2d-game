@@ -13,6 +13,7 @@ public class LobbyRegularView extends LobbyView {
 
     private final GameConfiguration gameConfiguration;
     private final LobbyController lobbyController;
+
     public LobbyRegularView(LobbyController lobbyController, GameConfiguration gameConfiguration){
         this.lobbyController = lobbyController;
         this.gameConfiguration = gameConfiguration;
@@ -21,13 +22,13 @@ public class LobbyRegularView extends LobbyView {
 
     private void createView() {
 
-        for (int i = 0; i < gameConfiguration.getNrOfPlayers(); i++) {
+        for (int i = 1; i <= gameConfiguration.getNrOfPlayers(); i++) {
             JPanel namePanel = new JPanel(new BorderLayout());
             namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
             namePanel.setPreferredSize(new Dimension(100, 50));
             namePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
            // namePanel.add(new JLabel(String.valueOf(i)), new GridBagConstraintsBuilder(i,0).build());
-            namePanel.add(new JTextField("player" +" "+ String.valueOf(i+1)), new GridBagConstraintsBuilder(1,i).build());
+            namePanel.add(new JTextField("player" +" "+ String.valueOf(i)), new GridBagConstraintsBuilder(1,i).build());
             add(namePanel, new GridBagConstraintsBuilder(i,0).build());
         }
         JButton startGameButton = new JButton("START GAME");

@@ -7,9 +7,13 @@ import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainMenuView extends JPanel {
     private final MainMenuController controller;
@@ -27,15 +31,18 @@ public class MainMenuView extends JPanel {
     protected void generateMainMenu() {
         setLayout(new GridBagLayout());
         int horizontalInset = 100;
-        // GAME NAME
-        add(generateGameNameLabel(), new GridBagConstraintsBuilder(0, 0).gridWidth(2).build());
 
-        // USERS DISPLAYNAME
-        add(generateDisplayNamePanel(), new GridBagConstraintsBuilder(0, 1).fill(GridBagConstraints.HORIZONTAL).weight(1, 0.4).gridWidth(2).build());
 
         // MAIN PANEL -> 2 COLUMNS
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(1, 2));
+
+        //Logo
+        JLabel logoLabel = generateLogoLabel();
+        mainPanel.add(logoLabel, BorderLayout.NORTH);
+        add(logoLabel, new GridBagConstraintsBuilder(0, 0).gridWidth(2).build());
+        setVisible(true);
+
 
         // LEFT SIDE PANEL
         JPanel leftPanel = new JPanel();
@@ -46,31 +53,32 @@ public class MainMenuView extends JPanel {
        // leftPanel.setBorder(BorderFactory.createEmptyBorder(10, horizontalInset, 10, horizontalInset/2));
         // Play AI button
         JButton playAiButton = getPlayAiButton();
-        leftPanel.add(playAiButton, new GridBagConstraintsBuilder(0, 2).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
+        leftPanel.add(playAiButton, new GridBagConstraintsBuilder(0, 5).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
         leftPanel.setBorder(BorderFactory.createEmptyBorder(10, horizontalInset/2, 10, horizontalInset));
+        // Game difficulty choice dropdown
+        JLabel difficultyLabel = new JLabel("Difficulty: ");
+        difficultyLabel.setFont(Fonts.LARGE);
+        leftPanel.add(difficultyLabel, new GridBagConstraintsBuilder(0, 3).inset(0, 0, 25, 25).anchor(GridBagConstraints.CENTER).build());
+        difficultyLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        difficultyDropdown = getDifficultyDropdown();
+        leftPanel.add(difficultyDropdown, new GridBagConstraintsBuilder(1, 3).weightX(0.75).inset(1, 1, 25, 0).fill(GridBagConstraints.HORIZONTAL).build());
 
         // RIGHT SIDE PANEL
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new GridBagLayout());
 
-        // Game difficulty choice dropdown
-        JLabel difficultyLabel = new JLabel("Difficulty: ");
-        difficultyLabel.setFont(Fonts.LARGE);
-        rightPanel.add(difficultyLabel, new GridBagConstraintsBuilder(0, 0).inset(0, 0, 20, 50).anchor(GridBagConstraints.WEST).build());
-        difficultyLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        difficultyDropdown = getDifficultyDropdown();
-        rightPanel.add(difficultyDropdown, new GridBagConstraintsBuilder(1, 0).weightX(0.7).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
 
         // Nr of players choice drop down
         JLabel nrOfPlayers = new JLabel("Players");
         nrOfPlayers.setFont(Fonts.LARGE);
-        rightPanel.add(nrOfPlayers,new GridBagConstraintsBuilder(0,3).weightX(0.75).inset(1,1,25,25).anchor(GridBagConstraints.CENTER).build());
+        rightPanel.add(nrOfPlayers,new GridBagConstraintsBuilder(0,3).weightX(0.75).inset(0,0,25,25).anchor(GridBagConstraints.CENTER).build());
         playersDropdown = getPlayersDropdown();
-        rightPanel.add(playersDropdown,new GridBagConstraintsBuilder(1,3).weightX(0.75).inset(1,1,25,0).fill(GridBagConstraints.HORIZONTAL).anchor(GridBagConstraints.CENTER).build());
+        rightPanel.add(playersDropdown,new GridBagConstraintsBuilder(1,3).weightX(0.75).inset(1,1,25,0).fill(GridBagConstraints.HORIZONTAL).build());
 
         // Create lobby button
         JButton createLobbyButton = getCreateLobbyButton();
-        rightPanel.add(createLobbyButton, new GridBagConstraintsBuilder(0, 2).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
+        rightPanel.add(createLobbyButton, new GridBagConstraintsBuilder(0, 5).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, horizontalInset/2, 10, horizontalInset));
 
         // ADD TO CONTAINER
         mainPanel.add(leftPanel);
@@ -78,6 +86,18 @@ public class MainMenuView extends JPanel {
         add(mainPanel, new GridBagConstraintsBuilder(0, 2).weightX(1).fill(GridBagConstraints.BOTH).build());
         add(Box.createGlue(), new GridBagConstraintsBuilder(0, 3).weightY(1).build());
     }
+
+    private JLabel generateLogoLabel() {
+        JLabel logoLabel = new JLabel();
+        try {
+            BufferedImage logoImage = ImageIO.read(new File("src/main/java/App/Resources/RoboRallyLogo/logo.png"));
+            logoLabel.setIcon(new ImageIcon(logoImage));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return logoLabel;
+    }
+
 
 
     private JButton getJoinGameButton(){
@@ -96,7 +116,6 @@ public class MainMenuView extends JPanel {
         createGameButton.setFont(Fonts.LARGE);
         createGameButton.addActionListener(e -> {
             int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
-
             if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
                     // TODO
                     controller.userClickPlay(DifficultyEnum.HARD, numOfPlayers, true);
@@ -107,10 +126,13 @@ public class MainMenuView extends JPanel {
                 }
             // need game configuration ( skin, etc..)
 
+
             // controller.userClickCreateLobby();
         });
         return createGameButton;
     }
+
+
 
     private JButton getPlayAiButton(){
         JButton playAIButton = new JButton("Play against AI");
@@ -123,12 +145,16 @@ public class MainMenuView extends JPanel {
         return playAIButton;
     }
 
+
+
     private JLabel generateGameNameLabel(){
+
         JLabel gameNameLabel = new JLabel("ROBORALLY");
         gameNameLabel.setFont(Fonts.TITLE);
         return gameNameLabel;
     }
 
+    /*/ <-- should be on lobby
     private JPanel generateDisplayNamePanel(){
         // INPUT DISPLAYNAME FIELD
         JPanel namePanel = new JPanel();
@@ -147,22 +173,8 @@ public class MainMenuView extends JPanel {
         namePanel.add(Box.createGlue(), new GridBagConstraintsBuilder(2, 1).weightX(1).build());
         return namePanel;
     }
+*/
 
-
-    /*/
-    private JPanel generateIpPanel(){
-        JPanel ipPanel = new JPanel();
-        ipPanel.setLayout(new GridBagLayout());
-
-        JLabel ipAddressLabel = new JLabel("IP:");
-        ipAddressLabel.setFont(Fonts.LARGE);
-        ipPanel.add(ipAddressLabel, new GridBagConstraintsBuilder(0, 0).inset(0, 0, 0, 20).anchor(GridBagConstraints.WEST).build());
-
-        ipAddressField = new JTextField();
-        ipAddressField.setFont(Fonts.LARGE);
-        ipPanel.add(ipAddressField, new GridBagConstraintsBuilder(1, 0).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
-        return ipPanel;
-    }*/
 
     private JComboBox<String> getDifficultyDropdown(){
         JComboBox<String> difficultyDropdown = new JComboBox<>();
