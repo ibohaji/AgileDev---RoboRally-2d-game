@@ -39,7 +39,7 @@ public class MapGenerator {
         gameboard.changeTile(pitTile);
 
         // add healing tiles
-        Tile healTile1 = new Tile(7, 6, TileTypeEnum.OBSTACLE);
+        Tile healTile1 = new Tile(7, 4, TileTypeEnum.OBSTACLE);
         healTile1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_HEALING, difficulty);
         gameboard.changeTile(healTile1);
 
@@ -67,26 +67,34 @@ public class MapGenerator {
 
         // add acid tiles
         Tile acidTiles1 = new Tile(3, 4, TileTypeEnum.OBSTACLE);
-        acidTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_EXPLOSIVE_ACID, difficulty);
+        acidTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_ACID, difficulty);
         gameboard.changeTile(acidTiles1);
 
-        Tile acidTiles2 = new Tile(1, 6, TileTypeEnum.OBSTACLE);
-        acidTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_EXPLOSIVE_ACID, difficulty);
+        Tile acidTiles2 = new Tile(1, 5, TileTypeEnum.OBSTACLE);
+        acidTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_ACID, difficulty);
         gameboard.changeTile(acidTiles2);
 
         //add finish tile
-        //Tile finishPointTiles1 = new Tile(3, 6, TileTypeEnum.CHECKPOINT);
-        //checkPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_SOUTH, difficulty);
-        //tiles.add(checkPointTiles1);
+        Tile finishPointTiles1 = new Tile(4, 1, TileTypeEnum.FINISH);
+        finishPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.FINISH, difficulty);
+        gameboard.changeTile(finishPointTiles1);
 
         // add start point tiles
-        Tile startPointTiles1 = new Tile(5, 7, TileTypeEnum.START);
-        //startPointTiles1.setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
-        tiles.add(startPointTiles1);
+        Tile startPointTiles1 = new Tile(6, 7, TileTypeEnum.START);
+        startPointTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.START, difficulty);
+        gameboard.changeTile(startPointTiles1);
 
-        Tile starterPointTiles2 = new Tile(3,7,TileTypeEnum.START);
-        starterPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, difficulty);
-        tiles.add(starterPointTiles2);
+        Tile startPointTiles2 = new Tile(5, 7, TileTypeEnum.START);
+        startPointTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.START, difficulty);
+        gameboard.changeTile(startPointTiles2);
+
+        Tile starterPointTiles3 = new Tile(3,7,TileTypeEnum.START);
+        starterPointTiles3.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.START, difficulty);
+        gameboard.changeTile(starterPointTiles3);
+
+        Tile startPointTiles4 = new Tile(1, 7, TileTypeEnum.START);
+        startPointTiles4.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.START, difficulty);
+        gameboard.changeTile(startPointTiles4);
 
         return gameboard;
     }
