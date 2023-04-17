@@ -318,6 +318,15 @@ public class GameBrain implements iToDTO {
         return startPoints;
     }
 
+    public boolean checkRobotposition(Robot robot) {
+        int pos_x = robot.getCords().x;
+        int pos_y = robot.getCords().y;
+        Tile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
+
+        return !tile.doesTileHaveObstacle();
+
+    }
+
     private ArrayList<Tile> getAllFreeStartPoints(){
         ArrayList<Tile> allStartPoints = getAllStartPoints();
         ArrayList<Tile> availableStartPoints = new ArrayList<>();
@@ -337,5 +346,22 @@ public class GameBrain implements iToDTO {
         return availableStartPoints;
     }
 
+    public void activateExplosive(Tile tile) {
+        boolean robot_on_explosive = false;
+
+        for (Player player : this.players) {
+            if (player.getRobot().getCords().equals(tile.getCoordinates())) {
+                robot_on_explosive = true;
+            }
+        }
+
+        ArrayList<Tile> acidpool = this.gameboard.getTilesSurroundingCoordinate(tile.getCoordinates().x, tile.getCoordinates().y);
+        if (robot_on_explosive) {
+            for (Tile tilepool : acidpool) {
+                tilepool.setObstacle(new Obstacle(ObstacleEnum.ACID, ObstacleTypeEnum.KNOWN_OBSTACLE));
+                tilepool.setGraphicalElement(GraphicalElementEnum.OBSTACLE_ACID, this.gameConfig.getDifficulty());
+            }
+        }
+    }
 
 }
