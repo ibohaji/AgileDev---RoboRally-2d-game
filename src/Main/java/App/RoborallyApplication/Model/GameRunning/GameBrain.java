@@ -33,7 +33,7 @@ public class GameBrain implements iToDTO {
     public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
         this.id = UUID.randomUUID();
         gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
-        createGameboard();
+        createGameboard(difficulty);
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
@@ -158,8 +158,14 @@ public class GameBrain implements iToDTO {
         this.gameConfig = gameConfiguration;
     }
 
-    private void createGameboard(){
-        this.gameboard = MapGenerator.generateEasyMap(this);
+    private void createGameboard(DifficultyEnum difficulty){
+        if (difficulty == DifficultyEnum.EASY){
+            this.gameboard = MapGenerator.generateEasyMap(this);
+        } else if (difficulty == DifficultyEnum.MEDIUM){
+            this.gameboard = MapGenerator.generateMediumMap(this);
+        } else {
+            this.gameboard = MapGenerator.generateHardMap(this);
+        }
     }
 
     private ArrayList<Player> createPlayers(){
