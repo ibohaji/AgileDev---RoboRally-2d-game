@@ -30,7 +30,7 @@ public class GameConfiguration {
         switch (difficulty){
             case EASY -> scaling = 60;
             case MEDIUM -> scaling = 45;
-            case HARD -> scaling = 30;
+            case HARD -> scaling = 45;
         }
         return scaling;
     }

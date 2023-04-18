@@ -22,12 +22,13 @@ public enum GraphicalElementEnum {
     START("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "StartingPoint.png"),
     CHECKPOINTS_1("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "Checkpoints_1.png"),
     CHECKPOINTS_2("APP" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "Checkpoints_2.png"),
-    CHECKPOINTS_3("APP"+File.separator +"Resources"+File.separator+"Tiles"+File.separator+"Checkpoints_3.png"),
     FINISH("APP"+File.separator +"Resources"+File.separator+"Tiles"+File.separator+"finish.png"),
     UPLEFT_TURN_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "upleftTurnTreadmill.png"),
     UPRIGHT_TURN_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "uprightTurnTreadmill.png"),
-    BOTTOMLEFT_TURN_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "bottomleftTurnTreadmill.png"),
-    BOTTOMRIGHT_TURN_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "bottomrightTurnTreadmill.png");
+    BOTTOMLEFT_TURN_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "BottomleftTurnTreadmill.png"),
+    BOTTOMRIGHT_TURN_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "bottomrightTurnTreadmill.png"),
+    UPRIGHT_REVERSE_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "UprightReverseTreadmill.png"),
+    BOTTOMRIGHT_REVERSE_TREADMILL("APP" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "BottomrightReverseTreadmill.png");
 
 
     private String pictureFile;
