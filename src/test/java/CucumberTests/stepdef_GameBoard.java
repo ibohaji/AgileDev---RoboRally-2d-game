@@ -25,7 +25,7 @@ public class stepdef_GameBoard {
     @Before
     public void setup(){
         gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
-        gameboard = new LGameboard(gamebrain);
+        gameboard = gamebrain.getGameboard();
     }
 
     @Given("The point \\({double}) is an empty tile")
