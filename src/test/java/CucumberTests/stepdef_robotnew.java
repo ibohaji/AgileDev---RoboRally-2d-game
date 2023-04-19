@@ -42,6 +42,7 @@ public class stepdef_robotnew {
         changeDirectionProgramming = new LCardChangeDirectionProgramming(EnumTurnType.LEFT);
         changeDirectionProgramming.useCard(robot,gamebrain);
     }
+
     @Then("the expected direction get updated to WEST")
     public void the_expected_direction_get_updated_to_west() {
         assertEquals(EnumDirection.WEST,robot.getCurrentDirection());

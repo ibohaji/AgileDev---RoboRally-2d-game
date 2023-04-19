@@ -24,7 +24,7 @@ public class LobbyController {
     }
 
     public void userClickStartGame(LGameConfiguration gameConfiguration){
-        LGameBrain gameBrain = new LGameBrain(gameConfiguration.getNrOfPlayers(), gameConfiguration.getDifficulty());
+         LGameBrain gameBrain = new LGameBrain(gameConfiguration);
         GameController gameController = new GameController(applicationController, gameBrain);
         applicationController.changePanel(new ProgrammingPhaseView(gameController, gameBrain));
         // Test purpose only

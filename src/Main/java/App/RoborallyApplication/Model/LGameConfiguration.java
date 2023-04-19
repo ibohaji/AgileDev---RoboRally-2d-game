@@ -2,12 +2,15 @@ package App.RoborallyApplication.Model;
 
 import Utils.Tuple;
 
+import java.util.ArrayList;
+
 public class LGameConfiguration {
 
     private final int nrOfPlayers;
     private final Tuple<Integer, Integer> boardDimensions;
     private final EnumDifficulty difficulty;
     private boolean isRegular;
+    private ArrayList<String> playerNames;
     public LGameConfiguration(int nrOfPlayers, EnumDifficulty difficulty){
         this.nrOfPlayers = nrOfPlayers;
         this.difficulty = difficulty;
@@ -33,6 +36,10 @@ public class LGameConfiguration {
     public int getNrOfPlayers(){return this.nrOfPlayers;}
 
     public EnumDifficulty getDifficulty(){return this.difficulty;}
+
+    public void setPlayerNames(ArrayList<String> playerNames){ this.playerNames = playerNames;}
+    public ArrayList<String> getPlayerNames(){return playerNames;}
+
 
     public int getScalingSizeForTile(){
         int scaling = 0;

@@ -31,6 +31,18 @@ public class LGameBrain implements IToDTO {
         startGame();
         startRound();
     }
+    //Alternative constructor
+    public LGameBrain(LGameConfiguration gameConfig){
+        this.gameConfig = gameConfig;
+        this.id = UUID.randomUUID();
+        createGameboard(gameConfig.getDifficulty());
+        this.players = createPlayers();
+        ArrayList<LRobot> robots = createRobots(players);
+        this.gameboard.setRobots(robots);
+        currentEnumGamePhase = EnumGamePhase.ROUND_START;
+        startGame();
+        startRound();
+    }
 
 
     private void startGame(){
@@ -194,8 +206,9 @@ public class LGameBrain implements IToDTO {
 
     private ArrayList<LPlayer> createPlayers(){
         ArrayList<LPlayer> players = new ArrayList<>();
-        for (int i = 1; i <= this.gameConfig.getNrOfPlayers(); i++) {
-            players.add(new LPlayer("player" + (Integer.toString(i ))));
+        ArrayList<String> playerNames = gameConfig.getPlayerNames();
+        for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
+            players.add(new LPlayer(playerNames.get(i)));
         }
         return players;
     }

@@ -60,6 +60,8 @@ public class LobbyAiView extends LobbyView{
 
             lobbyController.userClickStartGame(gameConfiguration);
         });
+
+
         add(startGameButton);
     }
 
