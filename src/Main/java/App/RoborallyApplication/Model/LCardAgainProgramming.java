@@ -1,9 +1,14 @@
 package App.RoborallyApplication.Model;
 
+import Utils.ImageUtils;
+
+import javax.swing.*;
+
 public class LCardAgainProgramming extends AbCardProgramming {
-    @Override
-    public String getCardImageFileName() {
-        return "App.Resource.Cards.AgainCard.png";
+    private GraphicalElement graphicalElement = new GraphicalElement();
+
+    public LCardAgainProgramming(){
+        this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.AGAIN_CARD);
     }
 
     @Override
@@ -14,6 +19,10 @@ public class LCardAgainProgramming extends AbCardProgramming {
         if(lastCardUsed != null){
             robot.useProgrammingCard(lastCardUsed, gameBrain);
         }
+    }
+    @Override
+    public ImageIcon getCardImageIcon() {
+        return this.graphicalElement.getImage();
     }
 }
 

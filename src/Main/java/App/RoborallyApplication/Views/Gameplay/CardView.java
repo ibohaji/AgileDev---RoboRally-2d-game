@@ -22,7 +22,7 @@ public class CardView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        /*super.paintComponent(g);
         BufferedImage image = null;
         String imagePath = card.getCardImageFileName();
         try {
@@ -32,7 +32,7 @@ public class CardView extends JPanel {
         }
         if (image != null) {
             g.drawImage(image, 0, 0, CARD_WIDTH, CARD_HEIGHT, null);
-        }
+        }*/
     }
 }
 

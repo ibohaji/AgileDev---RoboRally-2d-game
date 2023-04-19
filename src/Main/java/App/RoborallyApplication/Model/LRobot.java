@@ -22,7 +22,7 @@ public class LRobot implements IToDTO {
         this.currentDirection = null;
 
         this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
-        this.graphicalElement.setGraphicalElement(EnumGraphicalElementMain.ROBOT_NORTH, EnumDifficulty.HARD);
+        this.graphicalElement.setTileGraphicalElement(EnumGraphicalElementMain.ROBOT_NORTH, EnumDifficulty.HARD);
     }
 
     public void setDirection(EnumDirection direction) {

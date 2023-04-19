@@ -29,6 +29,7 @@ public class LGameBrain implements IToDTO {
         this.gameboard.setRobots(robots);
         currentEnumGamePhase = EnumGamePhase.ROUND_START;
         startGame();
+        startRound();
     }
 
 
@@ -48,7 +49,21 @@ public class LGameBrain implements IToDTO {
 
     public boolean haveAllPlayersSubmittedSequence(){
         boolean haveSubmitted = true;
+        for (LPlayer player: players) {
+            if(player.getCardSequence() == null){
+                haveSubmitted = false;
+            }
+        }
         return haveSubmitted;
+    }
+
+    public LPlayer getPlayerWithoutCardSequence(){
+        for (LPlayer player: players) {
+            if(player.getCardSequence() == null){
+                return player;
+            }
+        }
+        return null;
     }
 
     public void endRound(){

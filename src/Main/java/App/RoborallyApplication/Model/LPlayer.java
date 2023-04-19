@@ -39,6 +39,7 @@ public class LPlayer implements IToDTO {
     }
 
     public ArrayList<AbCardProgramming> getProgrammingCards() {
+        System.out.println(programmingCards.size());
         return programmingCards;
     }
 

@@ -36,7 +36,7 @@ public class LTile implements IToDTO {
     }
 
     public void setGraphicalElement(EnumGraphicalElementMain enumGraphicalElementMain, EnumDifficulty difficulty){
-        this.graphicalElement.setGraphicalElement(enumGraphicalElementMain, difficulty);
+        this.graphicalElement.setTileGraphicalElement(enumGraphicalElementMain, difficulty);
     }
 
     public boolean doesTileHaveObstacle(){
