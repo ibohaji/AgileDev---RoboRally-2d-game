@@ -1,7 +1,10 @@
 package Utils;
 
 import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
+import App.RoborallyApplication.Model.Enums.ObstacleEnum;
+import App.RoborallyApplication.Model.Enums.ObstacleTypeEnum;
 import App.RoborallyApplication.Model.Enums.TileTypeEnum;
+import App.RoborallyApplication.Model.GameObjects.Obstacle;
 import App.RoborallyApplication.Model.GameObjects.Tile;
 import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
 import App.RoborallyApplication.Model.GameRunning.GameBrain;
@@ -72,10 +75,12 @@ public class MapGenerator {
         // add acid tiles
         Tile acidTiles1 = new Tile(3, 4, TileTypeEnum.OBSTACLE);
         acidTiles1.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_ACID, difficulty);
+        acidTiles1.setObstacle(new Obstacle(ObstacleEnum.ACID, ObstacleTypeEnum.EXPLOSIVE_KNOWN));
         gameboard.changeTile(acidTiles1);
 
         Tile acidTiles2 = new Tile(1, 5, TileTypeEnum.OBSTACLE);
         acidTiles2.getGraphicalElement().setGraphicalElement(GraphicalElementEnum.OBSTACLE_ACID, difficulty);
+        acidTiles2.setObstacle(new Obstacle(ObstacleEnum.ACID, ObstacleTypeEnum.EXPLOSIVE_KNOWN));
         gameboard.changeTile(acidTiles2);
 
         //add finish tile
