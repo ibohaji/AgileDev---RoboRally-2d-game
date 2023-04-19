@@ -1,4 +1,4 @@
-Feature: Programming Phase
+Feature: Player
 
   Scenario: Player receives 5 cards in programming phase
     Given  a player waiting to receive programming cards
@@ -19,3 +19,13 @@ Feature: Programming Phase
     Given a player in the game
     When during the whole programming phase
     Then player check the game board anytime
+
+  Scenario: Robot can execute programming cards in order in activation phase
+    Given a game board with a robot and 5 ordered cards
+    When the activation phase starts
+    Then the robot execute the cards in the given order
+
+  Scenario: Player watch the activation progress on the game board
+    Given a player and its robot
+    When during the activation phase
+    Then the player see how many lives its robot currently has
