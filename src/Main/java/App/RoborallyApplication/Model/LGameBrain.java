@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
-public class LGameBrain implements iToDTO {
+public class LGameBrain implements IToDTO {
     private UUID id;
     private LGameConfiguration gameConfig;
     private LGameboard gameboard = null;
@@ -23,7 +23,6 @@ public class LGameBrain implements iToDTO {
     public LGameBrain(int nrOfPlayers, EnumDifficulty difficulty){
         this.id = UUID.randomUUID();
         gameConfig = new LGameConfiguration(nrOfPlayers, difficulty);
-
         createGameboard(difficulty);
         this.players = createPlayers();
         ArrayList<LRobot> robots = createRobots(players);
@@ -43,7 +42,23 @@ public class LGameBrain implements iToDTO {
         currentEnumGamePhase = EnumGamePhase.PROGRAMMING_PHASE;
     }
 
-    public void setPlayerCardSequence(){
+    public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
+        player.setCardSequence(cardSequence);
+    }
+
+    public boolean haveAllPlayersSubmittedSequence(){
+        boolean haveSubmitted = true;
+        return haveSubmitted;
+    }
+
+    public void endRound(){
+        currentEnumGamePhase = EnumGamePhase.ROUND_END;
+        for (LPlayer player: players) {
+            player.setCardSequenceToNull();
+        }
+    }
+
+    public void setPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
 
     }
 

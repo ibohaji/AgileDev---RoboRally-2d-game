@@ -4,7 +4,7 @@ import Utils.JsonHelper;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LPlayer implements iToDTO {
+public class LPlayer implements IToDTO {
     private UUID id;
     private String displayName;
     private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
@@ -23,8 +23,19 @@ public class LPlayer implements iToDTO {
         robot.useProgrammingCard(card, gameBrain);
     }
 
-    protected ArrayList<AbCardProgramming> getProgrammingPhaseOrdering(LPlayer playerToGetOrderFrom){
-        return new ArrayList<>();
+    protected LCardSequence getCardSequence(){
+        return this.cardSequence;
+    }
+
+    protected void setCardSequence(LCardSequence cardSequence){
+        this.cardSequence = cardSequence;
+    }
+
+    /**
+     * At the end of the round, cardsequence should be null
+     */
+    protected void setCardSequenceToNull(){
+        this.cardSequence = null;
     }
 
     public ArrayList<AbCardProgramming> getProgrammingCards() {
