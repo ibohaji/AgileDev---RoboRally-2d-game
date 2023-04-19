@@ -5,7 +5,7 @@ import Utils.JsonHelper;
 
 import java.util.UUID;
 
-public class LObstacle implements iToDTO {
+public class LObstacle implements IToDTO {
     private UUID id;
     private Integer damage;
     public GraphicalElementObstacle graphicalElement;

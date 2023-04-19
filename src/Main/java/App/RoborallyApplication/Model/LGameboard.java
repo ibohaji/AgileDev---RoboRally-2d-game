@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LGameboard implements iToDTO {
+public class LGameboard implements IToDTO {
     private UUID id;
     private UUID gameBrainId;
     private ArrayList<LTile> tiles = new ArrayList<>();

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LRobot implements iToDTO {
+public class LRobot implements IToDTO {
 
     private UUID id;
     private Point cords = new Point(0,0);

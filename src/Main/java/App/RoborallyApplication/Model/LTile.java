@@ -6,7 +6,7 @@ import Utils.JsonHelper;
 import java.awt.*;
 import java.util.UUID;
 
-public class LTile implements iToDTO {
+public class LTile implements IToDTO {
     private UUID id;
     private Integer xCoordinate;
     private Integer yCoordinate;
