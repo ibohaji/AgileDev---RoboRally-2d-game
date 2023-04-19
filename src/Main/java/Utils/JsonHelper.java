@@ -1,7 +1,7 @@
 package Utils;
 
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.EnumDifficulty;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -21,7 +21,7 @@ public class JsonHelper {
         return "";
     }
     public static void main(String[] args) {
-        var gameBrain = new GameBrain(4, DifficultyEnum.EASY);
+        var gameBrain = new LGameBrain(4, EnumDifficulty.EASY);
         System.out.println(gameBrain.DTOasJson());
         var path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator
                 + "java" + File.separator + "App" + File.separator + "Resources" + File.separator + "savedGames.txt";

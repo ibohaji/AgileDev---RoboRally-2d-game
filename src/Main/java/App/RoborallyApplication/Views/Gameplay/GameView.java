@@ -1,23 +1,21 @@
 package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LGameConfiguration;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserCardDeckView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
-import Utils.ImageUtils;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class GameView extends JPanel {
     private final GameController controller;
-    protected final GameConfiguration gameConfiguration;
-    protected GameBrain gameBrain;
+    protected final LGameConfiguration gameConfiguration;
+    protected LGameBrain gameBrain;
 
-    public GameView(GameController controller, GameBrain gameBrain){
+    public GameView(GameController controller, LGameBrain gameBrain){
         this.controller = controller;
         this.gameBrain = gameBrain;
         this.gameConfiguration = gameBrain.getGameConfig();

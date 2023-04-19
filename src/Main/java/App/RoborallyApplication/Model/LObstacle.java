@@ -1,31 +1,26 @@
-package App.RoborallyApplication.Model.GameObjects;
+package App.RoborallyApplication.Model;
 
 import App.DTO.ObstacleDTO;
-import App.RoborallyApplication.Model.Enums.ObstacleEnum;
-import App.RoborallyApplication.Model.Enums.ObstacleTypeEnum;
-import App.RoborallyApplication.Model.iToDTO;
-import App.RoborallyApplication.Model.GraphicalElements.ObstacleGraphicalElement;
 import Utils.JsonHelper;
-import Utils.Tuple;
 
 import java.util.UUID;
 
-public class Obstacle implements iToDTO {
+public class LObstacle implements iToDTO {
     private UUID id;
     private Integer damage;
-    public ObstacleGraphicalElement graphicalElement;
-    private ObstacleTypeEnum obstacleType;
-    private ObstacleEnum obstacle;
+    public GraphicalElementObstacle graphicalElement;
+    private EnumObstacleType obstacleType;
+    private EnumObstacle obstacle;
 
-    public Obstacle(ObstacleEnum obstacle, ObstacleTypeEnum obstacleType) {
+    public LObstacle(EnumObstacle obstacle, EnumObstacleType obstacleType) {
         this.id = UUID.randomUUID();
         this.obstacleType = obstacleType;
         this.obstacle = obstacle;
-        this.graphicalElement = new ObstacleGraphicalElement();
+        this.graphicalElement = new GraphicalElementObstacle();
         this.damage = obstacle.getDamage();
     }
 
-    public Robot DoDamage(Robot targetrobot) {
+    public LRobot DoDamage(LRobot targetrobot) {
         targetrobot.setNrOfLives(
                 targetrobot.getNrOfLives() - this.damage
         );
@@ -48,11 +43,11 @@ public class Obstacle implements iToDTO {
         return this.id;
     }
 
-    public ObstacleEnum getObstacleEnum() {
+    public EnumObstacle getObstacleEnum() {
         return obstacle;
     }
 
-    public ObstacleTypeEnum getObstacleTypeEnum() {
+    public EnumObstacleType getObstacleTypeEnum() {
         return obstacleType;
     }
 

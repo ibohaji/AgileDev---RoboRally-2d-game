@@ -1,8 +1,8 @@
-package App.RoborallyApplication.Model.GameRunning;
+package App.RoborallyApplication.Model;
 
 import Utils.Tuple;
 
-public enum DifficultyEnum {
+public enum EnumDifficulty {
     EASY(8,8),
     MEDIUM(12,12),
     HARD(12,12);
@@ -12,7 +12,7 @@ public enum DifficultyEnum {
 
     private int tileSizeInPixels;
 
-    private DifficultyEnum(int width, int height) {
+    private EnumDifficulty(int width, int height) {
         this.width = width;
         this.height = height;
     }

@@ -1,34 +1,24 @@
-package App.RoborallyApplication.Model.GameRunning;
+package App.RoborallyApplication.Model;
 
 import App.DTO.GameboardDTO;
-import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
-import App.RoborallyApplication.Model.Enums.TileTypeEnum;
-import App.RoborallyApplication.Model.GameObjects.Obstacle;
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameObjects.Tile;
-import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
-import Utils.Tuple;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Gameboard implements iToDTO {
+public class LGameboard implements iToDTO {
     private UUID id;
     private UUID gameBrainId;
-    private ArrayList<Tile> tiles = new ArrayList<>();
-    private ArrayList<Robot> robots = new ArrayList<>();
-    private ArrayList<Obstacle> obstacles = new ArrayList<>();
-    private GameBrain gameBrain;
+    private ArrayList<LTile> tiles = new ArrayList<>();
+    private ArrayList<LRobot> robots = new ArrayList<>();
+    private ArrayList<LObstacle> obstacles = new ArrayList<>();
+    private LGameBrain gameBrain;
 
-    public Gameboard(){
+    public LGameboard(){
     }
 
-    public Gameboard(GameBrain brain){
+    public LGameboard(LGameBrain brain){
         gameBrain = brain;
         gameBrainId = gameBrain.getID();
     }
@@ -37,22 +27,22 @@ public class Gameboard implements iToDTO {
         return this.gameBrain.getID();
     }
 
-    private void removeRobotFromBoard(Robot robotToRemove){
+    private void removeRobotFromBoard(LRobot robotToRemove){
         this.robots.remove(robotToRemove);
     }
 
-    protected void setRobots(ArrayList<Robot> robots){this.robots = robots;}
+    protected void setRobots(ArrayList<LRobot> robots){this.robots = robots;}
 
-    public void setTiles(ArrayList<Tile> tiles){this.tiles = tiles;}
+    public void setTiles(ArrayList<LTile> tiles){this.tiles = tiles;}
 
-    public ArrayList<Tile> getTiles(){
+    public ArrayList<LTile> getTiles(){
         return this.tiles;
     }
 
-    public void changeTile(Tile newTile){
+    public void changeTile(LTile newTile){
         int xCoordinate = newTile.getCoordinates().x;
         int yCoordinate = newTile.getCoordinates().y;
-        Tile tile = getTileFromCoordinate(xCoordinate, yCoordinate);
+        LTile tile = getTileFromCoordinate(xCoordinate, yCoordinate);
         for (int i = 0; i < tiles.size(); i++) {
             if (tiles.get(i).equals(tile)){
                 tiles.remove(i);
@@ -61,14 +51,14 @@ public class Gameboard implements iToDTO {
         }
     }
 
-    public ArrayList<Robot> getRobots(){
+    public ArrayList<LRobot> getRobots(){
         return this.robots;
     }
 
-    public ArrayList<Obstacle> getObstacles(){return this.obstacles;}
+    public ArrayList<LObstacle> getObstacles(){return this.obstacles;}
 
-    public Obstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
-        for(Tile tile: tiles){
+    public LObstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
+        for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
                 if(tile.getCoordinates().x == xCoordinate && tile.getCoordinates().y == yCoordinate){
                     return tile.getObstacle();
@@ -78,9 +68,9 @@ public class Gameboard implements iToDTO {
         return null;
     }
 
-    public ArrayList<Tile> getTilesSurroundingCoordinate(int xCoordinate, int yCoordinate){
-        ArrayList<Tile> surroundingTiles = new ArrayList<>();
-        ArrayList<Tile> surroundingTilesFinal = new ArrayList<>();
+    public ArrayList<LTile> getTilesSurroundingCoordinate(int xCoordinate, int yCoordinate){
+        ArrayList<LTile> surroundingTiles = new ArrayList<>();
+        ArrayList<LTile> surroundingTilesFinal = new ArrayList<>();
         surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate - 1));
@@ -89,15 +79,15 @@ public class Gameboard implements iToDTO {
         surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate + 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate + 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate + 1));
-        for (Tile tile: surroundingTiles) {
+        for (LTile tile: surroundingTiles) {
             if(tile != null){
                 surroundingTilesFinal.add(tile);
             }
         }
         return surroundingTilesFinal;
     }
-    public Tile getTileFromCoordinate(Integer x, Integer y){
-        for (Tile tile: tiles) {
+    public LTile getTileFromCoordinate(Integer x, Integer y){
+        for (LTile tile: tiles) {
             if(tile.getCoordinates().x == x && tile.getCoordinates().y == y){
                 return tile;
             }
@@ -106,8 +96,8 @@ public class Gameboard implements iToDTO {
     }
 
 
-    public Robot getRobotFromCoordinate(Integer x, Integer y){
-        for (Robot robot: robots) {
+    public LRobot getRobotFromCoordinate(Integer x, Integer y){
+        for (LRobot robot: robots) {
             if(robot.getCords().x == x && robot.getCords().y == y){
                 return robot;
             }
@@ -116,7 +106,7 @@ public class Gameboard implements iToDTO {
     }
 
     public boolean isTileOccupiedByRobot(int xCoordinate, int yCoordinate){
-        for (Robot robot: robots) {
+        for (LRobot robot: robots) {
             Point location = robot.getCords();
             if(location.x == xCoordinate && location.y == yCoordinate){
                 return true;
@@ -125,7 +115,7 @@ public class Gameboard implements iToDTO {
         return false;
     }
 
-    protected void removeRobot(Robot robot){
+    protected void removeRobot(LRobot robot){
         this.robots.remove(robot);
     }
 
@@ -139,7 +129,7 @@ public class Gameboard implements iToDTO {
     public UUID getID() {
         return id;
     }
-    protected GameBrain getGameBrain() {
+    protected LGameBrain getGameBrain() {
         return gameBrain;
     }
 }

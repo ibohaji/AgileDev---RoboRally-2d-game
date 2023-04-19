@@ -1,6 +1,6 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
+import App.RoborallyApplication.Model.AbCardProgramming;
 
 public class ProgrammingCardDTO implements iFromDTO{
 
@@ -8,7 +8,7 @@ public class ProgrammingCardDTO implements iFromDTO{
 
     }
     @Override
-    public ProgrammingCard returnObjectFromDTO() {
+    public AbCardProgramming returnObjectFromDTO() {
         return null;
     }
 }

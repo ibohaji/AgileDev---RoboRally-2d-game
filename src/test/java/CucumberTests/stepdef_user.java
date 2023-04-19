@@ -1,9 +1,8 @@
 package CucumberTests;
 
-import App.RoborallyApplication.Model.GameObjects.Player;
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Views.Menus.LobbyView;
+import App.RoborallyApplication.Model.LPlayer;
+import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.Model.LGameBrain;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 public class stepdef_user {
 
-    private GameBrain gameBrain;
+    private LGameBrain gameBrain;
 
     /*
         Test steps for user
@@ -22,7 +21,7 @@ public class stepdef_user {
     // User chooses how many players will be in a game
     @Given("a user who wants to choose players")
     public void a_user_who_wants_to_choose_players() {
-        gameBrain = new GameBrain(1, DifficultyEnum.MEDIUM);
+        gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
     }
 
     @When("before a new game starts with specified players")
@@ -32,17 +31,17 @@ public class stepdef_user {
 
     @Then("user choose the number of players")
     public void user_choose_the_number_of_players() {
-        gameBrain = new GameBrain(1, DifficultyEnum.MEDIUM);
-        ArrayList<Player> getPlayers = gameBrain.getPlayers();
+        gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
+        ArrayList<LPlayer> getPlayers = gameBrain.getPlayers();
         Assert.assertEquals(1, getPlayers.size());
     }
 
     // User chooses the difficulty level
     @Given("a user who wants to choose difficulty level")
     public void a_user_who_wants_to_choose_difficulty_level() {
-        gameBrain = new GameBrain(1, DifficultyEnum.MEDIUM);
-        DifficultyEnum difficulty = gameBrain.getGameConfig().getDifficulty();
-        gameBrain = new GameBrain(1, gameBrain.getGameConfig().getDifficulty());
+        gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
+        EnumDifficulty difficulty = gameBrain.getGameConfig().getDifficulty();
+        gameBrain = new LGameBrain(1, gameBrain.getGameConfig().getDifficulty());
     }
 
     @When("before a new game starts with specified difficulty level")
@@ -52,14 +51,14 @@ public class stepdef_user {
 
     @Then("user choose the difficulty level")
     public void user_choose_the_difficulty_level() {
-        gameBrain = new GameBrain(1, DifficultyEnum.MEDIUM);
-        Assert.assertEquals(DifficultyEnum.MEDIUM, gameBrain.getGameConfig().getDifficulty());
+        gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
+        Assert.assertEquals(EnumDifficulty.MEDIUM, gameBrain.getGameConfig().getDifficulty());
     }
 
     // User create a single lobby
     @Given("a user who wants to create lobby")
     public void a_user_who_wants_to_create_lobby() {
-        gameBrain = new GameBrain(1, DifficultyEnum.MEDIUM);
+        gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
     }
 
     @When("before a new game starts with specified lobby")

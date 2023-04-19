@@ -1,15 +1,15 @@
-package App.RoborallyApplication.Model.Enums;
+package App.RoborallyApplication.Model;
 
-public enum TileTypeEnum {
+public enum EnumTileType {
     START,
     FINISH,
     CHECKPOINT,
     OBSTACLE,
     DEFAULT_FLOOR;
 
-    private TileTypeEnum(){}
+    private EnumTileType(){}
 
-    public boolean equals(TileTypeEnum typeEnum){
+    public boolean equals(EnumTileType typeEnum){
         if(this.ordinal() == typeEnum.ordinal()){
             return true;
         } else {

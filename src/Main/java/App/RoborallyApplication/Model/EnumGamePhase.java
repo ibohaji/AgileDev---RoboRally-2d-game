@@ -1,6 +1,6 @@
-package App.RoborallyApplication.Model.Enums;
+package App.RoborallyApplication.Model;
 
-public enum GamePhase {
+public enum EnumGamePhase {
     ROUND_START,
     PROGRAMMING_PHASE,
     MOVEMENT_PHASE,

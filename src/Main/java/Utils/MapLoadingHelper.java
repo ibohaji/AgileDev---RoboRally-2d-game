@@ -1,7 +1,7 @@
 package Utils;
 
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
-import App.RoborallyApplication.Model.GameObjects.Tile;
+import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.Model.LTile;
 
 import java.util.ArrayList;
 
@@ -42,8 +42,8 @@ public class MapLoadingHelper {
         }
     }*/
 
-    public static ArrayList<Tile> loadMap(DifficultyEnum difficulty){
-        ArrayList<Tile> tileList = new ArrayList<>();
+    public static ArrayList<LTile> loadMap(EnumDifficulty difficulty){
+        ArrayList<LTile> tileList = new ArrayList<>();
 
         return tileList;
     }

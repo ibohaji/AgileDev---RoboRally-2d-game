@@ -1,14 +1,14 @@
-package App.RoborallyApplication.Model.GameRunning;
+package App.RoborallyApplication.Model;
 
 import Utils.Tuple;
 
-public class GameConfiguration {
+public class LGameConfiguration {
 
     private final int nrOfPlayers;
     private final Tuple<Integer, Integer> boardDimensions;
-    private final DifficultyEnum difficulty;
+    private final EnumDifficulty difficulty;
     private boolean isRegular;
-    public GameConfiguration(int nrOfPlayers, DifficultyEnum difficulty){
+    public LGameConfiguration(int nrOfPlayers, EnumDifficulty difficulty){
         this.nrOfPlayers = nrOfPlayers;
         this.difficulty = difficulty;
         boardDimensions = difficulty.getDimensions();
@@ -32,7 +32,7 @@ public class GameConfiguration {
 
     public int getNrOfPlayers(){return this.nrOfPlayers;}
 
-    public DifficultyEnum getDifficulty(){return this.difficulty;}
+    public EnumDifficulty getDifficulty(){return this.difficulty;}
 
     public int getScalingSizeForTile(){
         int scaling = 0;

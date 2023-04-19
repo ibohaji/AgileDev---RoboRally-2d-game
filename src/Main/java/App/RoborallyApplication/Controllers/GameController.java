@@ -1,17 +1,17 @@
 package App.RoborallyApplication.Controllers;
 
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
+import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 
 public class GameController {
     private final ApplicationController applicationController;
-    protected final GameBrain gameBrain;
+    protected final LGameBrain gameBrain;
     private GameView view;
 
-    public GameController(ApplicationController applicationController, GameBrain gameBrain){
+    public GameController(ApplicationController applicationController, LGameBrain gameBrain){
         this.applicationController = applicationController;
         this.gameBrain = gameBrain;
         this.view = new GameBoardView(this, gameBrain);
@@ -29,7 +29,7 @@ public class GameController {
 
     public static void main(String[] args) {
         // Method to see the view
-        var game = new GameBrain(2, DifficultyEnum.EASY);
+        var game = new LGameBrain(2, EnumDifficulty.EASY);
         var app = new ApplicationController();
         var gameController = new GameController(app, game);
         gameController.display();

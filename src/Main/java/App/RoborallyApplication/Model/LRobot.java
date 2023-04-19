@@ -1,46 +1,38 @@
-package App.RoborallyApplication.Model.GameObjects;
+package App.RoborallyApplication.Model;
 
 
 import App.DTO.RobotDTO;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
-import App.RoborallyApplication.Model.Enums.TurnEnum;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.iToDTO;
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
-import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
-import App.RoborallyApplication.Model.GraphicalElements.RobotGraphicalElement;
 import Utils.JsonHelper;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Robot implements iToDTO {
+public class LRobot implements iToDTO {
 
     private UUID id;
     private Point cords = new Point(0,0);
-    private RobotGraphicalElement graphicalElement;
+    private GraphicalElementRobot graphicalElement;
     private ArrayList<Point> checkpointsDone;
-    private DirectionEnum currentDirection;
+    private EnumDirection currentDirection;
     private int lifeCount = 5;
-    Player player;
-    public Robot(){
+    LPlayer player;
+    public LRobot(){
         this.id = UUID.randomUUID();
         this.currentDirection = null;
 
-        this.graphicalElement = new RobotGraphicalElement("PLAYER", null);
-        this.graphicalElement.setGraphicalElement(GraphicalElementEnum.ROBOT_NORTH, DifficultyEnum.HARD);
+        this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
+        this.graphicalElement.setGraphicalElement(EnumGraphicalElementMain.ROBOT_NORTH, EnumDifficulty.HARD);
     }
 
-    public void setDirection(DirectionEnum direction) {
+    public void setDirection(EnumDirection direction) {
         currentDirection = direction;
     }
 
-    public DirectionEnum getCurrentDirection() {return this.currentDirection;}
+    public EnumDirection getCurrentDirection() {return this.currentDirection;}
 
-    public void changeDirection(TurnEnum turnEnum){
-        switch (turnEnum){
+    public void changeDirection(EnumTurnType enumTurnType){
+        switch (enumTurnType){
             case LEFT:
                 this.currentDirection = currentDirection.getLeft();
                 break;
@@ -85,7 +77,7 @@ public class Robot implements iToDTO {
     }
     public void setNrOfLives(int lifeCount) {this.lifeCount = lifeCount;}
 
-    public void useProgrammingCard(ProgrammingCard card, GameBrain gameBrain){
+    public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain){
         card.useCard(this, gameBrain);
     }
 
@@ -93,10 +85,10 @@ public class Robot implements iToDTO {
         lifeCount-=1;
     }
 
-    public void assignPlayer(Player player){
+    public void assignPlayer(LPlayer player){
         this.player = player;
     }
-    public Player  getPlayer(){
+    public LPlayer getPlayer(){
         return player;
     }
     @Override

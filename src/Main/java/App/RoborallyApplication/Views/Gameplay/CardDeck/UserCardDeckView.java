@@ -1,9 +1,8 @@
 package App.RoborallyApplication.Views.Gameplay.CardDeck;
 
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Views.Gameplay.CardView;
+import App.RoborallyApplication.Model.AbCardProgramming;
+import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.GridBagConstraintsBuilder;
 
@@ -17,15 +16,15 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class UserCardDeckView extends GameView {
-    private ArrayList<ProgrammingCard> cards;
+    private ArrayList<AbCardProgramming> cards;
     private JPanel cardPanel;
 
-    public UserCardDeckView(GameController controller, GameBrain gameBrain, ArrayList<ProgrammingCard> cards) {
+    public UserCardDeckView(GameController controller, LGameBrain gameBrain, ArrayList<AbCardProgramming> cards) {
         super(controller, gameBrain);
         this.cards = cards;
         setLayout(new GridBagLayout());
         cardPanel = new JPanel(new GridLayout(1, 5));
-        for (ProgrammingCard card : cards) {
+        for (AbCardProgramming card : cards) {
             CardPanel cardPanel = new CardPanel(card);
             cardPanel.addMouseListener(new CardMouseListener());
             cardPanel.setTransferHandler(new CardTransferHandler(card));
@@ -38,9 +37,9 @@ public class UserCardDeckView extends GameView {
     }
 
     private class CardPanel extends JPanel {
-        private ProgrammingCard card;
+        private AbCardProgramming card;
 
-        public CardPanel(ProgrammingCard card) {
+        public CardPanel(AbCardProgramming card) {
             this.card = card;
             // add card view to the panel
         }
@@ -57,9 +56,9 @@ public class UserCardDeckView extends GameView {
     }
 
     private class CardTransferHandler extends TransferHandler {
-        private ProgrammingCard card;
+        private AbCardProgramming card;
 
-        public CardTransferHandler(ProgrammingCard card) {
+        public CardTransferHandler(AbCardProgramming card) {
             this.card = card;
         }
 
@@ -69,12 +68,12 @@ public class UserCardDeckView extends GameView {
     }
 
     private class CardTransferable implements Transferable {
-        private ProgrammingCard card;
+        private AbCardProgramming card;
         private DataFlavor flavor;
 
-        public CardTransferable(ProgrammingCard card) {
+        public CardTransferable(AbCardProgramming card) {
             this.card = card;
-            flavor = new DataFlavor(ProgrammingCard.class, "ProgrammingCard");
+            flavor = new DataFlavor(AbCardProgramming.class, "ProgrammingCard");
         }
 
         public Object getTransferData(DataFlavor flavor) {

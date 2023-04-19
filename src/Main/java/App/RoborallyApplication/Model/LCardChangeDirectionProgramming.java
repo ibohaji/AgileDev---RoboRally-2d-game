@@ -1,15 +1,9 @@
-package App.RoborallyApplication.Model.Cards.ProgrammingCards;
+package App.RoborallyApplication.Model;
 
-import App.RoborallyApplication.Model.Enums.TurnEnum;
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-
-import java.awt.*;
-
-public class ChangeDirectionCard extends ProgrammingCard{
-    private final TurnEnum turn;
-    public ChangeDirectionCard(TurnEnum turnEnum){
-        turn = turnEnum;
+public class LCardChangeDirectionProgramming extends AbCardProgramming {
+    private final EnumTurnType turn;
+    public LCardChangeDirectionProgramming(EnumTurnType enumTurnType){
+        turn = enumTurnType;
     }
 
     @Override
@@ -32,7 +26,7 @@ public class ChangeDirectionCard extends ProgrammingCard{
         return imageName;
     }
     @Override
-    public void useCard(Robot robot, GameBrain gameBrain) {
+    public void useCard(LRobot robot, LGameBrain gameBrain) {
         robot.changeDirection(turn);
     }
 }

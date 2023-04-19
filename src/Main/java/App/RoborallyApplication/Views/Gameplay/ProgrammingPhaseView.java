@@ -1,7 +1,7 @@
 package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
+import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserCardDeckView;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
 import Utils.GridBagConstraintsBuilder;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class ProgrammingPhaseView extends GameView{
 
     private GameController gameController;
-    private GameBrain gameBrain;
-    public ProgrammingPhaseView(GameController gameController, GameBrain gameBrain) {
+    private LGameBrain gameBrain;
+    public ProgrammingPhaseView(GameController gameController, LGameBrain gameBrain) {
         super(gameController, gameBrain);
         this.gameBrain = gameBrain;
         this.gameController = gameController;

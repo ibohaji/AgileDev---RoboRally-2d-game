@@ -1,7 +1,7 @@
-package App.RoborallyApplication.Model.GameRunning;
+package App.RoborallyApplication.Model;
 
 
-public enum DirectionEnum {
+public enum EnumDirection {
     NORTH("WEST", "EAST", "SOUTH"),
     SOUTH("EAST", "WEST", "NORTH"),
     WEST("SOUTH", "NORTH", "EAST"),
@@ -11,7 +11,7 @@ public enum DirectionEnum {
     private final String rightDirection;
     private final String uTurnDirection;
 
-    DirectionEnum(String leftDirection, String rightDirection, String uTurnDirection) {
+    EnumDirection(String leftDirection, String rightDirection, String uTurnDirection) {
         this.leftDirection = leftDirection;
         this.rightDirection = rightDirection;
         this.uTurnDirection = uTurnDirection;
@@ -21,19 +21,19 @@ public enum DirectionEnum {
      *
      * @return Return the next direction to the left
      */
-    public DirectionEnum getLeft(){
-        return DirectionEnum.valueOf(leftDirection);
+    public EnumDirection getLeft(){
+        return EnumDirection.valueOf(leftDirection);
     }
 
     /**
      * @return Return the next direction to the left
      */
-    public DirectionEnum getRight(){
-        return DirectionEnum.valueOf(rightDirection);
+    public EnumDirection getRight(){
+        return EnumDirection.valueOf(rightDirection);
     }
 
-    public DirectionEnum getUTurn(){
-        return DirectionEnum.valueOf(uTurnDirection);
+    public EnumDirection getUTurn(){
+        return EnumDirection.valueOf(uTurnDirection);
     }
 
 }

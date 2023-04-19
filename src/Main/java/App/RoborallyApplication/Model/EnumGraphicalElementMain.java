@@ -1,8 +1,8 @@
-package App.RoborallyApplication.Model.Enums;
+package App.RoborallyApplication.Model;
 
 import java.io.File;
 
-public enum GraphicalElementEnum {
+public enum EnumGraphicalElementMain {
     DEFAULT_FLOOR("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "floor.png"),
     OBSTACLE_UNKNOWN_EXPLOSIVE("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "UnknownExplosiveTile.png"),
     OBSTACLE_EXPLOSIVE_ACID("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveAcidTile.png"),
@@ -33,7 +33,7 @@ public enum GraphicalElementEnum {
 
     private String pictureFile;
 
-    private GraphicalElementEnum(String pictureFile) {
+    private EnumGraphicalElementMain(String pictureFile) {
         this.pictureFile = pictureFile;
     }
 

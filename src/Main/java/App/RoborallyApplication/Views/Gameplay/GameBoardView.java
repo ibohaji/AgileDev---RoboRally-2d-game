@@ -1,10 +1,10 @@
 package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.Enums.GraphicalElementEnum;
-import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameObjects.Tile;
+import App.RoborallyApplication.Model.EnumGraphicalElementMain;
+import App.RoborallyApplication.Model.EnumDirection;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LTile;
 import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
 
@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameBoardView extends GameView{
-    public GameBoardView(GameController controller, GameBrain gameBrain) {
+    public GameBoardView(GameController controller, LGameBrain gameBrain) {
         super(controller, gameBrain);
         createView();
     }
@@ -25,24 +25,24 @@ public class GameBoardView extends GameView{
         // Create grid
         int scaling = gameConfiguration.getScalingSizeForTile();
         ImageIcon scaledDefaultFloor = ImageUtils.scaledImageIcon(new ImageIcon(
-                ImageUtils.getImage(GraphicalElementEnum.DEFAULT_FLOOR.getElementLocation())),
+                ImageUtils.getImage(EnumGraphicalElementMain.DEFAULT_FLOOR.getElementLocation())),
                 scaling,
                 scaling);
 
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 try{
-                    Tile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
+                    LTile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
                     if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){
                         if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()){
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
-                            DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
 
                             add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                         } else {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
-                            DirectionEnum directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             add(new JLabel(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                         }
                     } else if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {

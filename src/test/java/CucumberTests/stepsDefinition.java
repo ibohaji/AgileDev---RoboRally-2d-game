@@ -1,16 +1,14 @@
 package CucumberTests;
 
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.AgainCard;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ChangeDirectionCard;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.MovementCard;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
-import App.RoborallyApplication.Model.Enums.TurnEnum;
-import App.RoborallyApplication.Model.GameObjects.Player;
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
-import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameRunning.Gameboard;
+import App.RoborallyApplication.Model.LCardAgainProgramming;
+import App.RoborallyApplication.Model.LCardMovementProgramming;
+import App.RoborallyApplication.Model.AbCardProgramming;
+import App.RoborallyApplication.Model.EnumTurnType;
+import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.Model.EnumDirection;
+import App.RoborallyApplication.Model.LRobot;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LGameboard;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -25,28 +23,28 @@ import static org.junit.Assert.*;
 
 
 public class stepsDefinition {
-    MovementCard card;
-    GameBrain brain;
-    DirectionEnum direction;
-    Robot robot;
+    LCardMovementProgramming card;
+    LGameBrain brain;
+    EnumDirection direction;
+    LRobot robot;
     Point startCords;
 
 
 
-    Robot robotOne;
-    Robot robotTwo;
+    LRobot robotOne;
+    LRobot robotTwo;
 
     @Before
     public void setup(){
-        brain = new GameBrain(1, DifficultyEnum.EASY);
+        brain = new LGameBrain(1, EnumDifficulty.EASY);
         robot = brain.getPlayers().get(0).getRobot();
         startCords = robot.getCords(); // Currently the only starting position available is (2,0)
-        robot.setDirection(DirectionEnum.NORTH);
+        robot.setDirection(EnumDirection.NORTH);
     }
 
     @ParameterType("NORTH|SOUTH|WEST|EAST")
-    public DirectionEnum direction(String value) {
-        return DirectionEnum.valueOf(value);
+    public EnumDirection direction(String value) {
+        return EnumDirection.valueOf(value);
     }
 
     @Given("the robot's initial direction as NORTH")
@@ -56,10 +54,10 @@ public class stepsDefinition {
 
     @When("the robot get the LEFT direction card")
     public void the_robot_get_the_left_direction_card() {
-        robot.changeDirection(TurnEnum.LEFT);
+        robot.changeDirection(EnumTurnType.LEFT);
     }
     @Then("the expected direction get updated to {direction}")
-    public void the_expected_direction_get_updated_to(DirectionEnum direction) {
+    public void the_expected_direction_get_updated_to(EnumDirection direction) {
         assertEquals(robot.getCurrentDirection(), direction);
     }
 
@@ -71,7 +69,7 @@ public class stepsDefinition {
 
     @When("the robot receives the MovementCard with {int} steps")
     public void the_robot_receives_the_movement_card_with_steps(Integer int1){
-        card = new MovementCard(int1);
+        card = new LCardMovementProgramming(int1);
         card.useCard(robot,brain);
     }
 
@@ -85,7 +83,7 @@ public class stepsDefinition {
     @Given("the robot has previously moved a certain number of steps in a certain direction")
     public void the_robot_has_previously_moved_a_certain_number_of_steps_in_a_certain_direction() {
         setup();
-        card = new MovementCard(1);
+        card = new LCardMovementProgramming(1);
         card.useCard(robot,brain);
 
     }
@@ -93,7 +91,7 @@ public class stepsDefinition {
 
     @And("an AGAIN card is played")
     public void an_again_card_is_played() {
-        ProgrammingCard againCard = new AgainCard();
+        AbCardProgramming againCard = new LCardAgainProgramming();
         againCard.useCard(robot,brain);
     }
 
@@ -105,10 +103,10 @@ public class stepsDefinition {
 
     @Given("the game board is set up with robots at positions \\({int}, {int}) and \\({int}, {int})")
     public void the_game_board_is_set_up_with_robots_at_positions_and(Integer int1, Integer int2, Integer int3, Integer int4) {
-        brain = new GameBrain(2, DifficultyEnum.EASY);
+        brain = new LGameBrain(2, EnumDifficulty.EASY);
         robotOne = brain.getPlayers().get(0).getRobot();
         robotTwo = brain.getPlayers().get(1).getRobot();
-        robotTwo.setDirection(DirectionEnum.SOUTH);
+        robotTwo.setDirection(EnumDirection.SOUTH);
         robotOne.setCords(new Point(int1,int2));
         robotTwo.setCords(new Point(int3,int4));
 
@@ -116,12 +114,12 @@ public class stepsDefinition {
 
     @And("the first robot is facing NORTH")
     public void the_first_robot_is_facing_north() {
-        robotOne.setDirection(DirectionEnum.NORTH);
+        robotOne.setDirection(EnumDirection.NORTH);
 
     }
     @And("the first robot uses a movement card with {int} steps")
     public void the_first_robot_uses_a_movement_card_with_steps(Integer int1) {
-        card = new MovementCard(int1);
+        card = new LCardMovementProgramming(int1);
         card.useCard(robotOne,brain);
 
     }
@@ -147,11 +145,11 @@ public class stepsDefinition {
     }
     @Given("Robot1 is facing EAST")
     public void robot1_is_facing_east() {
-        robot.setDirection(DirectionEnum.EAST);
+        robot.setDirection(EnumDirection.EAST);
     }
     @When("Robot1 moves forward one step")
     public void robot1_moves_forward_one_step() {
-        card = new MovementCard(1);
+        card = new LCardMovementProgramming(1);
         card.useCard(robot,brain);
     }
     @Then("Robot1 should fall off the board")
@@ -173,11 +171,11 @@ public class stepsDefinition {
     public void if_robot1_has_no_lives_left_robot1_should_be_removed_from_the_game() {
         robot.setNrOfLives(1);
         robot.setCords(new Point(8,8));
-        robot.setDirection(DirectionEnum.EAST);
-        card = new MovementCard(1);
+        robot.setDirection(EnumDirection.EAST);
+        card = new LCardMovementProgramming(1);
         card.useCard(robot,brain);
-        Gameboard board = brain.getGameboard();
-        ArrayList<Robot> robots = board.getRobots();
+        LGameboard board = brain.getGameboard();
+        ArrayList<LRobot> robots = board.getRobots();
         assertFalse(robots.contains(robot));
 
     }

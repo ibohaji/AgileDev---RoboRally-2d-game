@@ -1,17 +1,14 @@
-package App.RoborallyApplication.Model.Cards.ProgrammingCards;
+package App.RoborallyApplication.Model;
 
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-
-public class AgainCard extends ProgrammingCard{
+public class LCardAgainProgramming extends AbCardProgramming {
     @Override
     public String getCardImageFileName() {
         return "App.Resource.Cards.AgainCard.png";
     }
 
     @Override
-    public void useCard(Robot robot, GameBrain gameBrain) {
-        ProgrammingCard lastCardUsed = gameBrain.getLastCardUsedByRobot(robot);
+    public void useCard(LRobot robot, LGameBrain gameBrain) {
+        AbCardProgramming lastCardUsed = gameBrain.getLastCardUsedByRobot(robot);
         // write logic for when first card is the again card then nothing happens
         // basically return null for last card used
         if(lastCardUsed != null){

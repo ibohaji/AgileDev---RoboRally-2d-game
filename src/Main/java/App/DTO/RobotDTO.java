@@ -1,7 +1,7 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.GameRunning.DirectionEnum;
-import App.RoborallyApplication.Model.GameObjects.Robot;
+import App.RoborallyApplication.Model.EnumDirection;
+import App.RoborallyApplication.Model.LRobot;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class RobotDTO implements iFromDTO{
     public int directionEnumOrdinal;
     public RobotDTO(){}
 
-    public RobotDTO(Robot robot){
+    public RobotDTO(LRobot robot){
         this.nrOfLives = robot.getNrOfLives();
         this.directionEnumOrdinal = robot.getCurrentDirection().ordinal();
         this.xCoordinate = robot.getCords().x;
@@ -22,10 +22,10 @@ public class RobotDTO implements iFromDTO{
     }
 
     @Override
-    public Robot returnObjectFromDTO() {
-        Robot newRobot = new Robot();
+    public LRobot returnObjectFromDTO() {
+        LRobot newRobot = new LRobot();
         newRobot.setCords(new Point(this.xCoordinate, this.yCoordinate));
-        newRobot.setDirection(DirectionEnum.values()[this.directionEnumOrdinal]);
+        newRobot.setDirection(EnumDirection.values()[this.directionEnumOrdinal]);
         newRobot.setNrOfLives(nrOfLives);
         return newRobot;
     }

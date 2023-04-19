@@ -1,44 +1,34 @@
-package App.RoborallyApplication.Model.GameRunning;
+package App.RoborallyApplication.Model;
 
 import App.DTO.GameBrainDTO;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.AgainCard;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ChangeDirectionCard;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.MovementCard;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
-import App.RoborallyApplication.Model.Enums.*;
-import App.RoborallyApplication.Model.GameObjects.Obstacle;
-import App.RoborallyApplication.Model.GameObjects.Player;
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameObjects.Tile;
-import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
-import Utils.Tuple;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
-public class GameBrain implements iToDTO {
+public class LGameBrain implements iToDTO {
     private UUID id;
-    private GameConfiguration gameConfig;
-    private Gameboard gameboard = null;
-    private ArrayList<Player> players;
-    private GamePhase currentGamePhase;
+    private LGameConfiguration gameConfig;
+    private LGameboard gameboard = null;
+    private ArrayList<LPlayer> players;
+    private EnumGamePhase currentEnumGamePhase;
 
-    public GameBrain(){
+    public LGameBrain(){
 
     }
 
-    public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
+    public LGameBrain(int nrOfPlayers, EnumDifficulty difficulty){
         this.id = UUID.randomUUID();
-        gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
+        gameConfig = new LGameConfiguration(nrOfPlayers, difficulty);
 
         createGameboard(difficulty);
         this.players = createPlayers();
-        ArrayList<Robot> robots = createRobots(players);
+        ArrayList<LRobot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
-        currentGamePhase = GamePhase.ROUND_START;
+        currentEnumGamePhase = EnumGamePhase.ROUND_START;
         startGame();
     }
 
@@ -48,9 +38,9 @@ public class GameBrain implements iToDTO {
     }
 
     public void startRound(){
-        currentGamePhase = GamePhase.ROUND_START;
+        currentEnumGamePhase = EnumGamePhase.ROUND_START;
         givePlayersCardsForRound();
-        currentGamePhase = GamePhase.PROGRAMMING_PHASE;
+        currentEnumGamePhase = EnumGamePhase.PROGRAMMING_PHASE;
     }
 
     public void setPlayerCardSequence(){
@@ -58,7 +48,7 @@ public class GameBrain implements iToDTO {
     }
 
     private void setupRobots(){
-        ArrayList<Tile> availableStartPoints = getAllStartPoints();
+        ArrayList<LTile> availableStartPoints = getAllStartPoints();
         for (int i = 0; i < this.players.size(); i++) {
             players.get(i).getRobot().setCords(availableStartPoints.get(i).getCoordinates());
         }
@@ -69,44 +59,44 @@ public class GameBrain implements iToDTO {
         // 1st -> give players their cards for the round
 
         // 2nd -> let players choose the order of their cards
-        currentGamePhase = GamePhase.PROGRAMMING_PHASE;
+        currentEnumGamePhase = EnumGamePhase.PROGRAMMING_PHASE;
         // 3rd -> move the players, constantly checking for winner
-        currentGamePhase = GamePhase.MOVEMENT_PHASE;
+        currentEnumGamePhase = EnumGamePhase.MOVEMENT_PHASE;
     }
 
     protected void givePlayersCardsForRound(){
         Random rnd = new Random();
-        for (Player player : players) {
+        for (LPlayer player : players) {
             for (int i = 0; i < 5; i++) {
                 int choiceForCard = rnd.nextInt(12);
                 int choiceForSpecific = rnd.nextInt(3);
                 if(choiceForCard < 2){ // againCard
-                    player.assignCardToPlayer(new AgainCard());
+                    player.assignCardToPlayer(new LCardAgainProgramming());
                 } else if (choiceForCard < 7) { // movementCard
                     if(choiceForSpecific == 0) {
-                        player.assignCardToPlayer(new MovementCard(1));
+                        player.assignCardToPlayer(new LCardMovementProgramming(1));
                     } else if (choiceForSpecific == 1) {
-                        player.assignCardToPlayer(new MovementCard(2));
+                        player.assignCardToPlayer(new LCardMovementProgramming(2));
                     } else {
-                        player.assignCardToPlayer(new MovementCard(3));
+                        player.assignCardToPlayer(new LCardMovementProgramming(3));
                     }
                 } else { // turn
                     if(choiceForSpecific == 0) { // LEFT
-                        player.assignCardToPlayer(new ChangeDirectionCard(TurnEnum.LEFT));
+                        player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.LEFT));
                     } else if (choiceForSpecific == 1) { // RIGHT
-                        player.assignCardToPlayer(new ChangeDirectionCard(TurnEnum.RIGHT));
+                        player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.RIGHT));
                     } else { // U-TURN
-                        player.assignCardToPlayer(new ChangeDirectionCard(TurnEnum.U_TURN));
+                        player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.U_TURN));
                     }
                 }
             }
         }
     }
 
-    public ArrayList<ProgrammingCard> dealCardsForRound() {
+    public ArrayList<AbCardProgramming> dealCardsForRound() {
         givePlayersCardsForRound();
-        ArrayList<ProgrammingCard> roundCards = new ArrayList<>();
-        for (Player player : players) {
+        ArrayList<AbCardProgramming> roundCards = new ArrayList<>();
+        for (LPlayer player : players) {
             roundCards.addAll(player.getProgrammingCards());
         }
         return roundCards;
@@ -133,7 +123,7 @@ public class GameBrain implements iToDTO {
         return playerMoves;
     }*/
 
-    private void makeMove(Player player, ProgrammingCard card){
+    private void makeMove(LPlayer player, AbCardProgramming card){
         card.useCard(player.getRobot(), this);
     }
 
@@ -142,28 +132,28 @@ public class GameBrain implements iToDTO {
                 point.y > -1 && point.y < gameConfig.getBoardDimensions().second());
     }
 
-    private void movePlayerWithCollision(DirectionEnum hitDirection){
+    private void movePlayerWithCollision(EnumDirection hitDirection){
         // if overboard then back to beginning
         // TODO
     }
 
-    public Obstacle getObstaclefromboard(Integer x, Integer y) {
+    public LObstacle getObstaclefromboard(Integer x, Integer y) {
 
         return this.gameboard.getObstacleFromCoordinate(x, y);
     }
 
-    public GameConfiguration getGameConfig(){
+    public LGameConfiguration getGameConfig(){
         return this.gameConfig;
     }
 
-    public void setGameConfig(GameConfiguration gameConfiguration){
+    public void setGameConfig(LGameConfiguration gameConfiguration){
         this.gameConfig = gameConfiguration;
     }
 
-    private void createGameboard(DifficultyEnum difficulty){
-        if (difficulty == DifficultyEnum.EASY){
+    private void createGameboard(EnumDifficulty difficulty){
+        if (difficulty == EnumDifficulty.EASY){
             this.gameboard = MapGenerator.generateEasyMap(this);
-        } else if (difficulty == DifficultyEnum.MEDIUM){
+        } else if (difficulty == EnumDifficulty.MEDIUM){
             this.gameboard = MapGenerator.generateMediumMap(this);
         } else {
             this.gameboard = MapGenerator.generateHardMap(this);
@@ -172,19 +162,19 @@ public class GameBrain implements iToDTO {
 
 
 
-    private ArrayList<Player> createPlayers(){
-        ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<LPlayer> createPlayers(){
+        ArrayList<LPlayer> players = new ArrayList<>();
         for (int i = 1; i <= this.gameConfig.getNrOfPlayers(); i++) {
-            players.add(new Player("player" + (Integer.toString(i ))));
+            players.add(new LPlayer("player" + (Integer.toString(i ))));
         }
         return players;
     }
 
-    private ArrayList<Robot> createRobots(ArrayList<Player> players){
-        ArrayList<Robot> robots = new ArrayList<>();
-        for (Player player: players) {
-            Robot newRobot = new Robot();
-            newRobot.setDirection(DirectionEnum.NORTH);
+    private ArrayList<LRobot> createRobots(ArrayList<LPlayer> players){
+        ArrayList<LRobot> robots = new ArrayList<>();
+        for (LPlayer player: players) {
+            LRobot newRobot = new LRobot();
+            newRobot.setDirection(EnumDirection.NORTH);
             player.assignRobot(newRobot);
             robots.add(newRobot);
         }
@@ -193,7 +183,7 @@ public class GameBrain implements iToDTO {
 
     @Override
     public String DTOasJson() {
-        GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentGamePhase, this);
+        GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentEnumGamePhase, this);
         return JsonHelper.serializeObjectToJson(gameBrainDTO);
     }
 
@@ -202,39 +192,39 @@ public class GameBrain implements iToDTO {
         return this.id;
     }
 
-    public Gameboard getGameboard(){
+    public LGameboard getGameboard(){
         return this.gameboard;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<LPlayer> getPlayers() {
         return players;
     }
 
-    public GamePhase getCurrentGamePhase(){
-        return this.currentGamePhase;
+    public EnumGamePhase getCurrentGamePhase(){
+        return this.currentEnumGamePhase;
     }
 
-    public void restore(GameConfiguration gameConfig, ArrayList<Player> players,
-                        GamePhase gamePhase, Gameboard gameboard, ArrayList<Robot> robots, ArrayList<Tile> tiles){
+    public void restore(LGameConfiguration gameConfig, ArrayList<LPlayer> players,
+                        EnumGamePhase enumGamePhase, LGameboard gameboard, ArrayList<LRobot> robots, ArrayList<LTile> tiles){
         this.gameConfig = gameConfig;
         this.gameboard = gameboard;
-        this.currentGamePhase = gamePhase;
+        this.currentEnumGamePhase = enumGamePhase;
         this.players = players;
         gameboard.setRobots(robots);
         gameboard.setTiles(tiles);
 
     }
 
-    public void setCurrentGamePhase(GamePhase phase){
-        this.currentGamePhase = phase;
+    public void setCurrentGamePhase(EnumGamePhase phase){
+        this.currentEnumGamePhase = phase;
     }
 
-    public ProgrammingCard getLastCardUsedByRobot(Robot robot){
+    public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
         // TODO
-        return new MovementCard(1);
+        return new LCardMovementProgramming(1);
     }
 
-    public void pushRobot(Robot robotBeingPushed, DirectionEnum directionOfPushOrigin){
+    public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
         Point pos = robotBeingPushed.getCords();
         switch (directionOfPushOrigin){
             case WEST -> pos.x += 1;
@@ -261,19 +251,19 @@ public class GameBrain implements iToDTO {
     }
 
 
-    private void push(Point newPos, DirectionEnum directionOfRobot) {
-            Robot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
+    private void push(Point newPos, EnumDirection directionOfRobot) {
+            LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
             // push robotAtCoordinate
             switch (directionOfRobot){
-                case NORTH -> pushRobot(robotAtCoordinate, DirectionEnum.SOUTH);
-                case SOUTH -> pushRobot(robotAtCoordinate, DirectionEnum.NORTH);
-                case EAST -> pushRobot(robotAtCoordinate, DirectionEnum.WEST);
-                case WEST -> pushRobot(robotAtCoordinate, DirectionEnum.EAST);
+                case NORTH -> pushRobot(robotAtCoordinate, EnumDirection.SOUTH);
+                case SOUTH -> pushRobot(robotAtCoordinate, EnumDirection.NORTH);
+                case EAST -> pushRobot(robotAtCoordinate, EnumDirection.WEST);
+                case WEST -> pushRobot(robotAtCoordinate, EnumDirection.EAST);
             }
 
     }
 
-    public void pushRobotOffBoard(Robot robot){
+    public void pushRobotOffBoard(LRobot robot){
         int nrOfLives = robot.getNrOfLives();
         if(nrOfLives == 1){
             removeRobot(robot);
@@ -284,26 +274,26 @@ public class GameBrain implements iToDTO {
         }
     }
 
-    public void putRobotToRandomStartPoint(Robot robot){
+    public void putRobotToRandomStartPoint(LRobot robot){
         // get all available start points (tiles with startpoint enum)
         // randomly choose one
     }
 
-    public Obstacle chooseUnkownObstacle(Tile tile){
+    public LObstacle chooseUnkownObstacle(LTile tile){
         // TODO
         Random rnd = new Random();
         float chance = rnd.nextFloat(1);
         if(chance < 0.6){ // acid
-            return new Obstacle(ObstacleEnum.ACID, ObstacleTypeEnum.KNOWN_OBSTACLE);
+            return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
         } else if (chance < 0.8) { // radiation
-            return new Obstacle(ObstacleEnum.RADIATION, ObstacleTypeEnum.KNOWN_OBSTACLE);
+            return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
         } else { // pit
-            return new Obstacle(ObstacleEnum.PIT, ObstacleTypeEnum.KNOWN_OBSTACLE);
+            return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
         }
     }
 
-    public Player findPlayerByRobot(Robot robot){
-        for (Player player: players) {
+    public LPlayer findPlayerByRobot(LRobot robot){
+        for (LPlayer player: players) {
             if (player.getRobot().equals(robot)){
                 return player;
             }
@@ -311,17 +301,17 @@ public class GameBrain implements iToDTO {
         return null;
     }
 
-    public void removePlayer(Player playerToRemove) {
+    public void removePlayer(LPlayer playerToRemove) {
         this.players.remove(playerToRemove);
     }
 
-    public void removeRobot(Robot robot){
+    public void removeRobot(LRobot robot){
         this.gameboard.removeRobot(robot);
     }
 
-    private ArrayList<Tile> getAllStartPoints(){
-        ArrayList<Tile> startPoints = new ArrayList<>();
-        for (Tile tile: gameboard.getTiles()) {
+    private ArrayList<LTile> getAllStartPoints(){
+        ArrayList<LTile> startPoints = new ArrayList<>();
+        for (LTile tile: gameboard.getTiles()) {
             if (tile.isTileStartPoint()){
                 startPoints.add(tile);
             }
@@ -329,22 +319,22 @@ public class GameBrain implements iToDTO {
         return startPoints;
     }
 
-    public boolean checkRobotposition(Robot robot) {
+    public boolean checkRobotposition(LRobot robot) {
         int pos_x = robot.getCords().x;
         int pos_y = robot.getCords().y;
-        Tile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
+        LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
 
         return !tile.doesTileHaveObstacle();
 
     }
 
-    private ArrayList<Tile> getAllFreeStartPoints(){
-        ArrayList<Tile> allStartPoints = getAllStartPoints();
-        ArrayList<Tile> availableStartPoints = new ArrayList<>();
-        ArrayList<Robot> robots = gameboard.getRobots();
-        for (Tile startpoint: allStartPoints) {
+    private ArrayList<LTile> getAllFreeStartPoints(){
+        ArrayList<LTile> allStartPoints = getAllStartPoints();
+        ArrayList<LTile> availableStartPoints = new ArrayList<>();
+        ArrayList<LRobot> robots = gameboard.getRobots();
+        for (LTile startpoint: allStartPoints) {
             boolean isTaken = false;
-            for (Robot robot: robots) {
+            for (LRobot robot: robots) {
                 if(robot.getCords().x == startpoint.getCoordinates().x &&
                         robot.getCords().y == startpoint.getCoordinates().y){
                     isTaken = true;
@@ -357,20 +347,20 @@ public class GameBrain implements iToDTO {
         return availableStartPoints;
     }
 
-    public void activateExplosive(Tile tile) {
+    public void activateExplosive(LTile tile) {
         boolean robot_on_explosive = false;
 
-        for (Player player : this.players) {
+        for (LPlayer player : this.players) {
             if (player.getRobot().getCords().equals(tile.getCoordinates())) {
                 robot_on_explosive = true;
             }
         }
 
-        ArrayList<Tile> acidpool = this.gameboard.getTilesSurroundingCoordinate(tile.getCoordinates().x, tile.getCoordinates().y);
+        ArrayList<LTile> acidpool = this.gameboard.getTilesSurroundingCoordinate(tile.getCoordinates().x, tile.getCoordinates().y);
         if (robot_on_explosive) {
-            for (Tile tilepool : acidpool) {
-                tilepool.setObstacle(new Obstacle(ObstacleEnum.ACID, ObstacleTypeEnum.KNOWN_OBSTACLE));
-                tilepool.setGraphicalElement(GraphicalElementEnum.OBSTACLE_ACID, this.gameConfig.getDifficulty());
+            for (LTile tilepool : acidpool) {
+                tilepool.setObstacle(new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE));
+                tilepool.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, this.gameConfig.getDifficulty());
             }
         }
     }

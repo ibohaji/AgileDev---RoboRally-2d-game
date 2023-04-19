@@ -1,14 +1,14 @@
 package App.DAL;
 
 import App.DTO.GameboardDTO;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameRunning.Gameboard;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LGameboard;
 
 import java.util.UUID;
 
 public class DataAccessController {
-    public static void saveGame(GameBrain gameBrain){
-        Gameboard gameboard = gameBrain.getGameboard();
+    public static void saveGame(LGameBrain gameBrain){
+        LGameboard gameboard = gameBrain.getGameboard();
     }
     public static void loadGame(UUID id){
 

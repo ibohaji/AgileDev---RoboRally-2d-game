@@ -1,18 +1,17 @@
 package App.RoborallyApplication.Views.Gameplay.CardDeck;
 
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
+import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.GridBagConstraintsBuilder;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class UserOrderedCardDeckView extends GameView {
 
-    public UserOrderedCardDeckView(GameController controller, GameBrain gameBrain) {
+    public UserOrderedCardDeckView(GameController controller, LGameBrain gameBrain) {
         super(controller, gameBrain);
         createView();
     }

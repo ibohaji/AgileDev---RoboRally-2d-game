@@ -1,6 +1,6 @@
 package App.RoborallyApplication.Views.Gameplay;
 
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
+import App.RoborallyApplication.Model.AbCardProgramming;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,9 +12,9 @@ import java.io.IOException;
 public class CardView extends JPanel {
     private final int CARD_WIDTH = 80;
     private final int CARD_HEIGHT = 120;
-    private final ProgrammingCard card;
+    private final AbCardProgramming card;
 
-    public CardView(ProgrammingCard card) {
+    public CardView(AbCardProgramming card) {
         this.card = card;
         setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
         setOpaque(false);

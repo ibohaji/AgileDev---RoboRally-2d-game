@@ -1,16 +1,14 @@
 package App.RoborallyApplication.Views.Menus;
 
 import App.RoborallyApplication.Controllers.ApplicationController;
-import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Controllers.MainMenuController;
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
+import App.RoborallyApplication.Model.EnumDifficulty;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -119,11 +117,11 @@ public class MainMenuView extends JPanel {
             int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
             if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
                     // TODO
-                    controller.userClickPlay(DifficultyEnum.HARD, numOfPlayers, true);
+                    controller.userClickPlay(EnumDifficulty.HARD, numOfPlayers, true);
                 } else if (difficultyDropdown.getSelectedItem().toString().equals("MEDIUM")) {
-                    controller.userClickPlay(DifficultyEnum.MEDIUM, numOfPlayers, true);
+                    controller.userClickPlay(EnumDifficulty.MEDIUM, numOfPlayers, true);
                 } else {
-                    controller.userClickPlay(DifficultyEnum.EASY, numOfPlayers, true);
+                    controller.userClickPlay(EnumDifficulty.EASY, numOfPlayers, true);
                 }
             // need game configuration ( skin, etc..)
 
@@ -144,11 +142,11 @@ public class MainMenuView extends JPanel {
         playAIButton.addActionListener(e -> {
             int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
             if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
-                controller.userClickPlay(DifficultyEnum.HARD, numOfPlayers, false);
+                controller.userClickPlay(EnumDifficulty.HARD, numOfPlayers, false);
             } else if (difficultyDropdown.getSelectedItem().toString().equals("MEDIUM")) {
-                controller.userClickPlay(DifficultyEnum.MEDIUM, numOfPlayers, false);
+                controller.userClickPlay(EnumDifficulty.MEDIUM, numOfPlayers, false);
             } else {
-                controller.userClickPlay(DifficultyEnum.EASY, numOfPlayers, false);
+                controller.userClickPlay(EnumDifficulty.EASY, numOfPlayers, false);
             }
 
             // controller.userClickPlayAI();

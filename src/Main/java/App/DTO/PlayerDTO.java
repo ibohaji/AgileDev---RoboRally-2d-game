@@ -1,6 +1,6 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.GameObjects.Player;
+import App.RoborallyApplication.Model.LPlayer;
 
 import java.util.ArrayList;
 
@@ -12,13 +12,13 @@ public class PlayerDTO implements iFromDTO{
     public ArrayList<ProgrammingCardDTO> cards;
     public PlayerDTO(){}
 
-    public PlayerDTO(Player player){
+    public PlayerDTO(LPlayer player){
         this.robotDTO = new RobotDTO(player.getRobot());
     }
 
     @Override
-    public Player returnObjectFromDTO() {
-        Player player = new Player(this.displayName);
+    public LPlayer returnObjectFromDTO() {
+        LPlayer player = new LPlayer(this.displayName);
         player.assignRobot(robotDTO.returnObjectFromDTO());
         for (ProgrammingCardDTO cardDTO: cards) {
             player.assignCardToPlayer(cardDTO.returnObjectFromDTO());

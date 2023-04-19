@@ -1,24 +1,23 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.Enums.ObstacleEnum;
-import App.RoborallyApplication.Model.Enums.ObstacleTypeEnum;
-import App.RoborallyApplication.Model.GameObjects.Obstacle;
-import Utils.Tuple;
+import App.RoborallyApplication.Model.EnumObstacle;
+import App.RoborallyApplication.Model.EnumObstacleType;
+import App.RoborallyApplication.Model.LObstacle;
 
 public class ObstacleDTO {
     public int graphicalElementOrdinal;
 
-    public ObstacleEnum obstacleEnum;
+    public EnumObstacle enumObstacle;
 
-    public ObstacleTypeEnum obstacleTypeEnum;
+    public EnumObstacleType enumObstacleType;
 
     public ObstacleDTO() {
 
     }
-    public ObstacleDTO(Obstacle obstacle) {
+    public ObstacleDTO(LObstacle obstacle) {
         this.graphicalElementOrdinal = obstacle.graphicalElement.getGraphicalElementOrdinal();
-        this.obstacleEnum = obstacle.getObstacleEnum();
-        this.obstacleTypeEnum = obstacle.getObstacleTypeEnum();
+        this.enumObstacle = obstacle.getObstacleEnum();
+        this.enumObstacleType = obstacle.getObstacleTypeEnum();
     }
 
 }

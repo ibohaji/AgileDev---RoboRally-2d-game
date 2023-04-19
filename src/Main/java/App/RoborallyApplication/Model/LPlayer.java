@@ -1,37 +1,33 @@
-package App.RoborallyApplication.Model.GameObjects;
+package App.RoborallyApplication.Model;
 import App.DTO.PlayerDTO;
-import App.RoborallyApplication.Model.Cards.ProgrammingCards.ProgrammingCard;
-import App.RoborallyApplication.Model.GameRunning.CardSequence;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.iToDTO;
 import Utils.JsonHelper;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Player implements iToDTO {
+public class LPlayer implements iToDTO {
     private UUID id;
     private String displayName;
-    private ArrayList<ProgrammingCard> programmingCards = new ArrayList<>();
+    private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
 
-    private CardSequence cardSequence;
-    private Robot robot = null;
-    public Player(){}
-    public Player(String displayName){
+    private LCardSequence cardSequence;
+    private LRobot robot = null;
+    public LPlayer(){}
+    public LPlayer(String displayName){
         this.id = UUID.randomUUID();
         this.displayName = displayName;
     }
-    public void assignCardToPlayer(ProgrammingCard card){
+    public void assignCardToPlayer(AbCardProgramming card){
         programmingCards.add(card);
     }
-    public void useProgrammingCard(ProgrammingCard card, GameBrain gameBrain){
+    public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain){
         robot.useProgrammingCard(card, gameBrain);
     }
 
-    protected ArrayList<ProgrammingCard> getProgrammingPhaseOrdering(Player playerToGetOrderFrom){
+    protected ArrayList<AbCardProgramming> getProgrammingPhaseOrdering(LPlayer playerToGetOrderFrom){
         return new ArrayList<>();
     }
 
-    public ArrayList<ProgrammingCard> getProgrammingCards() {
+    public ArrayList<AbCardProgramming> getProgrammingCards() {
         return programmingCards;
     }
 
@@ -40,7 +36,7 @@ public class Player implements iToDTO {
      * @param robotToAssign robot object to assign to the player
      * @return boolean value whether robot could be assigned
      */
-    public boolean assignRobot(Robot robotToAssign){
+    public boolean assignRobot(LRobot robotToAssign){
         if(robot == null){
             robot = robotToAssign;
             robot.assignPlayer(this);
@@ -58,7 +54,7 @@ public class Player implements iToDTO {
         return this.id;
     }
 
-    public Robot getRobot(){
+    public LRobot getRobot(){
         return this.robot;
     }
 
@@ -67,7 +63,7 @@ public class Player implements iToDTO {
     }
 
 
-    public ArrayList<ProgrammingCard> getCards(){
+    public ArrayList<AbCardProgramming> getCards(){
         return programmingCards;
     }
 

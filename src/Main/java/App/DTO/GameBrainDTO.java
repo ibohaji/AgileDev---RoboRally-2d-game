@@ -1,11 +1,11 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.GameObjects.Player;
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameRunning.GameConfiguration;
-import App.RoborallyApplication.Model.Enums.GamePhase;
-import App.RoborallyApplication.Model.GameRunning.Gameboard;
+import App.RoborallyApplication.Model.LPlayer;
+import App.RoborallyApplication.Model.LRobot;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LGameConfiguration;
+import App.RoborallyApplication.Model.EnumGamePhase;
+import App.RoborallyApplication.Model.LGameboard;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -15,35 +15,35 @@ public class GameBrainDTO implements iFromDTO{
     public UUID gameBoardId;
     public ArrayList<PlayerDTO> playerDTOS;
     public GameboardDTO gameboardDTO;
-    public GameConfiguration gameConfiguration;
-    public GamePhase gamePhase;
+    public LGameConfiguration gameConfiguration;
+    public EnumGamePhase enumGamePhase;
     public GameBrainDTO(){
 
     }
 
-    public GameBrainDTO(Gameboard gameboard, GameConfiguration gameConfig, GamePhase gamePhase, GameBrain gameBrain){
+    public GameBrainDTO(LGameboard gameboard, LGameConfiguration gameConfig, EnumGamePhase enumGamePhase, LGameBrain gameBrain){
         this.gameboardDTO = new GameboardDTO(gameboard);
         this.gameConfiguration = gameConfig;
-        this.gamePhase = gamePhase;
+        this.enumGamePhase = enumGamePhase;
         this.id = gameBrain.getID();
         this.gameBoardId = gameboard.getID();
         playerDTOS = new ArrayList<>();
-        for (Player player: gameBrain.getPlayers()) {
+        for (LPlayer player: gameBrain.getPlayers()) {
             playerDTOS.add(new PlayerDTO(player));
         }
     }
 
     @Override
-    public GameBrain returnObjectFromDTO() {
-        GameBrain gameBrain = new GameBrain();
-        Gameboard gameboard = gameboardDTO.returnObjectFromDTO();
-        ArrayList<Player> players = new ArrayList<>();
-        ArrayList<Robot> robots = new ArrayList<>();
+    public LGameBrain returnObjectFromDTO() {
+        LGameBrain gameBrain = new LGameBrain();
+        LGameboard gameboard = gameboardDTO.returnObjectFromDTO();
+        ArrayList<LPlayer> players = new ArrayList<>();
+        ArrayList<LRobot> robots = new ArrayList<>();
         for (PlayerDTO playerDTO: playerDTOS) {
             players.add(playerDTO.returnObjectFromDTO());
         }
 
-        gameBrain.restore(this.gameConfiguration, players ,this.gamePhase, gameboard,
+        gameBrain.restore(this.gameConfiguration, players ,this.enumGamePhase, gameboard,
                 gameboard.getRobots(), gameboard.getTiles());
         return gameBrain;
     }

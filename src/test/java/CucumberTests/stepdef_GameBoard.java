@@ -1,11 +1,11 @@
 package CucumberTests;
 
-import App.RoborallyApplication.Model.GameObjects.Obstacle;
-import App.RoborallyApplication.Model.GameObjects.Robot;
-import App.RoborallyApplication.Model.GameObjects.Tile;
-import App.RoborallyApplication.Model.GameRunning.DifficultyEnum;
-import App.RoborallyApplication.Model.GameRunning.GameBrain;
-import App.RoborallyApplication.Model.GameRunning.Gameboard;
+import App.RoborallyApplication.Model.LObstacle;
+import App.RoborallyApplication.Model.LRobot;
+import App.RoborallyApplication.Model.LTile;
+import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LGameboard;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,16 +16,16 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class stepdef_GameBoard {
-    private Gameboard gameboard;
-    private GameBrain gamebrain;
-    private ArrayList<Tile> tile = new ArrayList<>();
-    private ArrayList<Obstacle> obstacle = new ArrayList<>();
-    private ArrayList<Robot> robot = new ArrayList<>();
+    private LGameboard gameboard;
+    private LGameBrain gamebrain;
+    private ArrayList<LTile> tile = new ArrayList<>();
+    private ArrayList<LObstacle> obstacle = new ArrayList<>();
+    private ArrayList<LRobot> robot = new ArrayList<>();
 
     @Before
     public void setup(){
-        gamebrain = new GameBrain(1, DifficultyEnum.EASY);
-        gameboard = new Gameboard(gamebrain);
+        gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
+        gameboard = new LGameboard(gamebrain);
     }
 
     @Given("The point \\({double}) is an empty tile")

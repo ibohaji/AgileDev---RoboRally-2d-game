@@ -1,6 +1,6 @@
-package App.RoborallyApplication.Model.Enums;
+package App.RoborallyApplication.Model;
 
-public enum ObstacleEnum {
+public enum EnumObstacle {
     ACID(-1),
     RADIATION(-1),
 
@@ -12,7 +12,7 @@ public enum ObstacleEnum {
     public int getDamage(){
         return this.damage;
     }
-    private ObstacleEnum(int damage) {
+    private EnumObstacle(int damage) {
         this.damage = damage;
     }
 }
