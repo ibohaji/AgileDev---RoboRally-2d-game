@@ -265,9 +265,8 @@ public class LGameBrain implements IToDTO {
         if(!isPositionOnBoard(pos)){
             robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
             if(robotBeingPushed.getNrOfLives() < 1){
-                // TODO
-                // remove robot from game
-                // remove player aswell
+                removeRobot(robotBeingPushed);
+                removePlayer(robotBeingPushed.getPlayer());
             } else {
                 putRobotToRandomStartPoint(robotBeingPushed);
             }
@@ -275,8 +274,9 @@ public class LGameBrain implements IToDTO {
             robotBeingPushed.setCords(pos);
 
         }
-        // check if pushes another robot
 
+        // TODO
+        // check if pushes another robot
 
     }
 
@@ -305,21 +305,43 @@ public class LGameBrain implements IToDTO {
     }
 
     public void putRobotToRandomStartPoint(LRobot robot){
-        // get all available start points (tiles with startpoint enum)
-        // randomly choose one
+        ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
+        Random rnd = new Random();
+        int index = rnd.nextInt(available_startpoints.size());
+        robot.setCords(available_startpoints.get(index).getCoordinates());
+    }
+
+    public void setRobotchekcpointDone(LRobot robot){
+        if (this.getGameboard().getTileFromCoordinate(
+                robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
+                EnumTileType.CHECKPOINT) {
+            robot.addCheckpoint(robot.getCords());
+        }
     }
 
     public LObstacle chooseUnkownObstacle(LTile tile){
-        // TODO
-        Random rnd = new Random();
-        float chance = rnd.nextFloat(1);
-        if(chance < 0.6){ // acid
-            return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
-        } else if (chance < 0.8) { // radiation
-            return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
-        } else { // pit
-            return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
+
+        boolean robot_on_unknown = false;
+
+        for (LPlayer player : this.players) {
+            if (player.getRobot().getCords().equals(tile.getCoordinates())) {
+                robot_on_unknown = true;
+            }
         }
+
+        if (robot_on_unknown) {
+            Random rnd = new Random();
+            float chance = rnd.nextFloat(1);
+            if (chance < 0.6) { // acid
+                return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
+            } else if (chance < 0.8) { // radiation
+                return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
+            } else { // pit
+                return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
+            }
+        }
+
+        return tile.getObstacle();
     }
 
     public LPlayer findPlayerByRobot(LRobot robot){

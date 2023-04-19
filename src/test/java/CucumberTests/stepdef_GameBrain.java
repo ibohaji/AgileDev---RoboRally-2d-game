@@ -31,15 +31,9 @@ public class stepdef_GameBrain {
 
     public static int t_rndInt(int min, int max) {
         Random t_rnd = new Random();
-        int t_rndInt = t_rnd.nextInt((max - min) + 1) + min;
-        return t_rndInt;
+        return t_rnd.nextInt((max - min) + 1) + min;
     }
-/*
-    @ParameterType("EASY|MEDIUM|HARD")
-    public DifficultyEnum t_Difficulty(String value) {
-        return DifficultyEnum.valueOf(value);
-    }
-*/
+
     @Before
     public void setup() {
         t_gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
@@ -59,7 +53,6 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain shuffle and assign cards to players")
     public void GameBrain_shuffle_and_assign_cards_to_players() {
-        t_gamebrain.startRound();
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
         for (LPlayer t_currentplayer : t_players) {
@@ -72,7 +65,7 @@ public class stepdef_GameBrain {
     // GameBrain gets the current game phase
     @Given("a GameBrain and a game instance")
     public void a_GameBrain_and_a_game_instance() {
-
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
     }
 
     @When("during {string}")
@@ -88,7 +81,7 @@ public class stepdef_GameBrain {
     // GameBrain puts robots at their starting positions
     @Given("a GameBrain a game board and robots")
     public void a_GameBrain_a_game_board_and_robots() {
-
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
     }
 
     @When("a new game starts")
@@ -110,7 +103,7 @@ public class stepdef_GameBrain {
     // GameBrain gets obstacles on the game board and their properties
     @Given("a GameBrain and game board filled with tiles")
     public void a_GameBrain_and_game_board_filled_with_tiles() {
-
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
     }
 
     @When("a new game board is generated")
@@ -160,9 +153,9 @@ public class stepdef_GameBrain {
     }
 
     // GameBrain gets and sets the icon image of a tile
-    @Given("a GameBrain a tile and an icon image")
-    public void a_GameBrain_a_tile_and_an_icon_image() {
-
+    @Given("a GameBrain with at least medium difficulty")
+    public void a_GameBrain_with_at_least_medium_difficulty() {
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
     }
 
     @When("an explosive tile affects nearby tiles")
@@ -201,20 +194,35 @@ public class stepdef_GameBrain {
     }
 
     // GameBrain traces the status of a robot
-    @Given("a GameBrain and a robot")
-    public void a_GameBrain_and_a_robot() {
-
+    @Given("a GameBrain with at least medium difficulty_")
+    public void a_GameBrain_with_at_least_medium_difficulty_() {
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
     }
 
     @When("a robot touches a checkpoint")
     public void a_robot_touches_a_checkpoint() {
-
+        ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
+        t_player = t_players.get(t_rndInt(0, t_players.size()-1));
+        t_robot = t_player.getRobot();
+        ArrayList<LTile> t__tiles = t_gamebrain.getGameboard().getTiles();
+        ArrayList<LTile> t_checkpoints = new ArrayList<>();
+        for (LTile t__tile : t__tiles) {
+            if (t__tile.getTileTypeEnum().equals(EnumTileType.CHECKPOINT)) {
+                t_checkpoints.add(t__tile);
+            }
+        }
+        t_tile = t_checkpoints.get(t_rndInt(0, t_checkpoints.size()-1));
+        t_robot.setCords(t_tile.getCoordinates());
     }
 
     @Then("GameBrain check how many checkpoints a robot has reached")
     public void GameBrain_check_how_many_checkpoints_a_robot_has_reached() {
+        t_gamebrain.setRobotchekcpointDone(t_robot);
+        assertTrue(t_robot.getCheckpointsDone().contains(t_tile.getCoordinates()));
 
-
+        t_robot = null;
+        t_player = null;
+        t_tile = null;
     }
 
     // GameBrain detects if a robot has fallen out of the game board
@@ -272,9 +280,9 @@ public class stepdef_GameBrain {
     }
 
     // GameBrain activate an explosive tile
-    @Given("a GameBrain and a tile on the game board")
-    public void a_GameBrain_and_a_tile_on_the_game_board() {
-
+    @Given("a GameBrain with at least medium difficulty__")
+    public void a_GameBrain_with_at_least_medium_difficulty__() {
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
     }
 
     @When("a robot stands on an explosive tile")
@@ -305,6 +313,46 @@ public class stepdef_GameBrain {
         for (LTile t__tile : t_tiles) {
             assertEquals(EnumObstacle.ACID, t__tile.getObstacle().getObstacleEnum());
         }
+
+        t_robot = null;
+        t_tile = null;
+    }
+
+    // GameBrain determine an unknown explosive tile
+    @Given("a GameBrain with {string} difficulty")
+    public void a_GameBrain_with_specified_difficulty(String string) {
+        t_gamebrain = new LGameBrain(1, EnumDifficulty.valueOf(string));
+    }
+
+    @When("a robot stands on an unknown explosive tile")
+    public void a_robot_stands_on_an_unknown_explosive_tile() {
+        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
+        int t_x = 0;
+        int t_y = 0;
+        for (LTile t__tile : t_tiles) {
+            if (!t__tile.doesTileHaveObstacle()) {
+                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_UNKNOWN) {
+                    t_x = t__tile.getCoordinates().x;
+                    t_y = t__tile.getCoordinates().y;
+                    t_tile = t__tile;
+                }
+            }
+        }
+
+        ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
+        t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
+        t_robot.setCords(new Point(t_x, t_y));
+    }
+
+    @Then("GameBrain set the unknown explosive tile to a known one")
+    public void GameBrain_set_the_unknown_explosive_tile_a_known_one() {
+        t_gamebrain.chooseUnkownObstacle(t_tile);
+        assertTrue(
+                t_tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN &&
+                        ( t_tile.getObstacle().getObstacleEnum() == EnumObstacle.ACID ||
+                          t_tile.getObstacle().getObstacleEnum() == EnumObstacle.RADIATION ||
+                          t_tile.getObstacle().getObstacleEnum() == EnumObstacle.PIT )
+        );
 
         t_robot = null;
         t_tile = null;

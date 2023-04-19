@@ -26,12 +26,12 @@ Feature: GameBrain
     Then GameBrain detect if a robot encounters an obstacle
 
   Scenario: GameBrain gets and sets the icon image of a tile
-    Given a GameBrain a tile and an icon image
+    Given a GameBrain with at least medium difficulty
     When an explosive tile affects nearby tiles
     Then GameBrain change graphics of a tile
 
   Scenario: GameBrain traces the status of a robot
-    Given a GameBrain and a robot
+    Given a GameBrain with at least medium difficulty_
     When a robot touches a checkpoint
     Then GameBrain check how many checkpoints a robot has reached
 
@@ -46,6 +46,11 @@ Feature: GameBrain
     Then GameBrain remove a player from the game
 
   Scenario: GameBrain activate an explosive tile
-    Given a GameBrain and a tile on the game board
+    Given a GameBrain with at least medium difficulty
+    When a robot stands on an explosive tile
+    Then GameBrain make a bomb obstacle explode
+
+  Scenario: GameBrain determine an unknown explosive tile
+    Given a GameBrain with "HARD" difficulty
     When a robot stands on an explosive tile
     Then GameBrain make a bomb obstacle explode

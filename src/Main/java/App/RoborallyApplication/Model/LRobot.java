@@ -13,7 +13,7 @@ public class LRobot implements IToDTO {
     private UUID id;
     private Point cords = new Point(0,0);
     private GraphicalElementRobot graphicalElement;
-    private ArrayList<Point> checkpointsDone;
+    private ArrayList<Point> checkpointsDone = new ArrayList<>();
     private EnumDirection currentDirection;
     private int lifeCount = 5;
     LPlayer player;
@@ -32,22 +32,20 @@ public class LRobot implements IToDTO {
     public EnumDirection getCurrentDirection() {return this.currentDirection;}
 
     public void changeDirection(EnumTurnType enumTurnType){
-        switch (enumTurnType){
-            case LEFT:
-                this.currentDirection = currentDirection.getLeft();
-                break;
-            case RIGHT:
+        switch (enumTurnType) {
+            case LEFT -> this.currentDirection = currentDirection.getLeft();
+            case RIGHT -> {
                 this.currentDirection = currentDirection.getRight();
                 this.graphicalElement.changeDirection(currentDirection.getRight());
-                break;
-            case U_TURN:
+            }
+            case U_TURN -> {
                 this.currentDirection = currentDirection.getUTurn();
                 this.graphicalElement.changeDirection(currentDirection.getUTurn());
-                break;
+            }
         }
     }
 
-    protected void addCheckpoint(Point point){
+    public void addCheckpoint(Point point){
         boolean isAlreadyChecked = false;
         for (Point pointDone : checkpointsDone) {
             if(pointDone.x == point.x && pointDone.y == point.y){
@@ -59,7 +57,7 @@ public class LRobot implements IToDTO {
         }
     }
 
-    protected ArrayList<Point> getCheckpointsDone(){
+    public ArrayList<Point> getCheckpointsDone(){
         return this.checkpointsDone;
     }
 

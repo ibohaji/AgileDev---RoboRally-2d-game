@@ -3,7 +3,7 @@ package App.RoborallyApplication.Model;
 public enum EnumObstacle {
     ACID(-1),
     RADIATION(-1),
-
+    TREADMILL(0),
     HEALING(2),
 
     PIT(-2);

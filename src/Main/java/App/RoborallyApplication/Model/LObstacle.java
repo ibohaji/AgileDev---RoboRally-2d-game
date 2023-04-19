@@ -20,6 +20,13 @@ public class LObstacle implements IToDTO {
         this.damage = obstacle.getDamage();
     }
 
+    // For EXPLOSIVE_UNKNOWN we should not have the EnumObstacle parameter predefined
+    public LObstacle(EnumObstacleType obstacleType) {
+        this.id = UUID.randomUUID();
+        this.obstacleType = obstacleType;
+        this.graphicalElement = new GraphicalElementObstacle();
+    }
+
     public LRobot DoDamage(LRobot targetrobot) {
         targetrobot.setNrOfLives(
                 targetrobot.getNrOfLives() - this.damage
