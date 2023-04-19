@@ -6,7 +6,7 @@ import App.RoborallyApplication.Model.LGameBrain;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.testng.Assert;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class stepdef_user {
     public void user_choose_the_number_of_players() {
         gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
         ArrayList<LPlayer> getPlayers = gameBrain.getPlayers();
-        Assert.assertEquals(1, getPlayers.size());
+        assertEquals(1, getPlayers.size());
     }
 
     // User chooses the difficulty level
@@ -52,7 +52,7 @@ public class stepdef_user {
     @Then("user choose the difficulty level")
     public void user_choose_the_difficulty_level() {
         gameBrain = new LGameBrain(1, EnumDifficulty.MEDIUM);
-        Assert.assertEquals(EnumDifficulty.MEDIUM, gameBrain.getGameConfig().getDifficulty());
+        assertEquals(EnumDifficulty.MEDIUM, gameBrain.getGameConfig().getDifficulty());
     }
 
     // User create a single lobby
@@ -72,7 +72,7 @@ public class stepdef_user {
 //            SINGLE
 //        }
 //
-//        Assert.assertEquals(LobbyType.SINGLE, gameBrain.getLobbyType());
+//        assertEquals(LobbyType.SINGLE, gameBrain.getLobbyType());
    }
 //
 //
@@ -94,7 +94,7 @@ public class stepdef_user {
         @Then("user play a single_player game")
         public void user_player_a_single_player_game() {
 
-//            Assert.assertEquals(2, gameBrain.getNumAIPlayers());
+//            assertEquals(2, gameBrain.getNumAIPlayers());
         }
     }
 
