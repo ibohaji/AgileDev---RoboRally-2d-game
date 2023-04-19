@@ -10,10 +10,10 @@ Feature: User interaction
     When before a new game starts with specified difficulty level
     Then user choose the difficulty level
 
-  Scenario: User create a single lobby
+  Scenario: User clicks on "Multiplayer" button to create a multiple lobby
     Given a user who wants to create lobby
     When before a new game starts with specified lobby
-    Then user create a single lobby
+    Then user create a multiple lobby
 
   Scenario: User create a new game where the other players are controlled by AI
     Given a user who wants to create new game
