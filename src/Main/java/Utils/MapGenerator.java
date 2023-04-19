@@ -31,7 +31,7 @@ public class MapGenerator {
         for (int i = 0; i < boardDimensions.first(); i++) {
             for (int j = 0; j < boardDimensions.second(); j++) {
                 LTile nextTile = new LTile(i, j, floor);
-                nextTile.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, difficulty);
+                nextTile.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, difficulty);
                 tiles.add(nextTile);
             }
         }
@@ -47,62 +47,62 @@ public class MapGenerator {
 
         // add healing tiles
         LTile healTile1 = new LTile(7, 4, EnumTileType.OBSTACLE);
-        healTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, difficulty);
+        healTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, difficulty);
         gameboard.changeTile(healTile1);
 
 
         LTile healTile2 = new LTile(0, 3, EnumTileType.OBSTACLE);
-        healTile2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, difficulty);
+        healTile2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, difficulty);
         gameboard.changeTile(healTile2);
 
         // add treadmill tiles
         LTile treadmillTile1 = new LTile(4, 0, EnumTileType.OBSTACLE);
-        treadmillTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.RIGHT_TREADMILL, difficulty);
+        treadmillTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.RIGHT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile1);
 
         LTile treadmillTile2 = new LTile(5, 5, EnumTileType.OBSTACLE);
-        treadmillTile2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.RIGHT_TREADMILL, difficulty);
+        treadmillTile2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.RIGHT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile2);
 
         LTile treadmillTile3 = new LTile(2, 3, EnumTileType.OBSTACLE);
-        treadmillTile3.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
+        treadmillTile3.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile3);
 
         LTile treadmillTile4 = new LTile(1, 1, EnumTileType.OBSTACLE);
-        treadmillTile4.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.LEFT_TREADMILL, difficulty);
+        treadmillTile4.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.LEFT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile4);
 
         // add acid tiles
         LTile acidTiles1 = new LTile(3, 4, EnumTileType.OBSTACLE);
-        acidTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, difficulty);
+        acidTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, difficulty);
         acidTiles1.setObstacle(new LObstacle(EnumObstacle.ACID, EnumObstacleType.EXPLOSIVE_KNOWN));
         gameboard.changeTile(acidTiles1);
 
         LTile acidTiles2 = new LTile(1, 5, EnumTileType.OBSTACLE);
-        acidTiles2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, difficulty);
+        acidTiles2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, difficulty);
         acidTiles2.setObstacle(new LObstacle(EnumObstacle.ACID, EnumObstacleType.EXPLOSIVE_KNOWN));
         gameboard.changeTile(acidTiles2);
 
         //add finish tile
         LTile finishPointTiles1 = new LTile(4, 1, EnumTileType.FINISH);
-        finishPointTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.FINISH, difficulty);
+        finishPointTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.FINISH, difficulty);
         gameboard.changeTile(finishPointTiles1);
 
         // add start point tiles
         LTile startPointTiles1 = new LTile(6, 7, EnumTileType.START);
-        startPointTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.START, difficulty);
+        startPointTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.START, difficulty);
         gameboard.changeTile(startPointTiles1);
 
         LTile startPointTiles2 = new LTile(5, 7, EnumTileType.START);
-        startPointTiles2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.START, difficulty);
+        startPointTiles2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.START, difficulty);
         gameboard.changeTile(startPointTiles2);
 
         LTile starterPointTiles3 = new LTile(3,7, EnumTileType.START);
-        starterPointTiles3.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.START, difficulty);
+        starterPointTiles3.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.START, difficulty);
         gameboard.changeTile(starterPointTiles3);
 
         LTile startPointTiles4 = new LTile(1, 7, EnumTileType.START);
-        startPointTiles4.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.START, difficulty);
+        startPointTiles4.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.START, difficulty);
         gameboard.changeTile(startPointTiles4);
 
         return gameboard;
@@ -122,7 +122,7 @@ public class MapGenerator {
         for (int i = 0; i < boardDimensions.first(); i++) {
             for (int j = 0; j < boardDimensions.second(); j++) {
                 LTile nextTile = new LTile(i, j, floor);
-                nextTile.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, difficulty);
+                nextTile.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, difficulty);
                 tiles.add(nextTile);
             }
         }
@@ -132,8 +132,8 @@ public class MapGenerator {
         for (int i = 4; i < 8; i++) {
             LTile treadmillTurnTile1 = new LTile(i, 3, EnumTileType.OBSTACLE);
             LTile treadmillTurnTile2 = new LTile(i, 8, EnumTileType.OBSTACLE);
-            treadmillTurnTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.LEFT_TREADMILL, difficulty);
-            treadmillTurnTile2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.LEFT_TREADMILL, difficulty);
+            treadmillTurnTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.LEFT_TREADMILL, difficulty);
+            treadmillTurnTile2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.LEFT_TREADMILL, difficulty);
             gameboard.changeTile(treadmillTurnTile1);
             gameboard.changeTile(treadmillTurnTile2);
 
@@ -143,27 +143,27 @@ public class MapGenerator {
         for (int i = 4; i < 8; i++) {
             LTile treadmillTurnTile3 = new LTile(3, i, EnumTileType.OBSTACLE);
             LTile treadmillTurnTile4 = new LTile(8, i, EnumTileType.OBSTACLE);
-            treadmillTurnTile3.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
-            treadmillTurnTile4.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
+            treadmillTurnTile3.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
+            treadmillTurnTile4.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
             gameboard.changeTile(treadmillTurnTile3);
             gameboard.changeTile(treadmillTurnTile4);
         }
 
         // add turn treadmill tiles
         LTile treadmillTile1 = new LTile(3, 3, EnumTileType.OBSTACLE);
-        treadmillTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.UPLEFT_TURN_TREADMILL, difficulty);
+        treadmillTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.UPLEFT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile1);
 
         LTile treadmillTile2 = new LTile(8, 3, EnumTileType.OBSTACLE);
-        treadmillTile2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.UPRIGHT_TURN_TREADMILL, difficulty);
+        treadmillTile2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.UPRIGHT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile2);
 
         LTile treadmillTile3 = new LTile(3, 8, EnumTileType.OBSTACLE);
-        treadmillTile3.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.BOTTOMLEFT_TURN_TREADMILL, difficulty);
+        treadmillTile3.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.BOTTOMLEFT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile3);
 
         LTile treadmillTile4 = new LTile(8, 8, EnumTileType.OBSTACLE);
-        treadmillTile4.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.BOTTOMRIGHT_TURN_TREADMILL, difficulty);
+        treadmillTile4.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.BOTTOMRIGHT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile4);
 
         // add acid tiles
@@ -177,12 +177,12 @@ public class MapGenerator {
 
         //add finish tile
         LTile finishPointTiles1 = new LTile(10, 2, EnumTileType.FINISH);
-        finishPointTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.FINISH, difficulty);
+        finishPointTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.FINISH, difficulty);
         gameboard.changeTile(finishPointTiles1);
 
         //add checkpoint1
         LTile checkpointTiles1 = new LTile(1, 4, EnumTileType.CHECKPOINT);
-        checkpointTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_1, difficulty);
+        checkpointTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_1, difficulty);
         gameboard.changeTile(checkpointTiles1);
 
         // add start point tiles
@@ -223,7 +223,7 @@ public class MapGenerator {
 
         //add downwards treadmill tiles
         LTile treadmillTileDown1 = new LTile(2, 0, EnumTileType.OBSTACLE);
-        treadmillTileDown1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
+        treadmillTileDown1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DOWNWARD_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTileDown1);
 
         //add leftwards treadmill tiles
@@ -237,21 +237,21 @@ public class MapGenerator {
 
         //add rightwards treadmill tiles
         LTile treadmillTileRight1 = new LTile(0, 8, EnumTileType.OBSTACLE);
-        treadmillTileRight1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.RIGHT_TREADMILL, difficulty);
+        treadmillTileRight1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.RIGHT_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTileRight1);
 
         //add explosive acid tiles
         LTile explosiveAcidTile1 = new LTile(4, 9, EnumTileType.OBSTACLE);
-        explosiveAcidTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, difficulty);
+        explosiveAcidTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, difficulty);
         gameboard.changeTile(explosiveAcidTile1);
 
         LTile explosiveAcidTile2 = new LTile(7, 9, EnumTileType.OBSTACLE);
-        explosiveAcidTile2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, difficulty);
+        explosiveAcidTile2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, difficulty);
         gameboard.changeTile(explosiveAcidTile2);
 
         //add explosive radiation tile
         LTile explosiveRadiationTile1 = new LTile(8, 2, EnumTileType.OBSTACLE);
-        explosiveRadiationTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_RADIATION, difficulty);
+        explosiveRadiationTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_RADIATION, difficulty);
         gameboard.changeTile(explosiveRadiationTile1);
 
 
@@ -272,7 +272,7 @@ public class MapGenerator {
         for (int i = 0; i < boardDimensions.first(); i++) {
             for (int j = 0; j < boardDimensions.second(); j++) {
                 LTile nextTile = new LTile(i, j, floor);
-                nextTile.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, difficulty);
+                nextTile.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, difficulty);
                 tiles.add(nextTile);
             }
         }
@@ -316,23 +316,23 @@ public class MapGenerator {
 
         // add turn treadmill tiles
         LTile treadmillTile1 = new LTile(10, 4, EnumTileType.OBSTACLE);
-        treadmillTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.BOTTOMRIGHT_REVERSE_TREADMILL, difficulty);
+        treadmillTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.BOTTOMRIGHT_REVERSE_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile1);
 
         LTile treadmillTile2 = new LTile(10, 7, EnumTileType.OBSTACLE);
-        treadmillTile2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.UPRIGHT_TURN_TREADMILL, difficulty);
+        treadmillTile2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.UPRIGHT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile2);
 
         LTile treadmillTile3 = new LTile(1, 4, EnumTileType.OBSTACLE);
-        treadmillTile3.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.BOTTOMLEFT_TURN_TREADMILL, difficulty);
+        treadmillTile3.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.BOTTOMLEFT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile3);
 
         LTile treadmillTile4 = new LTile(1, 7, EnumTileType.OBSTACLE);
-        treadmillTile4.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.UPRIGHT_REVERSE_TREADMILL, difficulty);
+        treadmillTile4.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.UPRIGHT_REVERSE_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile4);
 
         LTile treadmillTile5 = new LTile(7, 9, EnumTileType.OBSTACLE);
-        treadmillTile5.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.BOTTOMRIGHT_TURN_TREADMILL, difficulty);
+        treadmillTile5.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.BOTTOMRIGHT_TURN_TREADMILL, difficulty);
         gameboard.changeTile(treadmillTile5);
 
         // add acid tiles
@@ -346,16 +346,16 @@ public class MapGenerator {
 
         //add finish tile
         LTile finishPointTiles1 = new LTile(4, 5, EnumTileType.FINISH);
-        finishPointTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.FINISH, difficulty);
+        finishPointTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.FINISH, difficulty);
         gameboard.changeTile(finishPointTiles1);
 
         //add checkpoint1, 2
         LTile checkpointTiles1 = new LTile(7, 5, EnumTileType.CHECKPOINT);
-        checkpointTiles1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_1, difficulty);
+        checkpointTiles1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_1, difficulty);
         gameboard.changeTile(checkpointTiles1);
 
         LTile checkpointTiles2 = new LTile(11, 0, EnumTileType.CHECKPOINT);
-        checkpointTiles2.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_2, difficulty);
+        checkpointTiles2.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_2, difficulty);
         gameboard.changeTile(checkpointTiles2);
 
         // add start point tiles
@@ -387,22 +387,22 @@ public class MapGenerator {
 
         //add explosive acid tiles
         LTile explosiveAcidTile1 = new LTile(7, 6, EnumTileType.OBSTACLE);
-        explosiveAcidTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, difficulty);
+        explosiveAcidTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, difficulty);
         gameboard.changeTile(explosiveAcidTile1);
 
         //add explosive radiation tile
         LTile explosiveRadiationTile1 = new LTile(2, 9, EnumTileType.OBSTACLE);
-        explosiveRadiationTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_RADIATION, difficulty);
+        explosiveRadiationTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_RADIATION, difficulty);
         gameboard.changeTile(explosiveRadiationTile1);
 
         //add radiation tile
         LTile radiationTile1 = new LTile(8, 3, EnumTileType.OBSTACLE);
-        radiationTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_RADIATION, difficulty);
+        radiationTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_RADIATION, difficulty);
         gameboard.changeTile(radiationTile1);
 
         //add unknown explosive tile
         LTile unknownExplosiveTile1 = new LTile(2, 6, EnumTileType.OBSTACLE);
-        unknownExplosiveTile1.getGraphicalElement().setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_UNKNOWN_EXPLOSIVE, difficulty);
+        unknownExplosiveTile1.getGraphicalElement().setTileGraphicalElement(EnumGraphicalElementMain.OBSTACLE_UNKNOWN_EXPLOSIVE, difficulty);
         gameboard.changeTile(unknownExplosiveTile1);
 
 

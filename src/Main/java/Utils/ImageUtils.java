@@ -40,7 +40,6 @@ public class ImageUtils {
     public static Image getImage(String filepath) {
         //if (filepath.charAt(0) != '/') filepath = "/" + filepath;
         BufferedImage img = null;
-
         try {
             img = ImageIO.read(new File(filepath));
         } catch (IOException e) {

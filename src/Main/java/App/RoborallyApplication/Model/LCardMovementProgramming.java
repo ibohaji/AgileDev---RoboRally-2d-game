@@ -1,25 +1,21 @@
 package App.RoborallyApplication.Model;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class LCardMovementProgramming extends AbCardProgramming {
     private final int steps;
+
+    private GraphicalElement graphicalElement = new GraphicalElement();
     public LCardMovementProgramming(int steps){
         this.steps = steps;
-    }
-
-    @Override
-    public String getCardImageFileName() {
-        String filename = "App.Resources.Cards.MovementCard";
         if (steps == 1) {
-            filename += "_1.png";
+            this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.MOVEMENT_CARD_1);
         } else if (steps == 2) {
-            filename += "_2.png";
+            this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.MOVEMENT_CARD_2);
         } else if (steps == 3) {
-            filename += "_3.png";
-        }
-        return filename;
-    }
+            this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.MOVEMENT_CARD_3);
+        }    }
 
 
     @Override
@@ -64,5 +60,10 @@ public class LCardMovementProgramming extends AbCardProgramming {
                 case WEST -> gameBrain.pushRobot(robotAtCoordinate, EnumDirection.EAST);
             }
         }
+    }
+
+    @Override
+    public ImageIcon getCardImageIcon() {
+        return this.graphicalElement.getImage();
     }
 }

@@ -7,13 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="test" />
-        <module name="AgileDevSpring2023" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="test" options="--add-modules java.base,java.desktop" />
+      <module name="test" options="" />
     </option>
   </component>
 </project>

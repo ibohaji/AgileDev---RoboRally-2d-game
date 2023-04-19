@@ -1,7 +1,6 @@
 package App.RoborallyApplication.Controllers;
 
-import App.RoborallyApplication.Model.EnumDifficulty;
-import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.*;
 import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
@@ -14,8 +13,12 @@ public class GameController {
     public GameController(ApplicationController applicationController, LGameBrain gameBrain){
         this.applicationController = applicationController;
         this.gameBrain = gameBrain;
-        this.view = new GameBoardView(this, gameBrain);
-        this.view = new ProgrammingPhaseView(this, gameBrain);
+        if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
+            this.view = new ProgrammingPhaseView(this, gameBrain);
+        } else {
+            //this.view = new GameBoardView(this, gameBrain);
+        }
+
     }
 
     protected void display() {
@@ -34,6 +37,16 @@ public class GameController {
         var gameController = new GameController(app, game);
         gameController.display();
     }
+
+    public LPlayer getPlayerWithoutCardSequence(){
+        return gameBrain.getPlayerWithoutCardSequence();
+    }
+
+    public void submitPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
+        gameBrain.setCardSequenceForPlayer(player, cardSequence);
+    }
+
+
 
 
 }

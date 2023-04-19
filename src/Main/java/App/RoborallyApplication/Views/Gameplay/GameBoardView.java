@@ -38,7 +38,6 @@ public class GameBoardView extends GameView{
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                             EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
-
                             add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                         } else {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();

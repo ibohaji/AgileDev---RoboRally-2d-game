@@ -5,6 +5,7 @@ import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.GridBagConstraintsBuilder;
+import Utils.ImageUtils;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -39,9 +40,13 @@ public class UserCardDeckView extends GameView {
     private class CardPanel extends JPanel {
         private AbCardProgramming card;
 
+        private ImageIcon image;
+
         public CardPanel(AbCardProgramming card) {
             this.card = card;
             // add card view to the panel
+            this.image = card.getCardImageIcon();
+            add(new JLabel(this.image));
         }
 
         // implement other methods to handle rendering, sizing, etc.
