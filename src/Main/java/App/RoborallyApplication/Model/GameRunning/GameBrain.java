@@ -33,6 +33,7 @@ public class GameBrain implements iToDTO {
     public GameBrain(int nrOfPlayers, DifficultyEnum difficulty){
         this.id = UUID.randomUUID();
         gameConfig = new GameConfiguration(nrOfPlayers, difficulty);
+
         createGameboard(difficulty);
         this.players = createPlayers();
         ArrayList<Robot> robots = createRobots(players);
@@ -40,6 +41,7 @@ public class GameBrain implements iToDTO {
         currentGamePhase = GamePhase.ROUND_START;
         startGame();
     }
+
 
     private void startGame(){
         setupRobots();
@@ -168,13 +170,16 @@ public class GameBrain implements iToDTO {
         }
     }
 
+
+
     private ArrayList<Player> createPlayers(){
         ArrayList<Player> players = new ArrayList<>();
-        for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
-            players.add(new Player("player" + (Integer.toString(i + 1))));
+        for (int i = 1; i <= this.gameConfig.getNrOfPlayers(); i++) {
+            players.add(new Player("player" + (Integer.toString(i ))));
         }
         return players;
     }
+
     private ArrayList<Robot> createRobots(ArrayList<Player> players){
         ArrayList<Robot> robots = new ArrayList<>();
         for (Player player: players) {

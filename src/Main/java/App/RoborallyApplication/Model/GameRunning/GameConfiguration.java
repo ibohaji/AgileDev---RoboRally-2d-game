@@ -7,7 +7,7 @@ public class GameConfiguration {
     private final int nrOfPlayers;
     private final Tuple<Integer, Integer> boardDimensions;
     private final DifficultyEnum difficulty;
-
+    private boolean isRegular;
     public GameConfiguration(int nrOfPlayers, DifficultyEnum difficulty){
         this.nrOfPlayers = nrOfPlayers;
         this.difficulty = difficulty;
@@ -17,8 +17,17 @@ public class GameConfiguration {
     /**
      * @return board dimensions as tuple where 'first' is horizontal value and 'second' is vertical value
      */
+
     public Tuple<Integer, Integer> getBoardDimensions(){
         return this.boardDimensions;
+    }
+
+    public void setAIOpponent(){
+        isRegular = false;
+    }
+
+    public boolean getGameMode(){
+        return isRegular;
     }
 
     public int getNrOfPlayers(){return this.nrOfPlayers;}

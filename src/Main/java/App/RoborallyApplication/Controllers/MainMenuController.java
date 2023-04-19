@@ -24,6 +24,7 @@ public class MainMenuController {
         if(isRegular){
             applicationController.changePanel(new LobbyRegularView(lobbyController, gameConf));
         } else {
+            gameConf.setAIOpponent();
             applicationController.changePanel(new LobbyAiView(lobbyController, gameConf));
         }
     }

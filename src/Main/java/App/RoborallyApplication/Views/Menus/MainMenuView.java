@@ -53,6 +53,7 @@ public class MainMenuView extends JPanel {
        // leftPanel.setBorder(BorderFactory.createEmptyBorder(10, horizontalInset, 10, horizontalInset/2));
         // Play AI button
         JButton playAiButton = getPlayAiButton();
+
         leftPanel.add(playAiButton, new GridBagConstraintsBuilder(0, 5).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
         leftPanel.setBorder(BorderFactory.createEmptyBorder(10, horizontalInset/2, 10, horizontalInset));
         // Game difficulty choice dropdown
@@ -134,16 +135,28 @@ public class MainMenuView extends JPanel {
 
 
 
+
     private JButton getPlayAiButton(){
+
+
         JButton playAIButton = new JButton("Play against AI");
         playAIButton.setFont(Fonts.LARGE);
         playAIButton.addActionListener(e -> {
-            // need ip
-            // need game configuration (nr of players, skin, etc..)
+            int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
+            if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
+                controller.userClickPlay(DifficultyEnum.HARD, numOfPlayers, false);
+            } else if (difficultyDropdown.getSelectedItem().toString().equals("MEDIUM")) {
+                controller.userClickPlay(DifficultyEnum.MEDIUM, numOfPlayers, false);
+            } else {
+                controller.userClickPlay(DifficultyEnum.EASY, numOfPlayers, false);
+            }
+
             // controller.userClickPlayAI();
         });
         return playAIButton;
     }
+
+
 
 
 

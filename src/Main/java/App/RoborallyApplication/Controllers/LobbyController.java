@@ -13,6 +13,7 @@ public class LobbyController {
 
     private final ApplicationController applicationController;
     private final LobbyView view;
+
     public LobbyController(ApplicationController applicationController, boolean isRegular, GameConfiguration gameConfiguration){
         this.applicationController = applicationController;
         if(isRegular){

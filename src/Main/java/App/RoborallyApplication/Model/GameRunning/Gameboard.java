@@ -26,8 +26,8 @@ public class Gameboard implements iToDTO {
     private GameBrain gameBrain;
 
     public Gameboard(){
-
     }
+
     public Gameboard(GameBrain brain){
         gameBrain = brain;
         gameBrainId = gameBrain.getID();
