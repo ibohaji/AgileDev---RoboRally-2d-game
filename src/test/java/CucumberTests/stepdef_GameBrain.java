@@ -29,7 +29,7 @@ public class stepdef_GameBrain {
     private LRobot t_robot;
     private LTile t_tile;
 
-    public static int t_rndInt(int min, int max) {
+    private static int t_rndInt(int min, int max) {
         Random t_rnd = new Random();
         return t_rnd.nextInt((max - min) + 1) + min;
     }

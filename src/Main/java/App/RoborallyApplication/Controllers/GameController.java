@@ -46,7 +46,9 @@ public class GameController {
         gameBrain.setCardSequenceForPlayer(player, cardSequence);
     }
 
-
-
+    // Test purpose only
+    public LGameBrain getGameBrain() {
+        return this.gameBrain;
+    }
 
 }

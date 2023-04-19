@@ -11,6 +11,8 @@ public class LobbyController {
 
     private final ApplicationController applicationController;
     private final LobbyView view;
+    // Test purpose only
+    private GameController t_gameController;
 
     public LobbyController(ApplicationController applicationController, boolean isRegular, LGameConfiguration gameConfiguration){
         this.applicationController = applicationController;
@@ -25,5 +27,12 @@ public class LobbyController {
         LGameBrain gameBrain = new LGameBrain(gameConfiguration.getNrOfPlayers(), gameConfiguration.getDifficulty());
         GameController gameController = new GameController(applicationController, gameBrain);
         applicationController.changePanel(new ProgrammingPhaseView(gameController, gameBrain));
+        // Test purpose only
+        this.t_gameController = gameController;
+    }
+
+    // Test purpose only
+    public GameController getGameController() {
+        return this.t_gameController;
     }
 }

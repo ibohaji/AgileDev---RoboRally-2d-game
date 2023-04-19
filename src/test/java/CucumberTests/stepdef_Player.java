@@ -4,7 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class stepdef_programmingPhase {
+public class stepdef_Player {
 
     /*
         Test steps for programmingPhase
@@ -71,6 +71,22 @@ public class stepdef_programmingPhase {
 
     @Then("player check the game board anytime")
     public void player_check_the_game_board_anytime() {
+
+    }
+
+    // Player watch the activation progress on the game board
+    @Given("a player and its robot")
+    public void a_player_and_its_robot() {
+
+    }
+
+    @When("during the activation phase")
+    public void during_the_activation_phase() {
+
+    }
+
+    @Then("the player see how many lives its robot currently has")
+    public void the_player_see_how_many_lives_its_robot_currently_has() {
 
     }
 

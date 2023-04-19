@@ -42,3 +42,7 @@ Feature: Robot Movement on the board
     When Robot suffer a damage
     Then Robot is deleted
 
+    Scenario: Robot execute programming cards in order in activation phase
+      Given a game board with a robot and 5 ordered cards
+      When the activation phase starts
+      Then the robot execute the cards in the given order

@@ -163,4 +163,21 @@ public class stepdef_robotnew {
     public void robot_is_deleted() {
 
     }
+
+    // Robot execute programming cards in order in activation phase
+    @Given("a game board with a robot and 5 ordered cards")
+    public void a_game_board_with_a_robot_and_5_ordered_cards() {
+
+    }
+
+    @When("the activation phase starts")
+    public void the_activation_phase_starts() {
+
+    }
+
+    @Then("the robot execute the cards in the given order")
+    public void the_robot_execute_the_cards_in_the_given_order() {
+
+    }
+
 }

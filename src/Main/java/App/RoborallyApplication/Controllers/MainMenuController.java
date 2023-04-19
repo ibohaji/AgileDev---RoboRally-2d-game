@@ -10,6 +10,9 @@ public class MainMenuController {
 
     private final ApplicationController applicationController;
     private final MainMenuView view;
+    // Test purpose only
+    private LobbyController t_lobbyController;
+    private LGameConfiguration t_gameConfiguration;
 
     public MainMenuController(ApplicationController applicationController) {
         this.applicationController = applicationController;
@@ -25,9 +28,20 @@ public class MainMenuController {
             gameConf.setAIOpponent();
             applicationController.changePanel(new LobbyAiView(lobbyController, gameConf));
         }
+        // Test purpose only
+        this.t_lobbyController = lobbyController;
+        this.t_gameConfiguration = gameConf;
     }
 
     public void display() {
         applicationController.changePanel(view);
+    }
+
+    // Test purpose only
+    public LobbyController getLobbyController() {
+        return this.t_lobbyController;
+    }
+    public LGameConfiguration getGameConfiguration() {
+        return this.t_gameConfiguration;
     }
 }
