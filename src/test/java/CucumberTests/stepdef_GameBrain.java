@@ -56,7 +56,7 @@ public class stepdef_GameBrain {
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
         for (LPlayer t_currentplayer : t_players) {
-            ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getCards();
+            ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getProgrammingCards();
             assertEquals(5, t_playerscards.size());
         }
 
@@ -146,7 +146,7 @@ public class stepdef_GameBrain {
         int t_pos_x = t_robot.getCords().x;
         int t_pos_y = t_robot.getCords().y;
         LTile t__tile = t_gamebrain.getGameboard().getTileFromCoordinate(t_pos_x, t_pos_y);
-        assertEquals(!t__tile.doesTileHaveObstacle(), t_gamebrain.checkRobotposition(t_robot));
+        assertEquals(t__tile.doesTileHaveObstacle(), t_robot.getCords().equals(t__tile.getCoordinates()));
 
         t_player = null;
         t_robot = null;

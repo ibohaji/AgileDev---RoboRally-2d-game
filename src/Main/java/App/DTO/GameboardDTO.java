@@ -1,5 +1,6 @@
 package App.DTO;
 
+import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LGameboard;
 import App.RoborallyApplication.Model.LRobot;
 import App.RoborallyApplication.Model.LTile;
@@ -9,13 +10,11 @@ import java.util.UUID;
 
 public class GameboardDTO implements iFromDTO{
 
-    public UUID id;
-    public UUID gamebrainID;
-    public ArrayList<TileDTO> tiles = new ArrayList<>();
-    public ArrayList<RobotDTO> robots = new ArrayList<>();
-    public GameboardDTO() {
-
-    }
+    private UUID id;
+    private UUID gamebrainID;
+    private ArrayList<TileDTO> tiles = new ArrayList<>();
+    private ArrayList<RobotDTO> robots = new ArrayList<>();
+    private LGameBrain gamebrain;
 
     public GameboardDTO(LGameboard gameboard){
         for (LTile tile : gameboard.getTiles()){
@@ -26,6 +25,8 @@ public class GameboardDTO implements iFromDTO{
         }
         this.id = gameboard.getID();
         this.gamebrainID = gameboard.getGameBrainId();
+        this.gamebrain = gameboard.getGameBrain();
+        this.id = UUID.randomUUID();
     }
 
 
@@ -34,14 +35,15 @@ public class GameboardDTO implements iFromDTO{
         //TODO
         ArrayList<LRobot> robotsForBoard = new ArrayList<>();
         ArrayList<LTile> tilesForBoard = new ArrayList<>();
-        LGameboard gameboard = new LGameboard();
-        for (RobotDTO robotDTO: robots) {
+        LGameboard gameboard = new LGameboard(gamebrain);
+        for (RobotDTO robotDTO: this.robots) {
             robotsForBoard.add(robotDTO.returnObjectFromDTO());
         }
-        for (TileDTO tileDTO: tiles) {
-            LTile tile = tileDTO.returnObjectFromDTO();
-            tilesForBoard.add(tile);
+        for (TileDTO tileDTO: this.tiles) {
+            tilesForBoard.add(tileDTO.returnObjectFromDTO());
         }
+        gameboard.setRobots(robotsForBoard);
+        gameboard.setTiles(tilesForBoard);
         return gameboard;
     }
 }

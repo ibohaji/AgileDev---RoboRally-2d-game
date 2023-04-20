@@ -11,12 +11,13 @@ import java.util.UUID;
 public class LRobot implements IToDTO {
 
     private UUID id;
-    private Point cords = new Point(0,0);
+    private Point cords = new Point();
     private GraphicalElementRobot graphicalElement;
     private ArrayList<Point> checkpointsDone = new ArrayList<>();
     private EnumDirection currentDirection;
     private int lifeCount = 5;
-    LPlayer player;
+    private LPlayer player;
+
     public LRobot(){
         this.id = UUID.randomUUID();
         this.currentDirection = null;
@@ -60,13 +61,17 @@ public class LRobot implements IToDTO {
         return this.checkpointsDone;
     }
 
+    public void setCheckpointsDone(ArrayList<Point> checkpointsDone) {
+        this.checkpointsDone = checkpointsDone;
+    }
+
     public Point getCords(){
         return cords;
     }
 
     public void setCords(Point newCords){
         cords.x = newCords.x;
-        cords.y =newCords.y;
+        cords.y = newCords.y;
     }
 
     public int getNrOfLives(){
@@ -88,6 +93,7 @@ public class LRobot implements IToDTO {
     public LPlayer getPlayer(){
         return player;
     }
+
     @Override
     public String toString() {
         return "Robot. Direction: " + this.currentDirection.name() + ". X: " + this.cords.x + " Y: " + this.cords.y +

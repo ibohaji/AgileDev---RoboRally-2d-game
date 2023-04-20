@@ -4,11 +4,15 @@ import App.RoborallyApplication.Model.AbCardProgramming;
 
 public class ProgrammingCardDTO implements iFromDTO{
 
-    public ProgrammingCardDTO(){
+    private AbCardProgramming card;
 
+    public ProgrammingCardDTO(AbCardProgramming abCardProgramming){
+        this.card = abCardProgramming;
     }
+
     @Override
     public AbCardProgramming returnObjectFromDTO() {
-        return null;
+        return this.card;
     }
+
 }

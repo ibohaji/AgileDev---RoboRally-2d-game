@@ -1,28 +1,31 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.EnumTileType;
-import App.RoborallyApplication.Model.LTile;
-import App.RoborallyApplication.Model.GraphicalElementTile;
+import App.RoborallyApplication.Model.*;
 
 import java.awt.*;
+import java.util.UUID;
 
 public class TileDTO implements iFromDTO{
-    public Integer xCoordinate;
-    public Integer yCoordinate;
-    public GraphicalElementTile graphicalElement;
-    public EnumTileType enumTileType;
-    public TileDTO(){}
+    private UUID id;
+    private Point coordinate;
+    private int xCoordinate;
+    private int yCoordinate;
+    private GraphicalElementTile graphicalElement;
+    private EnumTileType enumTileType;
+
     public TileDTO(LTile tile){
-        Point coordinates = tile.getCoordinates();
-        this.xCoordinate = coordinates.x;
-        this.yCoordinate = coordinates.y;
+        this.id = UUID.randomUUID();
+        this.coordinate = tile.getCoordinates();
+        this.xCoordinate = coordinate.x;
+        this.yCoordinate = coordinate.y;
         this.enumTileType = tile.getTileTypeEnum();
         this.graphicalElement = tile.getGraphicalElement();
     }
 
     @Override
     public LTile returnObjectFromDTO() {
-        LTile tile = new LTile(this.xCoordinate, this.yCoordinate, this.enumTileType);
-        return tile;
+        LTile return_tile = new LTile(this.xCoordinate, this.yCoordinate, this.enumTileType);
+        return_tile.setGraphicalElement(this.graphicalElement);
+        return return_tile;
     }
 }
