@@ -13,7 +13,7 @@ public class LPlayer implements IToDTO {
     private LRobot robot = null;
 
     public LPlayer() {
-
+        this.id = UUID.randomUUID();
     }
 
     public LPlayer(String displayName){

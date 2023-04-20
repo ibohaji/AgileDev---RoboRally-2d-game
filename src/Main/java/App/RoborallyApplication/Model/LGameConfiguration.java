@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Model;
 
 import Utils.Tuple;
+import io.cucumber.java.bs.A;
 
 import java.util.ArrayList;
 
@@ -10,7 +11,7 @@ public class LGameConfiguration {
     private final Tuple<Integer, Integer> boardDimensions;
     private final EnumDifficulty difficulty;
     private boolean isRegular;
-    private ArrayList<String> playerNames;
+    private ArrayList<String> playerNames = new ArrayList<>();
     public LGameConfiguration(int nrOfPlayers, EnumDifficulty difficulty){
         this.nrOfPlayers = nrOfPlayers;
         this.difficulty = difficulty;

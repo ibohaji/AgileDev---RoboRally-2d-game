@@ -146,7 +146,7 @@ public class stepdef_GameBrain {
         int t_pos_x = t_robot.getCords().x;
         int t_pos_y = t_robot.getCords().y;
         LTile t__tile = t_gamebrain.getGameboard().getTileFromCoordinate(t_pos_x, t_pos_y);
-        assertEquals(!t__tile.doesTileHaveObstacle(), t_gamebrain.checkRobotposition(t_robot));
+        assertEquals(t__tile.doesTileHaveObstacle(), t_robot.getCords().equals(t__tile.getCoordinates()));
 
         t_player = null;
         t_robot = null;

@@ -207,9 +207,16 @@ public class LGameBrain implements IToDTO {
     private ArrayList<LPlayer> createPlayers(){
         ArrayList<LPlayer> players = new ArrayList<>();
         ArrayList<String> playerNames = gameConfig.getPlayerNames();
-        for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
-            players.add(new LPlayer(playerNames.get(i)));
+        if (playerNames.size() == this.getGameConfig().getNrOfPlayers()) {
+            for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
+                players.add(new LPlayer(playerNames.get(i)));
+            }
+        } else {
+            for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
+                players.add(new LPlayer());
+            }
         }
+
         return players;
     }
 
@@ -382,15 +389,6 @@ public class LGameBrain implements IToDTO {
             }
         }
         return startPoints;
-    }
-
-    public boolean checkRobotposition(LRobot robot) {
-        int pos_x = robot.getCords().x;
-        int pos_y = robot.getCords().y;
-        LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
-
-        return !tile.doesTileHaveObstacle();
-
     }
 
     private ArrayList<LTile> getAllFreeStartPoints(){
