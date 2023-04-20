@@ -8,7 +8,7 @@ import java.util.UUID;
 public class LObstacle implements IToDTO {
     private UUID id;
     private Integer damage;
-    public GraphicalElementObstacle graphicalElement;
+    private GraphicalElementObstacle graphicalElement;
     private EnumObstacleType obstacleType;
     private EnumObstacle obstacle;
 
@@ -53,9 +53,12 @@ public class LObstacle implements IToDTO {
     public EnumObstacle getObstacleEnum() {
         return obstacle;
     }
-
+    //public void setObstacleEnum(EnumObstacle enumObstacle) { this.obstacle = enumObstacle; }
     public EnumObstacleType getObstacleTypeEnum() {
         return obstacleType;
     }
+    //public void setObstacleTypeEnum(EnumObstacleType enumObstacleType) { this.obstacleType = enumObstacleType; }
+    public GraphicalElementObstacle getGraphicalElement() { return this.graphicalElement; }
+    public void setGraphicalElement(GraphicalElementObstacle graphicalElementObstacle) {this.graphicalElement = graphicalElementObstacle; }
 
 }

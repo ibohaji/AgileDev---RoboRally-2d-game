@@ -15,10 +15,8 @@ public class LGameboard implements IToDTO {
     private ArrayList<LObstacle> obstacles = new ArrayList<>();
     private LGameBrain gameBrain;
 
-    public LGameboard(){
-    }
-
     public LGameboard(LGameBrain brain){
+        id = UUID.randomUUID();
         gameBrain = brain;
         gameBrainId = gameBrain.getID();
     }
@@ -31,7 +29,7 @@ public class LGameboard implements IToDTO {
         this.robots.remove(robotToRemove);
     }
 
-    protected void setRobots(ArrayList<LRobot> robots){this.robots = robots;}
+    public void setRobots(ArrayList<LRobot> robots){this.robots = robots;}
 
     public void setTiles(ArrayList<LTile> tiles){this.tiles = tiles;}
 
@@ -129,7 +127,7 @@ public class LGameboard implements IToDTO {
     public UUID getID() {
         return id;
     }
-    protected LGameBrain getGameBrain() {
+    public LGameBrain getGameBrain() {
         return gameBrain;
     }
 }

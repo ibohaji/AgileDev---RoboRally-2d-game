@@ -11,7 +11,11 @@ public class LPlayer implements IToDTO {
 
     private LCardSequence cardSequence;
     private LRobot robot = null;
-    public LPlayer(){}
+
+    public LPlayer() {
+
+    }
+
     public LPlayer(String displayName){
         this.id = UUID.randomUUID();
         this.displayName = displayName;
@@ -73,12 +77,6 @@ public class LPlayer implements IToDTO {
     public String getDisplayName(){
         return this.displayName;
     }
-
-
-    public ArrayList<AbCardProgramming> getCards(){
-        return programmingCards;
-    }
-
 
     /**
      * A player's initial starting position can only be accepted if the selected tire is a spawning gear and not occupied

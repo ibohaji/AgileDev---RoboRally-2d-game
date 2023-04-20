@@ -56,7 +56,7 @@ public class stepdef_GameBrain {
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
         for (LPlayer t_currentplayer : t_players) {
-            ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getCards();
+            ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getProgrammingCards();
             assertEquals(5, t_playerscards.size());
         }
 
