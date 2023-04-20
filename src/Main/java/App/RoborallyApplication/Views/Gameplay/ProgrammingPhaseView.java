@@ -31,13 +31,13 @@ public class ProgrammingPhaseView extends GameView{
         this.gameBrain = gameBrain;
         this.gameController = gameController;
         this.player = gameController.getPlayerWithoutCardSequence();
-        this.programmingCards = this.player.getProgrammingCards();
+        this.programmingCards = this.player.getCards();
         createView();
     }
 
     private void createView() {
         setLayout(new GridBagLayout());
-        this.userDeckView = new UserCardDeckView(gameController, gameBrain, programmingCards);
+        this.userDeckView = new UserCardDeckView(gameController, gameBrain);
         this.userOrderedDeckView = new UserOrderedCardDeckView(gameController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
         add(userOrderedDeckView, new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
@@ -48,10 +48,12 @@ public class ProgrammingPhaseView extends GameView{
         JButton submitButton = new JButton("SUBMIT SEQUENCE");
         submitButton.setFont(Fonts.LARGE);
         submitButton.addActionListener(e -> {
-            //TODO
-            // if not all cards in ordered deck, throw error
-            // check if last player -> move to showing the robots move
-            // check if still some players haven't submitted, then take that player and their cards
+            if(this.userOrderedDeckView.getCardSequence().getSize() == 5){
+                //TODO
+                // if not all cards in ordered deck, throw error popup
+            } else {
+                this.gameController.setPlayerCardSequence(this.player, this.userOrderedDeckView.getCardSequence());
+            }
 
         });
         add(submitButton, new GridBagConstraintsBuilder(1, 1).inset(50,0,0,0).fill(GridBagConstraints.BOTH).build());

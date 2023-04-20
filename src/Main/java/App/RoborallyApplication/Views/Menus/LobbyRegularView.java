@@ -4,6 +4,7 @@ import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Model.LGameConfiguration;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
+import Utils.Tuple;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ public class LobbyRegularView extends LobbyView {
 
     private final LGameConfiguration gameConfiguration;
     private final LobbyController lobbyController;
-    ArrayList<String> playerNames;
+    ArrayList<Tuple<String, Boolean>> playersInformation;
 
     public LobbyRegularView(LobbyController lobbyController, LGameConfiguration gameConfiguration){
         this.lobbyController = lobbyController;
@@ -22,7 +23,7 @@ public class LobbyRegularView extends LobbyView {
     }
 
     private void createView() {
-        playerNames = new ArrayList<>();
+        playersInformation = new ArrayList<>();
         for (int i = 0; i < gameConfiguration.getNrOfPlayers(); i++) {
             JPanel namePanel = new JPanel(new BorderLayout());
             namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
@@ -46,14 +47,12 @@ public class LobbyRegularView extends LobbyView {
                         for(Component subComponent: subComponents){
                             if(subComponent instanceof JTextField){
                                 JTextField textField = (JTextField) subComponent;
-                                playerNames.add(textField.getText());
-
+                                playersInformation.add(new Tuple<>(textField.getText(), true));
                             }
                         }
                     }
                 }
-
-            gameConfiguration.setPlayerNames(playerNames);
+            gameConfiguration.createPlayersFromLobby(playersInformation);
             lobbyController.userClickStartGame(gameConfiguration);
         });
         add(startGameButton);

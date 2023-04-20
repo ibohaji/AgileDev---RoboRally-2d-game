@@ -27,7 +27,7 @@ public abstract class GameView extends JPanel {
 
     protected void getUserCardDeckView(){
         // TODO we don't need to deal cards manually by calling .dealCardsForRound()
-        UserCardDeckView userCardDeckView = new UserCardDeckView(controller, gameBrain, gameBrain.dealCardsForRound());
+        UserCardDeckView userCardDeckView = new UserCardDeckView(controller, gameBrain);
         add(userCardDeckView, new GridBagConstraintsBuilder(0, 1).anchor(GridBagConstraints.NORTH).build());
     }
 

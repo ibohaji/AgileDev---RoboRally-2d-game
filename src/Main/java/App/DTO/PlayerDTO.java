@@ -18,7 +18,9 @@ public class PlayerDTO implements iFromDTO{
 
     @Override
     public LPlayer returnObjectFromDTO() {
-        LPlayer player = new LPlayer(this.displayName);
+        // TODO
+        // FIX THIS
+        LPlayer player = new LPlayer(this.displayName, true);
         player.assignRobot(robotDTO.returnObjectFromDTO());
         for (ProgrammingCardDTO cardDTO: cards) {
             player.assignCardToPlayer(cardDTO.returnObjectFromDTO());

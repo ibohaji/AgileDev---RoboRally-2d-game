@@ -43,7 +43,7 @@ public class GameBrainDTO implements iFromDTO{
             players.add(playerDTO.returnObjectFromDTO());
         }
 
-        gameBrain.restore(this.gameConfiguration, players ,this.enumGamePhase, gameboard,
+        gameBrain.restoreGameboard(this.gameConfiguration, players ,this.enumGamePhase, gameboard,
                 gameboard.getRobots(), gameboard.getTiles());
         return gameBrain;
     }

@@ -16,27 +16,22 @@ public class LGameBrain implements IToDTO {
     private ArrayList<LPlayer> players;
     private EnumGamePhase currentEnumGamePhase;
 
+    /**
+     * Constructor for restoring
+     */
     public LGameBrain(){
 
     }
 
-    public LGameBrain(int nrOfPlayers, EnumDifficulty difficulty){
+    /**
+     * @param gameConfiguration game configuration
+     * Constructor for starting game from lobby
+     */
+    public LGameBrain(LGameConfiguration gameConfiguration){
         this.id = UUID.randomUUID();
-        gameConfig = new LGameConfiguration(nrOfPlayers, difficulty);
-        createGameboard(difficulty);
-        this.players = createPlayers();
-        ArrayList<LRobot> robots = createRobots(players);
-        this.gameboard.setRobots(robots);
-        currentEnumGamePhase = EnumGamePhase.ROUND_START;
-        startGame();
-        startRound();
-    }
-    //Alternative constructor
-    public LGameBrain(LGameConfiguration gameConfig){
-        this.gameConfig = gameConfig;
-        this.id = UUID.randomUUID();
+        gameConfig = gameConfiguration;
         createGameboard(gameConfig.getDifficulty());
-        this.players = createPlayers();
+        this.players = gameConfiguration.getPlayers();
         ArrayList<LRobot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
         currentEnumGamePhase = EnumGamePhase.ROUND_START;
@@ -44,69 +39,20 @@ public class LGameBrain implements IToDTO {
         startRound();
     }
 
-
+    // -------------------------------------------------------------------------//
+    // GAME RUNNING LOGIC
+    public void setCurrentGamePhase(EnumGamePhase phase){
+        this.currentEnumGamePhase = phase;
+    }
     private void startGame(){
         setupRobots();
     }
-
     public void startRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_START;
         givePlayersCardsForRound();
         currentEnumGamePhase = EnumGamePhase.PROGRAMMING_PHASE;
     }
-
-    public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
-        player.setCardSequence(cardSequence);
-    }
-
-    public boolean haveAllPlayersSubmittedSequence(){
-        boolean haveSubmitted = true;
-        for (LPlayer player: players) {
-            if(player.getCardSequence() == null){
-                haveSubmitted = false;
-            }
-        }
-        return haveSubmitted;
-    }
-
-    public LPlayer getPlayerWithoutCardSequence(){
-        for (LPlayer player: players) {
-            if(player.getCardSequence() == null){
-                return player;
-            }
-        }
-        return null;
-    }
-
-    public void endRound(){
-        currentEnumGamePhase = EnumGamePhase.ROUND_END;
-        for (LPlayer player: players) {
-            player.setCardSequenceToNull();
-        }
-    }
-
-    public void setPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
-
-    }
-
-    private void setupRobots(){
-        ArrayList<LTile> availableStartPoints = getAllStartPoints();
-        for (int i = 0; i < this.players.size(); i++) {
-            players.get(i).getRobot().setCords(availableStartPoints.get(i).getCoordinates());
-        }
-    }
-
-    private void playRound(){
-
-        // 1st -> give players their cards for the round
-
-        // 2nd -> let players choose the order of their cards
-        currentEnumGamePhase = EnumGamePhase.PROGRAMMING_PHASE;
-        // 3rd -> move the players, constantly checking for winner
-        currentEnumGamePhase = EnumGamePhase.MOVEMENT_PHASE;
-    }
-
-    protected void givePlayersCardsForRound(){
+    public void givePlayersCardsForRound(){
         Random rnd = new Random();
         for (LPlayer player : players) {
             for (int i = 0; i < 5; i++) {
@@ -134,205 +80,58 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
-
-    public ArrayList<AbCardProgramming> dealCardsForRound() {
-        givePlayersCardsForRound();
-        ArrayList<AbCardProgramming> roundCards = new ArrayList<>();
-        for (LPlayer player : players) {
-            roundCards.addAll(player.getProgrammingCards());
+    public void endRound(){
+        currentEnumGamePhase = EnumGamePhase.ROUND_END;
+        for (LPlayer player: players) {
+            player.setCardSequenceToNull();
         }
-        return roundCards;
     }
-
 
     /**
-     * @param player Player whose card ordering is being asked for
-     * @return List containing tuples where first item is the ProgrammingCard and the second item is the number
-     * in the ordering
+     * @return Return true if there is a player on finish that has reached checkpoints and is now on finish tile
      */
-    /*private ArrayList<Tuple<ProgrammingCard, Integer>> getCardSequenceFromPlayer(Player player){
-        ArrayList<ProgrammingCard> playerCards = player.getProgrammingCards();
-        ArrayList<Tuple<ProgrammingCard, Integer>> playerMoves = new ArrayList<>();
-
-        // TODO: prompt player to select the card ordering via GUI drag-and-drop interface
-
-        for (int i = 0; i < playerCards.size(); i++) {
-            ProgrammingCard card = playerCards.get(i);
-            int position = // TODO: get the position of the card in the player's selected ordering
-                    playerMoves.add(new Tuple<>(card, position));
-        }
-
-        return playerMoves;
-    }*/
-
-    private void makeMove(LPlayer player, AbCardProgramming card){
-        card.useCard(player.getRobot(), this);
-    }
-
-    public boolean isPositionOnBoard(Point point){
-        return (point.x > -1 && point.x < gameConfig.getBoardDimensions().first() &&
-                point.y > -1 && point.y < gameConfig.getBoardDimensions().second());
-    }
-
-    private void movePlayerWithCollision(EnumDirection hitDirection){
-        // if overboard then back to beginning
+    public boolean isThereAWinner(){
         // TODO
-    }
-
-    public LObstacle getObstaclefromboard(Integer x, Integer y) {
-
-        return this.gameboard.getObstacleFromCoordinate(x, y);
-    }
-
-    public LGameConfiguration getGameConfig(){
-        return this.gameConfig;
-    }
-
-    public void setGameConfig(LGameConfiguration gameConfiguration){
-        this.gameConfig = gameConfiguration;
-    }
-
-    private void createGameboard(EnumDifficulty difficulty){
-        if (difficulty == EnumDifficulty.EASY){
-            this.gameboard = MapGenerator.generateEasyMap(this);
-        } else if (difficulty == EnumDifficulty.MEDIUM){
-            this.gameboard = MapGenerator.generateMediumMap(this);
-        } else {
-            this.gameboard = MapGenerator.generateHardMap(this);
-        }
+        return false;
     }
 
 
-
-    private ArrayList<LPlayer> createPlayers(){
-        ArrayList<LPlayer> players = new ArrayList<>();
-        ArrayList<String> playerNames = gameConfig.getPlayerNames();
-        for (int i = 0; i < this.gameConfig.getNrOfPlayers(); i++) {
-            players.add(new LPlayer(playerNames.get(i)));
-        }
-        return players;
+    // -------------------------------------------------------------------------//
+    // CARD SEQUENCE LOGIC
+    public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
+        player.setCardSequence(cardSequence);
     }
-
-    private ArrayList<LRobot> createRobots(ArrayList<LPlayer> players){
-        ArrayList<LRobot> robots = new ArrayList<>();
+    public boolean haveAllPlayersSubmittedSequence(){
+        boolean haveSubmitted = true;
         for (LPlayer player: players) {
-            LRobot newRobot = new LRobot();
-            newRobot.setDirection(EnumDirection.NORTH);
-            player.assignRobot(newRobot);
-            robots.add(newRobot);
-        }
-        return robots;
-    }
-
-    @Override
-    public String DTOasJson() {
-        GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentEnumGamePhase, this);
-        return JsonHelper.serializeObjectToJson(gameBrainDTO);
-    }
-
-    @Override
-    public UUID getID() {
-        return this.id;
-    }
-
-    public LGameboard getGameboard(){
-        return this.gameboard;
-    }
-
-    public ArrayList<LPlayer> getPlayers() {
-        return players;
-    }
-
-    public EnumGamePhase getCurrentGamePhase(){
-        return this.currentEnumGamePhase;
-    }
-
-    public void restore(LGameConfiguration gameConfig, ArrayList<LPlayer> players,
-                        EnumGamePhase enumGamePhase, LGameboard gameboard, ArrayList<LRobot> robots, ArrayList<LTile> tiles){
-        this.gameConfig = gameConfig;
-        this.gameboard = gameboard;
-        this.currentEnumGamePhase = enumGamePhase;
-        this.players = players;
-        gameboard.setRobots(robots);
-        gameboard.setTiles(tiles);
-
-    }
-
-    public void setCurrentGamePhase(EnumGamePhase phase){
-        this.currentEnumGamePhase = phase;
-    }
-
-    public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
-        // TODO
-        return new LCardMovementProgramming(1);
-    }
-
-    public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
-        Point pos = robotBeingPushed.getCords();
-        switch (directionOfPushOrigin){
-            case WEST -> pos.x += 1;
-            case EAST -> pos.x -= 1;
-            case SOUTH -> pos.y -= 1;
-            case NORTH -> pos.y += 1;
-        }
-        if(!isPositionOnBoard(pos)){
-            robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
-            if(robotBeingPushed.getNrOfLives() < 1){
-                removeRobot(robotBeingPushed);
-                removePlayer(robotBeingPushed.getPlayer());
-            } else {
-                putRobotToRandomStartPoint(robotBeingPushed);
+            if(player.getCardSequence() == null){
+                haveSubmitted = false;
             }
-        } else if(isPositionOnBoard(pos)){
-            robotBeingPushed.setCords(pos);
-
         }
-
-        // TODO
-        // check if pushes another robot
-
+        return haveSubmitted;
     }
-
-
-    private void push(Point newPos, EnumDirection directionOfRobot) {
-            LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
-            // push robotAtCoordinate
-            switch (directionOfRobot){
-                case NORTH -> pushRobot(robotAtCoordinate, EnumDirection.SOUTH);
-                case SOUTH -> pushRobot(robotAtCoordinate, EnumDirection.NORTH);
-                case EAST -> pushRobot(robotAtCoordinate, EnumDirection.WEST);
-                case WEST -> pushRobot(robotAtCoordinate, EnumDirection.EAST);
+    public LPlayer getPlayerWithoutCardSequence(){
+        for (LPlayer player: players) {
+            if(player.getCardSequence() == null){
+                return player;
             }
-
+        }
+        return null;
     }
-
-    public void pushRobotOffBoard(LRobot robot){
-        int nrOfLives = robot.getNrOfLives();
-        if(nrOfLives == 1){
-            removeRobot(robot);
-            removePlayer(findPlayerByRobot(robot));
-        } else {
-            putRobotToRandomStartPoint(robot);
-            robot.setNrOfLives(nrOfLives - 1);
+    public void setCardSequencesForAi(){
+        while(!haveAllPlayersSubmittedSequence()){
+            LPlayer player = getPlayerWithoutCardSequence();
+            LCardSequence newSeq = new LCardSequence(player);
+            for (AbCardProgramming card: player.getCards()) {
+                newSeq.addCard(card);
+            }
+            this.setCardSequenceForPlayer(player, newSeq);
         }
     }
 
-    public void putRobotToRandomStartPoint(LRobot robot){
-        ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
-        Random rnd = new Random();
-        int index = rnd.nextInt(available_startpoints.size());
-        robot.setCords(available_startpoints.get(index).getCoordinates());
-    }
-
-    public void setRobotchekcpointDone(LRobot robot){
-        if (this.getGameboard().getTileFromCoordinate(
-                robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
-                EnumTileType.CHECKPOINT) {
-            robot.addCheckpoint(robot.getCords());
-        }
-    }
-
-    public LObstacle chooseUnkownObstacle(LTile tile){
+    // -------------------------------------------------------------------------//
+    // OBSTACLE METHODS
+    public LObstacle chooseUnknownObstacle(LTile tile){
 
         boolean robot_on_unknown = false;
 
@@ -356,7 +155,16 @@ public class LGameBrain implements IToDTO {
 
         return tile.getObstacle();
     }
+    public LObstacle getObstacleFromCoordinate(Integer x, Integer y) {
+        return this.gameboard.getObstacleFromCoordinate(x, y);
+    }
 
+
+    // -------------------------------------------------------------------------//
+    // PLAYER METHODS
+    public void removePlayer(LPlayer playerToRemove) {
+        this.players.remove(playerToRemove);
+    }
     public LPlayer findPlayerByRobot(LRobot robot){
         for (LPlayer player: players) {
             if (player.getRobot().equals(robot)){
@@ -366,14 +174,79 @@ public class LGameBrain implements IToDTO {
         return null;
     }
 
-    public void removePlayer(LPlayer playerToRemove) {
-        this.players.remove(playerToRemove);
-    }
 
+    // -------------------------------------------------------------------------//
+    // ROBOT METHODS
+    private ArrayList<LRobot> createRobots(ArrayList<LPlayer> players){
+        ArrayList<LRobot> robots = new ArrayList<>();
+        for (LPlayer player: players) {
+            LRobot newRobot = new LRobot();
+            newRobot.setDirection(EnumDirection.NORTH);
+            player.assignRobot(newRobot);
+            robots.add(newRobot);
+        }
+        return robots;
+    }
     public void removeRobot(LRobot robot){
         this.gameboard.removeRobot(robot);
     }
+    public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
+        Point pos = robotBeingPushed.getCords();
+        switch (directionOfPushOrigin){
+            case WEST -> pos.x += 1;
+            case EAST -> pos.x -= 1;
+            case SOUTH -> pos.y -= 1;
+            case NORTH -> pos.y += 1;
+        }
+        if(!isPositionOnBoard(pos)){
+            robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
+            if(robotBeingPushed.getNrOfLives() < 1){
+                removeRobot(robotBeingPushed);
+                removePlayer(robotBeingPushed.getPlayer());
+            } else {
+                putRobotToRandomStartPoint(robotBeingPushed);
+            }
+        } else if(isPositionOnBoard(pos)){
+            if(gameboard.isTileOccupiedByRobot(pos.x, pos.y)){
+                LRobot robot2 = gameboard.getRobotFromCoordinate(pos.x, pos.y);
+                pushRobot(robot2, directionOfPushOrigin);
+            } else {
+                robotBeingPushed.setCords(pos);
+            }
+        }
+    }
+    public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
+        LPlayer player = robot.getPlayer();
+        return player.getCardSequence().getLastCard();
+    }
+    private void setupRobots(){
+        ArrayList<LTile> availableStartPoints = getAllStartPoints();
+        for (int i = 0; i < this.players.size(); i++) {
+            players.get(i).getRobot().setCords(availableStartPoints.get(i).getCoordinates());
+        }
+    }
+    private void moveRobotWithCard(LPlayer player, AbCardProgramming card){
+        card.useCard(player.getRobot(), this);
+    }
 
+    // -------------------------------------------------------------------------//
+    // GAMEBOARD METHODS
+    private void createGameboard(EnumDifficulty difficulty){
+        if (difficulty == EnumDifficulty.EASY){
+            this.gameboard = MapGenerator.generateEasyMap(this);
+        } else if (difficulty == EnumDifficulty.MEDIUM){
+            this.gameboard = MapGenerator.generateMediumMap(this);
+        } else {
+            this.gameboard = MapGenerator.generateHardMap(this);
+        }
+    }
+    public boolean isPositionOnBoard(Point point){
+        return (point.x > -1 && point.x < gameConfig.getBoardDimensions().first() &&
+                point.y > -1 && point.y < gameConfig.getBoardDimensions().second());
+    }
+
+    // -------------------------------------------------------------------------//
+    // STARTPOINT METHODS
     private ArrayList<LTile> getAllStartPoints(){
         ArrayList<LTile> startPoints = new ArrayList<>();
         for (LTile tile: gameboard.getTiles()) {
@@ -383,16 +256,6 @@ public class LGameBrain implements IToDTO {
         }
         return startPoints;
     }
-
-    public boolean checkRobotposition(LRobot robot) {
-        int pos_x = robot.getCords().x;
-        int pos_y = robot.getCords().y;
-        LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
-
-        return !tile.doesTileHaveObstacle();
-
-    }
-
     private ArrayList<LTile> getAllFreeStartPoints(){
         ArrayList<LTile> allStartPoints = getAllStartPoints();
         ArrayList<LTile> availableStartPoints = new ArrayList<>();
@@ -411,7 +274,78 @@ public class LGameBrain implements IToDTO {
         }
         return availableStartPoints;
     }
+    public void putRobotToRandomStartPoint(LRobot robot){
+        ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
+        Random rnd = new Random();
+        int index = rnd.nextInt(available_startpoints.size());
+        robot.setCords(available_startpoints.get(index).getCoordinates());
+    }
 
+    // -------------------------------------------------------------------------//
+    // GAMESTATE METHODS
+    public void restoreGameboard(LGameConfiguration gameConfig, ArrayList<LPlayer> players,
+                                 EnumGamePhase enumGamePhase, LGameboard gameboard,
+                                 ArrayList<LRobot> robots, ArrayList<LTile> tiles){
+        this.gameConfig = gameConfig;
+        this.gameboard = gameboard;
+        this.currentEnumGamePhase = enumGamePhase;
+        this.players = players;
+        gameboard.setRobots(robots);
+        gameboard.setTiles(tiles);
+    }
+    public EnumGamePhase getCurrentGamePhase(){
+        return this.currentEnumGamePhase;
+    }
+    @Override
+    public String DTOasJson() {
+        GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentEnumGamePhase, this);
+        return JsonHelper.serializeObjectToJson(gameBrainDTO);
+    }
+
+
+    // -------------------------------------------------------------------------//
+    // GETTERS
+    public LGameConfiguration getGameConfig(){
+        return this.gameConfig;
+    }
+    public ArrayList<LPlayer> getPlayers() {
+        return players;
+    }
+    public LGameboard getGameboard(){
+        return this.gameboard;
+    }
+    @Override
+    public UUID getID() {
+        return this.id;
+    }
+
+    // -------------------------------------------------------------------------//
+    // RANDOM, TO BE DELETED?
+    private void push(Point newPos, EnumDirection directionOfRobot) {
+        LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
+        // push robotAtCoordinate
+        switch (directionOfRobot){
+            case NORTH -> pushRobot(robotAtCoordinate, EnumDirection.SOUTH);
+            case SOUTH -> pushRobot(robotAtCoordinate, EnumDirection.NORTH);
+            case EAST -> pushRobot(robotAtCoordinate, EnumDirection.WEST);
+            case WEST -> pushRobot(robotAtCoordinate, EnumDirection.EAST);
+        }
+    }
+    public void setRobotChekcpointDone(LRobot robot){
+        if (this.getGameboard().getTileFromCoordinate(
+                robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
+                EnumTileType.CHECKPOINT) {
+            robot.addCheckpoint(robot.getCords());
+        }
+    }
+    public boolean checkRobotposition(LRobot robot) {
+        //TODO
+        // use isTileOccupiedByRobot from gameboard
+        int pos_x = robot.getCords().x;
+        int pos_y = robot.getCords().y;
+        LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
+        return !tile.doesTileHaveObstacle();
+    }
     public void activateExplosive(LTile tile) {
         boolean robot_on_explosive = false;
 
@@ -429,5 +363,4 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
-
 }

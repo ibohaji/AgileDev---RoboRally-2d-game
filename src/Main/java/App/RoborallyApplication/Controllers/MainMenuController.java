@@ -20,12 +20,11 @@ public class MainMenuController {
     }
 
     public void userClickPlay(EnumDifficulty difficulty, int nrOfPlayers, boolean isRegular){
-        LGameConfiguration gameConf = new LGameConfiguration(nrOfPlayers, difficulty);
+        LGameConfiguration gameConf = new LGameConfiguration(nrOfPlayers, difficulty, isRegular);
         LobbyController lobbyController = new LobbyController(this.applicationController, isRegular,gameConf);
         if(isRegular){
             applicationController.changePanel(new LobbyRegularView(lobbyController, gameConf));
         } else {
-            gameConf.setAIOpponent();
             applicationController.changePanel(new LobbyAiView(lobbyController, gameConf));
         }
         // Test purpose only

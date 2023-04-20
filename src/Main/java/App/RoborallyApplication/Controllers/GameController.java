@@ -1,7 +1,6 @@
 package App.RoborallyApplication.Controllers;
 
 import App.RoborallyApplication.Model.*;
-import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 
@@ -16,7 +15,7 @@ public class GameController {
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
             this.view = new ProgrammingPhaseView(this, gameBrain);
         } else {
-            //this.view = new GameBoardView(this, gameBrain);
+            System.out.println("TO MOVEMENT VIEW");
         }
 
     }
@@ -29,21 +28,23 @@ public class GameController {
         this.view = viewToChangeTo;
     }
 
-
-    public static void main(String[] args) {
-        // Method to see the view
-        var game = new LGameBrain(2, EnumDifficulty.EASY);
-        var app = new ApplicationController();
-        var gameController = new GameController(app, game);
-        gameController.display();
-    }
-
     public LPlayer getPlayerWithoutCardSequence(){
         return gameBrain.getPlayerWithoutCardSequence();
     }
 
-    public void submitPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
+    public void setPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
         gameBrain.setCardSequenceForPlayer(player, cardSequence);
+        if(gameBrain.haveAllPlayersSubmittedSequence()){
+            gameBrain.setCurrentGamePhase(EnumGamePhase.MOVEMENT_PHASE);
+        } else {
+            if(gameBrain.getPlayerWithoutCardSequence().isHuman()){
+                changeView(new ProgrammingPhaseView(this, gameBrain));
+            } else {
+                gameBrain.setCardSequencesForAi();
+                gameBrain.setCurrentGamePhase(EnumGamePhase.MOVEMENT_PHASE);
+            }
+
+        }
     }
 
     // Test purpose only

@@ -21,11 +21,11 @@ public class JsonHelper {
         return "";
     }
     public static void main(String[] args) {
-        var gameBrain = new LGameBrain(4, EnumDifficulty.EASY);
+        /*var gameBrain = new LGameBrain(4, EnumDifficulty.EASY);
         System.out.println(gameBrain.DTOasJson());
         var path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator
                 + "java" + File.separator + "App" + File.separator + "Resources" + File.separator + "savedGames.txt";
-        IOHelper.writeContentToFile(gameBrain.DTOasJson(), path);
+        IOHelper.writeContentToFile(gameBrain.DTOasJson(), path);*/
 
 
 

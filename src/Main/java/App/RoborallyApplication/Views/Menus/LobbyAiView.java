@@ -4,6 +4,7 @@ import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Model.LGameConfiguration;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
+import Utils.Tuple;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,17 +14,20 @@ public class LobbyAiView extends LobbyView{
 
     private final LGameConfiguration gameConfiguration;
     private final LobbyController lobbyController;
-    ArrayList<String> playerNames;
+    ArrayList<Tuple<String, Boolean>> playersInformation;
     JPanel namePanel;
 
     public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration){
+        //TODO
+        // need checkbox after every namepanel to check whether AI player or not
+
         this.lobbyController = lobbyController;
         this.gameConfiguration = gameConfiguration;
         createView();
     }
 
     private void createView() {
-        playerNames = new ArrayList<>();
+        playersInformation = new ArrayList<>();
         JPanel namePanel;
         int nrOfPlayers = gameConfiguration.getNrOfPlayers();
 
@@ -51,13 +55,14 @@ public class LobbyAiView extends LobbyView{
                     for(Component subComponent: subComponents){
                         if(subComponent instanceof JTextField){
                             JTextField textField = (JTextField) subComponent;
-                            playerNames.add(textField.getText());
+                            // TODO fix this to say true/false
+                            playersInformation.add(new Tuple<>(textField.getText(), true));
 
                         }
                     }
                 }
             }
-
+            gameConfiguration.createPlayersFromLobby(playersInformation);
             lobbyController.userClickStartGame(gameConfiguration);
         });
 

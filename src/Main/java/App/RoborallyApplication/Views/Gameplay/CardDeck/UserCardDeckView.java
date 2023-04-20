@@ -20,16 +20,19 @@ public class UserCardDeckView extends GameView {
     private ArrayList<AbCardProgramming> cards;
     private JPanel cardPanel;
 
-    public UserCardDeckView(GameController controller, LGameBrain gameBrain, ArrayList<AbCardProgramming> cards) {
+    public UserCardDeckView(GameController controller, LGameBrain gameBrain) {
         super(controller, gameBrain);
-        this.cards = cards;
+        this.cards = gameBrain.getPlayerWithoutCardSequence().getCards();
         setLayout(new GridBagLayout());
-        cardPanel = new JPanel(new GridLayout(1, 5));
+        cardPanel = new JPanel();
+        cardPanel.setLayout(new GridBagLayout());
+        int counter = 0;
         for (AbCardProgramming card : cards) {
             CardPanel cardPanel = new CardPanel(card);
             cardPanel.addMouseListener(new CardMouseListener());
             cardPanel.setTransferHandler(new CardTransferHandler(card));
-            this.cardPanel.add(cardPanel);
+            this.cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0,counter).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
+            counter += 1;
         }
         setBorder(new LineBorder(Color.BLACK));
         JLabel nameForDeck = new JLabel("Player Deck");
@@ -46,7 +49,7 @@ public class UserCardDeckView extends GameView {
             this.card = card;
             // add card view to the panel
             this.image = card.getCardImageIcon();
-            add(new JLabel(this.image));
+            add(new JLabel(ImageUtils.scaledImageWithPercent(this.image, 40)));
         }
 
         // implement other methods to handle rendering, sizing, etc.

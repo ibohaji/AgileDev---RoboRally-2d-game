@@ -37,6 +37,12 @@ public class ImageUtils {
         return new ImageIcon(newimg);
     }
 
+    public static ImageIcon scaledImageWithPercent(ImageIcon imageIcon, int percent){
+        Image image = imageIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance((imageIcon.getIconWidth() * percent/100), imageIcon.getIconHeight() * percent/100,  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(newimg);
+    }
+
     public static Image getImage(String filepath) {
         //if (filepath.charAt(0) != '/') filepath = "/" + filepath;
         BufferedImage img = null;

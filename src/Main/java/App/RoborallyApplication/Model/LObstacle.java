@@ -28,9 +28,7 @@ public class LObstacle implements IToDTO {
     }
 
     public LRobot DoDamage(LRobot targetrobot) {
-        targetrobot.setNrOfLives(
-                targetrobot.getNrOfLives() - this.damage
-        );
+        targetrobot.setNrOfLives(targetrobot.getNrOfLives() - this.damage);
         return targetrobot;
     }
 

@@ -118,7 +118,7 @@ public class stepdef_GameBrain {
         int x = t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().first());
         int y = t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().second());
 
-        LObstacle t_obstacle = t_gamebrain.getObstaclefromboard(x, y);
+        LObstacle t_obstacle = t_gamebrain.getObstacleFromCoordinate(x, y);
 
         assertEquals(t_gameboard.getObstacleFromCoordinate(x, y), t_obstacle);
     }
@@ -217,7 +217,7 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain check how many checkpoints a robot has reached")
     public void GameBrain_check_how_many_checkpoints_a_robot_has_reached() {
-        t_gamebrain.setRobotchekcpointDone(t_robot);
+        t_gamebrain.setRobotChekcpointDone(t_robot);
         assertTrue(t_robot.getCheckpointsDone().contains(t_tile.getCoordinates()));
 
         t_robot = null;
@@ -346,7 +346,7 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain set the unknown explosive tile to a known one")
     public void GameBrain_set_the_unknown_explosive_tile_a_known_one() {
-        t_gamebrain.chooseUnkownObstacle(t_tile);
+        t_gamebrain.chooseUnknownObstacle(t_tile);
         assertTrue(
                 t_tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN &&
                         ( t_tile.getObstacle().getObstacleEnum() == EnumObstacle.ACID ||

@@ -9,38 +9,23 @@ public class LPlayer implements IToDTO {
     private String displayName;
     private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
 
+    private boolean isHumanPlayer;
+
     private LCardSequence cardSequence;
+
+    private LCardSequence usedCardSequence;
     private LRobot robot = null;
     public LPlayer(){}
-    public LPlayer(String displayName){
+    public LPlayer(String displayName, boolean isHumanPlayer){
+        this.isHumanPlayer = isHumanPlayer;
         this.id = UUID.randomUUID();
         this.displayName = displayName;
     }
     public void assignCardToPlayer(AbCardProgramming card){
         programmingCards.add(card);
     }
-    public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain){
+    public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain) {
         robot.useProgrammingCard(card, gameBrain);
-    }
-
-    protected LCardSequence getCardSequence(){
-        return this.cardSequence;
-    }
-
-    protected void setCardSequence(LCardSequence cardSequence){
-        this.cardSequence = cardSequence;
-    }
-
-    /**
-     * At the end of the round, cardsequence should be null
-     */
-    protected void setCardSequenceToNull(){
-        this.cardSequence = null;
-    }
-
-    public ArrayList<AbCardProgramming> getProgrammingCards() {
-        System.out.println(programmingCards.size());
-        return programmingCards;
     }
 
     /**
@@ -86,7 +71,32 @@ public class LPlayer implements IToDTO {
      * @Error if the selected cords are invalid, otherwise it is passed to the gamebrain/gameboard
      */    public void StartingPosition(int x,int y){
          // TODO
-
     }
+
+    // CARD SEQUENCE METHODS
+    /**
+     * At the end of the round, cardsequence should be null
+     */
+    protected void setCardSequenceToNull(){
+        this.cardSequence = null;
+        this.usedCardSequence = null;
+    }
+    protected void setCardSequence(LCardSequence cardSequence){
+        this.cardSequence = cardSequence;
+        this.usedCardSequence = new LCardSequence(this);
+    }
+
+    protected LCardSequence getCardSequence(){
+        return this.cardSequence;
+    }
+
+    protected AbCardProgramming getLastCardUsed(){
+        return this.usedCardSequence.getLastCard();
+    }
+
+    public boolean isHuman(){
+        return this.isHumanPlayer;
+    }
+
 }
 
