@@ -1,19 +1,42 @@
 package CucumberTests;
 
+import Utils.Tuple;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import App.RoborallyApplication.Controllers.ApplicationController;
+import App.RoborallyApplication.Controllers.GameController;
+import App.RoborallyApplication.Controllers.LobbyController;
+import App.RoborallyApplication.Controllers.MainMenuController;
+import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LGameConfiguration;
 
-public class stepdef_Player {
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+
+public class
+stepdef_Player {
 
     /*
         Test steps for programmingPhase
      */
-
+    private LGameBrain t_gamebrain;
+    private LGameConfiguration t_gameconfig;
     // Player receives 5 cards in programming phase
     @Given("a player waiting to receive programming cards")
     public void a_player_waiting_to_receive_programming_cards() {
-
+        t_gameconfig = new LGameConfiguration(1, EnumDifficulty.EASY, true);
+        int t_norplayers = 1;
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_norplayers; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfig.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfig);
     }
 
     @When("the programming phase starts")
@@ -23,7 +46,7 @@ public class stepdef_Player {
 
     @Then("the player receive 5 cards")
     public void the_player_receive_5_cards() {
-
+        assertEquals(5, t_gamebrain.getPlayers().get(0).getProgrammingCards().size());
     }
 
     // Player reorder cards in programming phase
