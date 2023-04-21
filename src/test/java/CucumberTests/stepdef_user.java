@@ -11,7 +11,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import static org.junit.Assert.*;
-
+import Utils.Tuple;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,6 +20,7 @@ public class stepdef_user {
     private int t_norplayers;
     private EnumDifficulty t_difficulty;
     private boolean t_isplaywithAI;
+    private LGameConfiguration t_gameconfiguration;
 
     private LGameBrain t_gamebrain;
 
@@ -38,6 +39,7 @@ public class stepdef_user {
         t_norplayers = 1;
         t_difficulty = EnumDifficulty.EASY;
         t_isplaywithAI = false;
+
     }
 
     @When("before a new game starts with specified players")
@@ -46,7 +48,17 @@ public class stepdef_user {
         MainMenuController t_menuController = new MainMenuController(t_app);
         t_menuController.userClickPlay(t_difficulty, t_norplayers, t_isplaywithAI);
         LobbyController t_lobbyController = t_menuController.getLobbyController();
-        t_lobbyController.userClickStartGame(t_menuController.getGameConfiguration());
+
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_norplayers, t_difficulty, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_norplayers; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+
+        t_lobbyController.userClickStartGame(t_gameconfiguration);
         GameController t_gameController = t_lobbyController.getGameController();
         t_gamebrain = t_gameController.getGameBrain();
     }
@@ -76,7 +88,17 @@ public class stepdef_user {
         MainMenuController t_menuController = new MainMenuController(t_app);
         t_menuController.userClickPlay(t_difficulty, t_norplayers, t_isplaywithAI);
         LobbyController t_lobbyController = t_menuController.getLobbyController();
-        t_lobbyController.userClickStartGame(t_menuController.getGameConfiguration());
+
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_norplayers, t_difficulty, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_norplayers; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+
+        t_lobbyController.userClickStartGame(t_gameconfiguration);
         GameController t_gameController = t_lobbyController.getGameController();
         t_gamebrain = t_gameController.getGameBrain();
     }
