@@ -26,6 +26,7 @@ public class LPlayer implements IToDTO {
     }
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain) {
         robot.useProgrammingCard(card, gameBrain);
+        this.usedCardSequence.addCard(card);
     }
 
     /**
@@ -81,16 +82,16 @@ public class LPlayer implements IToDTO {
         this.cardSequence = null;
         this.usedCardSequence = null;
     }
-    protected void setCardSequence(LCardSequence cardSequence){
+    public void setCardSequence(LCardSequence cardSequence){
         this.cardSequence = cardSequence;
         this.usedCardSequence = new LCardSequence(this);
     }
 
-    protected LCardSequence getCardSequence(){
+    public LCardSequence getCardSequence(){
         return this.cardSequence;
     }
 
-    protected AbCardProgramming getLastCardUsed(){
+    protected AbCardProgramming getLastCard(){
         return this.usedCardSequence.getLastCard();
     }
 

@@ -1,6 +1,8 @@
 package CucumberTests;
 
+import App.RoborallyApplication.Model.*;
 import Utils.Tuple;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,25 +10,22 @@ import App.RoborallyApplication.Controllers.ApplicationController;
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Controllers.MainMenuController;
-import App.RoborallyApplication.Model.EnumDifficulty;
-import App.RoborallyApplication.Model.LGameBrain;
-import App.RoborallyApplication.Model.LGameConfiguration;
+import org.junit.Before;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
 public class
 stepdef_Player {
-
-    /*
-        Test steps for programmingPhase
-     */
+    private LPlayer player;
     private LGameBrain t_gamebrain;
     private LGameConfiguration t_gameconfig;
-    // Player receives 5 cards in programming phase
-    @Given("a player waiting to receive programming cards")
-    public void a_player_waiting_to_receive_programming_cards() {
+    private LCardSequence cardSequence;
+    private AbCardProgramming card;
+    @Before
+    private void setup(){
         t_gameconfig = new LGameConfiguration(1, EnumDifficulty.EASY, true);
         int t_norplayers = 1;
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
@@ -37,6 +36,13 @@ stepdef_Player {
         }
         t_gameconfig.createPlayersFromLobby(t_playerInfo);
         t_gamebrain = new LGameBrain(t_gameconfig);
+
+        player = t_gamebrain.getPlayers().get(0);
+    }
+    // Player receives 5 cards in programming phase
+    @Given("a player waiting to receive programming cards")
+    public void a_player_waiting_to_receive_programming_cards() {
+        setup();
     }
 
     @When("the programming phase starts")
@@ -57,44 +63,22 @@ stepdef_Player {
 
     @When("the player reorders the cards")
     public void the_player_reordered_the_cards() {
-
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(player.getProgrammingCards().get(4));
+        cardSequence.addCard(player.getProgrammingCards().get(3));
+        cardSequence.addCard(player.getProgrammingCards().get(2));
+        cardSequence.addCard(player.getProgrammingCards().get(1));
+        cardSequence.addCard(player.getProgrammingCards().get(0));
+        player.setCardSequence(cardSequence);
     }
 
     @Then("the order of the cards change accordingly")
     public void the_order_of_the_cards_change_accordingly() {
-
-    }
-
-    // Player see the function of each card
-    @Given("a player has reordered 5 cards")
-    public void a_player_has_reordered_5_cards() {
-        setup();
-    }
-
-    @When("after the player reorders the cards")
-    public void after_the_player_reorders_the_cards() {
-
-    }
-
-    @Then("player check the function of the programming cards")
-    public void player_check_the_function_of_the_programming_cards() {
-
-    }
-
-    // Player see the game board
-    @Given("a player in the game")
-    public void a_player_in_the_game() {
-
-    }
-
-    @When("during the whole programming phase")
-    public void during_the_whole_programming_phase() {
-
-    }
-
-    @Then("player check the game board anytime")
-    public void player_check_the_game_board_anytime() {
-
+        assertEquals(cardSequence.getCardSequence().get(0),player.getCardSequence().getCardSequence().get(0));
+        assertEquals(cardSequence.getCardSequence().get(1),player.getCardSequence().getCardSequence().get(1));
+        assertEquals(cardSequence.getCardSequence().get(2),player.getCardSequence().getCardSequence().get(2));
+        assertEquals(cardSequence.getCardSequence().get(3),player.getCardSequence().getCardSequence().get(3));
+        assertEquals(cardSequence.getCardSequence().get(4),player.getCardSequence().getCardSequence().get(4));
     }
 
     // Player watch the activation progress on the game board
@@ -110,7 +94,24 @@ stepdef_Player {
 
     @Then("the player see how many lives its robot currently has")
     public void the_player_see_how_many_lives_its_robot_currently_has() {
-
+        assertEquals(3,player.getRobot().getNrOfLives());
     }
 
+    @Given("A player has already reordered his cards")
+    public void a_player_has_already_reordered_his_cards() {
+        setup();
+        player.getRobot().setCords(new Point(7,7));
+        player.getRobot().setDirection(EnumDirection.SOUTH);
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        player.setCardSequence(cardSequence);
+    }
+    @When("start activation phase")
+    public void start_activation_phase() {
+        player.useProgrammingCard(player.getCardSequence().getCardSequence().get(0), t_gamebrain);
+    }
+    @Then("the robot follow the card instruction")
+    public void the_robot_follow_the_card_instruction() {
+        assertEquals(new Point(7,6),player.getRobot().getCords());
+    }
 }

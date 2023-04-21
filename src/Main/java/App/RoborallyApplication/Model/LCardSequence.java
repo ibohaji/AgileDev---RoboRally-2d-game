@@ -29,6 +29,7 @@ public class LCardSequence {
             return true;
         }
     }
+
     public AbCardProgramming getLastCard(){
         if(this.cardSequence.isEmpty()){
             return null;
@@ -40,4 +41,7 @@ public class LCardSequence {
         return this.cardSequence.size();
     }
 
+    public ArrayList<AbCardProgramming> getCardSequence(){
+        return this.cardSequence;
+    }
 }

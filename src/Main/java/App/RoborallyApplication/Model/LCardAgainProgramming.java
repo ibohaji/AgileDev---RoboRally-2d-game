@@ -13,9 +13,8 @@ public class LCardAgainProgramming extends AbCardProgramming {
 
     @Override
     public void useCard(LRobot robot, LGameBrain gameBrain) {
-        AbCardProgramming lastCardUsed = gameBrain.getLastCardUsedByRobot(robot);
-        // write logic for when first card is the again card then nothing happens
-        // basically return null for last card used
+        LPlayer playerOfRobot = robot.getPlayer();
+        AbCardProgramming lastCardUsed = playerOfRobot.getLastCard();
         if(lastCardUsed != null){
             robot.useProgrammingCard(lastCardUsed, gameBrain);
         }

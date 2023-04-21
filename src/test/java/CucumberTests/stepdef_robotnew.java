@@ -18,7 +18,7 @@ public class stepdef_robotnew {
     private LCardChangeDirectionProgramming changeDirectionProgramming;
     private LCardAgainProgramming againProgramming;
     private LGameBrain gamebrain;
-    private EnumDirection direction;
+    private LCardSequence cardSequence;
     private LRobot robot;
     private LRobot robot1;
     private LRobot robot2;
@@ -98,16 +98,22 @@ public class stepdef_robotnew {
         setup();
         robot.setCords(new Point(3,3));
         robot.setDirection(EnumDirection.WEST);
+        cardSequence = new LCardSequence(player0);
+        cardSequence.addCard(new LCardChangeDirectionProgramming(EnumTurnType.U_TURN));
+        cardSequence.addCard(new LCardChangeDirectionProgramming(EnumTurnType.RIGHT));
+        cardSequence.addCard(new LCardAgainProgramming());
+        player0.setCardSequence(cardSequence);
     }
     @When("an AGAIN card is played")
     public void an_again_card_is_played(){
-//        againProgramming = new LCardAgainProgramming();
-//        againProgramming.useCard(robot,gamebrain);
+        for (int i=0;i<=2;i++){
+            player0.useProgrammingCard(player0.getCardSequence().getCardSequence().get(i),gamebrain);
+        }
     }
     @Then("the robot should be at point and facing EAST after using Again card")
     public void the_robot_should_be_at_point_and_facing_east_after_using_again_card() {
         assertEquals(new Point(3,3),robot.getCords());
-        assertEquals(EnumDirection.EAST, robot.getCurrentDirection());
+        assertEquals(EnumDirection.WEST, robot.getCurrentDirection());
     }
 
     @Given("the game board is set up with robots at positions")
