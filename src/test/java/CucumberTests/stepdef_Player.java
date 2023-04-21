@@ -29,7 +29,7 @@ stepdef_Player {
         t_gameconfig = new LGameConfiguration(1, EnumDifficulty.EASY, true);
         int t_norplayers = 1;
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_norplayers; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -84,7 +84,8 @@ stepdef_Player {
     // Player watch the activation progress on the game board
     @Given("a player and its robot")
     public void a_player_and_its_robot() {
-
+        setup();
+        player.getRobot().setNrOfLives(3);
     }
 
     @When("during the activation phase")
