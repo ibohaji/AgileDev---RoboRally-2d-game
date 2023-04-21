@@ -13,7 +13,7 @@ Feature: Robot Movement on the board
   Scenario: Robot repeats its previous movement according to the AGAIN card
     Given the robot is at point and facing WEST and the card used previously is U-TURN card
     When an AGAIN card is played
-    Then the robot should be at point(3,3) and facing EAST after using Again card
+    Then the robot should be at point and facing EAST after using Again card
 
   Scenario: Robot pushes another robot
     Given the game board is set up with robots at positions

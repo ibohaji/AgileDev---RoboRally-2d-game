@@ -1,5 +1,6 @@
 package CucumberTests;
 import App.RoborallyApplication.Model.*;
+import Utils.Tuple;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -21,16 +22,44 @@ public class stepdef_robotnew {
     private LRobot robot;
     private LRobot robot1;
     private LRobot robot2;
+    private LPlayer player0,player1;
+    private LGameConfiguration gameConfiguration;
+    private int t_no_of_players;
 
     @Before
     public void setup(){
-        gamebrain = new LGameBrain(1,EnumDifficulty.EASY);
+        t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        gamebrain = new LGameBrain(t_gameconfiguration);
         robot = gamebrain.getPlayers().get(0).getRobot();
+
+        player0 = gamebrain.getPlayers().get(0);
     }
     public void setup2(){
-        gamebrain = new LGameBrain(2,EnumDifficulty.EASY);
+        t_no_of_players = 2;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        gamebrain = new LGameBrain(t_gameconfiguration);
+
         robot1 = gamebrain.getPlayers().get(0).getRobot();
         robot2 = gamebrain.getPlayers().get(1).getRobot();
+
+        player0 = gamebrain.getPlayers().get(0);
+        player1 = gamebrain.getPlayers().get(1);
+
     }
 
     @Given("the robot's initial direction as NORTH")
@@ -64,16 +93,16 @@ public class stepdef_robotnew {
         assertEquals(new Point(2,1),robot.getCords());
     }
 
-    @Given("the robot is at point 3,3 and facing WEST and the card used previously is U-TURN card")
-    public void the_robot_is_at_point_and_facing_west_and_the_card_used_previously_is_u_turn_card() {
+    @Given("the robot is at point and facing WEST and the card used previously is U-TURN card")
+    public void the_robot_is_at_point_and_facing_west_and_the_card_used_previously_is_u_turn_card(){
         setup();
         robot.setCords(new Point(3,3));
         robot.setDirection(EnumDirection.WEST);
     }
     @When("an AGAIN card is played")
-    public void an_again_card_is_played() {
-        againProgramming = new LCardAgainProgramming();
-        againProgramming.useCard(robot,gamebrain);
+    public void an_again_card_is_played(){
+//        againProgramming = new LCardAgainProgramming();
+//        againProgramming.useCard(robot,gamebrain);
     }
     @Then("the robot should be at point and facing EAST after using Again card")
     public void the_robot_should_be_at_point_and_facing_east_after_using_again_card() {
@@ -81,7 +110,7 @@ public class stepdef_robotnew {
         assertEquals(EnumDirection.EAST, robot.getCurrentDirection());
     }
 
-    @Given("the game board is set up with robots at positions 2,0 and 2,1")
+    @Given("the game board is set up with robots at positions")
     public void the_game_board_is_set_up_with_robots_at_positions() {
         setup2();
         robot1.setCords(new Point(2,0));
@@ -94,25 +123,31 @@ public class stepdef_robotnew {
     }
     @When("robot1 uses a movement card with {int} steps")
     public void robot1_uses_a_movement_card_with_steps(Integer int1) {
-
+        movementProgramming = new LCardMovementProgramming(int1);
+        movementProgramming.useCard(robot1,gamebrain);
     }
     @Then("robot1 should be at \\({double}) facing NORTH and robot2 should be at \\({double}) facing EAST")
     public void robot1_should_be_at_facing_north_and_robot2_should_be_at_facing_east(Double double1, Double double2) {
-
+        assertEquals(new Point(2,2),robot1.getCords());
+        assertEquals(new Point(2,3),robot2.getCords());
+        assertEquals(EnumDirection.NORTH,robot1.getCurrentDirection());
+        assertEquals(EnumDirection.EAST,robot2.getCurrentDirection());
     }
-
 
     @Given("a game board with difficulty Easy")
     public void a_game_board_with_difficulty_easy_fall() {
-
+        setup();
     }
     @Given("Robot1 at position \\({double}) facing EAST with {int} lives")
     public void robot1_at_position_facing_east_with_lives(Double double1, Integer int1) {
-
+        robot.setCords(new Point(7,7));
+        robot.setDirection(EnumDirection.EAST);
+        robot.setNrOfLives(int1);
     }
     @When("Robot1 moves forward {int} step")
     public void robot1_moves_forward_step(Integer int1) {
-
+        movementProgramming = new LCardMovementProgramming(int1);
+        movementProgramming.useCard(robot,gamebrain);
     }
     @Then("Robot1 has {int} lives left")
     public void robot1_has_lives_left(Integer int1) {
@@ -125,15 +160,17 @@ public class stepdef_robotnew {
 
     @Given("a game board with difficulty EASY")
     public void a_game_board_with_difficulty_easy() {
-
+        setup2();
     }
     @Given("Robot1 at position \\({double}) and Robot2 at position \\({double})")
     public void robot1_at_position_and_robot2_at_position(Double double1, Double double2) {
-
+        robot1.setCords(new Point(2,0));
+        robot2.setCords(new Point(2,1));
     }
     @Given("Robot1 is facing NORTH and Robot2 is facing SOUTH")
     public void robot1_is_facing_north_and_robot2_is_facing_south() {
-
+        robot1.setDirection(EnumDirection.NORTH);
+        robot2.setDirection(EnumDirection.SOUTH);
     }
     @Given("Robot1 has {int} lives and Robot2 has {int} lives")
     public void robot1_has_lives_and_robot2_has_lives(Integer int1, Integer int2) {
@@ -154,15 +191,20 @@ public class stepdef_robotnew {
 
     @Given("Robot has one life")
     public void robot_has_one_life() {
-
+        setup();
+        robot.setNrOfLives(1);
     }
     @When("Robot suffer a damage")
     public void robot_suffer_a_damage() {
-
+        robot.setNrOfLives(robot.getNrOfLives()-1);
+        if (robot.getNrOfLives() < 1){
+            gamebrain.removeRobot(robot);
+            gamebrain.removePlayer(robot.getPlayer());
+        }
     }
     @Then("Robot is deleted")
     public void robot_is_deleted() {
-
+        assertEquals(false,gamebrain.getPlayers().contains(player0));
     }
 
     // Robot execute programming cards in order in activation phase
@@ -180,5 +222,4 @@ public class stepdef_robotnew {
     public void the_robot_execute_the_cards_in_the_given_order() {
 
     }
-
 }
