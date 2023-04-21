@@ -2,14 +2,9 @@ package CucumberTests;
 
 import App.RoborallyApplication.Model.*;
 import Utils.Tuple;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import App.RoborallyApplication.Controllers.ApplicationController;
-import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Controllers.LobbyController;
-import App.RoborallyApplication.Controllers.MainMenuController;
 import org.junit.Before;
 
 import java.awt.*;
@@ -69,16 +64,16 @@ stepdef_Player {
         cardSequence.addCard(player.getProgrammingCards().get(2));
         cardSequence.addCard(player.getProgrammingCards().get(1));
         cardSequence.addCard(player.getProgrammingCards().get(0));
-        player.setCardSequence(cardSequence);
+        player.setCardSequenceInDeck(cardSequence);
     }
 
     @Then("the order of the cards change accordingly")
     public void the_order_of_the_cards_change_accordingly() {
-        assertEquals(cardSequence.getCardSequence().get(0),player.getCardSequence().getCardSequence().get(0));
-        assertEquals(cardSequence.getCardSequence().get(1),player.getCardSequence().getCardSequence().get(1));
-        assertEquals(cardSequence.getCardSequence().get(2),player.getCardSequence().getCardSequence().get(2));
-        assertEquals(cardSequence.getCardSequence().get(3),player.getCardSequence().getCardSequence().get(3));
-        assertEquals(cardSequence.getCardSequence().get(4),player.getCardSequence().getCardSequence().get(4));
+        assertEquals(cardSequence.getCardSequence().get(0),player.getCardSequenceInDeck().getCardSequence().get(0));
+        assertEquals(cardSequence.getCardSequence().get(1),player.getCardSequenceInDeck().getCardSequence().get(1));
+        assertEquals(cardSequence.getCardSequence().get(2),player.getCardSequenceInDeck().getCardSequence().get(2));
+        assertEquals(cardSequence.getCardSequence().get(3),player.getCardSequenceInDeck().getCardSequence().get(3));
+        assertEquals(cardSequence.getCardSequence().get(4),player.getCardSequenceInDeck().getCardSequence().get(4));
     }
 
     // Player watch the activation progress on the game board
@@ -105,11 +100,11 @@ stepdef_Player {
         player.getRobot().setDirection(EnumDirection.SOUTH);
         cardSequence = new LCardSequence(player);
         cardSequence.addCard(new LCardMovementProgramming(1));
-        player.setCardSequence(cardSequence);
+        player.setCardSequenceInDeck(cardSequence);
     }
     @When("start activation phase")
     public void start_activation_phase() {
-        player.useProgrammingCard(player.getCardSequence().getCardSequence().get(0), t_gamebrain);
+        player.useProgrammingCard(player.getCardSequenceInDeck().getCardSequence().get(0), t_gamebrain);
     }
     @Then("the robot follow the card instruction")
     public void the_robot_follow_the_card_instruction() {

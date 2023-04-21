@@ -19,7 +19,7 @@ public class stepdef_user {
 
     private int t_norplayers;
     private EnumDifficulty t_difficulty;
-    private boolean t_isplaywithAI;
+    private boolean t_isregular;
     private LGameConfiguration t_gameconfiguration;
 
     private LGameBrain t_gamebrain;
@@ -38,7 +38,7 @@ public class stepdef_user {
     public void a_user_who_wants_to_choose_players() {
         t_norplayers = 1;
         t_difficulty = EnumDifficulty.EASY;
-        t_isplaywithAI = false;
+        t_isregular = true;
 
     }
 
@@ -46,10 +46,10 @@ public class stepdef_user {
     public void before_a_new_game_starts_with_specified_players() {
         ApplicationController t_app = new ApplicationController();
         MainMenuController t_menuController = new MainMenuController(t_app);
-        t_menuController.userClickPlay(t_difficulty, t_norplayers, t_isplaywithAI);
+        t_menuController.userClickPlay(t_difficulty, t_norplayers, t_isregular);
         LobbyController t_lobbyController = t_menuController.getLobbyController();
 
-        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_norplayers, t_difficulty, true);
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_norplayers, t_difficulty, t_isregular);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
         Tuple<String, Boolean> t_info;;
         for (int i = 0; i < t_norplayers; i++) {
@@ -79,17 +79,17 @@ public class stepdef_user {
             case(2): t_difficulty = EnumDifficulty.MEDIUM;
             case(3): t_difficulty = EnumDifficulty.HARD;
         }
-        t_isplaywithAI = false;
+        t_isregular = false;
     }
 
     @When("before a new game starts with specified difficulty level")
     public void before_a_new_game_starts_with_specified_difficulty_level() {
         ApplicationController t_app = new ApplicationController();
         MainMenuController t_menuController = new MainMenuController(t_app);
-        t_menuController.userClickPlay(t_difficulty, t_norplayers, t_isplaywithAI);
+        t_menuController.userClickPlay(t_difficulty, t_norplayers, t_isregular);
         LobbyController t_lobbyController = t_menuController.getLobbyController();
 
-        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_norplayers, t_difficulty, true);
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_norplayers, t_difficulty, t_isregular);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
         Tuple<String, Boolean> t_info;;
         for (int i = 0; i < t_norplayers; i++) {

@@ -11,7 +11,7 @@ public class LPlayer implements IToDTO {
 
     private boolean isHumanPlayer;
 
-    private LCardSequence cardSequence;
+    private LCardSequence cardSequenceInDeck;
 
     private LCardSequence usedCardSequence;
     private LRobot robot = null;
@@ -79,16 +79,16 @@ public class LPlayer implements IToDTO {
      * At the end of the round, cardsequence should be null
      */
     protected void setCardSequenceToNull(){
-        this.cardSequence = null;
+        this.cardSequenceInDeck = null;
         this.usedCardSequence = null;
     }
-    public void setCardSequence(LCardSequence cardSequence){
-        this.cardSequence = cardSequence;
+    public void setCardSequenceInDeck(LCardSequence cardSequenceInDeck){
+        this.cardSequenceInDeck = cardSequenceInDeck;
         this.usedCardSequence = new LCardSequence(this);
     }
 
-    public LCardSequence getCardSequence(){
-        return this.cardSequence;
+    public LCardSequence getCardSequenceInDeck(){
+        return this.cardSequenceInDeck;
     }
 
     protected AbCardProgramming getLastCard(){

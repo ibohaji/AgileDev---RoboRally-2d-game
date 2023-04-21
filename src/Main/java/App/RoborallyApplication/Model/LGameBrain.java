@@ -112,12 +112,12 @@ public class LGameBrain implements IToDTO {
     // -------------------------------------------------------------------------//
     // CARD SEQUENCE LOGIC
     public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
-        player.setCardSequence(cardSequence);
+        player.setCardSequenceInDeck(cardSequence);
     }
     public boolean haveAllPlayersSubmittedSequence(){
         boolean haveSubmitted = true;
         for (LPlayer player: players) {
-            if(player.getCardSequence() == null){
+            if(player.getCardSequenceInDeck() == null){
                 haveSubmitted = false;
             }
         }
@@ -125,7 +125,7 @@ public class LGameBrain implements IToDTO {
     }
     public LPlayer getPlayerWithoutCardSequence(){
         for (LPlayer player: players) {
-            if(player.getCardSequence() == null){
+            if(player.getCardSequenceInDeck() == null){
                 return player;
             }
         }
@@ -236,7 +236,7 @@ public class LGameBrain implements IToDTO {
     }
     public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
         LPlayer player = robot.getPlayer();
-        return player.getCardSequence().getLastCard();
+        return player.getCardSequenceInDeck().getLastCard();
     }
     private void setupRobots(){
         ArrayList<LTile> availableStartPoints = getAllStartPoints();

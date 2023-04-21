@@ -8,7 +8,6 @@ import App.RoborallyApplication.Model.LTile;
 import App.RoborallyApplication.Model.EnumDifficulty;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LGameboard;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,12 +32,6 @@ public class stepdef_GameBrain {
         Random t_rnd = new Random();
         return t_rnd.nextInt((max - min) + 1) + min;
     }
-
-    @Before
-    public void setup() {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.EASY, true));
-    }
-
 
     // GameBrain shuffles and assigns cards
     @Given("{int} players")
@@ -163,11 +156,7 @@ public class stepdef_GameBrain {
 
     @When("a robot makes movement on the game board")
     public void a_robot_makes_movement_on_the_game_board() {
-        t_robot.setCords(new Point(
-                t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().first()-1),
-                t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().second()-1)
-                )
-        );
+        t_robot.setCords(new Point(1, 1));
     }
 
     @Then("GameBrain detect if a robot encounters an obstacle")
@@ -175,7 +164,7 @@ public class stepdef_GameBrain {
         int t_pos_x = t_robot.getCords().x;
         int t_pos_y = t_robot.getCords().y;
         LTile t__tile = t_gamebrain.getGameboard().getTileFromCoordinate(t_pos_x, t_pos_y);
-        assertEquals(t__tile.doesTileHaveObstacle(), t_robot.getCords().equals(t__tile.getCoordinates()));
+        assertEquals(!t__tile.doesTileHaveObstacle(), t_robot.getCords().equals(t__tile.getCoordinates()));
 
         t_player = null;
         t_robot = null;

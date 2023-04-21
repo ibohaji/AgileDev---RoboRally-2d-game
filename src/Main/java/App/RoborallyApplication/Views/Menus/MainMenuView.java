@@ -97,19 +97,6 @@ public class MainMenuView extends JPanel {
         return logoLabel;
     }
 
-
-
-    private JButton getJoinGameButton(){
-        // JOIN GAME BUTTON
-        JButton joinGameButton = new JButton("Join game");
-        joinGameButton.setFont(Fonts.LARGE);
-        joinGameButton.addActionListener(e -> {
-            // controller.userClickJoinGame();
-            // check if lobby already full
-        });
-        return joinGameButton;
-    }
-
     private JButton getCreateLobbyButton(){
         JButton createGameButton = new JButton("Multiplayer");
         createGameButton.setFont(Fonts.LARGE);
@@ -207,24 +194,5 @@ public class MainMenuView extends JPanel {
 
 
     }
-
-
-    public static void main(String[] args) {
-        ApplicationController app = new ApplicationController();
-        MainMenuController controller = new MainMenuController(app);
-        //LobbyRegularView lobby = new LobbyRegularView()
-        MainMenuView view = new MainMenuView(controller);
-        JFrame frame=new JFrame("Test run");
-        frame.add(view);
-        frame.setSize(800,600);
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-
-
-
-
-
 
 }
