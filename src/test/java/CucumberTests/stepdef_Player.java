@@ -52,7 +52,7 @@ stepdef_Player {
     // Player reorder cards in programming phase
     @Given("a player has received 5 cards")
     public void a_player_has_received_5_cards() {
-
+        setup();
     }
 
     @When("the player reorders the cards")
@@ -68,7 +68,7 @@ stepdef_Player {
     // Player see the function of each card
     @Given("a player has reordered 5 cards")
     public void a_player_has_reordered_5_cards() {
-
+        setup();
     }
 
     @When("after the player reorders the cards")
