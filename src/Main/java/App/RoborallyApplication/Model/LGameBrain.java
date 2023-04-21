@@ -80,6 +80,15 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
+
+    public void makeMovement(){
+
+    }
+
+    public boolean areThereMovementsLeftInThisRound(){
+        // TODO
+        return true;
+    }
     public void endRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
         for (LPlayer player: players) {
@@ -91,8 +100,12 @@ public class LGameBrain implements IToDTO {
      * @return Return true if there is a player on finish that has reached checkpoints and is now on finish tile
      */
     public boolean isThereAWinner(){
+        // After a player gets to finish tile, check if they have collected checkpoints aswell
         // TODO
         return false;
+    }
+    public LPlayer getPlayerWhoWon(){
+        return null;
     }
 
 
@@ -171,6 +184,12 @@ public class LGameBrain implements IToDTO {
                 return player;
             }
         }
+        return null;
+    }
+
+    public LPlayer getPlayerWhoIsCurrentlyMoving(){
+        // Once a player has made all his movements, set cardsequence to null
+        // TODO
         return null;
     }
 
