@@ -22,7 +22,7 @@ public class UserCardDeckView extends GameView {
 
     public UserCardDeckView(GameController controller, LGameBrain gameBrain) {
         super(controller, gameBrain);
-        this.cards = gameBrain.getPlayerWithoutCardSequence().getCards();
+        this.cards = gameBrain.getPlayerWithoutCardSequence().getProgrammingCards();
         setLayout(new GridBagLayout());
         cardPanel = new JPanel();
         cardPanel.setLayout(new GridBagLayout());

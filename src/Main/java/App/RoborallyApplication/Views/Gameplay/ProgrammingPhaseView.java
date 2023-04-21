@@ -31,7 +31,7 @@ public class ProgrammingPhaseView extends GameView{
         this.gameBrain = gameBrain;
         this.gameController = gameController;
         this.player = gameController.getPlayerWithoutCardSequence();
-        this.programmingCards = this.player.getCards();
+        this.programmingCards = this.player.getProgrammingCards();
         createView();
     }
 

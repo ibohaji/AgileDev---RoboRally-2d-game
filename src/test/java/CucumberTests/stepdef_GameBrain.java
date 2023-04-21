@@ -12,7 +12,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+import Utils.Tuple;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -43,7 +43,16 @@ public class stepdef_GameBrain {
     // GameBrain shuffles and assigns cards
     @Given("{int} players")
     public void create_players(Integer t_no_of_players) {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true));
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+
     }
 
     @When("a round starts")
@@ -56,7 +65,7 @@ public class stepdef_GameBrain {
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
         for (LPlayer t_currentplayer : t_players) {
-            ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getCards();
+            ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getProgrammingCards();
             assertEquals(5, t_playerscards.size());
         }
 
@@ -103,7 +112,16 @@ public class stepdef_GameBrain {
     // GameBrain gets obstacles on the game board and their properties
     @Given("a GameBrain and game board filled with tiles")
     public void a_GameBrain_and_game_board_filled_with_tiles() {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.EASY, true));
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
     }
 
     @When("a new game board is generated")
@@ -126,6 +144,17 @@ public class stepdef_GameBrain {
     // GameBrain gets the relative position of a robot and an obstacle
     @Given("a GameBrain a robot and a tile on the game board")
     public void a_GameBrain_a_robot_and_a_tile_on_the_game_board() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_player = t_players.get(t_rndInt(0, t_players.size()-1));
         t_robot = t_player.getRobot();
@@ -155,7 +184,16 @@ public class stepdef_GameBrain {
     // GameBrain gets and sets the icon image of a tile
     @Given("a GameBrain with at least medium difficulty")
     public void a_GameBrain_with_at_least_medium_difficulty() {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.MEDIUM, true));
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
     }
 
     @When("an explosive tile affects nearby tiles")
@@ -196,7 +234,16 @@ public class stepdef_GameBrain {
     // GameBrain traces the status of a robot
     @Given("a GameBrain with at least medium difficulty_")
     public void a_GameBrain_with_at_least_medium_difficulty_() {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.MEDIUM, true));
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
     }
 
     @When("a robot touches a checkpoint")
@@ -228,6 +275,16 @@ public class stepdef_GameBrain {
     // GameBrain detects if a robot has fallen out of the game board
     @Given("a GameBrain a game board and a robot")
     public void a_GameBrain_a_game_board_and_a_robot() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_player = t_players.get(t_rndInt(0, t_players.size()-1));
         t_robot = t_player.getRobot();
@@ -262,6 +319,16 @@ public class stepdef_GameBrain {
     // GameBrain detects if a player has been defeated
     @Given("a GameBrain and a player")
     public void a_GameBrain_and_a_player() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_player = t_players.get(t_rndInt(0, t_players.size()-1));
     }
@@ -282,7 +349,16 @@ public class stepdef_GameBrain {
     // GameBrain activate an explosive tile
     @Given("a GameBrain with at least medium difficulty__")
     public void a_GameBrain_with_at_least_medium_difficulty__() {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.MEDIUM, true));
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
     }
 
     @When("a robot stands on an explosive tile")
@@ -321,7 +397,16 @@ public class stepdef_GameBrain {
     // GameBrain determine an unknown explosive tile
     @Given("a GameBrain with {string} difficulty")
     public void a_GameBrain_with_specified_difficulty(String string) {
-        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.valueOf(string), true));
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
     }
 
     @When("a robot stands on an unknown explosive tile")

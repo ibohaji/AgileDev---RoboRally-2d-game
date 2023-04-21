@@ -135,7 +135,7 @@ public class LGameBrain implements IToDTO {
         while(!haveAllPlayersSubmittedSequence()){
             LPlayer player = getPlayerWithoutCardSequence();
             LCardSequence newSeq = new LCardSequence(player);
-            for (AbCardProgramming card: player.getCards()) {
+            for (AbCardProgramming card: player.getProgrammingCards()) {
                 newSeq.addCard(card);
             }
             this.setCardSequenceForPlayer(player, newSeq);

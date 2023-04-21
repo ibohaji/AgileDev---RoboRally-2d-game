@@ -60,7 +60,7 @@ public class LPlayer implements IToDTO {
     }
 
 
-    public ArrayList<AbCardProgramming> getCards(){
+    public ArrayList<AbCardProgramming> getProgrammingCards(){
         return programmingCards;
     }
 

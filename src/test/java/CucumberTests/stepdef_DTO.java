@@ -67,7 +67,7 @@ public class stepdef_DTO {
         LRobot t_robot = new LRobot();
         t_robot.setDirection(EnumDirection.NORTH);
         t_robots.add(t_robot);
-        t_gameboard = new LGameboard(new LGameBrain(1, EnumDifficulty.EASY));
+        t_gameboard = new LGameboard(new LGameBrain(new LGameConfiguration(1, EnumDifficulty.EASY, true)));
         t_gameboard.setTiles(t_tiles);
         t_gameboard.setRobots(t_robots);
     }
@@ -94,7 +94,7 @@ public class stepdef_DTO {
 
     @Given("Data prepared in GameBrain")
     public void data_prepared_in_GameBrain() {
-        t_gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
+        t_gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.EASY, true));
 
     }
 
@@ -151,7 +151,7 @@ public class stepdef_DTO {
 
     @Given("Data prepared in Player")
     public void data_prepared_in_Player() {
-        t_player = new LPlayer("player");
+        t_player = new LPlayer("player", false);
         this.assigncards(t_player, 5);
         LRobot t__robot = new LRobot();
         t__robot.setDirection(EnumDirection.NORTH);

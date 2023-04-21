@@ -1,11 +1,6 @@
 package CucumberTests;
 
-import App.RoborallyApplication.Model.LObstacle;
-import App.RoborallyApplication.Model.LRobot;
-import App.RoborallyApplication.Model.LTile;
-import App.RoborallyApplication.Model.EnumDifficulty;
-import App.RoborallyApplication.Model.LGameBrain;
-import App.RoborallyApplication.Model.LGameboard;
+import App.RoborallyApplication.Model.*;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -24,7 +19,7 @@ public class stepdef_GameBoard {
 
     @Before
     public void setup(){
-        gamebrain = new LGameBrain(1, EnumDifficulty.EASY);
+        gamebrain = new LGameBrain(new LGameConfiguration(1, EnumDifficulty.EASY, true));
         gameboard = gamebrain.getGameboard();
     }
 
