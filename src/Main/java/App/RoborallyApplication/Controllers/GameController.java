@@ -1,8 +1,11 @@
 package App.RoborallyApplication.Controllers;
 
 import App.RoborallyApplication.Model.*;
+import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
+
+import java.util.Timer;
 
 public class GameController {
     private final ApplicationController applicationController;
@@ -14,10 +17,27 @@ public class GameController {
         this.gameBrain = gameBrain;
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
             this.view = new ProgrammingPhaseView(this, gameBrain);
-        } else {
-            System.out.println("TO MOVEMENT VIEW");
+        } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
+            this.view = new GameBoardView(this, gameBrain);
+            makeMovements();
+        } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)){
+            // Give a screen where you can save game or continue with next round
         }
 
+    }
+
+    private void makeMovements(){
+        while(this.gameBrain.areThereMovementsLeftInThisRound()){
+            this.gameBrain.makeMovement();
+            this.view = new GameBoardView(this, gameBrain);
+            display();
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Interrupted sleep in GameController method makeMovements()");
+            }
+        }
+        this.gameBrain.setCurrentGamePhase(EnumGamePhase.ROUND_END);
     }
 
     protected void display() {

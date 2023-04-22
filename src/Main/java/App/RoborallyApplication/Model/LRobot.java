@@ -79,6 +79,12 @@ public class LRobot implements IToDTO {
     }
     public void setNrOfLives(int lifeCount) {this.lifeCount = lifeCount;}
 
+    /**
+     * This method is used when calling the againCard method because you don't want
+     * to add the again card to the sequence
+     * @param card card to use
+     * @param gameBrain gamebrain reference
+     */
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain){
         card.useCard(this, gameBrain);
     }

@@ -201,7 +201,7 @@ public class MapGenerator {
         LTile checkpointTiles1 = new LTile(1, 4, EnumTileType.CHECKPOINT);
         checkpointTiles1.setGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_1, difficulty);
         gameboard.changeTile(checkpointTiles1);
-
+        gameboard.addCheckpoint(checkpointTiles1);
         // add start point tiles
         int[][] startTilePositions = {{2,11}, {4,11}, {7,11}, {9,11}};
 
@@ -389,10 +389,12 @@ public class MapGenerator {
         LTile checkpointTiles1 = new LTile(7, 5, EnumTileType.CHECKPOINT);
         checkpointTiles1.setGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_1, difficulty);
         gameboard.changeTile(checkpointTiles1);
+        gameboard.addCheckpoint(checkpointTiles1);
 
         LTile checkpointTiles2 = new LTile(11, 0, EnumTileType.CHECKPOINT);
         checkpointTiles2.setGraphicalElement(EnumGraphicalElementMain.CHECKPOINTS_2, difficulty);
         gameboard.changeTile(checkpointTiles2);
+        gameboard.addCheckpoint(checkpointTiles2);
 
         // add start point tiles
         int[][] startTilePositions = {{2,11}, {5,11}, {6,11}, {10,11}};

@@ -13,6 +13,7 @@ public class LGameboard implements IToDTO {
     private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
     private ArrayList<LObstacle> obstacles = new ArrayList<>();
+    private ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
     private LGameBrain gameBrain;
 
     public LGameboard(LGameBrain brain){
@@ -23,10 +24,6 @@ public class LGameboard implements IToDTO {
 
     public UUID getGameBrainId(){
         return this.gameBrain.getID();
-    }
-
-    private void removeRobotFromBoard(LRobot robotToRemove){
-        this.robots.remove(robotToRemove);
     }
 
     public void setRobots(ArrayList<LRobot> robots){this.robots = robots;}
@@ -65,7 +62,6 @@ public class LGameboard implements IToDTO {
         }
         return null;
     }
-
     public ArrayList<LTile> getTilesSurroundingCoordinate(int xCoordinate, int yCoordinate){
         ArrayList<LTile> surroundingTiles = new ArrayList<>();
         ArrayList<LTile> surroundingTilesFinal = new ArrayList<>();
@@ -115,6 +111,26 @@ public class LGameboard implements IToDTO {
 
     protected void removeRobot(LRobot robot){
         this.robots.remove(robot);
+    }
+
+    public void addCheckpoint(LTile checkpointTile){
+        if(this.gameBrain.getGameConfig().getDifficulty().equals(EnumDifficulty.EASY)){
+            throw new RuntimeException("Problem in gameboard method addCheckpoint(). Can't add checkpoints to EASY difficulty");
+        } else if (this.gameBrain.getGameConfig().getDifficulty().equals(EnumDifficulty.MEDIUM)) {
+            if(this.checkpointsInOrder.isEmpty()){
+                this.checkpointsInOrder.add(checkpointTile);
+            } else {
+                throw new RuntimeException("Problem in gameboard method addCheckpoint(). Can't add more than 1 checkpoint to MEDIUM difficulty");
+            }
+        } else if (this.gameBrain.getGameConfig().getDifficulty().equals(EnumDifficulty.HARD)) {
+            if(this.checkpointsInOrder.size() < 3){
+                this.checkpointsInOrder.add(checkpointTile);
+            } else {
+                throw new RuntimeException("Problem in gameboard method addCheckpoint(). Can't add more than 2 checkpoints to HARD difficulty");
+            }
+        } else {
+            throw new RuntimeException("Problem with getting difficulty in gameboard method addCheckpoint()");
+        }
     }
 
     @Override
