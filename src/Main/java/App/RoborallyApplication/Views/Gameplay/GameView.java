@@ -38,4 +38,6 @@ public abstract class GameView extends JPanel {
         return gameNameLabel;
     }
 
+
+
 }
