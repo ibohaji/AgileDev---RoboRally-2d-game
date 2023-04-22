@@ -55,6 +55,9 @@ public class LCardSequence {
     public ArrayList<AbCardProgramming> getCardSequence(){
         return this.cardSequence;
     }
+    public void  setCardSequence(ArrayList<AbCardProgramming> cardSequence) {
+        this.cardSequence = cardSequence;
+    }
 
     public AbCardProgramming getFirstCard() {
         return this.cardSequence.get(0);
