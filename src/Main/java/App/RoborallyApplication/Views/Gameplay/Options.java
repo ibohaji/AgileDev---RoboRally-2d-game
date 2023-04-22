@@ -17,14 +17,15 @@ public class Options extends GameView {
     public Options(GameController gameController, LGameBrain gameBrain){
         super(gameController,gameBrain);
         createOptions();
-
     }
+
     public void createOptions(){
         JButton saveGameButton = saveGameButton();
         JButton ExitGameButton = exitGameButton();
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         add(saveGameButton,new GridBagConstraintsBuilder(0, 1).inset(0,0,0,0).fill(GridBagConstraints.LAST_LINE_END).build());
+        add(ExitGameButton,new GridBagConstraintsBuilder(-1,0).inset(0,0,0,0).fill(GridBagConstraints.FIRST_LINE_START).build());
     }
 
     protected JButton saveGameButton(){
