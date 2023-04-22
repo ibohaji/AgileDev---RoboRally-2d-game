@@ -19,11 +19,14 @@ public abstract class GameView extends JPanel {
         this.controller = controller;
         this.gameBrain = gameBrain;
         this.gameConfiguration = gameBrain.getGameConfig();
+
     }
 
     protected void getGameboardView(){
 
     }
+
+
 
     protected void getUserCardDeckView(){
         // TODO we don't need to deal cards manually by calling .dealCardsForRound()
@@ -37,6 +40,7 @@ public abstract class GameView extends JPanel {
         gameNameLabel.setFont(Fonts.TITLE);
         return gameNameLabel;
     }
+
 
 
 

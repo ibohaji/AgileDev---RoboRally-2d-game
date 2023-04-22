@@ -3,6 +3,7 @@ package App.RoborallyApplication.Controllers;
 import App.RoborallyApplication.Model.*;
 import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
+import App.RoborallyApplication.Views.Gameplay.Options;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 
 import java.util.Timer;
@@ -15,6 +16,7 @@ public class GameController {
     public GameController(ApplicationController applicationController, LGameBrain gameBrain){
         this.applicationController = applicationController;
         this.gameBrain = gameBrain;
+
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
             this.view = new ProgrammingPhaseView(this, gameBrain);
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
@@ -22,6 +24,7 @@ public class GameController {
             makeMovements();
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)){
             // Give a screen where you can save game or continue with next round
+            this.view = new Options(this,gameBrain);
         }
 
     }

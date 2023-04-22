@@ -37,9 +37,11 @@ public class ProgrammingPhaseView extends GameView{
 
     private void createView() {
         setLayout(new GridBagLayout());
+        Options options = new Options(gameController,gameBrain);
         this.userDeckView = new UserCardDeckView(gameController, gameBrain);
         this.userOrderedDeckView = new UserOrderedCardDeckView(gameController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
+        add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
         add(userOrderedDeckView, new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
         add(userDeckView, new GridBagConstraintsBuilder(2, 0).inset(0,50,0,0).fill(GridBagConstraints.BOTH).build());
