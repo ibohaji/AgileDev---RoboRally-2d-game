@@ -100,12 +100,12 @@ public class stepdef_Robot {
         cardSequence.addCard(new LCardChangeDirectionProgramming(EnumTurnType.U_TURN));
         cardSequence.addCard(new LCardChangeDirectionProgramming(EnumTurnType.RIGHT));
         cardSequence.addCard(new LCardAgainProgramming());
-        player0.setCardSequenceInDeck(cardSequence);
+        player0.setOrderedCardSequence(cardSequence);
     }
     @When("an AGAIN card is played")
     public void an_again_card_is_played(){
         for (int i=0;i<=2;i++){
-            player0.useProgrammingCard(player0.getCardSequenceInDeck().getCardSequence().get(i),gamebrain);
+            player0.useProgrammingCard(player0.getCardSequence().getCardSequence().get(i),gamebrain);
         }
     }
     @Then("the robot should be at point and facing EAST after using Again card")

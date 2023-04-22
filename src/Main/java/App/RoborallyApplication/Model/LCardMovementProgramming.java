@@ -41,7 +41,9 @@ public class LCardMovementProgramming extends AbCardProgramming {
             pushIfOccupied(gameBrain, newPos, directionOfRobot);
             LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
             // check for obstacle on tile
-
+            if(gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveObstacle()){
+                gameBrain.robotStepOnObstacle(robot, gameBrain.getObstacleFromCoordinate(newPos.x, newPos.y), newPos);
+            }
             // set new coordinate
             robot.setCords(newPos);
         }

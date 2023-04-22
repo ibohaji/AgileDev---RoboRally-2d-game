@@ -30,11 +30,22 @@ public class LCardSequence {
         }
     }
 
+    /**
+     * Method to get the last movement card.
+     * @return Last programming card that is not an again card,
+     * will return null if there are no usable cards
+     */
     public AbCardProgramming getLastCard(){
         if(this.cardSequence.isEmpty()){
             return null;
         }
-        return this.cardSequence.get(this.cardSequence.size() - 1);
+        for (int i = 1; i < this.cardSequence.size(); i++) {
+            if(!(this.cardSequence.get(this.cardSequence.size() - i) instanceof LCardAgainProgramming)){
+                return this.cardSequence.get(this.cardSequence.size() - i);
+            }
+        }
+        return null;
+
     }
 
     public int getSize(){
@@ -43,5 +54,9 @@ public class LCardSequence {
 
     public ArrayList<AbCardProgramming> getCardSequence(){
         return this.cardSequence;
+    }
+
+    public AbCardProgramming getFirstCard() {
+        return this.cardSequence.get(0);
     }
 }

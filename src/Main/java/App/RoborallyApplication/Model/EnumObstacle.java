@@ -5,7 +5,6 @@ public enum EnumObstacle {
     RADIATION(-1),
     TREADMILL(0),
     HEALING(2),
-
     PIT(-2);
     private int damage;
 

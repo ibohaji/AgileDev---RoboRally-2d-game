@@ -80,20 +80,30 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
-
     public void makeMovement(){
-
+        LPlayer player = getPlayerWhoIsCurrentlyMoving();
+        AbCardProgramming card = player.getNextCardFromOrderedDeck();
+        moveRobotWithCard(player, card);
     }
 
+    /**
+     * This method is to ensure that the game logic knows when to stop making movements
+     * @return boolean whether there are still movements left to make
+     */
     public boolean areThereMovementsLeftInThisRound(){
-        // TODO
-        return true;
+        for (LPlayer player : players) {
+            if (!(player.getCardSequence() == null)){
+                return true;
+            }
+        }
+        return false;
     }
+
+    /**
+     * Called once no movements left for any player.
+     */
     public void endRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
-        for (LPlayer player: players) {
-            player.setCardSequenceToNull();
-        }
     }
 
     /**
@@ -105,6 +115,7 @@ public class LGameBrain implements IToDTO {
         return false;
     }
     public LPlayer getPlayerWhoWon(){
+        // TODO
         return null;
     }
 
@@ -112,12 +123,12 @@ public class LGameBrain implements IToDTO {
     // -------------------------------------------------------------------------//
     // CARD SEQUENCE LOGIC
     public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
-        player.setCardSequenceInDeck(cardSequence);
+        player.setOrderedCardSequence(cardSequence);
     }
     public boolean haveAllPlayersSubmittedSequence(){
         boolean haveSubmitted = true;
         for (LPlayer player: players) {
-            if(player.getCardSequenceInDeck() == null){
+            if(player.getCardSequence() == null){
                 haveSubmitted = false;
             }
         }
@@ -125,7 +136,7 @@ public class LGameBrain implements IToDTO {
     }
     public LPlayer getPlayerWithoutCardSequence(){
         for (LPlayer player: players) {
-            if(player.getCardSequenceInDeck() == null){
+            if(player.getCardSequence() == null){
                 return player;
             }
         }
@@ -170,6 +181,11 @@ public class LGameBrain implements IToDTO {
     }
     public LObstacle getObstacleFromCoordinate(Integer x, Integer y) {
         return this.gameboard.getObstacleFromCoordinate(x, y);
+    }
+
+    public void explodeObstacleToTiles(ArrayList<LTile> tiles, EnumObstacle obstacle){
+        //TODO
+
     }
 
 
@@ -236,7 +252,7 @@ public class LGameBrain implements IToDTO {
     }
     public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
         LPlayer player = robot.getPlayer();
-        return player.getCardSequenceInDeck().getLastCard();
+        return player.getCardSequence().getLastCard();
     }
     private void setupRobots(){
         ArrayList<LTile> availableStartPoints = getAllStartPoints();
@@ -245,7 +261,30 @@ public class LGameBrain implements IToDTO {
         }
     }
     private void moveRobotWithCard(LPlayer player, AbCardProgramming card){
-        card.useCard(player.getRobot(), this);
+        if (player.getRobot().getNrOfLives() > 0){
+            player.useProgrammingCard(card, this);
+        } else {
+            player.setCardSequenceToNull();
+        }
+    }
+
+    protected void robotStepOnObstacle(LRobot robot, LObstacle obstacle, Point pos){
+        if(obstacle.getObstacleTypeEnum().equals(EnumObstacleType.KNOWN_OBSTACLE)){
+            obstacle.DoDamage(robot);
+        } else if (obstacle.getObstacleTypeEnum().equals(EnumObstacleType.EXPLOSIVE_KNOWN)) {
+            obstacle.DoDamage(robot);
+            explodeObstacleToTiles(gameboard.getTilesSurroundingCoordinate(pos.x, pos.y), obstacle.getObstacleEnum());
+        } else if (obstacle.getObstacleTypeEnum().equals(EnumObstacleType.EXPLOSIVE_UNKNOWN)) {
+            //TODO
+            // choose unknown
+            // change obstacle properties
+            obstacle.DoDamage(robot);
+            explodeObstacleToTiles(gameboard.getTilesSurroundingCoordinate(pos.x, pos.y), obstacle.getObstacleEnum());
+        }
+        if(robot.getNrOfLives() < 1){
+            removePlayer(robot.getPlayer());
+            removeRobot(robot);
+        }
     }
 
     // -------------------------------------------------------------------------//
@@ -354,6 +393,8 @@ public class LGameBrain implements IToDTO {
         if (this.getGameboard().getTileFromCoordinate(
                 robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
                 EnumTileType.CHECKPOINT) {
+            //TODO
+            // check ordering of checkpoints
             robot.addCheckpoint(robot.getCords());
         }
     }
@@ -367,7 +408,6 @@ public class LGameBrain implements IToDTO {
     }
     public void activateExplosive(LTile tile) {
         boolean robot_on_explosive = false;
-
         for (LPlayer player : this.players) {
             if (player.getRobot().getCords().equals(tile.getCoordinates())) {
                 robot_on_explosive = true;

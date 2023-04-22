@@ -8,11 +8,9 @@ public class LPlayer implements IToDTO {
     private UUID id;
     private String displayName;
     private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
-
     private boolean isHumanPlayer;
 
-    private LCardSequence cardSequenceInDeck;
-
+    private LCardSequence orderedCardSequence;
     private LCardSequence usedCardSequence;
     private LRobot robot = null;
     public LPlayer(){}
@@ -65,34 +63,30 @@ public class LPlayer implements IToDTO {
         return programmingCards;
     }
 
-
-    /**
-     * A player's initial starting position can only be accepted if the selected tire is a spawning gear and not occupied
-     * @param x,y the selected coordinates of the player
-     * @Error if the selected cords are invalid, otherwise it is passed to the gamebrain/gameboard
-     */    public void StartingPosition(int x,int y){
-         // TODO
-    }
-
     // CARD SEQUENCE METHODS
     /**
-     * At the end of the round, cardsequence should be null
+     * At the end of the players turn, card sequence should be null.
+     * At the end of the round, all players should have cardsequence as null.
      */
     protected void setCardSequenceToNull(){
-        this.cardSequenceInDeck = null;
+        this.orderedCardSequence = null;
         this.usedCardSequence = null;
     }
-    public void setCardSequenceInDeck(LCardSequence cardSequenceInDeck){
-        this.cardSequenceInDeck = cardSequenceInDeck;
+    public void setOrderedCardSequence(LCardSequence orderedSequence){
+        this.orderedCardSequence = orderedSequence;
         this.usedCardSequence = new LCardSequence(this);
     }
 
-    public LCardSequence getCardSequenceInDeck(){
-        return this.cardSequenceInDeck;
+    public LCardSequence getCardSequence(){
+        return this.orderedCardSequence;
     }
 
     protected AbCardProgramming getLastCard(){
         return this.usedCardSequence.getLastCard();
+    }
+
+    protected AbCardProgramming getNextCardFromOrderedDeck(){
+        return this.orderedCardSequence.getFirstCard();
     }
 
     public boolean isHuman(){
