@@ -84,6 +84,18 @@ public class LGameBrain implements IToDTO {
         LPlayer player = getPlayerWhoIsCurrentlyMoving();
         AbCardProgramming card = player.getNextCardFromOrderedDeck();
         moveRobotWithCard(player, card);
+        Point newPos = player.getRobot().getCords();
+        if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
+            //TODO
+            // ordering of checkpoints before assigning a checkpoint to the robot
+            //
+        } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
+            if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
+                setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                // SOMEBODY WON <-------
+            }
+        }
+
     }
 
     /**
@@ -104,15 +116,6 @@ public class LGameBrain implements IToDTO {
      */
     public void endRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
-    }
-
-    /**
-     * @return Return true if there is a player on finish that has reached checkpoints and is now on finish tile
-     */
-    public boolean isThereAWinner(){
-        // After a player gets to finish tile, check if they have collected checkpoints aswell
-        // TODO
-        return false;
     }
     public LPlayer getPlayerWhoWon(){
         // TODO
@@ -367,7 +370,7 @@ public class LGameBrain implements IToDTO {
     }
 
     // -------------------------------------------------------------------------//
-    // STARTPOINT METHODS
+    // STARTPOINT, CHECKPOINT METHODS
     private ArrayList<LTile> getAllStartPoints(){
         ArrayList<LTile> startPoints = new ArrayList<>();
         for (LTile tile: gameboard.getTiles()) {

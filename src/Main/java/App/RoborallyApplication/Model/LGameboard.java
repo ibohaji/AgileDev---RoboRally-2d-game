@@ -146,4 +146,6 @@ public class LGameboard implements IToDTO {
     public LGameBrain getGameBrain() {
         return gameBrain;
     }
+
+    public ArrayList<LTile> getCheckpointsInOrder(){return checkpointsInOrder;}
 }
