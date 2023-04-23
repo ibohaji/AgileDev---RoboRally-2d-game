@@ -5,6 +5,7 @@ import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.Options;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
+import App.RoborallyApplication.Views.Menus.MainMenuView;
 
 import java.util.Timer;
 
@@ -75,4 +76,12 @@ public class GameController {
         return this.gameBrain;
     }
 
+    public void saveGame() {
+        //TODO
+        // make into DTOs and save
+    }
+
+    public void quitGame() {
+        applicationController.changePanel(new MainMenuView(new MainMenuController(applicationController)));
+    }
 }

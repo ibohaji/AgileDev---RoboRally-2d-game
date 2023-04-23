@@ -16,31 +16,37 @@ public class Options extends GameView {
 
     public Options(GameController gameController, LGameBrain gameBrain){
         super(gameController,gameBrain);
+        this.gameController = gameController;
+        this.gameBrain = gameBrain;
         createOptions();
     }
 
     public void createOptions(){
         JButton saveGameButton = saveGameButton();
-        JButton ExitGameButton = exitGameButton();
+        JButton exitGameButton = exitGameButton();
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         add(saveGameButton,new GridBagConstraintsBuilder(0, 1).inset(0,0,0,0).fill(GridBagConstraints.LAST_LINE_END).build());
-        add(ExitGameButton,new GridBagConstraintsBuilder(-1,0).inset(0,0,0,0).fill(GridBagConstraints.FIRST_LINE_START).build());
+        add(exitGameButton,new GridBagConstraintsBuilder(-1,0).inset(0,0,0,0).fill(GridBagConstraints.FIRST_LINE_START).build());
     }
 
     protected JButton saveGameButton(){
         JButton saveGame = new JButton("Save game");
         saveGame.setFont(Fonts.LARGE);
+        saveGame.addActionListener(e -> {
+            gameController.saveGame();
+            System.out.println("NEW GAMESTATE SAVED");
+        });
         return saveGame;
 
     }
     protected  JButton exitGameButton(){
         JButton exitGame = new JButton("Exit");
         exitGame.setFont(Fonts.LARGE);
+        exitGame.addActionListener(e -> {
+            gameController.quitGame();
+            System.out.println("USER EXITED GAME");
+        });
         return exitGame;
-    }
-
-    private void createView(){
-        setLayout(new GridBagLayout());
     }
 }

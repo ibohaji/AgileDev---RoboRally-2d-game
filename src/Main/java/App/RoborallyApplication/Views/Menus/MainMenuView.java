@@ -116,6 +116,7 @@ public class MainMenuView extends JPanel {
         continueButton.addActionListener(e -> {
             //TODO
             // Continue the game from saved data
+            // Also a view where you can choose between gamebrains or do we just give the last one that was saved?
         });
         return continueButton;
     }

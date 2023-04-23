@@ -77,6 +77,10 @@ public class LPlayer implements IToDTO {
         this.usedCardSequence = new LCardSequence(this);
     }
 
+    protected boolean doesPlayerHaveMovesLeft(){
+        return this.usedCardSequence.getSize() != 5;
+    }
+
     public LCardSequence getCardSequence(){
         return this.orderedCardSequence;
     }
