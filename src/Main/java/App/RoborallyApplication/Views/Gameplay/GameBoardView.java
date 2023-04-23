@@ -1,10 +1,7 @@
 package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.EnumGraphicalElementMain;
-import App.RoborallyApplication.Model.EnumDirection;
-import App.RoborallyApplication.Model.LGameBrain;
-import App.RoborallyApplication.Model.LTile;
+import App.RoborallyApplication.Model.*;
 import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
 
@@ -33,7 +30,7 @@ public class GameBoardView extends GameView{
             for (int y = 0; y < gridSize; y++) {
                 try{
                     LTile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
-                    if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){
+                    if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){ // ROBOT ON TILE
                         if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()){
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                             EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
@@ -44,17 +41,19 @@ public class GameBoardView extends GameView{
                             EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             add(new JLabel(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
                         }
-                    } else if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {
-                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,
-                                tileAtCoordinate.getGraphicalElement().getImage()
-                                )), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                    } else if(tileAtCoordinate.doesTileHaveObstacle()) {
+                        ImageIcon img2 = ImageUtils.scaledImageIcon(tileAtCoordinate.getGraphicalElement().getImage(), gameBrain.getGameConfig().getScalingSizeForTile(), gameConfiguration.getScalingSizeForTile());
+                        System.out.println(img2.getIconHeight());
+                        System.out.println(scaledDefaultFloor.getIconHeight());
+                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,img2)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+
                     } else {
                         add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
                                 new GridBagConstraintsBuilder(x + 1, y + 1).build());
                     }
 
                 } catch (NullPointerException exception){
-                    throw new RuntimeException("Will never happen");
+                    throw new RuntimeException("Should never happen, but this exception is thrown in GameBoardView when setting up graphics");
                 }
             }
         }
