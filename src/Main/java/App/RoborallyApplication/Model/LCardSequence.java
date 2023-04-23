@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class LCardSequence {
     private LPlayer player;
     private ArrayList<AbCardProgramming> cardSequence;
+
     public LCardSequence(LPlayer player){
         this.player = player;
         this.cardSequence = new ArrayList<>();
@@ -55,11 +56,19 @@ public class LCardSequence {
     public ArrayList<AbCardProgramming> getCardSequence(){
         return this.cardSequence;
     }
-    public void  setCardSequence(ArrayList<AbCardProgramming> cardSequence) {
+
+    public void setCardSequence(ArrayList<AbCardProgramming> cardSequence) {
         this.cardSequence = cardSequence;
     }
 
     public AbCardProgramming getFirstCard() {
         return this.cardSequence.get(0);
+    }
+
+    /**
+     * Submits the current card sequence.
+     */
+    public void submitCardSequence() {
+        player.getCardSequence().setCardSequence(cardSequence);
     }
 }
