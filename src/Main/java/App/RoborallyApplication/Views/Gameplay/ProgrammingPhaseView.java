@@ -53,8 +53,9 @@ public class ProgrammingPhaseView extends GameView{
             if(this.userOrderedDeckView.getCardSequence().getSize() == 5){
                 //TODO
                 // if not all cards in ordered deck, throw error popup
+                this.controller.setPlayerCardSequence(this.gameBrain.getPlayerWithoutCardSequence(), this.userOrderedDeckView.getCardSequence());
             } else {
-                this.gameController.setPlayerCardSequence(this.player, this.userOrderedDeckView.getCardSequence());
+                JOptionPane.showMessageDialog(null, "Please order all 5 cards!");
             }
 
         });
