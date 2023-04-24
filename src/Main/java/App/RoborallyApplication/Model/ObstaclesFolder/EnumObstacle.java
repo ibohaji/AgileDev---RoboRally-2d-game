@@ -1,4 +1,4 @@
-package App.RoborallyApplication.Model;
+/*\ package App.RoborallyApplication.Model.ObstaclesFolder;
 
 public enum EnumObstacle {
     ACID(-1),
@@ -15,3 +15,4 @@ public enum EnumObstacle {
         this.damage = damage;
     }
 }
+ */

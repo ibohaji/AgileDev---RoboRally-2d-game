@@ -12,15 +12,14 @@ public class GraphicalElement {
     public GraphicalElement(){
 
     }
-    public void setTileGraphicalElement(EnumGraphicalElementMain graphicalElement, EnumDifficulty enumDifficultyForScaling){
-        this.enumGraphicalElementMain = graphicalElement;
+    public void setTileGraphicalElement(String path, EnumDifficulty enumDifficultyForScaling){
         switch (enumDifficultyForScaling){
             case EASY -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())), 60, 60);
+                    new ImageIcon(ImageUtils.getImage(path)), 60, 60);
             case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())), 45, 45);
+                    new ImageIcon(ImageUtils.getImage(path)), 45, 45);
             case HARD -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())), 35, 35);
+                    new ImageIcon(ImageUtils.getImage(path)), 35, 35);
         }
     }
 

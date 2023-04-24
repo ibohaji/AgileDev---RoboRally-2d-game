@@ -8,6 +8,8 @@ import App.RoborallyApplication.Model.LTile;
 import App.RoborallyApplication.Model.EnumDifficulty;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LGameboard;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacle;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

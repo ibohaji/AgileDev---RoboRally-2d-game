@@ -1,6 +1,8 @@
 package App.RoborallyApplication.Model;
 
 import App.DTO.ObstacleDTO;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
+import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
 import Utils.JsonHelper;
 
 import java.util.UUID;
@@ -10,14 +12,14 @@ public class LObstacle implements IToDTO {
     private Integer damage;
     private GraphicalElementObstacle graphicalElement;
     private EnumObstacleType obstacleType;
-    private EnumObstacle obstacle;
+    private Obstacles obstacle;
 
-    public LObstacle(EnumObstacle obstacle, EnumObstacleType obstacleType) {
+    public LObstacle(Obstacles obstacle, EnumObstacleType obstacleType) {
         this.id = UUID.randomUUID();
         this.obstacleType = obstacleType;
         this.obstacle = obstacle;
         this.graphicalElement = new GraphicalElementObstacle();
-        this.damage = obstacle.getDamage();
+      //  this.damage = obstacle.getDamage();
     }
 
     // For EXPLOSIVE_UNKNOWN we should not have the EnumObstacle parameter predefined
@@ -48,7 +50,7 @@ public class LObstacle implements IToDTO {
         return this.id;
     }
 
-    public EnumObstacle getObstacleEnum() {
+    public Obstacles getObstacle() {
         return obstacle;
     }
     //public void setObstacleEnum(EnumObstacle enumObstacle) { this.obstacle = enumObstacle; }

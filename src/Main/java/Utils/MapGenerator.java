@@ -1,8 +1,8 @@
 package Utils;
 
 import App.RoborallyApplication.Model.EnumGraphicalElementMain;
-import App.RoborallyApplication.Model.EnumObstacle;
-import App.RoborallyApplication.Model.EnumObstacleType;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacle;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
 import App.RoborallyApplication.Model.EnumTileType;
 import App.RoborallyApplication.Model.LObstacle;
 import App.RoborallyApplication.Model.LTile;

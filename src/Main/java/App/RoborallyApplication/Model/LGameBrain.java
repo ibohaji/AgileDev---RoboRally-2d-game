@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Model;
 
 import App.DTO.GameBrainDTO;
+import App.RoborallyApplication.Model.ObstaclesFolder.*;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
 
@@ -170,11 +171,14 @@ public class LGameBrain implements IToDTO {
             Random rnd = new Random();
             float chance = rnd.nextFloat(1);
             if (chance < 0.6) { // acid
-                return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
+                Obstacles acid = new Acid();
+                return new LObstacle(acid, EnumObstacleType.KNOWN_OBSTACLE);
             } else if (chance < 0.8) { // radiation
-                return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
+                Radiation radiation = new Radiation();
+                return new LObstacle(radiation, EnumObstacleType.KNOWN_OBSTACLE);
             } else { // pit
-                return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
+                Pit pit = new Pit();
+                return new LObstacle(pit, EnumObstacleType.KNOWN_OBSTACLE);
             }
         }
 
@@ -185,34 +189,28 @@ public class LGameBrain implements IToDTO {
         Random rnd = new Random();
         float val = rnd.nextFloat(1);
         if (val < 0.3) { // ACID
-            return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
+            Acid acid = new Acid();
+            return new LObstacle(acid, EnumObstacleType.KNOWN_OBSTACLE);
         } else if (val < 0.6) { // RADIATION
-            return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
+            Radiation radiation = new Radiation();
+            return new LObstacle(radiation, EnumObstacleType.KNOWN_OBSTACLE);
         } else if (val < 0.8 ){ // PIT
-            return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
+            Pit pit = new Pit();
+            return new LObstacle(pit, EnumObstacleType.KNOWN_OBSTACLE);
         } else {
-            return new LObstacle(EnumObstacle.HEALING, EnumObstacleType.KNOWN_OBSTACLE);
+            Healing healing = new Healing();
+            return new LObstacle(healing, EnumObstacleType.KNOWN_OBSTACLE);
         }
     }
     public LObstacle getObstacleFromCoordinate(Integer x, Integer y) {
         return this.gameboard.getObstacleFromCoordinate(x, y);
     }
 
-    public void explodeObstacleToTiles(ArrayList<LTile> tiles, EnumObstacle obstacle){
+    public void explodeObstacleToTiles(ArrayList<LTile> tiles, Obstacles obstacle){
         for (LTile tile: tiles) {
             if(!tile.doesTileHaveObstacle()){
                 tile.setObstacle(new LObstacle(obstacle, EnumObstacleType.KNOWN_OBSTACLE));
-                if(obstacle.getDeclaringClass().isInstance(EnumObstacle.ACID)){
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, gameConfig.getDifficulty());
-                } else if (obstacle.getDeclaringClass().isInstance(EnumObstacle.HEALING)) {
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, gameConfig.getDifficulty());
-                } else if (obstacle.getDeclaringClass().isInstance(EnumObstacle.PIT)) {
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_PIT, gameConfig.getDifficulty());
-                } else if (obstacle.getDeclaringClass().isInstance(EnumObstacle.RADIATION)) {
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_RADIATION, gameConfig.getDifficulty());
-                } else {
-                    throw new RuntimeException("Problem in explodeObstacleToTiles() with obstacle type. Should never happen");
-                }
+                tile.setGraphicalElement(obstacle.getGraphicalElement(),gameConfig.getDifficulty());
             }
             updateGraphicalElementOnTile(tile);
         }

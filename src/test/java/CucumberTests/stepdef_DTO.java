@@ -2,6 +2,8 @@ package CucumberTests;
 
 import App.DTO.*;
 import App.RoborallyApplication.Model.*;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacle;
+import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

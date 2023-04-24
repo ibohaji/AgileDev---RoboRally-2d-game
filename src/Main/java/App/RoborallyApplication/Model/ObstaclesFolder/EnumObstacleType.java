@@ -1,4 +1,4 @@
-package App.RoborallyApplication.Model;
+package App.RoborallyApplication.Model.ObstaclesFolder;
 
 public enum EnumObstacleType {
     KNOWN_OBSTACLE,
