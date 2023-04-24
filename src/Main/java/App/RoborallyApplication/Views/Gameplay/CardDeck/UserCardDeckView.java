@@ -1,5 +1,6 @@
 package App.RoborallyApplication.Views.Gameplay.CardDeck;
 
+import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LGameBrain;
@@ -22,13 +23,13 @@ public class UserCardDeckView extends GameView {
     private ArrayList<AbCardProgramming> cards;
     private JPanel cardPanel;
     private UserOrderedCardDeckView userOrderedDeckView;
-    private JButton submitButton;
 
-    public UserCardDeckView(GameController controller, LGameBrain gameBrain) {
-        super(controller, gameBrain);
+    private CardDeckController cardDeckController;
+
+    public UserCardDeckView(CardDeckController cardDeckController, LGameBrain gameBrain) {
+        super(cardDeckController.getGameController(), gameBrain);
+        this.cardDeckController = cardDeckController;
         this.cards = gameBrain.getPlayerWithoutCardSequence().getProgrammingCards();
-        this.userOrderedDeckView = userOrderedDeckView;
-        this.submitButton = submitButton;
         setLayout(new GridBagLayout());
         cardPanel = new JPanel();
         cardPanel.setLayout(new GridBagLayout());
@@ -82,11 +83,10 @@ public class UserCardDeckView extends GameView {
                 Transferable transferable = event.getTransferable();
                 if (transferable.isDataFlavorSupported(CardTransferable.PROGRAMMING_CARD)) {
                     AbCardProgramming card = (AbCardProgramming) transferable.getTransferData(CardTransferable.PROGRAMMING_CARD);
-                    if (userOrderedDeckView.getCardSequence().getSize() < 5) {
-                        userOrderedDeckView.addCard(card);
-                        userOrderedDeckView.revalidate();
-                        userOrderedDeckView.repaint();
+                    if (cardDeckController.getOrderedCardSequence().getSize() < 5) {
+                        cardDeckController.addCardToOrdered(card);
                         panel.remove(panel.getComponentAt(panel.getMousePosition()));
+                        cardDeckController.updateCardDecks(); // revalidate and repaint
                     }
                 }
             } catch (Exception e) {
@@ -201,6 +201,10 @@ public class UserCardDeckView extends GameView {
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return flavor.equals(this.flavor);
         }
+    }
+
+    public ArrayList<AbCardProgramming> getCards(){
+        return this.cards;
     }
 }
 

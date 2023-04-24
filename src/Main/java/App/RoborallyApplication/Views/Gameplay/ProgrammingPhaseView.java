@@ -1,5 +1,6 @@
 package App.RoborallyApplication.Views.Gameplay;
 
+import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LGameBrain;
@@ -24,12 +25,15 @@ public class ProgrammingPhaseView extends GameView{
 
     private ArrayList<AbCardProgramming> programmingCards;
 
+    private CardDeckController cardDeckController;
+
     private GameBoardView gameBoardView;
     private LPlayer player;
     public ProgrammingPhaseView(GameController gameController, LGameBrain gameBrain) {
         super(gameController, gameBrain);
         this.gameBrain = gameBrain;
         this.gameController = gameController;
+        this.cardDeckController = new CardDeckController(gameController);
         this.player = gameController.getPlayerWithoutCardSequence();
         this.programmingCards = this.player.getProgrammingCards();
         createView();
@@ -38,13 +42,13 @@ public class ProgrammingPhaseView extends GameView{
     private void createView() {
         setLayout(new GridBagLayout());
         Options options = new Options(gameController,gameBrain);
-        this.userDeckView = new UserCardDeckView(gameController, gameBrain);
-        this.userOrderedDeckView = new UserOrderedCardDeckView(gameController, gameBrain);
+        // this.userDeckView = new UserCardDeckView(gameController, gameBrain);
+        // this.userOrderedDeckView = new UserOrderedCardDeckView(gameController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
         add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
-        add(userOrderedDeckView, new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
+        add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
-        add(userDeckView, new GridBagConstraintsBuilder(2, 0).inset(0,50,0,0).fill(GridBagConstraints.BOTH).build());
+        add(this.cardDeckController.getUserDeckView(), new GridBagConstraintsBuilder(2, 0).inset(0,50,0,0).fill(GridBagConstraints.BOTH).build());
 
         // Submit button
         JButton submitButton = new JButton("SUBMIT SEQUENCE");

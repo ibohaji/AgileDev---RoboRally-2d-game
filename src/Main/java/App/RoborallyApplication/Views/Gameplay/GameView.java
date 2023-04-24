@@ -21,19 +21,6 @@ public abstract class GameView extends JPanel {
         this.gameConfiguration = gameBrain.getGameConfig();
 
     }
-
-    protected void getGameboardView(){
-
-    }
-
-
-
-    protected void getUserCardDeckView(){
-        UserCardDeckView userCardDeckView = new UserCardDeckView(controller, gameBrain);
-        add(userCardDeckView, new GridBagConstraintsBuilder(0, 1).anchor(GridBagConstraints.NORTH).build());
-    }
-
-
     protected JLabel generateGameNameLabel(){
         JLabel gameNameLabel = new JLabel("ROBORALLY");
         gameNameLabel.setFont(Fonts.TITLE);
