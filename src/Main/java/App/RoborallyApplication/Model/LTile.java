@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Model;
 
 import App.DTO.TileDTO;
+import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
 import Utils.JsonHelper;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public class LTile implements IToDTO {
     private Integer yCoordinate;
     private GraphicalElementTile graphicalElement;
     protected EnumTileType enumTileType;
-    private LObstacle obstacle;
+    private Obstacles obstacle;
 
     public LTile(int xCoordinate, int yCoordinate, EnumTileType enumTileType){
         this.id = UUID.randomUUID();
@@ -37,6 +38,11 @@ public class LTile implements IToDTO {
 
     public void setGraphicalElement(String path, EnumDifficulty difficulty){
         this.graphicalElement.setTileGraphicalElement(path, difficulty);
+    }
+
+    public void setGraphicalElement(EnumGraphicalElementMain element, EnumDifficulty difficulty){
+
+        this.graphicalElement.setTileGraphicalElement(element.getElementLocation(), difficulty);
     }
 
     public void setGraphicalElement(GraphicalElementTile graphicalElementTile) {
@@ -76,11 +82,11 @@ public class LTile implements IToDTO {
         return null;
     }
 
-    public LObstacle getObstacle() {
+    public Obstacles getObstacle() {
         return obstacle;
     }
 
-    public void setObstacle(LObstacle obstacle) {
+    public void setObstacle(Obstacles obstacle) {
         this.obstacle = obstacle;
     }
 

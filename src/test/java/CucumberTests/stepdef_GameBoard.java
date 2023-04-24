@@ -1,6 +1,7 @@
 package CucumberTests;
 
 import App.RoborallyApplication.Model.*;
+import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,7 +15,7 @@ public class stepdef_GameBoard {
     private LGameboard gameboard;
     private LGameBrain gamebrain;
     private ArrayList<LTile> tile = new ArrayList<>();
-    private ArrayList<LObstacle> obstacle = new ArrayList<>();
+    private ArrayList<Obstacles> obstacle = new ArrayList<>();
     private ArrayList<LRobot> robot = new ArrayList<>();
 
     @Before

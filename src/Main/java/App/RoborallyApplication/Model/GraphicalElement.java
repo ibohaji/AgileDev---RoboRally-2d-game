@@ -10,7 +10,6 @@ public class GraphicalElement {
     protected EnumGraphicalElementMain enumGraphicalElementMain;
     protected ImageIcon image = null;
     public GraphicalElement(){
-
     }
     public void setTileGraphicalElement(String path, EnumDifficulty enumDifficultyForScaling){
         switch (enumDifficultyForScaling){
@@ -20,6 +19,19 @@ public class GraphicalElement {
                     new ImageIcon(ImageUtils.getImage(path)), 45, 45);
             case HARD -> this.image = ImageUtils.scaledImageIcon(
                     new ImageIcon(ImageUtils.getImage(path)), 35, 35);
+        }
+    }
+
+
+    // Made so i can make the code run without refactoring
+    public void setTileGraphicalElement(EnumGraphicalElementMain element, EnumDifficulty enumDifficultyForScaling){
+        switch (enumDifficultyForScaling){
+            case EASY -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(element.getElementLocation())), 60, 60);
+            case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(element.getElementLocation())), 45, 45);
+            case HARD -> this.image = ImageUtils.scaledImageIcon(
+                    new ImageIcon(ImageUtils.getImage(element.getElementLocation())), 35, 35);
         }
     }
 

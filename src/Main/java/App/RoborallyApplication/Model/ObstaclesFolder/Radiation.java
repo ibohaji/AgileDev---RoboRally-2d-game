@@ -6,11 +6,23 @@ import java.io.File;
 
 public class Radiation extends Obstacles{
     private int damage;
-    private String location;
+    private String imgPath;
+    boolean known;
+    boolean explosive;
+
     public Radiation() {
         super(2);
-        String location = "App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveAcidTile.png";
+        String imgPath = "App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveAcidTile.png";
+        this.known = true;
+    }
+    public Radiation(boolean known) {
+        super(2);
+        this.known = known;
+        String imgPath = "App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveAcidTile.png";
+    }
 
+    public void setExplosive(){
+        this.explosive = true;
     }
 
     @Override
@@ -19,14 +31,25 @@ public class Radiation extends Obstacles{
     }
 
     @Override
-    void applyEffect(LRobot robot) {
+    public void applyEffect(LRobot robot) {
 
     }
 
     @Override
     public String getGraphicalElement() {
-        return location;
+        String imageLocationFolder = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java";
+        return imageLocationFolder + File.separator + imgPath;
 
+    }
+
+    @Override
+    public boolean isKnown() {
+        return known;
+    }
+
+    @Override
+    public boolean isExplosive() {
+        return explosive;
     }
 
 }

@@ -1,26 +1,22 @@
+
 package App.DTO;
 
-import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacle;
 import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
 import App.RoborallyApplication.Model.GraphicalElementObstacle;
-import App.RoborallyApplication.Model.LObstacle;
+import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
+
 
 public class ObstacleDTO {
-    private GraphicalElementObstacle graphicalElementObstacle;
-    private EnumObstacle enumObstacle;
-    private EnumObstacleType enumObstacleType;
+    private String graphicalElementObstacle;
+    private boolean enumObstacleType;
 
-    public ObstacleDTO(LObstacle obstacle) {
+    public ObstacleDTO(Obstacles obstacle) {
         this.graphicalElementObstacle = obstacle.getGraphicalElement();
-        this.enumObstacle = obstacle.getObstacleEnum();
-        this.enumObstacleType = obstacle.getObstacleTypeEnum();
+        this.enumObstacleType = obstacle.isExplosive();
     }
 
-    public LObstacle returnObjectFromDTO() {
-        LObstacle Obstacle = new LObstacle(this.enumObstacle, this.enumObstacleType);
-        Obstacle.setGraphicalElement(this.graphicalElementObstacle);
+    //public Obstacles returnObjectFromDTO() {
 
-        return Obstacle;
-    }
+    //}
 
 }

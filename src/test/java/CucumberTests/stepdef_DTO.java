@@ -2,8 +2,9 @@ package CucumberTests;
 
 import App.DTO.*;
 import App.RoborallyApplication.Model.*;
-import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacle;
+import App.RoborallyApplication.Model.ObstaclesFolder.Acid;
 import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
+import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -60,7 +61,8 @@ public class stepdef_DTO {
         ArrayList<LTile> t_tiles = new ArrayList<>();
         LTile t_tile1 = new LTile(0, 0, EnumTileType.DEFAULT_FLOOR);
         LTile t_tile2 = new LTile(0, 1, EnumTileType.OBSTACLE);
-        t_tile2.setObstacle(new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE));
+        Acid acid = new Acid(true);
+        t_tile2.setObstacle(acid);
         t_tile1.setGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, EnumDifficulty.EASY);
         t_tile2.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, EnumDifficulty.EASY);
         t_tiles.add(t_tile1);
@@ -121,12 +123,12 @@ public class stepdef_DTO {
     }
 
     // Object data transfer for Obstacle
-    private LObstacle t_obstacle;
+    private Obstacles t_obstacle;
     private ObstacleDTO t_obstacledto;
 
     @Given("Data prepared in Obstacle")
     public void data_prepared_in_Obstacle() {
-        t_obstacle = new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
+        t_obstacle = new Acid(true);
         t_obstacle.setGraphicalElement(new GraphicalElementObstacle());
 
     }

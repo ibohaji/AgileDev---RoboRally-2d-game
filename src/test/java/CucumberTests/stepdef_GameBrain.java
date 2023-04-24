@@ -1,15 +1,13 @@
 package CucumberTests;
 
 import App.RoborallyApplication.Model.*;
-import App.RoborallyApplication.Model.LObstacle;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Model.LRobot;
 import App.RoborallyApplication.Model.LTile;
 import App.RoborallyApplication.Model.EnumDifficulty;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LGameboard;
-import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacle;
-import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
+import App.RoborallyApplication.Model.ObstaclesFolder.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -131,7 +129,7 @@ public class stepdef_GameBrain {
         int x = t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().first());
         int y = t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().second());
 
-        LObstacle t_obstacle = t_gamebrain.getObstacleFromCoordinate(x, y);
+        Obstacles t_obstacle = t_gamebrain.getObstacleFromCoordinate(x, y);
 
         assertEquals(t_gameboard.getObstacleFromCoordinate(x, y), t_obstacle);
     }
@@ -194,7 +192,7 @@ public class stepdef_GameBrain {
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN) {
+                if (t__tile.getObstacle().isExplosive() & t__tile.getObstacle().isKnown() ) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                     t_tile = t__tile;
@@ -288,7 +286,7 @@ public class stepdef_GameBrain {
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleEnum() == EnumObstacle.PIT) {
+                if (t__tile.getObstacle() instanceof Pit) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                 }
@@ -359,7 +357,7 @@ public class stepdef_GameBrain {
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN) {
+                if (t__tile.getObstacle().isExplosive() & t__tile.getObstacle().isKnown()) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                     t_tile = t__tile;
@@ -378,7 +376,7 @@ public class stepdef_GameBrain {
 
         ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTilesSurroundingCoordinate(t_tile.getCoordinates().x, t_tile.getCoordinates().y);
         for (LTile t__tile : t_tiles) {
-            assertEquals(EnumObstacle.ACID, t__tile.getObstacle().getObstacleEnum());
+            assertEquals(new Acid(), t__tile.getObstacle());
         }
 
         t_robot = null;
@@ -407,7 +405,7 @@ public class stepdef_GameBrain {
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_UNKNOWN) {
+                if (t__tile.getObstacle().isExplosive() &  !( t__tile.getObstacle().isKnown())) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                     t_tile = t__tile;
@@ -424,10 +422,10 @@ public class stepdef_GameBrain {
     public void GameBrain_set_the_unknown_explosive_tile_a_known_one() {
         t_gamebrain.chooseUnknownObstacle(t_tile);
         assertTrue(
-                t_tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN &&
-                        ( t_tile.getObstacle().getObstacleEnum() == EnumObstacle.ACID ||
-                          t_tile.getObstacle().getObstacleEnum() == EnumObstacle.RADIATION ||
-                          t_tile.getObstacle().getObstacleEnum() == EnumObstacle.PIT )
+                t_tile.getObstacle().isExplosive() &  t_tile.getObstacle().isKnown() &&
+                        ( t_tile.getObstacle() instanceof  Acid  ||
+                          t_tile.getObstacle() instanceof Radiation ||
+                          t_tile.getObstacle() instanceof Pit )
         );
 
         t_robot = null;

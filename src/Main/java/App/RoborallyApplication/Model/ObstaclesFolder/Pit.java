@@ -2,12 +2,25 @@ package App.RoborallyApplication.Model.ObstaclesFolder;
 
 import App.RoborallyApplication.Model.LRobot;
 
+import java.io.File;
+
 public class Pit extends Obstacles {
     int damage;
-    String location;
+    String imgPath = "App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "pit.png";
+    boolean known;
+
 
     public Pit(){
         super(2);
+        this.known = true;
+
+    }
+
+
+    public Pit(boolean known){
+        super(2);
+        this.known = known;
+        this.imgPath = "App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "pit.png";
     }
 
     @Override
@@ -16,13 +29,24 @@ public class Pit extends Obstacles {
     }
 
     @Override
-    void applyEffect(LRobot robot) {
+   public void applyEffect(LRobot robot) {
 
     }
 
     @Override
     public String getGraphicalElement() {
-        return location;
+        String imageLocationFolder = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java";
+        return imageLocationFolder + File.separator + imgPath;
+    }
+
+    @Override
+    public boolean isKnown() {
+        return known;
+    }
+
+    @Override
+    public boolean isExplosive() {
+        return false;
     }
 
 }

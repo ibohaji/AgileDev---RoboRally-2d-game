@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Model;
 
 import App.DTO.GameboardDTO;
+import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
 import Utils.JsonHelper;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public class LGameboard implements IToDTO {
     private UUID gameBrainId;
     private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
-    private ArrayList<LObstacle> obstacles = new ArrayList<>();
+    private ArrayList<Obstacles> obstacles = new ArrayList<>();
     private ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
     private LGameBrain gameBrain;
 
@@ -50,9 +51,9 @@ public class LGameboard implements IToDTO {
         return this.robots;
     }
 
-    public ArrayList<LObstacle> getObstacles(){return this.obstacles;}
+    public ArrayList<Obstacles> getObstacles(){return this.obstacles;}
 
-    public LObstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
+    public Obstacles getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
         for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
                 if(tile.getCoordinates().x == xCoordinate && tile.getCoordinates().y == yCoordinate){
