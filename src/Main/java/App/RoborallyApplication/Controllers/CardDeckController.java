@@ -13,10 +13,11 @@ public class CardDeckController {
     private GameController gameController;
     private UserOrderedCardDeckView userOrderedDeckView;
     private UserCardDeckView userDeckView;
+
     public CardDeckController(GameController gameController){
         this.gameController = gameController;
-        this.userDeckView = new UserCardDeckView(this, gameController.gameBrain);
         this.userOrderedDeckView = new UserOrderedCardDeckView(this, gameController.gameBrain);
+        this.userDeckView = new UserCardDeckView(this, gameController.gameBrain, userOrderedDeckView);
     }
 
     public GameController getGameController() {
@@ -46,15 +47,7 @@ public class CardDeckController {
         return userOrderedDeckView;
     }
 
-    public void addCard(AbCardProgramming card) {
-        this.userOrderedDeckView.addCard(card);
-    }
-
-    public void removeCardFromUserDeck(AbCardProgramming card) {
+    public void removeCardFromPlayerDeck(AbCardProgramming card) {
         this.userDeckView.removeCard(card);
-    }
-
-    public void addCardToUserOrderedDeck(AbCardProgramming card) {
-        this.userOrderedDeckView.addCard(card);
     }
 }

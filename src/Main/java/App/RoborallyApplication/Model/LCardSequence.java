@@ -30,6 +30,20 @@ public class LCardSequence {
             return true;
         }
     }
+    public void removeCard(AbCardProgramming card) {
+        int index = cardSequence.indexOf(card);
+        if (index >= 0) {
+            removeCard(index);
+        }
+    }
+
+    public void removeCard(int index) {
+        if (index >= 0 && index < cardSequence.size()) {
+            cardSequence.remove(index);
+        }
+    }
+
+
 
     /**
      * Method to get the last movement card.

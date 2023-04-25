@@ -30,6 +30,8 @@ public class UserOrderedCardDeckView extends GameView {
         super(cardDeckController.getGameController(), gameBrain);
         this.cardDeckController = cardDeckController;
         this.cardSequence = new LCardSequence(gameBrain.getPlayerWithoutCardSequence());
+        this.gameBrain = gameBrain;
+        this.cardPanel = new JPanel();
         createView();
     }
 
@@ -57,9 +59,6 @@ public class UserOrderedCardDeckView extends GameView {
         }
     }
 
-
-
-
     public void addCard(AbCardProgramming card) {
         cardSequence.addCard(card);
         CardPanel newCardPanel = new CardPanel(card);
@@ -67,7 +66,9 @@ public class UserOrderedCardDeckView extends GameView {
         cardPanel.setTransferHandler(new CardTransferHandler(card));
         cardPanel.setDropTarget(new CardDropTarget(cardPanel));
         this.cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0, this.cardSequence.getSize() - 1).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
+        cardDeckController.updateCardDecks();
     }
+
 
     public LCardSequence getCardSequence(){
         return this.cardSequence;
@@ -118,7 +119,7 @@ public class UserOrderedCardDeckView extends GameView {
                     AbCardProgramming card = (AbCardProgramming) transferable.getTransferData(CardTransferable.PROGRAMMING_CARD);
                     if (cardDeckController.getOrderedCardSequence().getSize() < 5) {
                         cardDeckController.addCardToOrdered(card);
-                        panel.remove(panel.getComponentAt(panel.getMousePosition()));
+                        cardDeckController.removeCardFromPlayerDeck(card);
                         cardDeckController.updateCardDecks(); // revalidate and repaint
                     }
                 }
@@ -225,7 +226,7 @@ public class UserOrderedCardDeckView extends GameView {
             CardPanel cardPanel = new CardPanel(card);
             cardPanel.setTransferHandler(new CardTransferHandler(card));
             cardPanel.addMouseListener(new CardMouseListener());
-            cardDeckController.addCard(card);
+            cardDeckController.addCardToOrdered(card);
             cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0, insertIndex).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
             cardPanel.revalidate();
             cardPanel.repaint();

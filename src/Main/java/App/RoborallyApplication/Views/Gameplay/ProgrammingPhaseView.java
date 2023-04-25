@@ -36,14 +36,15 @@ public class ProgrammingPhaseView extends GameView{
         this.cardDeckController = new CardDeckController(gameController);
         this.player = gameController.getPlayerWithoutCardSequence();
         this.programmingCards = this.player.getProgrammingCards();
+        this.userOrderedDeckView = userOrderedDeckView;
         createView();
     }
 
     private void createView() {
         setLayout(new GridBagLayout());
         Options options = new Options(gameController,gameBrain);
-        // this.userDeckView = new UserCardDeckView(gameController, gameBrain);
-        // this.userOrderedDeckView = new UserOrderedCardDeckView(gameController, gameBrain);
+        this.userDeckView = new UserCardDeckView(cardDeckController, gameBrain, userOrderedDeckView);
+        this.userOrderedDeckView = new UserOrderedCardDeckView(cardDeckController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
         add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
         add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());

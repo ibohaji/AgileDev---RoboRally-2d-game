@@ -3,6 +3,7 @@ package App.RoborallyApplication.Views.Gameplay.CardDeck;
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.AbCardProgramming;
+import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.GridBagConstraintsBuilder;
@@ -25,11 +26,14 @@ public class UserCardDeckView extends GameView {
     private UserOrderedCardDeckView userOrderedDeckView;
 
     private CardDeckController cardDeckController;
+    private LCardSequence cardSequence;
 
-    public UserCardDeckView(CardDeckController cardDeckController, LGameBrain gameBrain) {
+    public UserCardDeckView(CardDeckController cardDeckController, LGameBrain gameBrain, UserOrderedCardDeckView userOrderedDeckView) {
         super(cardDeckController.getGameController(), gameBrain);
+        this.cardSequence = new LCardSequence(gameBrain.getPlayerWithoutCardSequence());
         this.cardDeckController = cardDeckController;
         this.cards = gameBrain.getPlayerWithoutCardSequence().getProgrammingCards();
+        this.userOrderedDeckView = userOrderedDeckView;
         setLayout(new GridBagLayout());
         cardPanel = new JPanel();
         cardPanel.setLayout(new GridBagLayout());
@@ -38,7 +42,7 @@ public class UserCardDeckView extends GameView {
             CardPanel cardPanel = new CardPanel(card);
             cardPanel.addMouseListener(new CardMouseListener());
             cardPanel.setTransferHandler(new CardTransferHandler(card));
-            cardPanel.setDropTarget(new CardDropTarget(cardPanel));
+            cardPanel.setDropTarget(new CardDropTarget(cardPanel, userOrderedDeckView));
             this.cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0, counter).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
             counter += 1;
         }
@@ -49,21 +53,17 @@ public class UserCardDeckView extends GameView {
     }
 
     public void removeCard(AbCardProgramming card) {
-        for (Component c : cardPanel.getComponents()) {
-            if (c instanceof CardPanel) {
-                CardPanel cardPanel = (CardPanel) c;
-                if (cardPanel.card.equals(card)) {
-                    cardPanel.setVisible(false);
-                    cardPanel.setEnabled(false);
-                    cardPanel.removeAll();
-                    cardPanel.revalidate();
-                    cardPanel.repaint();
-                    cards.remove(card);
-                    break;
-                }
+        cardSequence.removeCard(card);
+        for (Component component : cardPanel.getComponents()) {
+            CardPanel cardPanel = (CardPanel) component;
+            if (cardPanel.card != null && cardPanel.card.equals(card)) {
+                this.cardPanel.remove(cardPanel);
+                break;
             }
         }
+        cardDeckController.updateCardDecks();
     }
+
 
     private class CardPanel extends JPanel {
         private AbCardProgramming card;
@@ -90,9 +90,11 @@ public class UserCardDeckView extends GameView {
 
     private class CardDropTarget extends DropTarget {
         private JPanel panel;
+        private UserOrderedCardDeckView userOrderedDeckView;
 
-        public CardDropTarget(JPanel panel) {
+        public CardDropTarget(JPanel panel, UserOrderedCardDeckView userOrderedDeckView) {
             this.panel = panel;
+            this.userOrderedDeckView = userOrderedDeckView;
         }
 
         public synchronized void drop(DropTargetDropEvent event) {
@@ -100,9 +102,13 @@ public class UserCardDeckView extends GameView {
                 Transferable transferable = event.getTransferable();
                 if (transferable.isDataFlavorSupported(CardTransferable.PROGRAMMING_CARD)) {
                     AbCardProgramming card = (AbCardProgramming) transferable.getTransferData(CardTransferable.PROGRAMMING_CARD);
-                    if (userOrderedDeckView.getCardSequence().getSize() < 5) {
-                        userOrderedDeckView.addCard(card);
+                    if (userOrderedDeckView.getCardSequence().getSize() <= 5) {
+                        System.out.println("Size of ordered deck: " + userOrderedDeckView.getCardSequence().getSize());
+                        System.out.println("Mouse position: " + panel.getMousePosition());
+                        cardDeckController.addCardToOrdered(card);
+                        cardDeckController.removeCardFromPlayerDeck(card);
                         panel.remove(panel.getComponentAt(panel.getMousePosition()));
+                        cardDeckController.updateCardDecks(); // revalidate and repaint
                     }
                 }
             } catch (Exception e) {
