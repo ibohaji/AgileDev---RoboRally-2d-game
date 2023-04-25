@@ -49,4 +49,12 @@ public class CardDeckController {
     public void addCard(AbCardProgramming card) {
         this.userOrderedDeckView.addCard(card);
     }
+
+    public void removeCardFromUserDeck(AbCardProgramming card) {
+        this.userDeckView.removeCard(card);
+    }
+
+    public void addCardToUserOrderedDeck(AbCardProgramming card) {
+        this.userOrderedDeckView.addCard(card);
+    }
 }

@@ -48,6 +48,23 @@ public class UserCardDeckView extends GameView {
         add(cardPanel);
     }
 
+    public void removeCard(AbCardProgramming card) {
+        for (Component c : cardPanel.getComponents()) {
+            if (c instanceof CardPanel) {
+                CardPanel cardPanel = (CardPanel) c;
+                if (cardPanel.card.equals(card)) {
+                    cardPanel.setVisible(false);
+                    cardPanel.setEnabled(false);
+                    cardPanel.removeAll();
+                    cardPanel.revalidate();
+                    cardPanel.repaint();
+                    cards.remove(card);
+                    break;
+                }
+            }
+        }
+    }
+
     private class CardPanel extends JPanel {
         private AbCardProgramming card;
 
@@ -83,10 +100,9 @@ public class UserCardDeckView extends GameView {
                 Transferable transferable = event.getTransferable();
                 if (transferable.isDataFlavorSupported(CardTransferable.PROGRAMMING_CARD)) {
                     AbCardProgramming card = (AbCardProgramming) transferable.getTransferData(CardTransferable.PROGRAMMING_CARD);
-                    if (cardDeckController.getOrderedCardSequence().getSize() < 5) {
-                        cardDeckController.addCardToOrdered(card);
+                    if (userOrderedDeckView.getCardSequence().getSize() < 5) {
+                        userOrderedDeckView.addCard(card);
                         panel.remove(panel.getComponentAt(panel.getMousePosition()));
-                        cardDeckController.updateCardDecks(); // revalidate and repaint
                     }
                 }
             } catch (Exception e) {
@@ -107,17 +123,17 @@ public class UserCardDeckView extends GameView {
         }
 
         public boolean canImport(TransferHandler.TransferSupport support) {
-            // 检查是否允许导入数据
+            // check if importing data is allowed
             if (!support.isDrop()) {
                 return false;
             }
 
-            // 检查数据类型是否是ProgrammingCard
+            // check if the data type is ProgrammingCard
             if (!support.isDataFlavorSupported(CardTransferable.PROGRAMMING_CARD)) {
                 return false;
             }
 
-            // 检查是否已经拖拽了5张卡片
+            // check if it has dragged 5 cards
             JComponent component = (JComponent) support.getComponent();
             int currentCardCount = component.getComponentCount();
             if (currentCardCount >= 5) {
@@ -136,7 +152,7 @@ public class UserCardDeckView extends GameView {
                 return false;
             }
 
-            // 获取卡片数据
+            // get card data
             Transferable t = support.getTransferable();
             AbCardProgramming card;
             try {
@@ -145,10 +161,10 @@ public class UserCardDeckView extends GameView {
                 return false;
             }
 
-            // 获取鼠标释放时的位置
+            // get the drop point
             Point dropPoint = support.getDropLocation().getDropPoint();
 
-            // 获取插入位置
+            // get the insert point
             int insertIndex = 0;
             Component[] components = cardPanel.getComponents();
             for (int i = 0; i < components.length; i++) {
@@ -160,18 +176,16 @@ public class UserCardDeckView extends GameView {
                 }
             }
 
-            // 插入卡片
-            CardPanel cardPanel = new CardPanel(card);
-            cardPanel.setTransferHandler(new CardTransferHandler(card));
-            cardPanel.addMouseListener(new CardMouseListener());
+            // insert the card
+            CardPanel newCardPanel = new CardPanel(card);
+            newCardPanel.setTransferHandler(new CardTransferHandler(card));
+            newCardPanel.addMouseListener(new CardMouseListener());
             userOrderedDeckView.addCard(card);
-            cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0, insertIndex).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
+            cardPanel.add(newCardPanel, new GridBagConstraintsBuilder(0, insertIndex).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
             cardPanel.revalidate();
             cardPanel.repaint();
 
             return true;
-
-
         }
     }
 
