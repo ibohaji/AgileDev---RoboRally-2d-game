@@ -16,6 +16,7 @@ public class LTile implements IToDTO {
 
     public LTile(int xCoordinate, int yCoordinate, EnumTileType enumTileType){
         this.id = UUID.randomUUID();
+        this.obstacle = null;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new GraphicalElementTile();
@@ -44,7 +45,7 @@ public class LTile implements IToDTO {
     }
 
     public boolean doesTileHaveObstacle(){
-        return this.obstacle == null;
+        return this.obstacle != null;
     }
 
     public boolean doesTileHaveCheckpoint(){

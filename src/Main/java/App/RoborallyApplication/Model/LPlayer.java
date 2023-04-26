@@ -23,8 +23,10 @@ public class LPlayer implements IToDTO {
         programmingCards.add(card);
     }
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain) {
+        System.out.println("CARD USED: " + card.toString());
         robot.useProgrammingCard(card, gameBrain);
         this.usedCardSequence.addCard(card);
+        this.orderedCardSequence.removeFirstCard();
     }
 
     /**

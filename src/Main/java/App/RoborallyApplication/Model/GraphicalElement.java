@@ -26,8 +26,6 @@ public class GraphicalElement {
 
     public void setCardGraphicalElement(EnumGraphicalElementMain graphicalElement){
         this.enumGraphicalElementMain = graphicalElement;
-        System.out.println(this.enumGraphicalElementMain.getElementLocation());
-        System.out.println((ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())==null));
         this.image = new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation()));
     }
 

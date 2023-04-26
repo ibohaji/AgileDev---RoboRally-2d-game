@@ -85,6 +85,7 @@ public class LGameBrain implements IToDTO {
         AbCardProgramming card = player.getNextCardFromOrderedDeck();
         moveRobotWithCard(player, card);
         Point newPos = player.getRobot().getCords();
+        System.out.println("NEW POSITION: " + newPos.x + "&" + newPos.y);
         if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
             //TODO
             // ordering of checkpoints before assigning a checkpoint to the robot
@@ -118,14 +119,22 @@ public class LGameBrain implements IToDTO {
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
     }
     public LPlayer getPlayerWhoWon(){
-        // TODO
+        //TODO
+        // asap
         return null;
+    }
+
+    public boolean isThereAWinner(){
+        //TODO
+        // asap
+        return false;
     }
 
 
     // -------------------------------------------------------------------------//
     // CARD SEQUENCE LOGIC
     public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
+        System.out.println("SETTING SEQUENCE FOR PLAYER. Size of: " + cardSequence.getSize());
         player.setOrderedCardSequence(cardSequence);
     }
     public boolean haveAllPlayersSubmittedSequence(){

@@ -63,17 +63,16 @@ public class LCardSequence {
         return this.cardSequence.get(0);
     }
 
+    public void removeFirstCard(){
+        if(!this.cardSequence.isEmpty()){
+            this.cardSequence.remove(getFirstCard());
+        }
+    }
+
     public AbCardProgramming getLastCardInSequence() {
         if(this.cardSequence.isEmpty()){
             return null;
         }
         return this.cardSequence.get(this.cardSequence.size() - 1);
-    }
-
-    /**
-     * Submits the current card sequence.
-     */
-    public void submitCardSequence() {
-        player.getCardSequence().setCardSequence(cardSequence);
     }
 }

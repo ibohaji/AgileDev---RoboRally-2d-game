@@ -23,8 +23,6 @@ public class ProgrammingPhaseView extends GameView{
 
     private UserOrderedCardDeckView userOrderedDeckView;
 
-    private ArrayList<AbCardProgramming> programmingCards;
-
     private CardDeckController cardDeckController;
 
     private GameBoardView gameBoardView;
@@ -35,8 +33,6 @@ public class ProgrammingPhaseView extends GameView{
         this.gameController = gameController;
         this.cardDeckController = new CardDeckController(gameController);
         this.player = gameController.getPlayerWithoutCardSequence();
-        this.programmingCards = this.player.getProgrammingCards();
-        this.userOrderedDeckView = userOrderedDeckView;
         createView();
     }
 
@@ -55,10 +51,11 @@ public class ProgrammingPhaseView extends GameView{
         JButton submitButton = new JButton("SUBMIT SEQUENCE");
         submitButton.setFont(Fonts.LARGE);
         submitButton.addActionListener(e -> {
-            if(this.userOrderedDeckView.getCardSequence().getSize() == 5){
-                //TODO
-                // if not all cards in ordered deck, throw error popup
-                this.controller.setPlayerCardSequence(this.gameBrain.getPlayerWithoutCardSequence(), this.userOrderedDeckView.getCardSequence());
+            if(this.cardDeckController.getOrderedCardSequence().getSize() == 5){
+                this.controller.setPlayerCardSequence(this.player, this.cardDeckController.getOrderedCardSequence());
+                if(this.gameBrain.haveAllPlayersSubmittedSequence()){
+                    System.out.println("SEQUENCES ALL DONE");
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Please order all 5 cards!");
             }

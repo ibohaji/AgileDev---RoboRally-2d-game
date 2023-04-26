@@ -33,7 +33,7 @@ public class UserCardDeckView extends GameView {
     public UserCardDeckView(CardDeckController cardDeckController, LGameBrain gameBrain, UserOrderedCardDeckView userOrderedDeckView) {
         super(cardDeckController.getGameController(), gameBrain);
         this.cardDeckController = cardDeckController;
-        this.cards = gameBrain.getPlayerWithoutCardSequence().getProgrammingCards();
+        this.cards = cardDeckController.getGameController().getPlayerWithoutCardSequence().getProgrammingCards();
         this.userOrderedDeckView = userOrderedDeckView;
         this.cardButtons = new ArrayList<>();
         setLayout(new GridBagLayout());
@@ -73,6 +73,7 @@ public class UserCardDeckView extends GameView {
     }
 
     private void createCardButtonsPanel(){
+        this.cardButtons = new ArrayList<>();
         if(cardPanel != null){
             remove(cardPanel);
         }
