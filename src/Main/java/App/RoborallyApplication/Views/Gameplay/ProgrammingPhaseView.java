@@ -23,8 +23,6 @@ public class ProgrammingPhaseView extends GameView{
 
     private UserOrderedCardDeckView userOrderedDeckView;
 
-    private ArrayList<AbCardProgramming> programmingCards;
-
     private CardDeckController cardDeckController;
 
     private GameBoardView gameBoardView;
@@ -35,15 +33,14 @@ public class ProgrammingPhaseView extends GameView{
         this.gameController = gameController;
         this.cardDeckController = new CardDeckController(gameController);
         this.player = gameController.getPlayerWithoutCardSequence();
-        this.programmingCards = this.player.getProgrammingCards();
         createView();
     }
 
     private void createView() {
         setLayout(new GridBagLayout());
         Options options = new Options(gameController,gameBrain);
-        // this.userDeckView = new UserCardDeckView(gameController, gameBrain);
-        // this.userOrderedDeckView = new UserOrderedCardDeckView(gameController, gameBrain);
+        this.userDeckView = new UserCardDeckView(cardDeckController, gameBrain, userOrderedDeckView);
+        this.userOrderedDeckView = new UserOrderedCardDeckView(cardDeckController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
         add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
         add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
@@ -54,10 +51,11 @@ public class ProgrammingPhaseView extends GameView{
         JButton submitButton = new JButton("SUBMIT SEQUENCE");
         submitButton.setFont(Fonts.LARGE);
         submitButton.addActionListener(e -> {
-            if(this.userOrderedDeckView.getCardSequence().getSize() == 5){
-                //TODO
-                // if not all cards in ordered deck, throw error popup
-                this.controller.setPlayerCardSequence(this.gameBrain.getPlayerWithoutCardSequence(), this.userOrderedDeckView.getCardSequence());
+            if(this.cardDeckController.getOrderedCardSequence().getSize() == 5){
+                this.controller.setPlayerCardSequence(this.player, this.cardDeckController.getOrderedCardSequence());
+                if(this.gameBrain.haveAllPlayersSubmittedSequence()){
+                    System.out.println("SEQUENCES ALL DONE");
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Please order all 5 cards!");
             }

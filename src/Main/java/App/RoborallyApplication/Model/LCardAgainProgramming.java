@@ -14,23 +14,19 @@ public class LCardAgainProgramming extends AbCardProgramming {
     @Override
     public void useCard(LRobot robot, LGameBrain gameBrain) {
         LPlayer playerOfRobot = robot.getPlayer();
+        System.out.println(playerOfRobot.getDisplayName());
         AbCardProgramming lastCardUsed = playerOfRobot.getLastCard();
         if(lastCardUsed != null){
-            robot.useProgrammingCard(lastCardUsed, gameBrain);
+            lastCardUsed.useCard(robot, gameBrain);;
         }
     }
     @Override
     public ImageIcon getCardImageIcon() {
         return this.graphicalElement.getImage();
     }
+
+    @Override
+    public String toString() {
+        return "Again card";
+    }
 }
-
-
-   /* Repeat the programming in your previous register.
-        If your previous register was a damage card, draw a card from the top of your deck,
-        and play that card this register.
-     //
-     If you used an upgrade in your previous register that allowed you to play multiple programming cards,
-     re-execute the second card. This card cannot be played in the first register.
-
-    */

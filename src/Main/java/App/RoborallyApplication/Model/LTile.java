@@ -50,7 +50,7 @@ public class LTile implements IToDTO {
     }
 
     public boolean doesTileHaveObstacle(){
-        return this.obstacle == null;
+        return this.obstacle != null;
     }
 
     public boolean doesTileHaveCheckpoint(){

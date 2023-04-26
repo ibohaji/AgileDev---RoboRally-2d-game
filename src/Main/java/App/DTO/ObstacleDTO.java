@@ -1,7 +1,6 @@
 
 package App.DTO;
 
-import App.RoborallyApplication.Model.ObstaclesFolder.EnumObstacleType;
 import App.RoborallyApplication.Model.GraphicalElementObstacle;
 import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
 

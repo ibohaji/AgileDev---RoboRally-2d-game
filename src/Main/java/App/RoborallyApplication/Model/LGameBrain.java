@@ -98,6 +98,9 @@ public class LGameBrain implements IToDTO {
         }
 
     }
+    public void removeFirstCardForPlayer(LPlayer player){
+        player.removeFirstCardFromOrderedSequence();
+    }
 
     /**
      * This method is to ensure that the game logic knows when to stop making movements
@@ -289,10 +292,7 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
-    public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
-        LPlayer player = robot.getPlayer();
-        return player.getCardSequence().getLastCard();
-    }
+
     private void setupRobots(){
         ArrayList<LTile> availableStartPoints = getAllStartPoints();
         for (int i = 0; i < this.players.size(); i++) {
@@ -461,5 +461,10 @@ public class LGameBrain implements IToDTO {
                 tilepool.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, this.gameConfig.getDifficulty());
             }
         }
+    }
+
+    public boolean isThereAWinner(){
+        //TODO
+        return false;
     }
 }

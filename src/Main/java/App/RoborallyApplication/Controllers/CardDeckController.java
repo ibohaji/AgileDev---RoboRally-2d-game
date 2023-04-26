@@ -13,10 +13,11 @@ public class CardDeckController {
     private GameController gameController;
     private UserOrderedCardDeckView userOrderedDeckView;
     private UserCardDeckView userDeckView;
+
     public CardDeckController(GameController gameController){
         this.gameController = gameController;
-        this.userDeckView = new UserCardDeckView(this, gameController.gameBrain);
         this.userOrderedDeckView = new UserOrderedCardDeckView(this, gameController.gameBrain);
+        this.userDeckView = new UserCardDeckView(this, gameController.gameBrain, userOrderedDeckView);
     }
 
     public GameController getGameController() {
@@ -27,17 +28,6 @@ public class CardDeckController {
         return userOrderedDeckView.getCardSequence();
     }
 
-    public void addCardToOrdered(AbCardProgramming card) {
-        this.userOrderedDeckView.addCard(card);
-    }
-
-    public void updateCardDecks() {
-        userOrderedDeckView.revalidate();
-        userDeckView.revalidate();
-        userOrderedDeckView.repaint();
-        userDeckView.repaint();
-    }
-
     public UserCardDeckView getUserDeckView() {
         return userDeckView;
     }
@@ -46,7 +36,25 @@ public class CardDeckController {
         return userOrderedDeckView;
     }
 
-    public void addCard(AbCardProgramming card) {
+
+
+    public void removeCardFromPlayerDeck(AbCardProgramming card) {
+        this.userDeckView.removeCard(card);
+    }
+
+    public void addCardToOrdered(AbCardProgramming card) {
         this.userOrderedDeckView.addCard(card);
+        removeCardFromPlayerDeck(card);
+    }
+
+    public void addCardToUnordered(AbCardProgramming card){
+        this.userDeckView.addCard(card);
+    }
+
+    public void updateCardDecks() {
+        userOrderedDeckView.revalidate();
+        userDeckView.revalidate();
+        userOrderedDeckView.repaint();
+        userDeckView.repaint();
     }
 }

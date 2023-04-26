@@ -27,6 +27,14 @@ public class LPlayer implements IToDTO {
         this.usedCardSequence.addCard(card);
     }
 
+    protected void addCardToUsedSequence(AbCardProgramming card){
+        this.usedCardSequence.addCard(card);
+    }
+
+    protected void removeFirstCardFromOrderedSequence(){
+        this.orderedCardSequence.removeFirstCard();
+    }
+
     /**
      * Robot can only be assigned to player if he previously doesn't have a robot assigned to them
      * @param robotToAssign robot object to assign to the player
@@ -40,6 +48,8 @@ public class LPlayer implements IToDTO {
         }
         return false;
     }
+
+
     @Override
     public String DTOasJson() {
         PlayerDTO playerDTO = new PlayerDTO(this);
@@ -86,8 +96,9 @@ public class LPlayer implements IToDTO {
     }
 
     protected AbCardProgramming getLastCard(){
-        return this.usedCardSequence.getLastCard();
+        return this.usedCardSequence.getLastMovementCard();
     }
+
 
     protected AbCardProgramming getNextCardFromOrderedDeck(){
         return this.orderedCardSequence.getFirstCard();

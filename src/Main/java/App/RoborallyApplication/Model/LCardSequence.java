@@ -22,27 +22,26 @@ public class LCardSequence {
     /**
      * @return called when player removes card from ordered deck to unordered deck
      */
-    public boolean removeCard(){
-        if(this.cardSequence.isEmpty()){
-            return false;
-        } else {
+    public void removeCard() {
+        if (!this.cardSequence.isEmpty()) {
             cardSequence.remove(cardSequence.size() - 1);
-            return true;
         }
     }
+
 
     /**
      * Method to get the last movement card.
      * @return Last programming card that is not an again card,
      * will return null if there are no usable cards
      */
-    public AbCardProgramming getLastCard(){
+    public AbCardProgramming getLastMovementCard(){
         if(this.cardSequence.isEmpty()){
+            System.out.println("Card sequence is empty");
             return null;
         }
-        for (int i = 1; i < this.cardSequence.size(); i++) {
-            if(!(this.cardSequence.get(this.cardSequence.size() - i) instanceof LCardAgainProgramming)){
-                return this.cardSequence.get(this.cardSequence.size() - i);
+        for (int i = this.cardSequence.size(); i > 0; i--) {
+            if(!(this.cardSequence.get(i - 1) instanceof LCardAgainProgramming)){
+                return this.cardSequence.get(i - 1);
             }
         }
         return null;
@@ -65,10 +64,16 @@ public class LCardSequence {
         return this.cardSequence.get(0);
     }
 
-    /**
-     * Submits the current card sequence.
-     */
-    public void submitCardSequence() {
-        player.getCardSequence().setCardSequence(cardSequence);
+    public void removeFirstCard(){
+        if(!this.cardSequence.isEmpty()){
+            this.cardSequence.remove(getFirstCard());
+        }
+    }
+
+    public AbCardProgramming getLastCardInSequence() {
+        if(this.cardSequence.isEmpty()){
+            return null;
+        }
+        return this.cardSequence.get(this.cardSequence.size() - 1);
     }
 }

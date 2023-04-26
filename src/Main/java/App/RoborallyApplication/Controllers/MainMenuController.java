@@ -5,6 +5,7 @@ import App.RoborallyApplication.Model.LGameConfiguration;
 import App.RoborallyApplication.Views.Menus.LobbyAiView;
 import App.RoborallyApplication.Views.Menus.LobbyRegularView;
 import App.RoborallyApplication.Views.Menus.MainMenuView;
+import Utils.MusicPlayer;
 
 public class MainMenuController {
 
@@ -16,6 +17,7 @@ public class MainMenuController {
     public MainMenuController(ApplicationController applicationController) {
         this.applicationController = applicationController;
         this.view = new MainMenuView(this);
+        MusicPlayer.getInstance().playLoop("App/Resources/Music/Eric-Cartman-Poker-Face.wav");
     }
 
     public void userClickPlay(EnumDifficulty difficulty, int nrOfPlayers, boolean isRegular){

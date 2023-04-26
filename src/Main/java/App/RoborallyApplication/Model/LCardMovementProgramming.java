@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LCardMovementProgramming extends AbCardProgramming {
-    private final int steps;
+    private int steps;
 
     private GraphicalElement graphicalElement = new GraphicalElement();
     public LCardMovementProgramming(int steps){
@@ -25,8 +25,8 @@ public class LCardMovementProgramming extends AbCardProgramming {
         EnumDirection directionOfRobot= robot.getCurrentDirection();
         for (int i = 0; i < steps; i++) {
             switch (directionOfRobot){
-                case NORTH -> newPos.y +=   1;
-                case SOUTH -> newPos.y -=   1;
+                case NORTH -> newPos.y -=   1;
+                case SOUTH -> newPos.y +=   1;
                 case EAST -> newPos.x +=   1;
                 case WEST -> newPos.x -=  1;
             }
@@ -36,18 +36,19 @@ public class LCardMovementProgramming extends AbCardProgramming {
                     gameBrain.removeRobot(robot);
                     gameBrain.findPlayerByRobot(robot);
                 }
+            } else {
+                pushIfOccupied(gameBrain, newPos, directionOfRobot);
+                LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
+                // check for obstacle on tile
+                //gameBrain.getGameboard().getObstacleFromCoordinate(newPos.x,newPos.y);
+                if(newPositionTile.doesTileHaveObstacle()){
+                    System.out.println("Looking for obstacle from: " + newPos.x +"&" + newPos.y);
+                    gameBrain.robotStepOnObstacle(robot, gameBrain.getObstacleFromCoordinate(newPos.x, newPos.y), newPos);
+                }
+                // set new coordinate
+                robot.setCords(newPos);
             }
-
-            pushIfOccupied(gameBrain, newPos, directionOfRobot);
-            LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
-            // check for obstacle on tile
-            if(gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveObstacle()){
-                gameBrain.robotStepOnObstacle(robot, gameBrain.getObstacleFromCoordinate(newPos.x, newPos.y), newPos);
-            }
-            // set new coordinate
-            robot.setCords(newPos);
         }
-
     }
 
     private void pushIfOccupied(LGameBrain gameBrain, Point newPos, EnumDirection directionOfRobot) {
@@ -68,4 +69,11 @@ public class LCardMovementProgramming extends AbCardProgramming {
     public ImageIcon getCardImageIcon() {
         return this.graphicalElement.getImage();
     }
+
+    @Override
+    public String toString() {
+        return "MOVEMENT CARD, steps: " + this.steps;
+    }
+
+
 }
