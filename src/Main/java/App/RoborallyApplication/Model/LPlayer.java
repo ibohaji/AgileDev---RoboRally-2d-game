@@ -86,7 +86,7 @@ public class LPlayer implements IToDTO {
     }
 
     protected AbCardProgramming getLastCard(){
-        return this.usedCardSequence.getLastCard();
+        return this.usedCardSequence.getLastMovementCard();
     }
 
     protected AbCardProgramming getNextCardFromOrderedDeck(){

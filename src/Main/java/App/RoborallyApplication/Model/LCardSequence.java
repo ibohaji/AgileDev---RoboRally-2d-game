@@ -22,27 +22,11 @@ public class LCardSequence {
     /**
      * @return called when player removes card from ordered deck to unordered deck
      */
-    public boolean removeCard(){
-        if(this.cardSequence.isEmpty()){
-            return false;
-        } else {
+    public void removeCard() {
+        if (!this.cardSequence.isEmpty()) {
             cardSequence.remove(cardSequence.size() - 1);
-            return true;
         }
     }
-    public void removeCard(AbCardProgramming card) {
-        int index = cardSequence.indexOf(card);
-        if (index >= 0) {
-            removeCard(index);
-        }
-    }
-
-    public void removeCard(int index) {
-        if (index >= 0 && index < cardSequence.size()) {
-            cardSequence.remove(index);
-        }
-    }
-
 
 
     /**
@@ -50,7 +34,7 @@ public class LCardSequence {
      * @return Last programming card that is not an again card,
      * will return null if there are no usable cards
      */
-    public AbCardProgramming getLastCard(){
+    public AbCardProgramming getLastMovementCard(){
         if(this.cardSequence.isEmpty()){
             return null;
         }
@@ -77,6 +61,13 @@ public class LCardSequence {
 
     public AbCardProgramming getFirstCard() {
         return this.cardSequence.get(0);
+    }
+
+    public AbCardProgramming getLastCardInSequence() {
+        if(this.cardSequence.isEmpty()){
+            return null;
+        }
+        return this.cardSequence.get(this.cardSequence.size() - 1);
     }
 
     /**

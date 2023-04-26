@@ -317,7 +317,7 @@ public class LGameBrain implements IToDTO {
     }
     public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
         LPlayer player = robot.getPlayer();
-        return player.getCardSequence().getLastCard();
+        return player.getCardSequence().getLastMovementCard();
     }
     private void setupRobots(){
         ArrayList<LTile> availableStartPoints = getAllStartPoints();
