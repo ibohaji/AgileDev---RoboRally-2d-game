@@ -25,20 +25,38 @@ public class UserOrderedCardDeckView extends GameView {
 
     private CardDeckController cardDeckController;
     private JPanel cardPanel;
+
     public UserOrderedCardDeckView(CardDeckController cardDeckController, LGameBrain gameBrain) {
         super(cardDeckController.getGameController(), gameBrain);
         this.cardDeckController = cardDeckController;
         this.cardSequence = new LCardSequence(gameBrain.getPlayerWithoutCardSequence());
+        this.gameBrain = gameBrain;
+        this.cardPanel = new JPanel();
         createView();
     }
+
+
     private void createView() {
         setLayout(new GridBagLayout());
         setBorder(new LineBorder(Color.BLACK, 5));
+
         JLabel nameForDeck = new JLabel("Ordered Deck");
         add(nameForDeck, new GridBagConstraintsBuilder(0,0).weightX(1).inset(50).fill(GridBagConstraints.HORIZONTAL).build());
-        cardPanel = new JPanel();
-        cardPanel.setLayout(new GridBagLayout());
 
+        // Create a JPanel to hold the card slots
+        JPanel cardSlotsPanel = new JPanel();
+        cardSlotsPanel.setLayout(new BoxLayout(cardSlotsPanel, BoxLayout.Y_AXIS));
+        cardSlotsPanel.setOpaque(false);
+        add(cardSlotsPanel, new GridBagConstraintsBuilder(1, 0).weightY(1).fill(GridBagConstraints.VERTICAL).build());
+
+        // Add card slots to the card slots panel
+        for (int i = 0; i < 5; i++) {
+            CardPanel cardSlotPanel = new CardPanel();
+            cardSlotPanel.setPreferredSize(new Dimension(AbCardProgramming.CARD_WIDTH, AbCardProgramming.CARD_HEIGHT));
+            cardSlotPanel.setTransferHandler(new CardTransferHandler(null));
+            cardSlotPanel.addMouseListener(new CardMouseListener());
+            cardSlotsPanel.add(cardSlotPanel);
+        }
     }
 
     public void addCard(AbCardProgramming card) {
@@ -48,16 +66,24 @@ public class UserOrderedCardDeckView extends GameView {
         cardPanel.setTransferHandler(new CardTransferHandler(card));
         cardPanel.setDropTarget(new CardDropTarget(cardPanel));
         this.cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0, this.cardSequence.getSize() - 1).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
+        cardDeckController.updateCardDecks();
     }
+
 
     public LCardSequence getCardSequence(){
         return this.cardSequence;
     }
 
-    private class CardPanel extends JPanel {
+    class CardPanel extends JPanel {
         private AbCardProgramming card;
 
         private ImageIcon image;
+
+        public CardPanel() {
+            // add an empty label to represent a card slot
+            add(new JLabel());
+            setBorder(new LineBorder(Color.BLACK, 1)); // add border to the card panel
+        }
 
         public CardPanel(AbCardProgramming card) {
             this.card = card;
@@ -65,6 +91,8 @@ public class UserOrderedCardDeckView extends GameView {
             this.image = card.getCardImageIcon();
             add(new JLabel(ImageUtils.scaledImageWithPercent(this.image, 40)));
         }
+
+
 
         // implement other methods to handle rendering, sizing, etc.
     }
@@ -91,7 +119,7 @@ public class UserOrderedCardDeckView extends GameView {
                     AbCardProgramming card = (AbCardProgramming) transferable.getTransferData(CardTransferable.PROGRAMMING_CARD);
                     if (cardDeckController.getOrderedCardSequence().getSize() < 5) {
                         cardDeckController.addCardToOrdered(card);
-                        panel.remove(panel.getComponentAt(panel.getMousePosition()));
+                        cardDeckController.removeCardFromPlayerDeck(card);
                         cardDeckController.updateCardDecks(); // revalidate and repaint
                     }
                 }
@@ -198,7 +226,7 @@ public class UserOrderedCardDeckView extends GameView {
             CardPanel cardPanel = new CardPanel(card);
             cardPanel.setTransferHandler(new CardTransferHandler(card));
             cardPanel.addMouseListener(new CardMouseListener());
-            cardDeckController.addCard(card);
+            cardDeckController.addCardToOrdered(card);
             cardPanel.add(cardPanel, new GridBagConstraintsBuilder(0, insertIndex).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
             cardPanel.revalidate();
             cardPanel.repaint();
