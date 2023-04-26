@@ -8,7 +8,7 @@ import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 import App.RoborallyApplication.Views.Menus.MainMenuView;
 
 import java.awt.*;
-import java.util.Timer;
+import javax.swing.Timer;
 
 public class GameController {
     private final ApplicationController applicationController;
@@ -21,14 +21,22 @@ public class GameController {
 
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
             this.view = new ProgrammingPhaseView(this, gameBrain);
+            applicationController.changePanel(this.view);
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
             this.view = new GameBoardView(this, gameBrain);
             applicationController.changePanel(this.view);
             makeMovements();
             gameBrain.endRound();
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)){
-            // Give a screen where you can save game or continue with next round
-            this.view = new Options(this,gameBrain);
+            if(gameBrain.isThereAWinner()){
+                gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                //TODO
+                // redirect
+            } else {
+                gameBrain.startRound();
+                this.view = new ProgrammingPhaseView(this, gameBrain);
+                applicationController.changePanel(this.view);
+            }
         }
         applicationController.changePanel(this.view);
 
@@ -46,14 +54,13 @@ public class GameController {
                     this.gameBrain.makeMovement();
                     this.view = new GameBoardView(this, gameBrain);
                     applicationController.changePanel(this.view);
-
                 } else {
                     // Stop the timer when there are no more movements left
                     timer.stop();
                     this.gameBrain.setCurrentGamePhase(EnumGamePhase.ROUND_END);
                 }
             }
-            
+
         });
 
         timer.start(); // Start the timer
