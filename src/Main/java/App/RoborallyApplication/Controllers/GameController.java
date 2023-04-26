@@ -52,7 +52,13 @@ public class GameController {
             } else {
                 this.gameBrain.makeMovement();
                 this.view = new GameBoardView(this, gameBrain);
-
+                this.gameBrain.removeFirstCardForPlayer(this.gameBrain.getPlayerWhoIsCurrentlyMoving());
+                if(!gameBrain.areThereMovementsLeftInThisRound()){
+                    timer.stop();
+                    gameBrain.endRound();
+                    gameBrain.startRound();
+                    this.view = new ProgrammingPhaseView(this, gameBrain);
+                }
             }
             applicationController.changePanel(this.view);
         });
@@ -72,7 +78,6 @@ public class GameController {
     }
 
     public void setPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
-        System.out.println("SETTING SEQUENCE FOR PLAYER: " + player.getDisplayName());
         gameBrain.setCardSequenceForPlayer(player, cardSequence);
         if(gameBrain.haveAllPlayersSubmittedSequence()){
             gameBrain.setCurrentGamePhase(EnumGamePhase.MOVEMENT_PHASE);

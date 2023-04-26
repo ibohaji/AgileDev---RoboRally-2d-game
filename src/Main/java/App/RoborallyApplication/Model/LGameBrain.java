@@ -80,10 +80,15 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
+
+    /**
+     * @return returns the card that was used for movement
+     */
     public void makeMovement(){
         LPlayer player = getPlayerWhoIsCurrentlyMoving();
         AbCardProgramming card = player.getNextCardFromOrderedDeck();
         moveRobotWithCard(player, card);
+        player.addCardToUsedSequence(card);
         Point newPos = player.getRobot().getCords();
         if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
             //TODO
@@ -95,7 +100,9 @@ public class LGameBrain implements IToDTO {
                 // SOMEBODY WON <-------
             }
         }
-
+    }
+    public void removeFirstCardForPlayer(LPlayer player){
+        player.removeFirstCardFromOrderedSequence();
     }
 
     /**
@@ -116,6 +123,9 @@ public class LGameBrain implements IToDTO {
      */
     public void endRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
+        for (LPlayer player: players) {
+            player.setCardSequenceToNull();
+        }
     }
     public LPlayer getPlayerWhoWon(){
         //TODO
