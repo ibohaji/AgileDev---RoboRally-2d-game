@@ -52,6 +52,7 @@ public class GameController {
             } else {
                 this.gameBrain.makeMovement();
                 this.view = new GameBoardView(this, gameBrain);
+                applicationController.changePanel(this.view);
                 this.gameBrain.removeFirstCardForPlayer(this.gameBrain.getPlayerWhoIsCurrentlyMoving());
                 if(!gameBrain.areThereMovementsLeftInThisRound()){
                     timer.stop();

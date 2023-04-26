@@ -85,22 +85,18 @@ public class LPlayer implements IToDTO {
         this.orderedCardSequence = orderedSequence;
         this.usedCardSequence = new LCardSequence(this);
     }
-
     protected boolean doesPlayerHaveMovesLeft(){
         if(this.orderedCardSequence == null || this.orderedCardSequence.getSize() == 0){
             return false;
         }
         return true;
     }
-
     public LCardSequence getCardSequence(){
         return this.orderedCardSequence;
     }
-
     protected AbCardProgramming getLastCard(){
         return this.usedCardSequence.getLastMovementCard();
     }
-
     protected AbCardProgramming getNextCardFromOrderedDeck(){
         return this.orderedCardSequence.getFirstCard();
     }
@@ -108,6 +104,5 @@ public class LPlayer implements IToDTO {
     public boolean isHuman(){
         return this.isHumanPlayer;
     }
-
 }
 

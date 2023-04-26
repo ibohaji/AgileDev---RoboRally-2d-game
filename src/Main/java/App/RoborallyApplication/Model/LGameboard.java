@@ -112,7 +112,6 @@ public class LGameboard implements IToDTO {
     protected void removeRobot(LRobot robot){
         this.robots.remove(robot);
     }
-
     public void addCheckpoint(LTile checkpointTile){
         if(this.gameBrain.getGameConfig().getDifficulty().equals(EnumDifficulty.EASY)){
             throw new RuntimeException("Problem in gameboard method addCheckpoint(). Can't add checkpoints to EASY difficulty");
