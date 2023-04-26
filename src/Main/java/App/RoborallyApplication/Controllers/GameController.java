@@ -25,8 +25,15 @@ public class GameController {
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
             this.view = new GameBoardView(this, gameBrain);
             applicationController.changePanel(this.view);
-            makeMovements();
-            gameBrain.endRound();
+            if(gameBrain.areThereMovementsLeftInThisRound()){
+                makeMovements();
+            } else {
+                gameBrain.endRound();
+                gameBrain.startRound();
+                this.view = new ProgrammingPhaseView(this, gameBrain);
+                applicationController.changePanel(this.view);
+            }
+
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)){
             if(gameBrain.isThereAWinner()){
                 gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
@@ -45,24 +52,17 @@ public class GameController {
     private void makeMovements() {
         Timer timer = new Timer(1000, null); // Create a timer with a 1000 ms (1 second) delay
         timer.addActionListener(e -> {
-            if(gameBrain.isThereAWinner()){
-                this.gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                //TODO
-                // move to final screen showing winner
+            this.gameBrain.makeMovement();
+            if(this.gameBrain.areThereMovementsLeftInThisRound()){
+                this.view = new GameBoardView(this, gameBrain);
+                applicationController.changePanel(this.view);
             } else {
-                if (this.gameBrain.areThereMovementsLeftInThisRound()) {
-                    this.gameBrain.makeMovement();
-                    this.view = new GameBoardView(this, gameBrain);
-                    applicationController.changePanel(this.view);
-                } else {
-                    // Stop the timer when there are no more movements left
-                    timer.stop();
-                    this.gameBrain.setCurrentGamePhase(EnumGamePhase.ROUND_END);
-                }
+                gameBrain.endRound();
+                this.view = new ProgrammingPhaseView(this, gameBrain);
+                applicationController.changePanel(this.view);
             }
 
         });
-
         timer.start(); // Start the timer
     }
 

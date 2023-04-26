@@ -85,7 +85,6 @@ public class LGameBrain implements IToDTO {
         AbCardProgramming card = player.getNextCardFromOrderedDeck();
         moveRobotWithCard(player, card);
         Point newPos = player.getRobot().getCords();
-        System.out.println("NEW POSITION: " + newPos.x + "&" + newPos.y);
         if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
             //TODO
             // ordering of checkpoints before assigning a checkpoint to the robot
@@ -105,7 +104,7 @@ public class LGameBrain implements IToDTO {
      */
     public boolean areThereMovementsLeftInThisRound(){
         for (LPlayer player : players) {
-            if (!(player.getCardSequence() == null)){
+            if(player.doesPlayerHaveMovesLeft()){
                 return true;
             }
         }

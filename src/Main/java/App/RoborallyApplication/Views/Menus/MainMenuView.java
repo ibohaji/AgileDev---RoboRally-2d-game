@@ -74,11 +74,6 @@ public class MainMenuView extends JPanel {
         rightPanel.add(playersDropdown,new GridBagConstraintsBuilder(1,2).weightX(0.75).inset(1,1,25,0).fill(GridBagConstraints.HORIZONTAL).build());
 
 
-        difficultyLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        difficultyDropdown = getDifficultyDropdown();
-        leftPanel.add(difficultyDropdown, new GridBagConstraintsBuilder(1, 3).weightX(0.75).inset(1, 1, 25, 0).fill(GridBagConstraints.HORIZONTAL).build());
-
-
 
 
         // Continue game button
@@ -125,8 +120,8 @@ public class MainMenuView extends JPanel {
         createGameButton.setFont(Fonts.LARGE);
         createGameButton.addActionListener(e -> {
             int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
+            System.out.println(difficultyDropdown.getSelectedItem().toString());
             if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
-                    // TODO
                     controller.userClickPlay(EnumDifficulty.HARD, numOfPlayers, true);
                 } else if (difficultyDropdown.getSelectedItem().toString().equals("MEDIUM")) {
                     controller.userClickPlay(EnumDifficulty.MEDIUM, numOfPlayers, true);

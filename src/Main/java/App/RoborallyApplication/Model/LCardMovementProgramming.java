@@ -36,17 +36,17 @@ public class LCardMovementProgramming extends AbCardProgramming {
                     gameBrain.removeRobot(robot);
                     gameBrain.findPlayerByRobot(robot);
                 }
+            } else {
+                pushIfOccupied(gameBrain, newPos, directionOfRobot);
+                LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
+                // check for obstacle on tile
+                if(newPositionTile.doesTileHaveObstacle()){
+                    System.out.println("Looking for obstacle from: " + newPos.x +"&" + newPos.y);
+                    gameBrain.robotStepOnObstacle(robot, gameBrain.getObstacleFromCoordinate(newPos.x, newPos.y), newPos);
+                }
+                // set new coordinate
+                robot.setCords(newPos);
             }
-
-            pushIfOccupied(gameBrain, newPos, directionOfRobot);
-            LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
-            // check for obstacle on tile
-            if(newPositionTile.doesTileHaveObstacle()){
-                System.out.println("Looking for obstacle from: " + newPos.x +"&" + newPos.y);
-                gameBrain.robotStepOnObstacle(robot, gameBrain.getObstacleFromCoordinate(newPos.x, newPos.y), newPos);
-            }
-            // set new coordinate
-            robot.setCords(newPos);
         }
     }
 

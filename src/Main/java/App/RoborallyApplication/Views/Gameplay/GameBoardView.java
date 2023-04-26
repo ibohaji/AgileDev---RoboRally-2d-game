@@ -57,8 +57,6 @@ public class GameBoardView extends GameView{
                 }
             }
         }
-
-
         // PLAYER INFO
         if(this.gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
             LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
@@ -66,7 +64,6 @@ public class GameBoardView extends GameView{
             playerName.setFont(Fonts.BOLDMEDIUM);
             JLabel robotLives = new JLabel("Number of lives: " + player.getRobot().getNrOfLives());
             robotLives.setFont(Fonts.BOLDMEDIUM);
-
             JPanel infoPanel = new JPanel();
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
             infoPanel.add(Box.createHorizontalGlue());
