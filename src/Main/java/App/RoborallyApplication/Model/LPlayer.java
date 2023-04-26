@@ -26,9 +26,6 @@ public class LPlayer implements IToDTO {
         robot.useProgrammingCard(card, gameBrain);
         this.usedCardSequence.addCard(card);
         this.orderedCardSequence.removeFirstCard();
-        if(this.usedCardSequence.getSize() == 5){
-            setCardSequenceToNull();
-        }
     }
 
     /**
@@ -72,7 +69,7 @@ public class LPlayer implements IToDTO {
      * At the end of the players turn, card sequence should be null.
      * At the end of the round, all players should have cardsequence as null.
      */
-    protected void setCardSequenceToNull(){
+    public void setCardSequenceToNull(){
         this.orderedCardSequence = null;
         this.usedCardSequence = null;
     }
@@ -82,10 +79,10 @@ public class LPlayer implements IToDTO {
     }
 
     protected boolean doesPlayerHaveMovesLeft(){
-        if(this.orderedCardSequence == null){
+        if(this.orderedCardSequence == null || this.orderedCardSequence.getSize() == 0){
             return false;
         }
-        return this.usedCardSequence.getSize() != 5;
+        return true;
     }
 
     public LCardSequence getCardSequence(){

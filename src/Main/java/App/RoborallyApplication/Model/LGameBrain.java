@@ -133,7 +133,6 @@ public class LGameBrain implements IToDTO {
     // -------------------------------------------------------------------------//
     // CARD SEQUENCE LOGIC
     public void setCardSequenceForPlayer(LPlayer player, LCardSequence cardSequence ){
-        System.out.println("SETTING SEQUENCE FOR PLAYER. Size of: " + cardSequence.getSize());
         player.setOrderedCardSequence(cardSequence);
     }
     public boolean haveAllPlayersSubmittedSequence(){
@@ -322,10 +321,6 @@ public class LGameBrain implements IToDTO {
                 robotBeingPushed.setCords(pos);
             }
         }
-    }
-    public AbCardProgramming getLastCardUsedByRobot(LRobot robot){
-        LPlayer player = robot.getPlayer();
-        return player.getCardSequence().getLastMovementCard();
     }
     private void setupRobots(){
         ArrayList<LTile> availableStartPoints = getAllStartPoints();

@@ -30,7 +30,6 @@ public class LobbyAiView extends LobbyView{
         playersInformation = new ArrayList<>();
         JPanel namePanel;
         int nrOfPlayers = gameConfiguration.getNrOfPlayers();
-
         namePanel = new JPanel(new BorderLayout());
         namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
         namePanel.setPreferredSize(new Dimension(100, 50));
