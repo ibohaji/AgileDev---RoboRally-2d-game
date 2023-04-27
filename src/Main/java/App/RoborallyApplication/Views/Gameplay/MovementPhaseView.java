@@ -22,7 +22,6 @@ public class MovementPhaseView extends GameView{
     private CardDeckController cardDeckController;
     private GameBoardView gameBoardView;
     private LPlayer player;
-    private UserOrderedCardDeckView userOrderedDeckView;
 
 
     public MovementPhaseView(GameController gameController, LGameBrain gameBrain) {
@@ -37,12 +36,9 @@ public class MovementPhaseView extends GameView{
     private void createView() {
         setLayout(new GridBagLayout());
         Options options = new Options(gameController,gameBrain);
-        this.userOrderedDeckView = new UserOrderedCardDeckView(cardDeckController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
-        add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
+        add(options, new GridBagConstraintsBuilder(1, 1).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
-        UserOrderedCardDeckView orderedDeckView = this.cardDeckController.getUserOrderedDeckView();
-        add(orderedDeckView, new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
     }
 }
 
