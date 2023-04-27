@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class LGameBrain implements IToDTO {
     private UUID id;
