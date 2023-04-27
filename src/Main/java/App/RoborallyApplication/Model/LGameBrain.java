@@ -90,7 +90,6 @@ public class LGameBrain implements IToDTO {
         LPlayer player = getPlayerWhoIsCurrentlyMoving();
         AbCardProgramming card = player.getNextCardFromOrderedDeck();
         moveRobotWithCard(player, card);
-        player.addCardToUsedSequence(card);
         Point newPos = player.getRobot().getCords();
         if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
             //TODO
@@ -335,7 +334,18 @@ public class LGameBrain implements IToDTO {
     private void moveRobotWithCard(LPlayer player, AbCardProgramming card){
         if (player.getRobot().getNrOfLives() > 0){
             player.useProgrammingCard(card, this);
+            if(card instanceof LCardMovementProgramming){
+                if(((LCardMovementProgramming) card).getSteps() == ((LCardMovementProgramming) card).getStepsMade()){
+                    player.addCardToUsedSequence(card);
+                    player.removeFirstCardFromOrderedSequence();
+                }
+            } else {
+                player.addCardToUsedSequence(card);
+                player.removeFirstCardFromOrderedSequence();
+            }
         } else {
+            //TODO
+            // problematic?
             player.setCardSequenceToNull();
         }
     }

@@ -20,13 +20,13 @@ public class MovementPhaseController extends AbPhaseController{
         makeMovements();
     }
     private void makeMovements() {
-        Timer timer = new Timer(2000, null); // Create a timer with a 2000 ms (2 second) delay
+        Timer timer = new Timer(1000, null); // Create a timer with a 2000 ms (2 second) delay
         timer.addActionListener(e -> {
             if(!this.gameBrain.areThereMovementsLeftInThisRound()){
                 timer.stop();
                 this.view = new MovementPhaseView(this.gameController, gameBrain);
                 gameController.updateView(this.view);
-                Waiter.getInstance().waitForXMilliseconds(2000);
+                Waiter.getInstance().waitForXMilliseconds(1000);
                 gameBrain.endRound();
                 gameController.updateControllerState();
             } else {
@@ -34,11 +34,13 @@ public class MovementPhaseController extends AbPhaseController{
                 this.view = new MovementPhaseView(this.gameController, gameBrain);
                 gameController.updateView(this.view);
                 LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving(); // will be null when all players moved
+                if(player.getCardSequence().getSize() == 0){
+                    player.setCardSequenceToNull();
+                }
                 if(player != null){
-                    this.gameBrain.removeFirstCardForPlayer(player);
                     if(!gameBrain.areThereMovementsLeftInThisRound()){
                         timer.stop();
-                        Waiter.getInstance().waitForXMilliseconds(2000);
+                        //Waiter.getInstance().waitForXMilliseconds(1000);
                         gameBrain.endRound();
                         gameController.updateControllerState();
                     }

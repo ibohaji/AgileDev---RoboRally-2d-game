@@ -5,9 +5,11 @@ import java.awt.*;
 
 public class LCardMovementProgramming extends AbCardProgramming {
     private int steps;
+    private int stepsMade;
     private GraphicalElement graphicalElement = new GraphicalElement();
     public LCardMovementProgramming(int steps){
         this.steps = steps;
+        this.stepsMade = 0;
         if (steps == 1) {
             this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.MOVEMENT_CARD_1);
         } else if (steps == 2) {
@@ -19,35 +21,37 @@ public class LCardMovementProgramming extends AbCardProgramming {
 
     @Override
     public void useCard(LRobot robot, LGameBrain gameBrain) {
-        for (int i = 0; i < steps; i++) {
-            Point currentPos = robot.getCords();
-            Point newPos = new Point(currentPos);
-            EnumDirection directionOfRobot= robot.getCurrentDirection();
-            switch (directionOfRobot){
-                case NORTH -> newPos.y -= 1;
-                case SOUTH -> newPos.y += 1;
-                case EAST -> newPos.x += 1;
-                case WEST -> newPos.x -= 1;
-            }
-            if(!gameBrain.isPositionOnBoard(newPos)){
-                robot.decreaseNumberOfLives();
-                if(robot.getNrOfLives() < 1){
-                    gameBrain.removeRobot(robot);
-                    gameBrain.removePlayer(gameBrain.findPlayerByRobot(robot));
-                } else {
-                    gameBrain.putRobotToRandomStartPoint(robot);
-                }
+        stepsMade += 1;
+        Point currentPos = robot.getCords();
+        Point newPos = new Point(currentPos);
+        EnumDirection directionOfRobot= robot.getCurrentDirection();
+        switch (directionOfRobot){
+            case NORTH -> newPos.y -= 1;
+            case SOUTH -> newPos.y += 1;
+            case EAST -> newPos.x += 1;
+            case WEST -> newPos.x -= 1;
+        }
+        if(!gameBrain.isPositionOnBoard(newPos)){
+            robot.decreaseNumberOfLives();
+            if(robot.getNrOfLives() < 1){
+                gameBrain.removeRobot(robot);
+                gameBrain.removePlayer(gameBrain.findPlayerByRobot(robot));
             } else {
-                pushIfOccupied(gameBrain, newPos, directionOfRobot);
-                LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
-                if(newPositionTile.doesTileHaveObstacle()){
-                    robot.setCords(newPos);
-                    gameBrain.robotStepOnObstacleNEW(gameBrain.getObstacleFromCoordinateNEW(newPos.x, newPos.y), robot);
-                } else {
-                    robot.setCords(newPos);
-                }
-
+                gameBrain.putRobotToRandomStartPoint(robot);
             }
+        } else {
+            pushIfOccupied(gameBrain, newPos, directionOfRobot);
+            LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
+            if(newPositionTile.doesTileHaveObstacle()){
+                robot.setCords(newPos);
+                gameBrain.robotStepOnObstacleNEW(gameBrain.getObstacleFromCoordinateNEW(newPos.x, newPos.y), robot);
+            } else {
+                robot.setCords(newPos);
+            }
+
+        }
+        if(stepsMade == steps){
+            robot.getPlayer().addCardToUsedSequence(this);
         }
     }
 
@@ -69,6 +73,9 @@ public class LCardMovementProgramming extends AbCardProgramming {
     public ImageIcon getCardImageIcon() {
         return this.graphicalElement.getImage();
     }
+
+    protected int getSteps(){return steps;}
+    protected int getStepsMade(){return stepsMade;}
 
     @Override
     public String toString() {
