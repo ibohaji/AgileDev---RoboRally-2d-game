@@ -14,94 +14,46 @@ import javax.swing.Timer;
 public class GameController {
     private final ApplicationController applicationController;
     protected final LGameBrain gameBrain;
-    private GameView view;
+    protected AbPhaseController controller;
 
     public GameController(ApplicationController applicationController, LGameBrain gameBrain){
         this.applicationController = applicationController;
         this.gameBrain = gameBrain;
+        updateControllerState();
+    }
+
+    public void updateControllerState(){
+        System.out.println(gameBrain.getCurrentGamePhase());
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
-            this.view = new ProgrammingPhaseView(this, gameBrain);
-            applicationController.changePanel(this.view);
+            this.controller = new ProgrammingPhaseController(this, gameBrain);
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
-            this.view = new GameBoardView(this, gameBrain);
-            applicationController.changePanel(this.view);
-            makeMovements();
+            this.controller = new MovementPhaseController(this, gameBrain);
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)){
             if(gameBrain.isThereAWinner()){
                 gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
                 //TODO
-                // redirect
+                // final screen
             } else {
                 gameBrain.startRound();
-                this.view = new ProgrammingPhaseView(this, gameBrain);
-                applicationController.changePanel(this.view);
+                updateControllerState();
             }
         }
-        applicationController.changePanel(this.view);
-
     }
 
-    private void makeMovements() {
-        Timer timer = new Timer(1000, null); // Create a timer with a 1000 ms (1 second) delay
-        timer.addActionListener(e -> {
-            if(!this.gameBrain.areThereMovementsLeftInThisRound()){
-                timer.stop();
-                gameBrain.endRound();
-                gameBrain.startRound();
-                this.view = new ProgrammingPhaseView(this, gameBrain);
-                applicationController.changePanel(this.view);
-            } else {
-                this.gameBrain.makeMovement();
-                this.view = new GameBoardView(this, gameBrain);
-                applicationController.changePanel(this.view);
-                this.gameBrain.removeFirstCardForPlayer(this.gameBrain.getPlayerWhoIsCurrentlyMoving());
-                if(!gameBrain.areThereMovementsLeftInThisRound()){
-                    timer.stop();
-                    gameBrain.endRound();
-                    gameBrain.startRound();
-                    this.view = new ProgrammingPhaseView(this, gameBrain);
-                }
-            }
-            applicationController.changePanel(this.view);
-        });
-        timer.start(); // Start the timer
-    }
-
-    protected void display() {
-        applicationController.changePanel(view);
-    }
-
-    private void changeView(GameView viewToChangeTo){
-        this.view = viewToChangeTo;
+    public void updateView(GameView viewToChangeTo){
+        applicationController.changePanel(viewToChangeTo);
     }
 
     public void updateOrderedCardDeckView(LPlayer player) {
-        UserOrderedCardDeckView orderedDeckView = cardDeckController.getUserOrderedDeckView();
+        /*UserOrderedCardDeckView orderedDeckView = cardDeckController.getUserOrderedDeckView();
         orderedDeckView.clearCardSlots();
         for (AbCardProgramming card : player.getCardSequence().getCardSequence()) {
             orderedDeckView.addCard(card);
-        }
+        }*/
     }
 
     public LPlayer getPlayerWithoutCardSequence(){
         return gameBrain.getPlayerWithoutCardSequence();
-    }
-
-    public void setPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
-        gameBrain.setCardSequenceForPlayer(player, cardSequence);
-        if(gameBrain.haveAllPlayersSubmittedSequence()){
-            gameBrain.setCurrentGamePhase(EnumGamePhase.MOVEMENT_PHASE);
-            applicationController.changePanel(new GameBoardView(new GameController(applicationController, gameBrain), gameBrain));
-        } else {
-            if(gameBrain.getPlayerWithoutCardSequence().isHuman()){
-                applicationController.changePanel(new ProgrammingPhaseView(this, gameBrain));
-            } else {
-                gameBrain.setCardSequencesForAi();
-                gameBrain.setCurrentGamePhase(EnumGamePhase.MOVEMENT_PHASE);
-                applicationController.changePanel(new GameBoardView(new GameController(applicationController, gameBrain), gameBrain));
-            }
-
-        }
     }
 
     // Test purpose only

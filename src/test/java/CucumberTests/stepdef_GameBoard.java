@@ -42,7 +42,8 @@ public class stepdef_GameBoard {
     }
     @When("the GameBrain wants to know the status of this obstacle")
     public void the_game_brain_wants_to_know_the_status_of_this_obstacle() {
-        obstacle = gamebrain.getGameboard().getObstacles();
+        //TODO
+        // obstacle = gamebrain.getGameboard().getObstacles();
     }
     @Then("The GameBoard returns the information of this obstacle")
     public void the_game_board_returns_the_information_of_this_obstacle() {

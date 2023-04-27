@@ -60,7 +60,7 @@ public class LGameBrain implements IToDTO {
                 int choiceForSpecific = rnd.nextInt(3);
                 if(choiceForCard < 2){ // againCard
                     player.assignCardToPlayer(new LCardAgainProgramming());
-                } else if (choiceForCard < 7) { // movementCard
+                } else if (choiceForCard < 8) { // movementCard
                     if(choiceForSpecific == 0) {
                         player.assignCardToPlayer(new LCardMovementProgramming(1));
                     } else if (choiceForSpecific == 1) {
@@ -123,8 +123,12 @@ public class LGameBrain implements IToDTO {
      */
     public void endRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
-        for (LPlayer player: players) {
-            player.setCardSequenceToNull();
+        if(!canGameContinue()){
+            currentEnumGamePhase = EnumGamePhase.GAME_OVER;
+        } else {
+            for (LPlayer player: players) {
+                player.setCardSequenceToNull();
+            }
         }
     }
     public LPlayer getPlayerWhoWon(){
@@ -186,10 +190,6 @@ public class LGameBrain implements IToDTO {
             return EnumObstacleType.HEALING;
         }
     }
-    public AbObstacle getObstacleFromCoordinate(Integer x, Integer y) {
-        return this.gameboard.getObstacleFromCoordinateNEW(x, y);
-    }
-
     public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
         return this.gameboard.getObstacleFromCoordinateNEW(x, y);
     }
@@ -285,8 +285,9 @@ public class LGameBrain implements IToDTO {
     public void removeRobot(LRobot robot){
         System.out.println("Robot from " + robot.getPlayer().getDisplayName() + " was removed from game");
         this.gameboard.removeRobot(robot);
-        //TODO
-        // no robots left -> end game
+        if(!canGameContinue()){
+            setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+        }
     }
     public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
         Point pos = robotBeingPushed.getCords();
@@ -376,10 +377,13 @@ public class LGameBrain implements IToDTO {
         return availableStartPoints;
     }
     public void putRobotToRandomStartPoint(LRobot robot){
+        System.out.println("PUTTING ROBOT TO RANDOM START POINT");
         ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
         Random rnd = new Random();
         int index = rnd.nextInt(available_startpoints.size());
+        System.out.println("Before moving: " + robot.getCords());
         robot.setCords(available_startpoints.get(index).getCoordinates());
+        System.out.println("After moving: " + robot.getCords());
     }
 
     // -------------------------------------------------------------------------//
@@ -421,7 +425,7 @@ public class LGameBrain implements IToDTO {
     }
 
     // -------------------------------------------------------------------------//
-    // RANDOM, TO BE DELETED?
+    // RANDOM
     private void push(Point newPos, EnumDirection directionOfRobot) {
         LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
         // push robotAtCoordinate
@@ -440,13 +444,5 @@ public class LGameBrain implements IToDTO {
             // check ordering of checkpoints
             robot.addCheckpoint(robot.getCords());
         }
-    }
-    public boolean checkRobotposition(LRobot robot) {
-        //TODO
-        // use isTileOccupiedByRobot from gameboard
-        int pos_x = robot.getCords().x;
-        int pos_y = robot.getCords().y;
-        LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
-        return !tile.doesTileHaveObstacle();
     }
 }

@@ -31,11 +31,6 @@ public class LObstacleRegular extends AbObstacle{
                 gameBrain.removeRobot(robot);
             }
         } else {
-            //TODO
-            // 1) find nearby tiles
-            // 2) if unknown -> choose type
-            // 3) explode to nearby tiles using gamebrain
-            // 4) call applyEffect() again after type is set to known_obstacle
             ArrayList<LTile> affectedTiles = gameBrain.getGameboard().getTilesSurroundingCoordinate(robot.getCords().x, robot.getCords().y);
             if (this.obstacleClassification.equals(EnumObstacleClassification.EXPLOSIVE_KNOWN)){
                 // Explosive known

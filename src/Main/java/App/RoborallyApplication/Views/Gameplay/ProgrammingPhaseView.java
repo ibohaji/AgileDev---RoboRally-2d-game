@@ -2,6 +2,7 @@ package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
+import App.RoborallyApplication.Controllers.ProgrammingPhaseController;
 import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
@@ -27,10 +28,13 @@ public class ProgrammingPhaseView extends GameView{
 
     private GameBoardView gameBoardView;
     private LPlayer player;
-    public ProgrammingPhaseView(GameController gameController, LGameBrain gameBrain) {
-        super(gameController, gameBrain);
+
+    private ProgrammingPhaseController controller;
+    public ProgrammingPhaseView(ProgrammingPhaseController controller, LGameBrain gameBrain) {
+        super(controller.getGameController(), gameBrain);
         this.gameBrain = gameBrain;
-        this.gameController = gameController;
+        this.gameController = controller.getGameController();
+        this.controller = controller;
         this.cardDeckController = new CardDeckController(gameController);
         this.player = gameController.getPlayerWithoutCardSequence();
         createView();

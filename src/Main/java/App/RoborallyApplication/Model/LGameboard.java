@@ -12,7 +12,7 @@ public class LGameboard implements IToDTO {
     private UUID gameBrainId;
     private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
-    private ArrayList<LObstacle> obstacles = new ArrayList<>();
+    private ArrayList<AbObstacle> obstacles = new ArrayList<>();
     private ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
     private LGameBrain gameBrain;
 
@@ -45,12 +45,11 @@ public class LGameboard implements IToDTO {
             }
         }
     }
-
     public ArrayList<LRobot> getRobots(){
         return this.robots;
     }
 
-    public ArrayList<LObstacle> getObstacles(){return this.obstacles;}
+    public ArrayList<AbObstacle> getObstacles(){return this.obstacles;}
 
     public AbObstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
         for(LTile tile: tiles){

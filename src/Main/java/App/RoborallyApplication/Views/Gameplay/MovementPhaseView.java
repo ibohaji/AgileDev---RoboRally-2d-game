@@ -45,7 +45,7 @@ public class MovementPhaseView extends GameView{
         this.userMovementCardDeckView = new UserMovementCardDeckView(cardDeckController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
         add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
-        add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
+        //add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
         UserOrderedCardDeckView orderedDeckView = this.cardDeckController.getUserOrderedDeckView();
         add(orderedDeckView, new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
