@@ -1,11 +1,8 @@
 package App.RoborallyApplication.Controllers;
 
 import App.RoborallyApplication.Model.*;
+import App.RoborallyApplication.Views.Gameplay.*;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
-import App.RoborallyApplication.Views.Gameplay.GameBoardView;
-import App.RoborallyApplication.Views.Gameplay.GameView;
-import App.RoborallyApplication.Views.Gameplay.Options;
-import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 import App.RoborallyApplication.Views.Menus.MainMenuView;
 
 import java.awt.*;
@@ -31,8 +28,7 @@ public class GameController {
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)){
             if(gameBrain.isThereAWinner()){
                 gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                //TODO
-                // final screen
+                this.applicationController.changePanel(new GameOverPanel(this, gameBrain));
             } else {
                 gameBrain.startRound();
                 updateControllerState();

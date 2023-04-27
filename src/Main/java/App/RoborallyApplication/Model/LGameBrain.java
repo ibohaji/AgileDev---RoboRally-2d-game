@@ -393,7 +393,7 @@ public class LGameBrain implements IToDTO {
         MusicPlayer.getInstance().stopPlaying();
         MusicPlayer.getInstance().playLoop("App/Resources/Music/offBoardSound.wav");
         long startTime = System.currentTimeMillis();
-        while(false||(System.currentTimeMillis()-startTime)<2800)
+        while(false||(System.currentTimeMillis()-startTime)<2600)
         {
             // do nothing for 1500ms
         }
