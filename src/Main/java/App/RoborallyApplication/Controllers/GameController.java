@@ -40,14 +40,6 @@ public class GameController {
         applicationController.changePanel(viewToChangeTo);
     }
 
-    public void updateOrderedCardDeckView(LPlayer player) {
-        /*UserOrderedCardDeckView orderedDeckView = cardDeckController.getUserOrderedDeckView();
-        orderedDeckView.clearCardSlots();
-        for (AbCardProgramming card : player.getCardSequence().getCardSequence()) {
-            orderedDeckView.addCard(card);
-        }*/
-    }
-
     public LPlayer getPlayerWithoutCardSequence(){
         return gameBrain.getPlayerWithoutCardSequence();
     }

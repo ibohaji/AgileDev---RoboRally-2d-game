@@ -5,12 +5,10 @@ import Utils.JsonHelper;
 import Utils.MapGenerator;
 import Utils.MusicPlayer;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LGameBrain implements IToDTO {
     private UUID id;
@@ -458,7 +456,7 @@ public class LGameBrain implements IToDTO {
             case WEST -> pushRobot(robotAtCoordinate, EnumDirection.EAST);
         }
     }
-    public void setRobotChekcpointDone(LRobot robot){
+    public void setRobotCheckpointDone(LRobot robot){
         if (this.getGameboard().getTileFromCoordinate(
                 robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
                 EnumTileType.CHECKPOINT) {

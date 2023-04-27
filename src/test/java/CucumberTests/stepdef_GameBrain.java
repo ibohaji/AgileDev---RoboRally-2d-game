@@ -252,7 +252,7 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain check how many checkpoints a robot has reached")
     public void GameBrain_check_how_many_checkpoints_a_robot_has_reached() {
-        t_gamebrain.setRobotChekcpointDone(t_robot);
+        t_gamebrain.setRobotCheckpointDone(t_robot);
         assertTrue(t_robot.getCheckpointsDone().contains(t_tile.getCoordinates()));
 
         t_robot = null;
