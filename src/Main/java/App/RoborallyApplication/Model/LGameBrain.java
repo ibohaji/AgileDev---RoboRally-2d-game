@@ -15,7 +15,7 @@ public class LGameBrain implements IToDTO {
     private LGameboard gameboard = null;
     private ArrayList<LPlayer> players;
     private EnumGamePhase currentEnumGamePhase;
-
+    public LPlayer winner;
     /**
      * Constructor for restoring
      */
@@ -98,6 +98,7 @@ public class LGameBrain implements IToDTO {
             if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
                 setCurrentGamePhase(EnumGamePhase.GAME_OVER);
                 // SOMEBODY WON <-------
+                setWinner(player); // <---- Assuming the player above reached the finishPoint?
             }
         }
     }
@@ -131,18 +132,27 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
-    public LPlayer getPlayerWhoWon(){
-        //TODO
-        // asap
-        return null;
+
+    public boolean canGameContinue(){
+        return !isThereAWinner() && this.players.size() > 0;
+    }
+
+
+// -> Winner methods <-
+
+// ---------------------------------------
+    public void setWinner(LPlayer player){
+        this.winner = player;
+    }
+    public String getPlayerWhoWon(){
+        return winner.getDisplayName();
     }
 
     public boolean isThereAWinner(){
-        //TODO
-        // asap
-        return false;
+        return winner != null;
     }
 
+// ---------------------------------------
 
     // -------------------------------------------------------------------------//
     // CARD SEQUENCE LOGIC
