@@ -13,9 +13,7 @@ public class IOHelper {
             FileWriter myWriter = new FileWriter(filePath);
             myWriter.write(content);
             myWriter.close();
-            System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
-            System.out.println("An error occurred in file writing.");
             e.printStackTrace();
         }
     }

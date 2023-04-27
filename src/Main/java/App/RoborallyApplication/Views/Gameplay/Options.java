@@ -35,7 +35,6 @@ public class Options extends GameView {
         saveGame.setFont(Fonts.LARGE);
         saveGame.addActionListener(e -> {
             gameController.saveGame();
-            System.out.println("NEW GAMESTATE SAVED");
         });
         return saveGame;
 
@@ -45,7 +44,6 @@ public class Options extends GameView {
         exitGame.setFont(Fonts.LARGE);
         exitGame.addActionListener(e -> {
             gameController.quitGame();
-            System.out.println("USER EXITED GAME");
         });
         return exitGame;
     }

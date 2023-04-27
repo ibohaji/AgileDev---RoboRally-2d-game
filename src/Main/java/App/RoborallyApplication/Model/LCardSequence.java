@@ -36,7 +36,6 @@ public class LCardSequence {
      */
     public AbCardProgramming getLastMovementCard(){
         if(this.cardSequence.isEmpty()){
-            System.out.println("Card sequence is empty");
             return null;
         }
         for (int i = this.cardSequence.size(); i > 0; i--) {

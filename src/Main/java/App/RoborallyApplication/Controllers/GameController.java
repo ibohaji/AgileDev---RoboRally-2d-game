@@ -20,7 +20,6 @@ public class GameController {
     }
 
     public void updateControllerState(){
-        System.out.println(gameBrain.getCurrentGamePhase());
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
             this.controller = new ProgrammingPhaseController(this, gameBrain);
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {

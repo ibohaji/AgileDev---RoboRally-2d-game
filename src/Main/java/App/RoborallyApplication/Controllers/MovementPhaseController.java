@@ -3,6 +3,7 @@ package App.RoborallyApplication.Controllers;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.MovementPhaseView;
+import Utils.Waiter;
 
 import javax.swing.*;
 
@@ -23,6 +24,9 @@ public class MovementPhaseController extends AbPhaseController{
         timer.addActionListener(e -> {
             if(!this.gameBrain.areThereMovementsLeftInThisRound()){
                 timer.stop();
+                this.view = new MovementPhaseView(this.gameController, gameBrain);
+                gameController.updateView(this.view);
+                Waiter.getInstance().waitForXMilliseconds(2000);
                 gameBrain.endRound();
                 gameController.updateControllerState();
             } else {
@@ -34,6 +38,7 @@ public class MovementPhaseController extends AbPhaseController{
                     this.gameBrain.removeFirstCardForPlayer(player);
                     if(!gameBrain.areThereMovementsLeftInThisRound()){
                         timer.stop();
+                        Waiter.getInstance().waitForXMilliseconds(2000);
                         gameBrain.endRound();
                         gameController.updateControllerState();
                     }

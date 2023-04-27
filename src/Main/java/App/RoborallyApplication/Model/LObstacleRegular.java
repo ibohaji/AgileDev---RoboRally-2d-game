@@ -24,7 +24,6 @@ public class LObstacleRegular extends AbObstacle{
         if(this.obstacleClassification.equals(EnumObstacleClassification.KNOWN_OBSTACLE)){
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
             if(this.obstacleType.equals(EnumObstacleType.PIT)){
-                System.out.println("PIT");
                 gameBrain.putRobotToRandomStartPoint(robot);
             }
             if(robot.getNrOfLives() <= 0){

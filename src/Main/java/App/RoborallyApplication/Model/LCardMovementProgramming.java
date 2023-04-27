@@ -38,13 +38,8 @@ public class LCardMovementProgramming extends AbCardProgramming {
                     gameBrain.putRobotToRandomStartPoint(robot);
                 }
             } else {
-                System.out.println("OLD POSITION: " + currentPos);
-                System.out.println("NEW POSITION: " + newPos);
                 pushIfOccupied(gameBrain, newPos, directionOfRobot);
-                System.out.println("Looking for tile in: " + newPos.x + "&" + newPos.y);
                 LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
-                System.out.println("Did we find newpositionTile? => " + (newPositionTile != null));
-                // check for obstacle on tile
                 if(newPositionTile.doesTileHaveObstacle()){
                     robot.setCords(newPos);
                     gameBrain.robotStepOnObstacleNEW(gameBrain.getObstacleFromCoordinateNEW(newPos.x, newPos.y), robot);
@@ -59,7 +54,6 @@ public class LCardMovementProgramming extends AbCardProgramming {
     private void pushIfOccupied(LGameBrain gameBrain, Point newPos, EnumDirection directionOfRobot) {
         boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
         if (isTileOccupiedByAnotherRobot){
-            System.out.println("Tile was occupied by another robot, pushing");
             LRobot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
             // push robotAtCoordinate
             switch (directionOfRobot){

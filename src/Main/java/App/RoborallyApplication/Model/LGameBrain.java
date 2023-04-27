@@ -4,6 +4,7 @@ import App.DTO.GameBrainDTO;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
 import Utils.MusicPlayer;
+import Utils.Waiter;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -294,7 +295,6 @@ public class LGameBrain implements IToDTO {
         return robots;
     }
     public void removeRobot(LRobot robot){
-        System.out.println("Robot from " + robot.getPlayer().getDisplayName() + " was removed from game");
         this.gameboard.removeRobot(robot);
         if(!canGameContinue()){
             setCurrentGamePhase(EnumGamePhase.GAME_OVER);
@@ -390,21 +390,14 @@ public class LGameBrain implements IToDTO {
     public void putRobotToRandomStartPoint(LRobot robot){
         MusicPlayer.getInstance().stopPlaying();
         MusicPlayer.getInstance().playLoop("App/Resources/Music/offBoardSound.wav");
-        long startTime = System.currentTimeMillis();
-        while(false||(System.currentTimeMillis()-startTime)<2600)
-        {
-            // do nothing for 1500ms
-        }
+        Waiter.getInstance().waitForXMilliseconds(2000);
         MusicPlayer.getInstance().stopPlaying();
         MusicPlayer.getInstance().playLoop("App/Resources/Music/lobbyMusic.wav");
-        System.out.println("PUTTING ROBOT TO RANDOM START POINT");
         ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
         Random rnd = new Random();
         int index = rnd.nextInt(available_startpoints.size());
-        System.out.println("Before moving: " + robot.getCords());
         robot.setCords(available_startpoints.get(index).getCoordinates());
         robot.setDirection(EnumDirection.NORTH);
-        System.out.println("After moving: " + robot.getCords());
     }
     // -------------------------------------------------------------------------//
     // GAMESTATE METHODS
