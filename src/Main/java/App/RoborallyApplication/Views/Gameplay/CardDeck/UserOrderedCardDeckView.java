@@ -79,4 +79,10 @@ public class UserOrderedCardDeckView extends GameView {
         });
         return buttonToRemove;
     }
+
+    public void clearCardSlots() {
+        cardSlotsPanel.removeAll();
+        revalidate();
+        repaint();
+    }
 }

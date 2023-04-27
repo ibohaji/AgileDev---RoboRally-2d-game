@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Controllers;
 
 import App.RoborallyApplication.Model.*;
+import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
 import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.Options;
@@ -72,6 +73,14 @@ public class GameController {
 
     private void changeView(GameView viewToChangeTo){
         this.view = viewToChangeTo;
+    }
+
+    public void updateOrderedCardDeckView(LPlayer player) {
+        UserOrderedCardDeckView orderedDeckView = cardDeckController.getUserOrderedDeckView();
+        orderedDeckView.clearCardSlots();
+        for (AbCardProgramming card : player.getCardSequence().getCardSequence()) {
+            orderedDeckView.addCard(card);
+        }
     }
 
     public LPlayer getPlayerWithoutCardSequence(){
