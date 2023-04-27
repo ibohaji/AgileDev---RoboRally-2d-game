@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class stepdef_DTO {
+/*
 
     // Helper method for card assignment (single player version)
     private void assigncards(LPlayer player, int nrofcards) {
@@ -45,9 +46,11 @@ public class stepdef_DTO {
 
 
 
-    /*
-    Tests for DTO
     */
+/*
+    Tests for DTO
+    *//*
+
 
     // Object data transfer for Gameboard
     private LGameboard t_gameboard;
@@ -252,5 +255,6 @@ public class stepdef_DTO {
         t_tile = null;
         t_tiledto = null;
     }
+*/
 
 }

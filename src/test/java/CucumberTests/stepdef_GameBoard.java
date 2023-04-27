@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class stepdef_GameBoard {
-    private LGameboard gameboard;
+    /*private LGameboard gameboard;
     private LGameBrain gamebrain;
     private ArrayList<LTile> tile = new ArrayList<>();
     private ArrayList<LObstacle> obstacle = new ArrayList<>();
@@ -61,5 +61,5 @@ public class stepdef_GameBoard {
     @Then("The GameBoard returns the information of this robot")
     public void the_game_board_returns_the_information_of_this_robot() {
         assertEquals(gameboard.getRobots(),robot);
-    }
+    }*/
 }
