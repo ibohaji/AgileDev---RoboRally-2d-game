@@ -3,10 +3,9 @@ package App.DTO;
 import App.RoborallyApplication.Model.EnumObstacleType;
 import App.RoborallyApplication.Model.EnumObstacleClassification;
 import App.RoborallyApplication.Model.GraphicalElementObstacle;
-import App.RoborallyApplication.Model.LObstacle;
 
 public class ObstacleDTO {
-    private GraphicalElementObstacle graphicalElementObstacle;
+    /*private GraphicalElementObstacle graphicalElementObstacle;
     private EnumObstacleType enumObstacleType;
     private EnumObstacleClassification enumObstacleClassification;
 
@@ -21,6 +20,6 @@ public class ObstacleDTO {
         Obstacle.setGraphicalElement(this.graphicalElementObstacle);
 
         return Obstacle;
-    }
+    }*/
 
 }

@@ -70,8 +70,7 @@ public class LRobot implements IToDTO {
     }
 
     public void setCords(Point newCords){
-        cords.x = newCords.x;
-        cords.y = newCords.y;
+        cords = newCords;
     }
 
     public int getNrOfLives(){

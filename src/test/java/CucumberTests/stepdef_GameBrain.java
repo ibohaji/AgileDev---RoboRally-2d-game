@@ -1,7 +1,6 @@
 package CucumberTests;
 
 import App.RoborallyApplication.Model.*;
-import App.RoborallyApplication.Model.LObstacle;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Model.LRobot;
 import App.RoborallyApplication.Model.LTile;

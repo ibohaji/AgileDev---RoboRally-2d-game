@@ -105,8 +105,6 @@ public class LGameboard implements IToDTO {
         }
         return null;
     }
-
-
     public LRobot getRobotFromCoordinate(Integer x, Integer y){
         for (LRobot robot: robots) {
             if(robot.getCords().x == x && robot.getCords().y == y){

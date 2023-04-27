@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class LCardMovementProgramming extends AbCardProgramming {
     private int steps;
-
     private GraphicalElement graphicalElement = new GraphicalElement();
     public LCardMovementProgramming(int steps){
         this.steps = steps;
@@ -36,15 +35,19 @@ public class LCardMovementProgramming extends AbCardProgramming {
                     gameBrain.removeRobot(robot);
                     gameBrain.findPlayerByRobot(robot);
                 }
+                gameBrain.putRobotToRandomStartPoint(robot);
             } else {
                 pushIfOccupied(gameBrain, newPos, directionOfRobot);
+                System.out.println("Looking for tile in: " + newPos.x + "&" + newPos.y);
                 LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
+                System.out.println("Did we find newpositionTile? => " + (newPositionTile != null));
                 // check for obstacle on tile
                 if(newPositionTile.doesTileHaveObstacle()){
                     gameBrain.robotStepOnObstacleNEW(gameBrain.getObstacleFromCoordinateNEW(newPos.x, newPos.y), robot);
+                } else {
+                    robot.setCords(newPos);
                 }
-                // set new coordinate
-                robot.setCords(newPos);
+
             }
         }
     }
