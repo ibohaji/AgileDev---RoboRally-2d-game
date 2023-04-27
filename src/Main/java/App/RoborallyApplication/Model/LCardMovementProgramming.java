@@ -10,11 +10,11 @@ public class LCardMovementProgramming extends AbCardProgramming {
     public LCardMovementProgramming(int steps){
         this.steps = steps;
         if (steps == 1) {
-            this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.MOVEMENT_CARD_1);
+            this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.MOVEMENT_CARD_1);
         } else if (steps == 2) {
-            this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.MOVEMENT_CARD_2);
+            this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.MOVEMENT_CARD_2);
         } else if (steps == 3) {
-            this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.MOVEMENT_CARD_3);
+            this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.MOVEMENT_CARD_3);
         }    }
 
 
@@ -41,8 +41,7 @@ public class LCardMovementProgramming extends AbCardProgramming {
                 LTile newPositionTile = gameBrain.getGameboard().getTileFromCoordinate(newPos.x, newPos.y);
                 // check for obstacle on tile
                 if(newPositionTile.doesTileHaveObstacle()){
-                    System.out.println("Looking for obstacle from: " + newPos.x +"&" + newPos.y);
-                    gameBrain.robotStepOnObstacle(robot, gameBrain.getObstacleFromCoordinate(newPos.x, newPos.y), newPos);
+                    gameBrain.robotStepOnObstacleNEW(gameBrain.getObstacleFromCoordinateNEW(newPos.x, newPos.y), robot);
                 }
                 // set new coordinate
                 robot.setCords(newPos);

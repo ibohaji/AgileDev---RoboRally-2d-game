@@ -1,14 +1,12 @@
 package App.RoborallyApplication.Model;
 
-import Utils.ImageUtils;
-
 import javax.swing.*;
 
 public class LCardAgainProgramming extends AbCardProgramming {
     private GraphicalElement graphicalElement = new GraphicalElement();
 
     public LCardAgainProgramming(){
-        this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.AGAIN_CARD);
+        this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.AGAIN_CARD);
     }
 
     @Override

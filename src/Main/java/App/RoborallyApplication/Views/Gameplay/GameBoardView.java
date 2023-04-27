@@ -24,7 +24,7 @@ public class GameBoardView extends GameView{
         // GRID
         int scaling = gameConfiguration.getScalingSizeForTile();
         ImageIcon scaledDefaultFloor = ImageUtils.scaledImageIcon(new ImageIcon(
-                ImageUtils.getImage(EnumGraphicalElementMain.DEFAULT_FLOOR.getElementLocation())),
+                ImageUtils.getImage(EnumImageGraphics.DEFAULT_FLOOR.getElementLocation())),
                 scaling,
                 scaling);
 

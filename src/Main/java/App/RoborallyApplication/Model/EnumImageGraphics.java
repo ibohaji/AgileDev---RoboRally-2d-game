@@ -2,7 +2,7 @@ package App.RoborallyApplication.Model;
 
 import java.io.File;
 
-public enum EnumGraphicalElementMain {
+public enum EnumImageGraphics {
     DEFAULT_FLOOR("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "floor.png"),
     OBSTACLE_UNKNOWN_EXPLOSIVE("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "UnknownExplosiveTile.png"),
     OBSTACLE_EXPLOSIVE_ACID("App" + File.separator + "Resources" + File.separator + "Tiles" + File.separator + "ExplosiveAcidTile.png"),
@@ -42,24 +42,13 @@ public enum EnumGraphicalElementMain {
 
     private String pictureFile;
 
-    private EnumGraphicalElementMain(String pictureFile) {
+    private EnumImageGraphics(String pictureFile) {
         this.pictureFile = pictureFile;
-    }
-
-    public String getPictureFile() {
-        return pictureFile;
     }
 
     public String getElementLocation(){
         String imageLocationFolder = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java";
         return imageLocationFolder + File.separator + this.pictureFile;
-    }
-    public int getElementOrdinal(){
-        return this.ordinal();
-    }
-
-    public static void main(String[] args) {
-
     }
 
 }

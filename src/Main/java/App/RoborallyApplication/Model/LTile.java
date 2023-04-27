@@ -12,11 +12,10 @@ public class LTile implements IToDTO {
     private Integer yCoordinate;
     private GraphicalElementTile graphicalElement;
     protected EnumTileType enumTileType;
-    private LObstacle obstacle;
+    private AbObstacle newObstacle;
 
     public LTile(int xCoordinate, int yCoordinate, EnumTileType enumTileType){
         this.id = UUID.randomUUID();
-        this.obstacle = null;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new GraphicalElementTile();
@@ -36,18 +35,19 @@ public class LTile implements IToDTO {
         return graphicalElement;
     }
 
-    public void setGraphicalElement(EnumGraphicalElementMain enumGraphicalElementMain, EnumDifficulty difficulty){
-        this.graphicalElement.setTileGraphicalElement(enumGraphicalElementMain, difficulty);
+    public void setGraphicalElement(EnumImageGraphics enumImageGraphics, EnumDifficulty difficulty){
+        this.graphicalElement.setTileGraphicalElement(enumImageGraphics, difficulty);
     }
 
     public void setGraphicalElement(GraphicalElementTile graphicalElementTile) {
+        //TODO
+        // get rid of this
         this.graphicalElement = graphicalElementTile;
     }
 
     public boolean doesTileHaveObstacle(){
-        return this.obstacle != null;
+        return this.newObstacle != null;
     }
-
     public boolean doesTileHaveCheckpoint(){
         return this.enumTileType.equals(EnumTileType.CHECKPOINT);
     }
@@ -59,7 +59,6 @@ public class LTile implements IToDTO {
     public boolean isTileStartPoint(){
         return this.enumTileType.equals(EnumTileType.START);
     }
-
     @Override
     public String toString() {
         return "Tile object. X coordinate: " + this.xCoordinate + " Y coordinate: " + this.yCoordinate +
@@ -77,12 +76,11 @@ public class LTile implements IToDTO {
         return null;
     }
 
-    public LObstacle getObstacle() {
-        return obstacle;
+    public void setNewObstacle(AbObstacle obstacle){
+        this.newObstacle = obstacle;
     }
-
-    public void setObstacle(LObstacle obstacle) {
-        this.obstacle = obstacle;
+    public AbObstacle getNewObstacle(){
+        return this.newObstacle;
     }
 
 

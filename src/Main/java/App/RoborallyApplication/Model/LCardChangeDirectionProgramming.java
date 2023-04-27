@@ -10,13 +10,13 @@ public class LCardChangeDirectionProgramming extends AbCardProgramming {
         turn = enumTurnType;
         switch (turn) {
             case LEFT:
-                this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.LEFT_TURN_CARD);
+                this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.LEFT_TURN_CARD);
                 break;
             case RIGHT:
-                this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.RIGHT_TURN_CARD);
+                this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.RIGHT_TURN_CARD);
                 break;
             case U_TURN:
-                this.graphicalElement.setCardGraphicalElement(EnumGraphicalElementMain.U_TURN_CARD);
+                this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.U_TURN_CARD);
                 break;
         }
 

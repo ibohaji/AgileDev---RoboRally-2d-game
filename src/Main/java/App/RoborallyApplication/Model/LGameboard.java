@@ -52,11 +52,22 @@ public class LGameboard implements IToDTO {
 
     public ArrayList<LObstacle> getObstacles(){return this.obstacles;}
 
-    public LObstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
+    public AbObstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
         for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
                 if(tile.getCoordinates().x == xCoordinate && tile.getCoordinates().y == yCoordinate){
-                    return tile.getObstacle();
+                    return tile.getNewObstacle();
+                }
+            }
+        }
+        return null;
+    }
+
+    public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
+        for(LTile tile: tiles){
+            if(tile.doesTileHaveObstacle()){
+                if(tile.getCoordinates().x == x && tile.getCoordinates().y == y){
+                    return tile.getNewObstacle();
                 }
             }
         }

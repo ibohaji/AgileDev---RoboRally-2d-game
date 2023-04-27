@@ -175,58 +175,37 @@ public class LGameBrain implements IToDTO {
 
     // -------------------------------------------------------------------------//
     // OBSTACLE METHODS
-    public LObstacle chooseUnknownObstacle(LTile tile){   // <--- Very weird method???
-        boolean robot_on_unknown = false;
-        for (LPlayer player : this.players) {
-            if (player.getRobot().getCords().equals(tile.getCoordinates())) {
-                robot_on_unknown = true;
-            }
-        }
-
-        if (robot_on_unknown) {
-            Random rnd = new Random();
-            float chance = rnd.nextFloat(1);
-            if (chance < 0.6) { // acid
-                return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
-            } else if (chance < 0.8) { // radiation
-                return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
-            } else { // pit
-                return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
-            }
-        }
-
-        return tile.getObstacle();
-    }
-
-    public LObstacle getRandomObstacle(){
+    public EnumObstacleType getRandomObstacleType(){
         Random rnd = new Random();
         float val = rnd.nextFloat(1);
         if (val < 0.3) { // ACID
-            return new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
-        } else if (val < 0.6) { // RADIATION
-            return new LObstacle(EnumObstacle.RADIATION, EnumObstacleType.KNOWN_OBSTACLE);
-        } else if (val < 0.8 ){ // PIT
-            return new LObstacle(EnumObstacle.PIT, EnumObstacleType.KNOWN_OBSTACLE);
+            return EnumObstacleType.ACID;
+        } else if (val < 0.7) { // RADIATION
+            return EnumObstacleType.RADIATION;
         } else {
-            return new LObstacle(EnumObstacle.HEALING, EnumObstacleType.KNOWN_OBSTACLE);
+            return EnumObstacleType.HEALING;
         }
     }
-    public LObstacle getObstacleFromCoordinate(Integer x, Integer y) {
-        return this.gameboard.getObstacleFromCoordinate(x, y);
+    public AbObstacle getObstacleFromCoordinate(Integer x, Integer y) {
+        return this.gameboard.getObstacleFromCoordinateNEW(x, y);
     }
 
-    public void explodeObstacleToTiles(ArrayList<LTile> tiles, EnumObstacle obstacle){
+    public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
+        return this.gameboard.getObstacleFromCoordinateNEW(x, y);
+    }
+
+    public void explodeObstacleToTilesNEW(ArrayList<LTile> tiles, EnumObstacleType obstacleType){
         for (LTile tile: tiles) {
             if(!tile.doesTileHaveObstacle()){
-                tile.setObstacle(new LObstacle(obstacle, EnumObstacleType.KNOWN_OBSTACLE));
-                if(obstacle.getDeclaringClass().isInstance(EnumObstacle.ACID)){
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, gameConfig.getDifficulty());
-                } else if (obstacle.getDeclaringClass().isInstance(EnumObstacle.HEALING)) {
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, gameConfig.getDifficulty());
-                } else if (obstacle.getDeclaringClass().isInstance(EnumObstacle.PIT)) {
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_PIT, gameConfig.getDifficulty());
-                } else if (obstacle.getDeclaringClass().isInstance(EnumObstacle.RADIATION)) {
-                    tile.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_RADIATION, gameConfig.getDifficulty());
+                tile.setNewObstacle(new LObstacleRegular(obstacleType, EnumObstacleClassification.KNOWN_OBSTACLE));
+                if(obstacleType.getDeclaringClass().isInstance(EnumObstacleType.ACID)){
+                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, gameConfig.getDifficulty());
+                } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.HEALING)) {
+                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, gameConfig.getDifficulty());
+                } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.PIT)) {
+                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_PIT, gameConfig.getDifficulty());
+                } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.RADIATION)) {
+                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_RADIATION, gameConfig.getDifficulty());
                 } else {
                     throw new RuntimeException("Problem in explodeObstacleToTiles() with obstacle type. Should never happen");
                 }
@@ -236,34 +215,34 @@ public class LGameBrain implements IToDTO {
     }
 
     protected void updateGraphicalElementOnTile(LTile tileToUpdate){
-        LObstacle obs = tileToUpdate.getObstacle();
+        LObstacleRegular obs = (LObstacleRegular)tileToUpdate.getNewObstacle();
         EnumDifficulty diff = gameConfig.getDifficulty();
-        if(obs.getObstacleTypeEnum().ordinal() == 1 || obs.getObstacleTypeEnum().ordinal() == 2){ // Known and Explosive known
-            if(obs.getObstacleEnum().equals(EnumObstacle.PIT)){
-                tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_PIT, diff);
-            } else if (obs.getObstacleEnum().equals(EnumObstacle.RADIATION)) {
-                if (obs.getObstacleTypeEnum().ordinal() == 1) {
-                    tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_RADIATION, diff);
+        if(obs.getObstacleClassification().ordinal() == 1 || obs.getObstacleClassification().ordinal() == 2){ // Known and Explosive known
+            if(obs.getObstacleType().equals(EnumObstacleType.PIT)){
+                tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_PIT, diff);
+            } else if (obs.getObstacleType().equals(EnumObstacleType.RADIATION)) {
+                if (obs.getObstacleClassification().ordinal() == 1) {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_RADIATION, diff);
                 } else {
-                    tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_RADIATION, diff);
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_RADIATION, diff);
                 }
-            } else if (obs.getObstacleEnum().equals(EnumObstacle.HEALING)) {
-                if (obs.getObstacleTypeEnum().ordinal() == 1) {
-                    tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, diff);
+            } else if (obs.getObstacleType().equals(EnumObstacleType.HEALING)) {
+                if (obs.getObstacleClassification().ordinal() == 1) {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
                 } else {
                     //TODO
                     // graphics for explosive healing missing?
-                    tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_HEALING, diff);
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
                 }
             } else { // ACID
-                if (obs.getObstacleTypeEnum().ordinal() == 1) {
-                    tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, diff);
+                if (obs.getObstacleClassification().ordinal() == 1) {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, diff);
                 } else {
-                    tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_EXPLOSIVE_ACID, diff);
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_ACID, diff);
                 }
             }
         } else{ // Explosive unknown
-            tileToUpdate.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_UNKNOWN_EXPLOSIVE, gameConfig.getDifficulty());
+            tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_UNKNOWN_EXPLOSIVE, gameConfig.getDifficulty());
         }
     }
 
@@ -281,7 +260,6 @@ public class LGameBrain implements IToDTO {
         }
         return null;
     }
-
     public LPlayer getPlayerWhoIsCurrentlyMoving(){
         for (LPlayer player: players) {
             if (player.doesPlayerHaveMovesLeft()){
@@ -305,7 +283,10 @@ public class LGameBrain implements IToDTO {
         return robots;
     }
     public void removeRobot(LRobot robot){
+        System.out.println("Robot from " + robot.getPlayer().getDisplayName() + " was removed from game");
         this.gameboard.removeRobot(robot);
+        //TODO
+        // no robots left -> end game
     }
     public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
         Point pos = robotBeingPushed.getCords();
@@ -345,25 +326,8 @@ public class LGameBrain implements IToDTO {
             player.setCardSequenceToNull();
         }
     }
-
-    protected void robotStepOnObstacle(LRobot robot, LObstacle obstacle, Point pos){
-        if(obstacle.getObstacleTypeEnum().equals(EnumObstacleType.KNOWN_OBSTACLE)){
-            obstacle.DoDamage(robot);
-        } else if (obstacle.getObstacleTypeEnum().equals(EnumObstacleType.EXPLOSIVE_KNOWN)) {
-            obstacle.DoDamage(robot);
-            explodeObstacleToTiles(gameboard.getTilesSurroundingCoordinate(pos.x, pos.y), obstacle.getObstacleEnum());
-        } else if (obstacle.getObstacleTypeEnum().equals(EnumObstacleType.EXPLOSIVE_UNKNOWN)) {
-            LObstacle newObs = getRandomObstacle();
-            LTile tile = gameboard.getTileFromCoordinate(pos.x, pos.y);
-            tile.setObstacle(newObs);
-            // change obstacle properties
-            obstacle.DoDamage(robot);
-            explodeObstacleToTiles(gameboard.getTilesSurroundingCoordinate(pos.x, pos.y), obstacle.getObstacleEnum());
-        }
-        if(robot.getNrOfLives() < 1){
-            removePlayer(robot.getPlayer());
-            removeRobot(robot);
-        }
+    protected void robotStepOnObstacleNEW(AbObstacle obstacle, LRobot robot){
+        obstacle.applyEffect(robot, this);
     }
 
     // -------------------------------------------------------------------------//
@@ -484,21 +448,5 @@ public class LGameBrain implements IToDTO {
         int pos_y = robot.getCords().y;
         LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
         return !tile.doesTileHaveObstacle();
-    }
-    public void activateExplosive(LTile tile) {
-        boolean robot_on_explosive = false;
-        for (LPlayer player : this.players) {
-            if (player.getRobot().getCords().equals(tile.getCoordinates())) {
-                robot_on_explosive = true;
-            }
-        }
-
-        ArrayList<LTile> acidpool = this.gameboard.getTilesSurroundingCoordinate(tile.getCoordinates().x, tile.getCoordinates().y);
-        if (robot_on_explosive) {
-            for (LTile tilepool : acidpool) {
-                tilepool.setObstacle(new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE));
-                tilepool.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, this.gameConfig.getDifficulty());
-            }
-        }
     }
 }

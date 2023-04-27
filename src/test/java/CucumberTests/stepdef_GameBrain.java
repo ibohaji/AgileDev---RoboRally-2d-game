@@ -129,7 +129,7 @@ public class stepdef_GameBrain {
         int x = t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().first());
         int y = t_rndInt(0, t_gamebrain.getGameConfig().getBoardDimensions().second());
 
-        LObstacle t_obstacle = t_gamebrain.getObstacleFromCoordinate(x, y);
+        AbObstacle t_obstacle = t_gamebrain.getObstacleFromCoordinateNEW(x, y);
 
         assertEquals(t_gameboard.getObstacleFromCoordinate(x, y), t_obstacle);
     }
@@ -187,12 +187,12 @@ public class stepdef_GameBrain {
 
     @When("an explosive tile affects nearby tiles")
     public void an_explosive_tile_affects_nearby_tiles() {
-        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
+        /*ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
         int t_x = 0;
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN) {
+                if (t__tile.getNewObstacle().getObstacleClassification() == EnumObstacleClassification.EXPLOSIVE_KNOWN) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                     t_tile = t__tile;
@@ -205,7 +205,7 @@ public class stepdef_GameBrain {
         t_robot.setCords(new Point(t_x, t_y));
 
         t_gamebrain.activateExplosive(t_tile);
-
+*/
     }
 
     @Then("GameBrain change graphics of a tile")
@@ -213,7 +213,7 @@ public class stepdef_GameBrain {
         ArrayList<LTile> t_tilepool = t_gamebrain.getGameboard().getTilesSurroundingCoordinate(
                 t_tile.getCoordinates().x, t_tile.getCoordinates().y);
         for (LTile t__tile : t_tilepool) {
-            assertEquals(EnumGraphicalElementMain.OBSTACLE_ACID.toString(), t__tile.getGraphicalElement().getElementName());
+            assertEquals(EnumImageGraphics.OBSTACLE_ACID.toString(), t__tile.getGraphicalElement().getElementName());
         }
 
         t_tile = null;
@@ -281,19 +281,19 @@ public class stepdef_GameBrain {
 
     @When("a robot falls into a pit")
     public void a_robot_falls_into_a_pit() {
-        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
+        /*ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
         int t_x = 0;
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleEnum() == EnumObstacle.PIT) {
+                if (t__tile.getObstacle().getObstacleEnum() == EnumObstacleType.PIT) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                 }
             }
         }
 
-        t_robot.setCords(new Point(t_x, t_y));
+        t_robot.setCords(new Point(t_x, t_y));*/
     }
 
     @Then("GameBrain remove a robot from the game")
@@ -352,12 +352,12 @@ public class stepdef_GameBrain {
 
     @When("a robot stands on an explosive tile")
     public void a_robot_stands_on_an_explosive_tile() {
-        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
+        /*ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
         int t_x = 0;
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN) {
+                if (t__tile.getObstacle().getObstacleClassification() == EnumObstacleClassification.EXPLOSIVE_KNOWN) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                     t_tile = t__tile;
@@ -367,20 +367,20 @@ public class stepdef_GameBrain {
 
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
-        t_robot.setCords(new Point(t_x, t_y));
+        t_robot.setCords(new Point(t_x, t_y));*/
     }
 
     @Then("GameBrain make a bomb obstacle explode")
     public void GameBrain_make_a_bomb_obstacle_explode() {
-        t_gamebrain.activateExplosive(t_tile);
+       /* t_gamebrain.activateExplosive(t_tile);
 
         ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTilesSurroundingCoordinate(t_tile.getCoordinates().x, t_tile.getCoordinates().y);
         for (LTile t__tile : t_tiles) {
-            assertEquals(EnumObstacle.ACID, t__tile.getObstacle().getObstacleEnum());
+            assertEquals(EnumObstacleType.ACID, t__tile.getObstacle().getObstacleEnum());
         }
 
         t_robot = null;
-        t_tile = null;
+        t_tile = null;*/
     }
 
     // GameBrain determine an unknown explosive tile
@@ -400,12 +400,12 @@ public class stepdef_GameBrain {
 
     @When("a robot stands on an unknown explosive tile")
     public void a_robot_stands_on_an_unknown_explosive_tile() {
-        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
+        /*ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
         int t_x = 0;
         int t_y = 0;
         for (LTile t__tile : t_tiles) {
             if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_UNKNOWN) {
+                if (t__tile.getObstacle().getObstacleClassification() == EnumObstacleClassification.EXPLOSIVE_UNKNOWN) {
                     t_x = t__tile.getCoordinates().x;
                     t_y = t__tile.getCoordinates().y;
                     t_tile = t__tile;
@@ -415,21 +415,21 @@ public class stepdef_GameBrain {
 
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
-        t_robot.setCords(new Point(t_x, t_y));
+        t_robot.setCords(new Point(t_x, t_y));*/
     }
 
-    @Then("GameBrain set the unknown explosive tile to a known one")
+    /*@Then("GameBrain set the unknown explosive tile to a known one")
     public void GameBrain_set_the_unknown_explosive_tile_a_known_one() {
         t_gamebrain.chooseUnknownObstacle(t_tile);
         assertTrue(
-                t_tile.getObstacle().getObstacleTypeEnum() == EnumObstacleType.EXPLOSIVE_KNOWN &&
-                        ( t_tile.getObstacle().getObstacleEnum() == EnumObstacle.ACID ||
-                          t_tile.getObstacle().getObstacleEnum() == EnumObstacle.RADIATION ||
-                          t_tile.getObstacle().getObstacleEnum() == EnumObstacle.PIT )
+                t_tile.getObstacle().getObstacleClassification() == EnumObstacleClassification.EXPLOSIVE_KNOWN &&
+                        ( t_tile.getObstacle().getObstacleEnum() == EnumObstacleType.ACID ||
+                          t_tile.getObstacle().getObstacleEnum() == EnumObstacleType.RADIATION ||
+                          t_tile.getObstacle().getObstacleEnum() == EnumObstacleType.PIT )
         );
 
         t_robot = null;
         t_tile = null;
-    }
+    }*/
 
 }

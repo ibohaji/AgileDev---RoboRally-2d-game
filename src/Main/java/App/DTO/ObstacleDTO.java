@@ -1,23 +1,23 @@
 package App.DTO;
 
-import App.RoborallyApplication.Model.EnumObstacle;
 import App.RoborallyApplication.Model.EnumObstacleType;
+import App.RoborallyApplication.Model.EnumObstacleClassification;
 import App.RoborallyApplication.Model.GraphicalElementObstacle;
 import App.RoborallyApplication.Model.LObstacle;
 
 public class ObstacleDTO {
     private GraphicalElementObstacle graphicalElementObstacle;
-    private EnumObstacle enumObstacle;
     private EnumObstacleType enumObstacleType;
+    private EnumObstacleClassification enumObstacleClassification;
 
     public ObstacleDTO(LObstacle obstacle) {
         this.graphicalElementObstacle = obstacle.getGraphicalElement();
-        this.enumObstacle = obstacle.getObstacleEnum();
-        this.enumObstacleType = obstacle.getObstacleTypeEnum();
+        this.enumObstacleType = obstacle.getObstacleEnum();
+        this.enumObstacleClassification = obstacle.getObstacleClassification();
     }
 
     public LObstacle returnObjectFromDTO() {
-        LObstacle Obstacle = new LObstacle(this.enumObstacle, this.enumObstacleType);
+        LObstacle Obstacle = new LObstacle(this.enumObstacleType, this.enumObstacleClassification);
         Obstacle.setGraphicalElement(this.graphicalElementObstacle);
 
         return Obstacle;

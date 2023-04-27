@@ -58,9 +58,9 @@ public class stepdef_DTO {
         ArrayList<LTile> t_tiles = new ArrayList<>();
         LTile t_tile1 = new LTile(0, 0, EnumTileType.DEFAULT_FLOOR);
         LTile t_tile2 = new LTile(0, 1, EnumTileType.OBSTACLE);
-        t_tile2.setObstacle(new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE));
-        t_tile1.setGraphicalElement(EnumGraphicalElementMain.DEFAULT_FLOOR, EnumDifficulty.EASY);
-        t_tile2.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, EnumDifficulty.EASY);
+        t_tile2.setNewObstacle(new LObstacleRegular(EnumObstacleType.ACID, EnumObstacleClassification.KNOWN_OBSTACLE));
+        t_tile1.setGraphicalElement(EnumImageGraphics.DEFAULT_FLOOR, EnumDifficulty.EASY);
+        t_tile2.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, EnumDifficulty.EASY);
         t_tiles.add(t_tile1);
         t_tiles.add(t_tile2);
         ArrayList<LRobot> t_robots = new ArrayList<>();
@@ -124,7 +124,7 @@ public class stepdef_DTO {
 
     @Given("Data prepared in Obstacle")
     public void data_prepared_in_Obstacle() {
-        t_obstacle = new LObstacle(EnumObstacle.ACID, EnumObstacleType.KNOWN_OBSTACLE);
+        t_obstacle = new LObstacle(EnumObstacleType.ACID, EnumObstacleClassification.KNOWN_OBSTACLE);
         t_obstacle.setGraphicalElement(new GraphicalElementObstacle());
 
     }
@@ -137,7 +137,7 @@ public class stepdef_DTO {
     @Then("Data exported out of Obstacle DTO")
     public void data_exported_out_of_Obstacle_DTO() {
         LObstacle t_dtoobstacle = t_obstacledto.returnObjectFromDTO();
-        assertEquals(t_obstacle.getObstacleTypeEnum(), t_dtoobstacle.getObstacleTypeEnum());
+        assertEquals(t_obstacle.getObstacleClassification(), t_dtoobstacle.getObstacleClassification());
         assertEquals(t_obstacle.getObstacleEnum(), t_dtoobstacle.getObstacleEnum());
         assertEquals(t_obstacle.getGraphicalElement(), t_dtoobstacle.getGraphicalElement());
 

@@ -9,10 +9,10 @@ public class LObstacle implements IToDTO {
     private UUID id;
     private Integer damage;
     private GraphicalElementObstacle graphicalElement;
-    private EnumObstacleType obstacleType;
-    private EnumObstacle obstacle;
+    private EnumObstacleClassification obstacleType;
+    private EnumObstacleType obstacle;
 
-    public LObstacle(EnumObstacle obstacle, EnumObstacleType obstacleType) {
+    public LObstacle(EnumObstacleType obstacle, EnumObstacleClassification obstacleType) {
         this.id = UUID.randomUUID();
         this.obstacleType = obstacleType;
         this.obstacle = obstacle;
@@ -21,7 +21,7 @@ public class LObstacle implements IToDTO {
     }
 
     // For EXPLOSIVE_UNKNOWN we should not have the EnumObstacle parameter predefined
-    public LObstacle(EnumObstacleType obstacleType) {
+    public LObstacle(EnumObstacleClassification obstacleType) {
         this.id = UUID.randomUUID();
         this.obstacleType = obstacleType;
         this.graphicalElement = new GraphicalElementObstacle();
@@ -48,14 +48,12 @@ public class LObstacle implements IToDTO {
         return this.id;
     }
 
-    public EnumObstacle getObstacleEnum() {
+    public EnumObstacleType getObstacleEnum() {
         return obstacle;
     }
-    //public void setObstacleEnum(EnumObstacle enumObstacle) { this.obstacle = enumObstacle; }
-    public EnumObstacleType getObstacleTypeEnum() {
+    public EnumObstacleClassification getObstacleClassification() {
         return obstacleType;
     }
-    //public void setObstacleTypeEnum(EnumObstacleType enumObstacleType) { this.obstacleType = enumObstacleType; }
     public GraphicalElementObstacle getGraphicalElement() { return this.graphicalElement; }
     public void setGraphicalElement(GraphicalElementObstacle graphicalElementObstacle) {this.graphicalElement = graphicalElementObstacle; }
 

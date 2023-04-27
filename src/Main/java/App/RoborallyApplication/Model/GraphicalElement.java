@@ -7,41 +7,31 @@ import java.awt.*;
 
 public class GraphicalElement {
 
-    protected EnumGraphicalElementMain enumGraphicalElementMain;
+    protected EnumImageGraphics enumImageGraphics;
     protected ImageIcon image = null;
     public GraphicalElement(){
 
     }
-    public void setTileGraphicalElement(EnumGraphicalElementMain graphicalElement, EnumDifficulty enumDifficultyForScaling){
-        this.enumGraphicalElementMain = graphicalElement;
+    public void setTileGraphicalElement(EnumImageGraphics graphicalElement, EnumDifficulty enumDifficultyForScaling){
+        this.enumImageGraphics = graphicalElement;
         switch (enumDifficultyForScaling){
             case EASY -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())), 60, 60);
+                    new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation())), 60, 60);
             case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())), 45, 45);
+                    new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation())), 45, 45);
             case HARD -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation())), 35, 35);
+                    new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation())), 35, 35);
         }
     }
-
-    public void setCardGraphicalElement(EnumGraphicalElementMain graphicalElement){
-        this.enumGraphicalElementMain = graphicalElement;
-        this.image = new ImageIcon(ImageUtils.getImage(this.enumGraphicalElementMain.getElementLocation()));
-    }
-
-    public int getGraphicalElementOrdinal(){
-        return this.enumGraphicalElementMain.getElementOrdinal();
+    public void setCardGraphicalElement(EnumImageGraphics graphicalElement){
+        this.enumImageGraphics = graphicalElement;
+        this.image = new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation()));
     }
     public String getElementName(){
-        return this.enumGraphicalElementMain.name();
+        return this.enumImageGraphics.name();
     }
 
     public ImageIcon getImage(){
         return this.image;
-    }
-
-    private void setImage(LTile tile, LGameBrain gameBrain){
-        Point location = new Point(tile.getCoordinates().x, tile.getCoordinates().y);
-        //tile.graphicalElement
     }
 }
