@@ -425,7 +425,7 @@ public class LGameBrain implements IToDTO {
     }
 
     // -------------------------------------------------------------------------//
-    // RANDOM
+    // RANDO
     private void push(Point newPos, EnumDirection directionOfRobot) {
         LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
         // push robotAtCoordinate

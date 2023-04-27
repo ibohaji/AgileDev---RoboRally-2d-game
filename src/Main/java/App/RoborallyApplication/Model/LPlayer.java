@@ -24,8 +24,6 @@ public class LPlayer implements IToDTO {
     }
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain) {
         robot.useProgrammingCard(card, gameBrain);
-        //this.usedCardSequence.addCard(card);
-        //this.orderedCardSequence.removeFirstCard();
     }
 
     protected void addCardToUsedSequence(AbCardProgramming card){
