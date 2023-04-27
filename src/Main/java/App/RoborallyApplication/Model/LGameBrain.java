@@ -221,25 +221,26 @@ public class LGameBrain implements IToDTO {
                 } else {
                     throw new RuntimeException("Problem in explodeObstacleToTiles() with obstacle type. Should never happen");
                 }
+                updateGraphicalElementOnTile(tile);
             }
-            updateGraphicalElementOnTile(tile);
         }
     }
 
     protected void updateGraphicalElementOnTile(LTile tileToUpdate){
         LObstacleRegular obs = (LObstacleRegular)tileToUpdate.getNewObstacle();
         EnumDifficulty diff = gameConfig.getDifficulty();
-        if(obs.getObstacleClassification().ordinal() == 1 || obs.getObstacleClassification().ordinal() == 2){ // Known and Explosive known
+        if(obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE) ||
+                obs.getObstacleClassification().equals(EnumObstacleClassification.EXPLOSIVE_KNOWN)){ // Known and Explosive known
             if(obs.getObstacleType().equals(EnumObstacleType.PIT)){
                 tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_PIT, diff);
             } else if (obs.getObstacleType().equals(EnumObstacleType.RADIATION)) {
-                if (obs.getObstacleClassification().ordinal() == 1) {
+                if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_RADIATION, diff);
                 } else {
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_RADIATION, diff);
                 }
             } else if (obs.getObstacleType().equals(EnumObstacleType.HEALING)) {
-                if (obs.getObstacleClassification().ordinal() == 1) {
+                if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
                 } else {
                     //TODO
@@ -247,7 +248,7 @@ public class LGameBrain implements IToDTO {
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
                 }
             } else { // ACID
-                if (obs.getObstacleClassification().ordinal() == 1) {
+                if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, diff);
                 } else {
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_ACID, diff);

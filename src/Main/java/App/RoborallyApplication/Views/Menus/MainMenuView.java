@@ -120,7 +120,6 @@ public class MainMenuView extends JPanel {
         createGameButton.setFont(Fonts.LARGE);
         createGameButton.addActionListener(e -> {
             int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
-            System.out.println(difficultyDropdown.getSelectedItem().toString());
             if (difficultyDropdown.getSelectedItem().toString().equals("HARD")){
                     controller.userClickPlay(EnumDifficulty.HARD, numOfPlayers, true);
                 } else if (difficultyDropdown.getSelectedItem().toString().equals("MEDIUM")) {

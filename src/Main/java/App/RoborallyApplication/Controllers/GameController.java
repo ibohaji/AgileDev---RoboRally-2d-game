@@ -20,6 +20,9 @@ public class GameController {
     }
 
     public void updateControllerState(){
+        if(!gameBrain.canGameContinue()){
+            this.applicationController.changePanel(new GameOverPanel(this, gameBrain));
+        }
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)){
             this.controller = new ProgrammingPhaseController(this, gameBrain);
         } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {

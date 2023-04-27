@@ -18,7 +18,7 @@ public class IOHelper {
         }
     }
 
-    public static ArrayList<String> readLinesFromFile(String filePath){
+    public static ArrayList<String> readLinesFromFile(String filePath) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -29,7 +29,7 @@ public class IOHelper {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            throw new IOException("Problem reading from file");
         }
         return lines;
     }
