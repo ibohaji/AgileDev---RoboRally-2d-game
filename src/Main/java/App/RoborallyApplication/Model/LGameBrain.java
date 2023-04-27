@@ -302,10 +302,10 @@ public class LGameBrain implements IToDTO {
     public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
         Point pos = robotBeingPushed.getCords();
         switch (directionOfPushOrigin){
-            case WEST -> pos.x -= 1;
-            case EAST -> pos.x += 1;
-            case SOUTH -> pos.y += 1;
-            case NORTH -> pos.y -= 1;
+            case WEST -> pos.x += 1;
+            case EAST -> pos.x -= 1;
+            case SOUTH -> pos.y -= 1;
+            case NORTH -> pos.y += 1;
         }
         if(!isPositionOnBoard(pos)){
             robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
@@ -313,6 +313,7 @@ public class LGameBrain implements IToDTO {
                 removeRobot(robotBeingPushed);
                 removePlayer(robotBeingPushed.getPlayer());
             } else {
+                System.out.println("Robot off board");
                 putRobotToRandomStartPoint(robotBeingPushed);
             }
         } else if(isPositionOnBoard(pos)){
@@ -393,6 +394,7 @@ public class LGameBrain implements IToDTO {
         int index = rnd.nextInt(available_startpoints.size());
         System.out.println("Before moving: " + robot.getCords());
         robot.setCords(available_startpoints.get(index).getCoordinates());
+        robot.setDirection(EnumDirection.NORTH);
         System.out.println("After moving: " + robot.getCords());
     }
 
