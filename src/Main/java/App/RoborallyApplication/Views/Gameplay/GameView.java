@@ -8,6 +8,7 @@ import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public abstract class GameView extends JPanel {
@@ -25,6 +26,7 @@ public abstract class GameView extends JPanel {
         JLabel gameNameLabel = new JLabel("ROBORALLY");
         gameNameLabel.setHorizontalTextPosition(SwingConstants.CENTER);
         gameNameLabel.setFont(Fonts.TITLE);
+        gameNameLabel.setBorder(new LineBorder(Color.BLACK));
         return gameNameLabel;
     }
 

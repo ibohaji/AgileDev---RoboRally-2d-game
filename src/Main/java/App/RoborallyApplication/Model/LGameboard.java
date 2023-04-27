@@ -118,6 +118,7 @@ public class LGameboard implements IToDTO {
         for (LRobot robot: robots) {
             Point location = robot.getCords();
             if(location.x == xCoordinate && location.y == yCoordinate){
+                System.out.println("TILE OCCUPIED AT: " + location.x + " & " + location.y);
                 return true;
             }
         }
