@@ -10,17 +10,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class LobbyAiView extends LobbyView{
+public class LobbyAiView extends LobbyView {
 
     private final LGameConfiguration gameConfiguration;
     private final LobbyController lobbyController;
     ArrayList<Tuple<String, Boolean>> playersInformation;
     JPanel namePanel;
 
-    public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration){
-        //TODO
-        // need checkbox after every namepanel to check whether AI player or not
-
+    public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration) {
         this.lobbyController = lobbyController;
         this.gameConfiguration = gameConfiguration;
         createView();
@@ -28,24 +25,25 @@ public class LobbyAiView extends LobbyView{
 
     private void createView() {
         playersInformation = new ArrayList<>();
-        JPanel namePanel;
-        int nrOfPlayers = gameConfiguration.getNrOfPlayers();
-        namePanel = new JPanel(new BorderLayout());
-        namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
-        namePanel.setPreferredSize(new Dimension(100, 50));
-        namePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        // namePanel.add(new JLabel(String.valueOf(i)), new GridBagConstraintsBuilder(i,0).build());
-        JTextField aiNameField = new JTextField("Player" +" "+ String.valueOf(1));
-        namePanel.add(aiNameField,new GridBagConstraintsBuilder(1,1).build());
-        add(namePanel, new GridBagConstraintsBuilder(1,0).build());
+        for (int i = 0; i < gameConfiguration.getNrOfPlayers(); i++) {
+            JPanel namePanel = new JPanel(new BorderLayout());
+            namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
+            namePanel.setPreferredSize(new Dimension(100, 50));
+            namePanel.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+            JTextField playerNameField = new JTextField("player" +" "+ String.valueOf(i+1));
+            namePanel.add(playerNameField,new GridBagConstraintsBuilder(1,i).build());
+            add(namePanel, new GridBagConstraintsBuilder(i,0).build());
 
-
+            if (i != 0){
+                JCheckBox checkBox = new JCheckBox("is AI");
+                checkBox.setBounds(100,100, 50,50);
+                add(checkBox, new GridBagConstraintsBuilder(i,1).build());
+            }
+        }
 
         JButton startGameButton = new JButton("START GAME");
         startGameButton.setFont(Fonts.LARGE);
-
         startGameButton.addActionListener(e -> {
-            //i want to retrive the userInput names from the namePanel above
             Component[] components = getComponents();
             for(Component component: components){
                 if(component instanceof JPanel){
@@ -54,9 +52,7 @@ public class LobbyAiView extends LobbyView{
                     for(Component subComponent: subComponents){
                         if(subComponent instanceof JTextField){
                             JTextField textField = (JTextField) subComponent;
-                            // TODO fix this to say true/false
-                            playersInformation.add(new Tuple<>(textField.getText(), true));
-
+                            playersInformation.add(new Tuple<>(textField.getText(),true));
                         }
                     }
                 }
@@ -64,11 +60,7 @@ public class LobbyAiView extends LobbyView{
             gameConfiguration.createPlayersFromLobby(playersInformation);
             lobbyController.userClickStartGame(gameConfiguration);
         });
-
-
         add(startGameButton);
+
     }
-
-
-
 }
