@@ -19,7 +19,7 @@ public class LobbyAiView extends LobbyView{
 
     public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration){
         //TODO
-        // need checkbox after every namepanel to check whether AI player or not
+        // need checkbox after every name panel to check whether AI player or not
 
         this.lobbyController = lobbyController;
         this.gameConfiguration = gameConfiguration;
