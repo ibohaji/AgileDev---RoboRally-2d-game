@@ -57,9 +57,6 @@ public class ProgrammingPhaseView extends GameView{
         submitButton.addActionListener(e -> {
             if(this.cardDeckController.getOrderedCardSequence().getSize() == 5){
                 this.controller.setPlayerCardSequence(this.player, this.cardDeckController.getOrderedCardSequence());
-                if(this.gameBrain.haveAllPlayersSubmittedSequence()){
-                    System.out.println("SEQUENCES ALL DONE");
-                }
             } else {
                 JOptionPane.showMessageDialog(null, "Please order all 5 cards!");
             }

@@ -37,7 +37,6 @@ public class MovementPhaseController extends AbPhaseController{
                         gameBrain.endRound();
                         gameController.updateControllerState();
                     }
-
                 }
             }
         });

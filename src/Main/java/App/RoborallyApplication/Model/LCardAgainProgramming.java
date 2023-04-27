@@ -12,7 +12,6 @@ public class LCardAgainProgramming extends AbCardProgramming {
     @Override
     public void useCard(LRobot robot, LGameBrain gameBrain) {
         LPlayer playerOfRobot = robot.getPlayer();
-        System.out.println(playerOfRobot.getDisplayName());
         AbCardProgramming lastCardUsed = playerOfRobot.getLastCard();
         if(lastCardUsed != null){
             lastCardUsed.useCard(robot, gameBrain);;

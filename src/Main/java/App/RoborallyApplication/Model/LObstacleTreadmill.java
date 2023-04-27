@@ -20,6 +20,8 @@ public class LObstacleTreadmill extends AbObstacle{
         }
         robot.useProgrammingCard(new LCardMovementProgramming(1), gameBrain);
         System.out.println("After stepping on treadmill:" + robot.getCords().x + " & " + robot.getCords().y);
+        Point cord1 = gameBrain.getGameboard().getRobots().stream().filter(x -> x.getCords().equals(robot.getCords())).findFirst().get().getCords();
+        System.out.println("After stepping on treadmill in gamebrain:" + cord1.x + " & " + cord1.y);
         robot.setDirection(start);
         Point cords = robot.getCords();
         if(gameBrain.getGameboard().getObstacleFromCoordinate(cords.x, cords.y) != null){
