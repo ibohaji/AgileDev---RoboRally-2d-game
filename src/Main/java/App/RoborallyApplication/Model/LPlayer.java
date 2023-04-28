@@ -102,5 +102,9 @@ public class LPlayer implements IToDTO {
     public boolean isHuman(){
         return this.isHumanPlayer;
     }
+
+    public void addCardFromAgain(AbCardProgramming card) {
+        this.orderedCardSequence.addCardToSecondPosition(card);
+    }
 }
 

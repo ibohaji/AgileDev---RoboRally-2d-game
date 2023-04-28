@@ -19,7 +19,10 @@ public class LCardChangeDirectionProgramming extends AbCardProgramming {
                 this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.U_TURN_CARD);
                 break;
         }
+    }
 
+    public EnumTurnType getTurnType(){
+        return this.turn;
     }
     @Override
     public void useCard(LRobot robot, LGameBrain gameBrain) {
