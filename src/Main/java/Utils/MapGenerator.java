@@ -309,7 +309,6 @@ public class MapGenerator {
             LTile leftwardsTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
             leftwardsTile.setGraphicalElement(EnumImageGraphics.LEFT_TREADMILL, difficulty);
             leftwardsTile.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.WEST));
-            //leftwardsTile.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
             gameboard.changeTile(leftwardsTile);
         }
 
@@ -331,7 +330,6 @@ public class MapGenerator {
             LTile upwardsTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
             upwardsTile.setGraphicalElement(EnumImageGraphics.FORWARD_TREADMILL, difficulty);
             upwardsTile.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.NORTH));
-            //upwardsTile.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
             gameboard.changeTile(upwardsTile);
         }
 
@@ -342,7 +340,6 @@ public class MapGenerator {
             LTile rightwardsTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
             rightwardsTile.setGraphicalElement(EnumImageGraphics.RIGHT_TREADMILL, difficulty);
             rightwardsTile.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.EAST));
-            //rightwardsTile.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
             gameboard.changeTile(rightwardsTile);
         }
 
@@ -350,25 +347,21 @@ public class MapGenerator {
         LTile treadmillTile1 = new LTile(8, 2, EnumTileType.OBSTACLE);
         treadmillTile1.setGraphicalElement(EnumImageGraphics.UPLEFT_TURN_TREADMILL, difficulty);
         treadmillTile1.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.SOUTH));
-        //treadmillTile1.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
         gameboard.changeTile(treadmillTile1);
 
         LTile treadmillTile2 = new LTile(10, 7, EnumTileType.OBSTACLE);
         treadmillTile2.setGraphicalElement(EnumImageGraphics.UPRIGHT_TURN_TREADMILL, difficulty);
         treadmillTile2.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.WEST));
-        //treadmillTile2.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
         gameboard.changeTile(treadmillTile2);
 
         LTile treadmillTile3 = new LTile(1, 5, EnumTileType.OBSTACLE);
         treadmillTile3.setGraphicalElement(EnumImageGraphics.BOTTOMLEFT_TURN_TREADMILL, difficulty);
-        //treadmillTile3.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.EAST));
-        //treadmillTile3.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
+        treadmillTile3.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.EAST));
         gameboard.changeTile(treadmillTile3);
 
         LTile treadmillTile4 = new LTile(0, 8, EnumTileType.OBSTACLE);
         treadmillTile4.setGraphicalElement(EnumImageGraphics.UPRIGHT_REVERSE_TREADMILL, difficulty);
-        //treadmillTile4.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.EAST));
-        //treadmillTile4.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
+        treadmillTile4.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.EAST));
         gameboard.changeTile(treadmillTile4);
 
         /*LTile treadmillTile5 = new LTile(7, 9, EnumTileType.OBSTACLE);
@@ -384,7 +377,6 @@ public class MapGenerator {
             LTile acidTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
             acidTile.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, difficulty);
             acidTile.setNewObstacle(new LObstacleRegular(EnumObstacleType.ACID, EnumObstacleClassification.KNOWN_OBSTACLE));
-            //acidTile.setObstacle(new LObstacle(EnumObstacleType.ACID, EnumObstacleClassification.KNOWN_OBSTACLE));
             gameboard.changeTile(acidTile);
         }
 
@@ -439,7 +431,7 @@ public class MapGenerator {
         for (int[] position : explosiveAcidTilePositions) {
             LTile explosiveAcidTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
             explosiveAcidTile.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_ACID, difficulty);
-            explosiveAcidTile.setNewObstacle(new LObstacleRegular(EnumObstacleType.ACID, EnumObstacleClassification.KNOWN_OBSTACLE));
+            explosiveAcidTile.setNewObstacle(new LObstacleRegular(EnumObstacleType.ACID, EnumObstacleClassification.EXPLOSIVE_KNOWN));
             gameboard.changeTile(explosiveAcidTile);
         }
 
