@@ -15,10 +15,7 @@ public class LRobot implements IToDTO {
     private GraphicalElementRobot graphicalElement;
     private ArrayList<Point> checkpointsDone = new ArrayList<>();
     private EnumDirection currentDirection;
-
-    //TODO
-    // fix nr of lives
-    private int lifeCount = 1;
+    private int lifeCount = 5;
     private LPlayer player;
 
     public LRobot(){
@@ -88,7 +85,9 @@ public class LRobot implements IToDTO {
      * @param gameBrain gamebrain reference
      */
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain){
-        card.useCard(this, gameBrain);
+        if(card != null){
+            card.useCard(this, gameBrain);
+        }
     }
 
     public void decreaseNumberOfLives(){

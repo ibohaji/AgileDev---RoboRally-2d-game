@@ -25,7 +25,8 @@ public class TileDTO implements iFromDTO{
     @Override
     public LTile returnObjectFromDTO() {
         LTile return_tile = new LTile(this.xCoordinate, this.yCoordinate, this.enumTileType);
-        return_tile.setGraphicalElement(this.graphicalElement);
+        //TODO
+        // return_tile.setGraphicalElement(this.graphicalElement);
         return return_tile;
     }
 }

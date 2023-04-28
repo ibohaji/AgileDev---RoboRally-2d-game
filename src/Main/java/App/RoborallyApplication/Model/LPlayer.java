@@ -78,6 +78,7 @@ public class LPlayer implements IToDTO {
     public void setCardSequenceToNull(){
         this.orderedCardSequence = null;
         this.usedCardSequence = null;
+        this.programmingCards = new ArrayList<>();
     }
     public void setOrderedCardSequence(LCardSequence orderedSequence){
         this.orderedCardSequence = orderedSequence;
@@ -96,7 +97,11 @@ public class LPlayer implements IToDTO {
         return this.usedCardSequence.getLastMovementCard();
     }
     protected AbCardProgramming getNextCardFromOrderedDeck(){
-        return this.orderedCardSequence.getFirstCard();
+        if(this.orderedCardSequence.getSize() != 0){
+            return this.orderedCardSequence.getFirstCard();
+        } else {
+            return null;
+        }
     }
 
     public boolean isHuman(){

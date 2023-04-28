@@ -12,10 +12,6 @@ public class GraphicalElementRobot extends GraphicalElement {
         this.direction = direction;
     }
 
-    private void addPlayerNumberToRobot(){
-        // TODO
-    }
-
     public void changeDirection(EnumDirection directionToChangeTo){
         this.direction = directionToChangeTo;
     }

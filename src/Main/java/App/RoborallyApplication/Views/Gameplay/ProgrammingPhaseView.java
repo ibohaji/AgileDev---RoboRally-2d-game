@@ -55,13 +55,8 @@ public class ProgrammingPhaseView extends GameView{
         JButton submitButton = new JButton("SUBMIT SEQUENCE");
         submitButton.setFont(Fonts.LARGE);
         submitButton.addActionListener(e -> {
-            if(this.cardDeckController.getOrderedCardSequence().getSize() == 5){
-                this.controller.setPlayerCardSequence(this.player, this.cardDeckController.getOrderedCardSequence());
-                submitButton.setEnabled(false);
-            } else {
-                JOptionPane.showMessageDialog(null, "Please order all 5 cards!");
-            }
-
+            this.controller.setPlayerCardSequence(this.player, this.cardDeckController.getOrderedCardSequence());
+            submitButton.setEnabled(false);
         });
         add(submitButton, new GridBagConstraintsBuilder(1, 1).inset(50,0,0,0).fill(GridBagConstraints.BOTH).build());
 

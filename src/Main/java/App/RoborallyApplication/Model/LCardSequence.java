@@ -55,11 +55,10 @@ public class LCardSequence {
         return this.cardSequence;
     }
 
-    public void setCardSequence(ArrayList<AbCardProgramming> cardSequence) {
-        this.cardSequence = cardSequence;
-    }
-
     public AbCardProgramming getFirstCard() {
+        if(this.cardSequence.isEmpty()){
+            return null;
+        }
         return this.cardSequence.get(0);
     }
 
