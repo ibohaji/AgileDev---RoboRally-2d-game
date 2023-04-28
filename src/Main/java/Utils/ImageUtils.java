@@ -114,8 +114,12 @@ public class ImageUtils {
         Image img = imageIcon.getImage();
         BufferedImage image = toBufferedImage(img);
         Graphics g = image.getGraphics();
+
+        Font boldFont = font.deriveFont(Font.BOLD);
         AttributedString attributedText = new AttributedString(text);
-        attributedText.addAttribute(TextAttribute.FONT, font);
+        attributedText.addAttribute(TextAttribute.FONT, boldFont);
+        attributedText.addAttribute(TextAttribute.FOREGROUND, Color.CYAN);
+
         FontMetrics metrics = g.getFontMetrics(font);
         int positionX = (image.getWidth() - metrics.stringWidth(text)) / 2;
         int positionY = (image.getHeight() - metrics.getHeight()) / 2 + metrics.getAscent();
