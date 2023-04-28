@@ -95,7 +95,14 @@ public class LGameBrain implements IToDTO {
         if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
             //TODO
             // ordering of checkpoints before assigning a checkpoint to the robot
-            //
+            // 1) Get robots checkpoints
+            // 2) Get gamebrains checkpoints
+            // 3) Check that player is collecting in correct sequence
+            ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
+            ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
+                    .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
+                    .toCollection(ArrayList::new));
+
         } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
             if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
                 setCurrentGamePhase(EnumGamePhase.GAME_OVER);
