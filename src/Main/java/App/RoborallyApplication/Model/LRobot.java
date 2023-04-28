@@ -89,11 +89,9 @@ public class LRobot implements IToDTO {
             card.useCard(this, gameBrain);
         }
     }
-
     public void decreaseNumberOfLives(){
         lifeCount-=1;
     }
-
     public void assignPlayer(LPlayer player){
         this.player = player;
     }

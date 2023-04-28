@@ -59,22 +59,22 @@ public class LGameBrain implements IToDTO {
         Random rnd = new Random();
         for (LPlayer player : players) {
             for (int i = 0; i < 5; i++) {
-                int choiceForCard = rnd.nextInt(12);
-                int choiceForSpecific = rnd.nextInt(3);
-                if(choiceForCard < 2){ // againCard
+                int choiceForCard = rnd.nextInt(10);
+                int choiceForSpecific = rnd.nextInt(10);
+                if(choiceForCard < 1){ // againCard
                     player.assignCardToPlayer(new LCardAgainProgramming());
-                } else if (choiceForCard < 8) { // movementCard
-                    if(choiceForSpecific == 0) {
+                } else if (choiceForCard < 6) { // movementCard
+                    if(choiceForSpecific <5) {
                         player.assignCardToPlayer(new LCardMovementProgramming(1));
-                    } else if (choiceForSpecific == 1) {
+                    } else if (choiceForSpecific < 8) {
                         player.assignCardToPlayer(new LCardMovementProgramming(2));
                     } else {
                         player.assignCardToPlayer(new LCardMovementProgramming(3));
                     }
                 } else { // turn
-                    if(choiceForSpecific == 0) { // LEFT
+                    if(choiceForSpecific < 4) { // LEFT
                         player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.LEFT));
-                    } else if (choiceForSpecific == 1) { // RIGHT
+                    } else if (choiceForSpecific < 8) { // RIGHT
                         player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.RIGHT));
                     } else { // U-TURN
                         player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.U_TURN));
@@ -100,21 +100,28 @@ public class LGameBrain implements IToDTO {
             } else {
                 Point newPos = player.getRobot().getCords();
                 if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
-                    //TODO
-                    // ordering of checkpoints before assigning a checkpoint to the robot
-                    // 1) Get robots checkpoints
-                    // 2) Get gamebrains checkpoints
-                    // 3) Check that player is collecting in correct sequence
                     ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
                     ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
                             .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
                                     .toCollection(ArrayList::new));
-
+                    if (!gameBrainCheckpoints.isEmpty()) {
+                        if (robotsCheckpoints.size() != gameBrainCheckpoints.size()){
+                            boolean orderCorrect = true;
+                            for (int i = 0; i < robotsCheckpoints.size(); i++) {
+                                if(!robotsCheckpoints.get(i).equals(gameBrainCheckpoints.get(i))){
+                                    orderCorrect = false;
+                                }
+                            }
+                            if(orderCorrect){
+                                player.getRobot().addCheckpoint(gameBrainCheckpoints.get(robotsCheckpoints.size()));
+                            }
+                        }
+                    }
                 } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
                     if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
                         setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                        // SOMEBODY WON <-------
-                        setWinner(player); // <---- Assuming the player above reached the finishPoint?
+                        System.out.println("WINNER WINNER CHICKEN DINNER");
+                        setWinner(player);
                     }
                 }
             }

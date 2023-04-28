@@ -38,27 +38,33 @@ public class MovementPhaseController extends AbPhaseController{
                 } else {
                     LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
                     this.gameBrain.makeMovement();
-                    if(player.getRobot().getNrOfLives() < 1){
-                        this.view.addPlayerRemovedPopup();
+                    if(!gameBrain.canGameContinue()){
                         timer.stop();
-                        Waiter.getInstance().waitForXMilliseconds(1000);
                         gameController.updateControllerState();
                     } else {
-                        this.view = new MovementPhaseView(this.gameController, gameBrain);
-                        gameController.updateView(this.view);
-                        player = this.gameBrain.getPlayerWhoIsCurrentlyMoving(); // will be null when all players moved
-                        if(player.getCardSequence().getSize() == 0){
-                            player.setCardSequenceToNull();
-                        }
-                        if(player != null){
-                            if(!gameBrain.areThereMovementsLeftInThisRound()){
-                                timer.stop();
-                                //Waiter.getInstance().waitForXMilliseconds(1000);
-                                gameBrain.endRound();
-                                gameController.updateControllerState();
+                        if(player.getRobot().getNrOfLives() < 1){
+                            this.view.addPlayerRemovedPopup();
+                            timer.stop();
+                            Waiter.getInstance().waitForXMilliseconds(1000);
+                            gameController.updateControllerState();
+                        } else {
+                            this.view = new MovementPhaseView(this.gameController, gameBrain);
+                            gameController.updateView(this.view);
+                            player = this.gameBrain.getPlayerWhoIsCurrentlyMoving(); // will be null when all players moved
+                            if(player.getCardSequence().getSize() == 0){
+                                player.setCardSequenceToNull();
+                            }
+                            if(player != null){
+                                if(!gameBrain.areThereMovementsLeftInThisRound()){
+                                    timer.stop();
+                                    //Waiter.getInstance().waitForXMilliseconds(1000);
+                                    gameBrain.endRound();
+                                    gameController.updateControllerState();
+                                }
                             }
                         }
                     }
+
                 }
             }
         });

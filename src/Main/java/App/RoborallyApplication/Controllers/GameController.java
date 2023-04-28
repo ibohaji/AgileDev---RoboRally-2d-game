@@ -41,8 +41,10 @@ public class GameController {
                     } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)) {
                         if (gameBrain.isThereAWinner()) {
                             gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                            ((Timer) e.getSource()).stop(); // Stop the timer
                             applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
                         } else if (gameBrain.getPlayers().isEmpty()) {
+                            ((Timer) e.getSource()).stop(); // Stop the timer
                             applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
                         } else {
                             gameBrain.startRound();
