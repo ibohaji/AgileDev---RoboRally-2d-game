@@ -46,8 +46,8 @@ public class MovementPhaseView extends GameView {
         add(movementCardDeckView, new GridBagConstraintsBuilder(2, 0).fill(GridBagConstraints.BOTH).build());
     }
 
-    public void addPlayerRemovedPopup(){
-        showMessageDialog(null, "Player removed");
+    public void addPlayerRemovedPopup(LPlayer player){
+        showMessageDialog(null, player.getDisplayName() + " removed.");
     }
 }
 

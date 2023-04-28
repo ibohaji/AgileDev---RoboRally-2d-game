@@ -5,7 +5,6 @@ import App.RoborallyApplication.Model.LGameConfiguration;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import App.RoborallyApplication.Model.LPlayer;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.Tuple;
@@ -18,8 +17,9 @@ public class LobbyAiView extends LobbyView {
 
     private final LGameConfiguration gameConfiguration;
     private final LobbyController lobbyController;
-    ArrayList<Tuple<String, Boolean>> playersInformation;
     private ArrayList<Tuple<String,Boolean>> isAI = new ArrayList<>();
+    private ArrayList<Tuple<String,String>> playName = new ArrayList<>();
+    private ArrayList<Tuple<String,Boolean>> info = new ArrayList<>();
     JPanel namePanel;
 
     public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration) {
@@ -29,7 +29,6 @@ public class LobbyAiView extends LobbyView {
     }
 
     private void createView(){
-        playersInformation = new ArrayList<>();
         for (int i = 0; i < gameConfiguration.getNrOfPlayers(); i++) {
             JPanel namePanel = new JPanel(new BorderLayout());
             namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
@@ -38,7 +37,6 @@ public class LobbyAiView extends LobbyView {
             JTextField playerNameField = new JTextField("player" +" "+ String.valueOf(i+1));
             namePanel.add(playerNameField,new GridBagConstraintsBuilder(1,i).build());
             add(namePanel, new GridBagConstraintsBuilder(i,0).build());
-            isAI.add(new Tuple<>(playerNameField.getText(), true));
 
             if (i != 0){
                 JCheckBox checkBox = new JCheckBox("is AI");
@@ -48,20 +46,40 @@ public class LobbyAiView extends LobbyView {
                     public void actionPerformed(ActionEvent actionEvent) {
                         AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
                         boolean selected = abstractButton.getModel().isSelected();
-                        isAI.set(isAI.indexOf(new Tuple<>(playerNameField.getText(), true)), new Tuple<>(playerNameField.getText(), !selected));
                     }
                 };
                 checkBox.addActionListener(actionListener);
             }
-
         }
-        JButton startGameButton = new JButton("START GAME");
-        startGameButton.setFont(Fonts.LARGE);
-        startGameButton.addActionListener(e -> {
-            startGameButton.setEnabled(false);
-            gameConfiguration.createPlayersFromLobby(isAI);
+
+        JButton Button = new JButton("START GAME");
+        Button.setFont(Fonts.LARGE);
+        Button.addActionListener(e -> {
+            Button.setEnabled(false);
+            Component[] components = getComponents();
+            isAI.add(new Tuple<>(null, true));
+            for(Component component: components){
+                if (component instanceof JCheckBox){
+                    JCheckBox checkBox = (JCheckBox) component;
+                    isAI.add(new Tuple<>(null, !checkBox.isSelected()));
+                }
+                if(component instanceof JPanel){
+                    JPanel panel = (JPanel) component;
+                    Component[] subComponents = panel.getComponents();
+                    for(Component subComponent: subComponents){
+                        if(subComponent instanceof JTextField){
+                            JTextField textField = (JTextField) subComponent;
+                            playName.add(new Tuple<>(textField.getText(), null));
+                        }
+                    }
+                }
+            }
+            for (int i = 0;i < gameConfiguration.getNrOfPlayers();i++){
+                info.add(new Tuple<>(playName.get(i).first(),isAI.get(i).second()));
+            }
+            gameConfiguration.createPlayersFromLobby(info);
             lobbyController.userClickStartGame(gameConfiguration);
         });
-        add(startGameButton);
+        add(Button);
     }
 }
