@@ -99,25 +99,12 @@ public class LGameBrain implements IToDTO {
                 removeRobot(player.getRobot());
             } else {
                 Point newPos = player.getRobot().getCords();
-                if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
-                    ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
-                    ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
-                            .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
-                                    .toCollection(ArrayList::new));
-                    if (!gameBrainCheckpoints.isEmpty()) {
-                        if (robotsCheckpoints.size() != gameBrainCheckpoints.size()){
-                            boolean orderCorrect = true;
-                            for (int i = 0; i < robotsCheckpoints.size(); i++) {
-                                if(!robotsCheckpoints.get(i).equals(gameBrainCheckpoints.get(i))){
-                                    orderCorrect = false;
-                                }
-                            }
-                            if(orderCorrect){
-                                player.getRobot().addCheckpoint(gameBrainCheckpoints.get(robotsCheckpoints.size()));
-                            }
-                        }
+                LTile tile = this.gameboard.getTileFromCoordinate(newPos.x, newPos.y);
+                if(tile.doesTileHaveCheckpoint()){
+                    if(canRobotCollectCheckpoint(player)){
+                        player.getRobot().addCheckpoint(new Point(tile.getCoordinates().x, tile.getCoordinates().y));
                     }
-                } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
+                } else if (tile.isTileFinishPoint()) {
                     if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
                         setCurrentGamePhase(EnumGamePhase.GAME_OVER);
                         setWinner(player);
@@ -167,6 +154,29 @@ public class LGameBrain implements IToDTO {
         } else {
             return true;
         }
+    }
+
+    public boolean canRobotCollectCheckpoint(LPlayer player){
+        ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
+        ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
+                .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
+                        .toCollection(ArrayList::new));
+        if (!gameBrainCheckpoints.isEmpty()) {
+            if (robotsCheckpoints.size() != gameBrainCheckpoints.size()){
+                boolean orderCorrect = true;
+                for (int i = 0; i < robotsCheckpoints.size(); i++) {
+                    boolean xCheck = robotsCheckpoints.get(i).x == gameBrainCheckpoints.get(i).x;
+                    boolean yCheck = robotsCheckpoints.get(i).y == gameBrainCheckpoints.get(i).y;
+                    if(!xCheck || !yCheck){
+                        orderCorrect = false;
+                    }
+                }
+                if(orderCorrect){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
@@ -467,16 +477,5 @@ public class LGameBrain implements IToDTO {
     @Override
     public UUID getID() {
         return this.id;
-    }
-
-    // -------------------------------------------------------------------------//
-    public void setRobotCheckpointDone(LRobot robot){
-        if (this.getGameboard().getTileFromCoordinate(
-                robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
-                EnumTileType.CHECKPOINT) {
-            //TODO
-            // check ordering of checkpoints
-            robot.addCheckpoint(robot.getCords());
-        }
     }
 }

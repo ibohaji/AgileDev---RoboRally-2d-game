@@ -13,7 +13,7 @@ public class LRobot implements IToDTO {
     private UUID id;
     private Point cords = new Point();
     private GraphicalElementRobot graphicalElement;
-    private ArrayList<Point> checkpointsDone = new ArrayList<>();
+    private ArrayList<Point> checkpointsDone;
     private EnumDirection currentDirection;
     private int lifeCount = 5;
     private LPlayer player;
@@ -21,6 +21,7 @@ public class LRobot implements IToDTO {
     public LRobot(){
         this.id = UUID.randomUUID();
         this.currentDirection = null;
+        this.checkpointsDone =  new ArrayList<>();
         this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
         this.graphicalElement.setTileGraphicalElement(EnumImageGraphics.ROBOT_NORTH, EnumDifficulty.HARD);
     }

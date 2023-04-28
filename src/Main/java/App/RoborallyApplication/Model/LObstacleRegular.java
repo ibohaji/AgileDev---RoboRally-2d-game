@@ -1,6 +1,7 @@
 package App.RoborallyApplication.Model;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class LObstacleRegular extends AbObstacle{
     private EnumObstacleClassification obstacleClassification;
@@ -22,7 +23,11 @@ public class LObstacleRegular extends AbObstacle{
     @Override
     public void applyEffect(LRobot robot, LGameBrain gameBrain) {
         if(this.obstacleClassification.equals(EnumObstacleClassification.KNOWN_OBSTACLE)){
+            System.out.println(this.obstacleType.name());
+            System.out.println("Lives before: " + robot.getNrOfLives());
+            System.out.println(this.obstacleType.getDamage());
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
+            System.out.println("Lives after: " + robot.getNrOfLives());
             if(this.obstacleType.equals(EnumObstacleType.PIT)){
                 gameBrain.putRobotToRandomStartPoint(robot);
             }
@@ -38,6 +43,7 @@ public class LObstacleRegular extends AbObstacle{
                 EnumObstacleType type = gameBrain.getRandomObstacleTypeToExplode();
                 this.setObstacleType(type);
             }
+            affectedTiles = affectedTiles.stream().filter(x -> !x.doesTileHaveObstacle()).collect(Collectors.toCollection(ArrayList::new));
             gameBrain.explodeObstacleToTilesNEW(affectedTiles, obstacleType);
             setObstacleClassification(EnumObstacleClassification.KNOWN_OBSTACLE);
             EnumImageGraphics graphic;
