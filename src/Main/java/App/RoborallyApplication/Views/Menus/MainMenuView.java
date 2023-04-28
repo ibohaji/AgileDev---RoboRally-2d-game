@@ -73,9 +73,6 @@ public class MainMenuView extends JPanel {
         playersDropdown = getPlayersDropdown();
         rightPanel.add(playersDropdown,new GridBagConstraintsBuilder(1,2).weightX(0.75).inset(1,1,25,0).fill(GridBagConstraints.HORIZONTAL).build());
 
-
-
-
         // Continue game button
         JButton continueB = createContinueButton();
         continueB.setFont(Fonts.LARGE);
@@ -116,7 +113,7 @@ public class MainMenuView extends JPanel {
         return continueButton;
     }
     private JButton getCreateLobbyButton(){
-        JButton createGameButton = new JButton("Multiplayer");
+        JButton createGameButton = new JButton("Join Game");
         createGameButton.setFont(Fonts.LARGE);
         createGameButton.addActionListener(e -> {
             int numOfPlayers = Integer.parseInt(playersDropdown.getSelectedItem().toString());
@@ -127,10 +124,6 @@ public class MainMenuView extends JPanel {
                 } else {
                     controller.userClickPlay(EnumDifficulty.EASY, numOfPlayers, true);
                 }
-            // need game configuration ( skin, etc..)
-
-
-            // controller.userClickCreateLobby();
         });
         return createGameButton;
     }
