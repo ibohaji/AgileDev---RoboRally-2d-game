@@ -148,17 +148,14 @@ public class MapGenerator {
         }
 
         // add down treadmill tiles
-        for (int i = 4; i < 8; i++) {
-            LTile treadmillTurnTile3 = new LTile(3, i, EnumTileType.OBSTACLE);
-            LTile treadmillTurnTile4 = new LTile(8, i, EnumTileType.OBSTACLE);
-            treadmillTurnTile3.setGraphicalElement(EnumImageGraphics.DOWNWARD_TREADMILL, difficulty);
-            treadmillTurnTile4.setGraphicalElement(EnumImageGraphics.DOWNWARD_TREADMILL, difficulty);
-            treadmillTurnTile3.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.SOUTH));
-            treadmillTurnTile4.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.SOUTH));
-            //treadmillTurnTile3.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
-            //treadmillTurnTile4.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
-            gameboard.changeTile(treadmillTurnTile3);
-            gameboard.changeTile(treadmillTurnTile4);
+        int[][] downwardsTilePositions = {{2,0}, {3,4}, {3,5}, {3,6}, {3,7}};
+
+        for (int[] position : downwardsTilePositions) {
+            LTile downwardsTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
+            downwardsTile.setGraphicalElement(EnumImageGraphics.DOWNWARD_TREADMILL, difficulty);
+            downwardsTile.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.SOUTH));
+            //downwardsTile.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
+            gameboard.changeTile(downwardsTile);
         }
 
         // add turn treadmill tiles
@@ -240,7 +237,7 @@ public class MapGenerator {
         }
 
         //add upwards treadmill tiles
-        int[][] upwardsTilePositions = {{0,10}, {10,10}, {9,9}, {2,9}, {10,0}};
+        int[][] upwardsTilePositions = {{0,10}, {10,10}, {9,9}, {2,9}, {10,0}, {8,4}, {8,5}, {8,6}, {8,7}};
 
         for (int[] position : upwardsTilePositions) {
             LTile upwardsTile = new LTile(position[0], position[1], EnumTileType.OBSTACLE);
@@ -249,13 +246,6 @@ public class MapGenerator {
             //upwardsTile.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
             gameboard.changeTile(upwardsTile);
         }
-
-        //add downwards treadmill tiles
-        LTile treadmillTileDown1 = new LTile(2, 0, EnumTileType.OBSTACLE);
-        treadmillTileDown1.setGraphicalElement(EnumImageGraphics.DOWNWARD_TREADMILL, difficulty);
-        treadmillTileDown1.setNewObstacle(new LObstacleTreadmill(EnumTreadmillDirection.SOUTH));
-        //treadmillTileDown1.setObstacle(new LObstacle(EnumObstacleType.TREADMILL, EnumObstacleClassification.KNOWN_OBSTACLE));
-        gameboard.changeTile(treadmillTileDown1);
 
         //add rightwards treadmill tiles
         int[][] rightwardsTilePositions = {{0,8}, {4,8}, {7,8}};

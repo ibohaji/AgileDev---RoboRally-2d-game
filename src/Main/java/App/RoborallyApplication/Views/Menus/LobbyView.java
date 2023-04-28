@@ -8,8 +8,4 @@ public class LobbyView extends JPanel{
     public LobbyView(){
         setLayout(new GridBagLayout());
     }
-
-
-
-
 }
