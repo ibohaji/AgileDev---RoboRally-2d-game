@@ -14,7 +14,21 @@ public class LCardAgainProgramming extends AbCardProgramming {
         LPlayer playerOfRobot = robot.getPlayer();
         AbCardProgramming lastCardUsed = playerOfRobot.getLastCard();
         if(lastCardUsed != null){
-            lastCardUsed.useCard(robot, gameBrain);;
+            //TODO
+            // fix here
+            // 1)take last movementCard
+            // 2)set to first card of unused sequence
+            // 3)add again card to used sequence as a new programming card?
+            // 3)reuse the same card but set steps = 0?
+            // create new instance of the card
+            AbCardProgramming cardToUse = null;
+            if (lastCardUsed instanceof LCardChangeDirectionProgramming){
+                cardToUse = new LCardChangeDirectionProgramming(((LCardChangeDirectionProgramming) lastCardUsed).getTurnType());
+            } else if (lastCardUsed instanceof  LCardMovementProgramming) {
+                cardToUse = new LCardMovementProgramming(((LCardMovementProgramming) lastCardUsed).getSteps());
+            }
+            playerOfRobot.addCardFromAgain(cardToUse);
+            //lastCardUsed.useCard(robot, gameBrain);
         }
     }
     @Override

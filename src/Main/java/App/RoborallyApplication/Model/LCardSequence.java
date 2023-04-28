@@ -75,4 +75,11 @@ public class LCardSequence {
         }
         return this.cardSequence.get(this.cardSequence.size() - 1);
     }
+
+    public void addCardToSecondPosition(AbCardProgramming card) {
+        if(this.cardSequence.size() >= 1){
+            this.cardSequence.add(1, card);
+        }
+
+    }
 }
