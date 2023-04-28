@@ -33,16 +33,20 @@ public class GameBoardView extends GameView{
                 try{
                     LTile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
                     if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){ // ROBOT ON TILE
-                        //TODO
-                        // check that robot on checkpoint, finish is on top
                         LRobot robot = gameBrain.getGameboard().getRobotFromCoordinate(x, y);
-                        if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()){
+                        if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
-                            EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            EnumDirection directionOfRobot = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
-                            robotWithTile = ImageUtils.addTextToImage(robotWithTile, Fonts.BOLD_SMALL ,robot.getPlayer().getDisplayName());
+                            robotWithTile = ImageUtils.addTextToImage(robotWithTile, Fonts.BOLD_SMALL, robot.getPlayer().getDisplayName());
                             add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
-                        } else {
+                        } else if (gameBrain.getGameboard().getTileFromCoordinate(x,y).isTileFinishPoint()) {
+                            EnumDirection directionOfRobot = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            ImageIcon finishImg = tileAtCoordinate.getGraphicalElement().getImage();
+                            finishImg = ImageUtils.mergeTwoImages(scaledDefaultFloor,finishImg);
+                            ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(finishImg, directionOfRobot);
+                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                    } else {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                             EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotImage = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);

@@ -36,7 +36,6 @@ public class UserCardDeckView extends GameView {
         if(gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
             this.cards = gameBrain.getPlayerWhoIsCurrentlyMoving().getCardSequence().getCardSequence();
         } else {
-            System.out.println("Tries to come here?");
             this.cards = cardDeckController.getGameController().getPlayerWithoutCardSequence().getProgrammingCards();
         }
         this.userOrderedDeckView = userOrderedDeckView;
