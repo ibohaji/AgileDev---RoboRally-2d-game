@@ -17,10 +17,8 @@ public class GraphicalElement {
         switch (enumDifficultyForScaling){
             case EASY -> this.image = ImageUtils.scaledImageIcon(
                     new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation())), 60, 60);
-            case MEDIUM -> this.image = ImageUtils.scaledImageIcon(
+            case MEDIUM, HARD -> this.image = ImageUtils.scaledImageIcon(
                     new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation())), 45, 45);
-            case HARD -> this.image = ImageUtils.scaledImageIcon(
-                    new ImageIcon(ImageUtils.getImage(this.enumImageGraphics.getElementLocation())), 35, 35);
         }
     }
     public void setCardGraphicalElement(EnumImageGraphics graphicalElement){
