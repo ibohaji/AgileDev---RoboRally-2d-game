@@ -39,7 +39,7 @@ public class MovementPhaseController extends AbPhaseController{
                     LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
                     this.gameBrain.makeMovement();
                     if(player.getRobot().getNrOfLives() < 1){
-                        this.view.addPlayerRemovedPopup();
+                        this.view.addPlayerRemovedPopup(player);
                         timer.stop();
                         Waiter.getInstance().waitForXMilliseconds(1000);
                         gameController.updateControllerState();
