@@ -35,7 +35,7 @@ public class LCardMovementProgramming extends AbCardProgramming {
             robot.decreaseNumberOfLives();
             if(robot.getNrOfLives() < 1){
                 gameBrain.removeRobot(robot);
-                gameBrain.removePlayer(gameBrain.findPlayerByRobot(robot));
+                //gameBrain.removePlayer(gameBrain.findPlayerByRobot(robot));
             } else {
                 gameBrain.putRobotToRandomStartPoint(robot);
             }

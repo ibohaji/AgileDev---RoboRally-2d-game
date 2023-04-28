@@ -15,7 +15,10 @@ public class LRobot implements IToDTO {
     private GraphicalElementRobot graphicalElement;
     private ArrayList<Point> checkpointsDone = new ArrayList<>();
     private EnumDirection currentDirection;
-    private int lifeCount = 5;
+
+    //TODO
+    // fix nr of lives
+    private int lifeCount = 1;
     private LPlayer player;
 
     public LRobot(){

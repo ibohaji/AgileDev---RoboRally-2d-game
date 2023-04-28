@@ -8,6 +8,7 @@ import App.RoborallyApplication.Views.Gameplay.CardDeck.MovementCardDeckView;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,6 +44,10 @@ public class MovementPhaseView extends GameView {
         add(options, new GridBagConstraintsBuilder(1, 1).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
         add(movementCardDeckView, new GridBagConstraintsBuilder(2, 0).fill(GridBagConstraints.BOTH).build());
+    }
+
+    public void addPlayerRemovedPopup(){
+        showMessageDialog(null, "Player removed");
     }
 }
 

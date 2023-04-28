@@ -88,29 +88,34 @@ public class LGameBrain implements IToDTO {
      * @return returns the card that was used for movement
      */
     public void makeMovement(){
-        LPlayer player = getPlayerWhoIsCurrentlyMoving();
-        AbCardProgramming card = player.getNextCardFromOrderedDeck();
-        moveRobotWithCard(player, card);
-        if(this.players.isEmpty()){
+        if(this.gameboard.getRobots().isEmpty()){
             setCurrentGamePhase(EnumGamePhase.GAME_OVER);
         } else {
-            Point newPos = player.getRobot().getCords();
-            if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
-                //TODO
-                // ordering of checkpoints before assigning a checkpoint to the robot
-                // 1) Get robots checkpoints
-                // 2) Get gamebrains checkpoints
-                // 3) Check that player is collecting in correct sequence
-                ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
-                ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
-                        .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
-                                .toCollection(ArrayList::new));
+            LPlayer player = getPlayerWhoIsCurrentlyMoving();
+            AbCardProgramming card = player.getNextCardFromOrderedDeck();
+            moveRobotWithCard(player, card);
+            if(player.getRobot().getNrOfLives() < 1){
+                removePlayer(player);
+                removeRobot(player.getRobot());
+            } else {
+                Point newPos = player.getRobot().getCords();
+                if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
+                    //TODO
+                    // ordering of checkpoints before assigning a checkpoint to the robot
+                    // 1) Get robots checkpoints
+                    // 2) Get gamebrains checkpoints
+                    // 3) Check that player is collecting in correct sequence
+                    ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
+                    ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
+                            .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
+                                    .toCollection(ArrayList::new));
 
-            } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
-                if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
-                    setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                    // SOMEBODY WON <-------
-                    setWinner(player); // <---- Assuming the player above reached the finishPoint?
+                } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
+                    if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
+                        setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                        // SOMEBODY WON <-------
+                        setWinner(player); // <---- Assuming the player above reached the finishPoint?
+                    }
                 }
             }
         }
@@ -151,7 +156,7 @@ public class LGameBrain implements IToDTO {
             return false;
         } else if (isThereAWinner()) {
             return false;
-        } else if (this.players.isEmpty()) {
+        } else if (this.gameboard.getRobots().isEmpty()) {
             return false;
         } else {
             return true;
@@ -364,9 +369,9 @@ public class LGameBrain implements IToDTO {
                 player.removeFirstCardFromOrderedSequence();
             }
         } else {
-            //TODO
-            // problematic?
             player.setCardSequenceToNull();
+            removePlayer(player);
+            removeRobot(player.getRobot());
         }
     }
     protected void robotStepOnObstacleNEW(AbObstacle obstacle, LRobot robot){

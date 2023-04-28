@@ -11,13 +11,17 @@ import java.awt.*;
 
 public class GameOverPanel extends GameView {
 
+    private GameController gameController;
+    private String winner = null;
     public GameOverPanel(GameController controller, LGameBrain gameBrain) {
         super(controller, gameBrain);
-        String winner = gameBrain.getPlayerWhoWon();
-        createView(winner,controller,gameBrain);
+        if(gameBrain.isThereAWinner()){
+            winner = gameBrain.getPlayerWhoWon();
+        }
+        createView();
     }
 
-    public void createView(String winner,GameController controller,LGameBrain brain) {
+    public void createView() {
         JLabel scoreLabel;
         setLayout(new GridBagLayout());
         //Game over Label

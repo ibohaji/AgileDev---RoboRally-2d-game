@@ -26,7 +26,6 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!gameBrain.canGameContinue()) {
-                    System.out.println("GAME CANNOT CONTINUE");
                     applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
                     ((Timer) e.getSource()).stop(); // Stop the timer
                 } else {
