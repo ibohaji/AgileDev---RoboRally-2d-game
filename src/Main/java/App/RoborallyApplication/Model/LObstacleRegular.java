@@ -35,13 +35,19 @@ public class LObstacleRegular extends AbObstacle{
             if (this.obstacleClassification.equals(EnumObstacleClassification.EXPLOSIVE_KNOWN)){
                 // Explosive known
             } else if (this.obstacleClassification.equals(EnumObstacleClassification.EXPLOSIVE_UNKNOWN)){
-                EnumObstacleType type = gameBrain.getRandomObstacleType();
+                EnumObstacleType type = gameBrain.getRandomObstacleTypeToExplode();
                 this.setObstacleType(type);
             }
             gameBrain.explodeObstacleToTilesNEW(affectedTiles, obstacleType);
             setObstacleClassification(EnumObstacleClassification.KNOWN_OBSTACLE);
-            //TODO
-            // s
+            EnumImageGraphics graphic;
+            if(this.obstacleType.equals(EnumObstacleType.RADIATION)){
+                graphic = EnumImageGraphics.OBSTACLE_RADIATION;
+            } else {
+                graphic = EnumImageGraphics.OBSTACLE_ACID;
+            }
+            gameBrain.getGameboard().getTileFromCoordinate(robot.getCords().x, robot.getCords().y)
+                    .setGraphicalElement(graphic,gameBrain.getGameConfig().getDifficulty());
             applyEffect(robot, gameBrain);
         }
     }

@@ -221,15 +221,13 @@ public class LGameBrain implements IToDTO {
 
     // -------------------------------------------------------------------------//
     // OBSTACLE METHODS
-    public EnumObstacleType getRandomObstacleType(){
+    public EnumObstacleType getRandomObstacleTypeToExplode(){
         Random rnd = new Random();
         float val = rnd.nextFloat(1);
-        if (val < 0.3) { // ACID
+        if (val < 0.5) { // ACID
             return EnumObstacleType.ACID;
-        } else if (val < 0.7) { // RADIATION
-            return EnumObstacleType.RADIATION;
         } else {
-            return EnumObstacleType.HEALING;
+            return EnumObstacleType.RADIATION;
         }
     }
     public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
