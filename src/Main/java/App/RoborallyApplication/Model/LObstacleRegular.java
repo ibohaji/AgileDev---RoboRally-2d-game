@@ -40,6 +40,8 @@ public class LObstacleRegular extends AbObstacle{
             }
             gameBrain.explodeObstacleToTilesNEW(affectedTiles, obstacleType);
             setObstacleClassification(EnumObstacleClassification.KNOWN_OBSTACLE);
+            //TODO
+            // s
             applyEffect(robot, gameBrain);
         }
     }

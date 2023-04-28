@@ -120,7 +120,6 @@ public class LGameBrain implements IToDTO {
                 } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
                     if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
                         setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                        System.out.println("WINNER WINNER CHICKEN DINNER");
                         setWinner(player);
                     }
                 }
