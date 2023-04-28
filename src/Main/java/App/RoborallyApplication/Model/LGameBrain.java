@@ -293,14 +293,6 @@ public class LGameBrain implements IToDTO {
     public void removePlayer(LPlayer playerToRemove) {
         this.players.remove(playerToRemove);
     }
-    public LPlayer findPlayerByRobot(LRobot robot){
-        for (LPlayer player: players) {
-            if (player.getRobot().equals(robot)){
-                return player;
-            }
-        }
-        return null;
-    }
     public LPlayer getPlayerWhoIsCurrentlyMoving(){
         for (LPlayer player: players) {
             if (player.doesPlayerHaveMovesLeft()){
@@ -478,17 +470,6 @@ public class LGameBrain implements IToDTO {
     }
 
     // -------------------------------------------------------------------------//
-    // RANDO
-    private void push(Point newPos, EnumDirection directionOfRobot) {
-        LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
-        // push robotAtCoordinate
-        switch (directionOfRobot){
-            case NORTH -> pushRobot(robotAtCoordinate, EnumDirection.SOUTH);
-            case SOUTH -> pushRobot(robotAtCoordinate, EnumDirection.NORTH);
-            case EAST -> pushRobot(robotAtCoordinate, EnumDirection.WEST);
-            case WEST -> pushRobot(robotAtCoordinate, EnumDirection.EAST);
-        }
-    }
     public void setRobotCheckpointDone(LRobot robot){
         if (this.getGameboard().getTileFromCoordinate(
                 robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==

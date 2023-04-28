@@ -22,7 +22,6 @@ public class LGameboard implements IToDTO {
         gameBrain = brain;
         gameBrainId = gameBrain.getID();
     }
-
     public UUID getGameBrainId(){
         return this.gameBrain.getID();
     }
@@ -50,8 +49,6 @@ public class LGameboard implements IToDTO {
         return this.robots;
     }
 
-    public ArrayList<AbObstacle> getObstacles(){return this.obstacles;}
-
     public AbObstacle getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
         for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
@@ -62,13 +59,6 @@ public class LGameboard implements IToDTO {
         }
         return null;
     }
-
-    public boolean isCoordinateOnBoard(Point cords){
-        Tuple<Integer, Integer> dimensions = gameBrain.getGameConfig().getBoardDimensions();
-        return (dimensions.first()>=cords.x && dimensions.second()>=cords.y);
-    }
-
-
     public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
         for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
