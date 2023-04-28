@@ -91,23 +91,27 @@ public class LGameBrain implements IToDTO {
         LPlayer player = getPlayerWhoIsCurrentlyMoving();
         AbCardProgramming card = player.getNextCardFromOrderedDeck();
         moveRobotWithCard(player, card);
-        Point newPos = player.getRobot().getCords();
-        if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
-            //TODO
-            // ordering of checkpoints before assigning a checkpoint to the robot
-            // 1) Get robots checkpoints
-            // 2) Get gamebrains checkpoints
-            // 3) Check that player is collecting in correct sequence
-            ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
-            ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
-                    .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
-                    .toCollection(ArrayList::new));
+        if(this.players.isEmpty()){
+            setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+        } else {
+            Point newPos = player.getRobot().getCords();
+            if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
+                //TODO
+                // ordering of checkpoints before assigning a checkpoint to the robot
+                // 1) Get robots checkpoints
+                // 2) Get gamebrains checkpoints
+                // 3) Check that player is collecting in correct sequence
+                ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
+                ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
+                        .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
+                                .toCollection(ArrayList::new));
 
-        } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
-            if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
-                setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                // SOMEBODY WON <-------
-                setWinner(player); // <---- Assuming the player above reached the finishPoint?
+            } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
+                if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
+                    setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                    // SOMEBODY WON <-------
+                    setWinner(player); // <---- Assuming the player above reached the finishPoint?
+                }
             }
         }
     }
@@ -143,7 +147,15 @@ public class LGameBrain implements IToDTO {
     }
 
     public boolean canGameContinue(){
-        return !isThereAWinner() && this.players.size() > 0;
+        if(this.currentEnumGamePhase.equals(EnumGamePhase.GAME_OVER)){
+            return false;
+        } else if (isThereAWinner()) {
+            return false;
+        } else if (this.players.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -304,7 +316,7 @@ public class LGameBrain implements IToDTO {
     }
     public void removeRobot(LRobot robot){
         this.gameboard.removeRobot(robot);
-        if(!canGameContinue()){
+        if(this.gameboard.getRobots().isEmpty()){
             setCurrentGamePhase(EnumGamePhase.GAME_OVER);
         }
     }
@@ -319,8 +331,8 @@ public class LGameBrain implements IToDTO {
         if(!isPositionOnBoard(pos)){
             robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
             if(robotBeingPushed.getNrOfLives() < 1){
-                removeRobot(robotBeingPushed);
                 removePlayer(robotBeingPushed.getPlayer());
+                removeRobot(robotBeingPushed);
             } else {
                 putRobotToRandomStartPoint(robotBeingPushed);
             }

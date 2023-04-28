@@ -38,6 +38,7 @@ public class LobbyRegularView extends LobbyView {
         JButton startGameButton = new JButton("START GAME");
         startGameButton.setFont(Fonts.LARGE);
         startGameButton.addActionListener(e -> {
+            startGameButton.setEnabled(false);
             //i want to retrive the userInput names from the namePanel above
                 Component[] components = getComponents();
                 for(Component component: components){

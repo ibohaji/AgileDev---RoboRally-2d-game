@@ -58,6 +58,7 @@ public class LobbyAiView extends LobbyView {
         JButton startGameButton = new JButton("START GAME");
         startGameButton.setFont(Fonts.LARGE);
         startGameButton.addActionListener(e -> {
+            startGameButton.setEnabled(false);
             gameConfiguration.createPlayersFromLobby(isAI);
             lobbyController.userClickStartGame(gameConfiguration);
         });

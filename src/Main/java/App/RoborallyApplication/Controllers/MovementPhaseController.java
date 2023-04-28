@@ -1,5 +1,6 @@
 package App.RoborallyApplication.Controllers;
 
+import App.RoborallyApplication.Model.EnumGamePhase;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.MovementPhaseView;
@@ -30,19 +31,24 @@ public class MovementPhaseController extends AbPhaseController{
                 gameBrain.endRound();
                 gameController.updateControllerState();
             } else {
-                this.gameBrain.makeMovement();
-                this.view = new MovementPhaseView(this.gameController, gameBrain);
-                gameController.updateView(this.view);
-                LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving(); // will be null when all players moved
-                if(player.getCardSequence().getSize() == 0){
-                    player.setCardSequenceToNull();
-                }
-                if(player != null){
-                    if(!gameBrain.areThereMovementsLeftInThisRound()){
-                        timer.stop();
-                        //Waiter.getInstance().waitForXMilliseconds(1000);
-                        gameBrain.endRound();
-                        gameController.updateControllerState();
+                if(this.gameBrain.getPlayers().size() == 0){
+                    gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                    gameController.updateControllerState();
+                } else {
+                    this.gameBrain.makeMovement();
+                    this.view = new MovementPhaseView(this.gameController, gameBrain);
+                    gameController.updateView(this.view);
+                    LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving(); // will be null when all players moved
+                    if(player.getCardSequence().getSize() == 0){
+                        player.setCardSequenceToNull();
+                    }
+                    if(player != null){
+                        if(!gameBrain.areThereMovementsLeftInThisRound()){
+                            timer.stop();
+                            //Waiter.getInstance().waitForXMilliseconds(1000);
+                            gameBrain.endRound();
+                            gameController.updateControllerState();
+                        }
                     }
                 }
             }

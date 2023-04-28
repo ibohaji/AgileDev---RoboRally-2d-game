@@ -26,19 +26,29 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!gameBrain.canGameContinue()) {
+                    System.out.println("GAME CANNOT CONTINUE");
                     applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
-                }
-                if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)) {
-                    controller = new ProgrammingPhaseController(GameController.this, gameBrain);
-                } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
-                    controller = new MovementPhaseController(GameController.this, gameBrain);
-                } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)) {
-                    if (gameBrain.isThereAWinner()) {
-                        gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                        applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
-                    } else {
-                        gameBrain.startRound();
-                        updateControllerState();
+                    ((Timer) e.getSource()).stop(); // Stop the timer
+                } else {
+                    if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.PROGRAMMING_PHASE)) {
+                        controller = new ProgrammingPhaseController(GameController.this, gameBrain);
+                    } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)) {
+                        if(gameBrain.getPlayers().isEmpty()){
+                            applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
+                            ((Timer) e.getSource()).stop(); // Stop the timer
+                        } else {
+                            controller = new MovementPhaseController(GameController.this, gameBrain);
+                        }
+                    } else if (gameBrain.getCurrentGamePhase().equals(EnumGamePhase.ROUND_END)) {
+                        if (gameBrain.isThereAWinner()) {
+                            gameBrain.setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                            applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
+                        } else if (gameBrain.getPlayers().isEmpty()) {
+                            applicationController.changePanel(new GameOverPanel(GameController.this, gameBrain));
+                        } else {
+                            gameBrain.startRound();
+                            updateControllerState();
+                        }
                     }
                 }
                 ((Timer) e.getSource()).stop(); // Stop the timer after the update

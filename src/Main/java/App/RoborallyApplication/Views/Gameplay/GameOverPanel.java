@@ -29,7 +29,12 @@ public class GameOverPanel extends GameView {
         constraints.insets = new Insets(50, 0, 50, 0);
         add(gameOverLabel, constraints);
 
-        scoreLabel = new JLabel("Winner is : " + winner);
+        if(winner == null){
+            scoreLabel = new JLabel("NO WINNER");
+        } else {
+            scoreLabel = new JLabel("Winner is : " + winner);
+        }
+
         scoreLabel.setFont(new Font("Serif", Font.PLAIN, 24));
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
