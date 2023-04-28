@@ -54,7 +54,7 @@ public class LGameConfiguration {
         switch (difficulty){
             case EASY -> scaling = 60;
             case MEDIUM -> scaling = 45;
-            case HARD -> scaling = 40;
+            case HARD -> scaling = 45;
         }
         return scaling;
     }

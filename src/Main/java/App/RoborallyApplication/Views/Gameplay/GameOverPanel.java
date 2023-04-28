@@ -14,10 +14,10 @@ public class GameOverPanel extends GameView {
     public GameOverPanel(GameController controller, LGameBrain gameBrain) {
         super(controller, gameBrain);
         String winner = gameBrain.getPlayerWhoWon();
-        creatView(winner,controller,gameBrain);
+        createView(winner,controller,gameBrain);
     }
 
-    public void creatView(String winner,GameController controller,LGameBrain brain){
+    public void createView(String winner,GameController controller,LGameBrain brain) {
         JLabel scoreLabel;
         setLayout(new GridBagLayout());
         //Game over Label
@@ -36,7 +36,6 @@ public class GameOverPanel extends GameView {
         constraints.gridy = 1;
         add(scoreLabel, constraints);
 
-
         JButton closeButton = new JButton("Close Game");
         closeButton.addActionListener(e -> controller.quitGame());
         constraints = new GridBagConstraints();
@@ -47,11 +46,5 @@ public class GameOverPanel extends GameView {
 
         setOpaque(false);
         setBackground(new Color(0, 0, 0, 128));
-
     }
-
-
-
-
-
 }

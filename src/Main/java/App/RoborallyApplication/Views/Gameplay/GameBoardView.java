@@ -33,6 +33,8 @@ public class GameBoardView extends GameView{
                 try{
                     LTile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
                     if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){ // ROBOT ON TILE
+                        //TODO
+                        // check that robot on checkpoint, finish is on top
                         LRobot robot = gameBrain.getGameboard().getRobotFromCoordinate(x, y);
                         if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()){
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
@@ -52,8 +54,15 @@ public class GameBoardView extends GameView{
                         add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,img2)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
 
                     } else {
-                        add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
-                                new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        if(tileAtCoordinate.isTileFinishPoint()){
+                            ImageIcon finishImg = tileAtCoordinate.getGraphicalElement().getImage();
+                            finishImg = ImageUtils.mergeTwoImages(scaledDefaultFloor,finishImg);
+                            add(new JLabel(finishImg),new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        } else {
+                            add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
+                                    new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        }
+
                     }
 
                 } catch (NullPointerException exception){
@@ -63,13 +72,12 @@ public class GameBoardView extends GameView{
         }
         // PLAYER INFO
         if(true){
-            LPlayer player = null;
+            LPlayer player;
             if(this.gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
                 player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
             } else {
                 player = this.gameBrain.getPlayerWithoutCardSequence();
             }
-            //player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
             JLabel playerName = new JLabel(player.getDisplayName());
             playerName.setFont(Fonts.BOLDMEDIUM);
             JLabel robotLives = new JLabel("Number of lives: " + player.getRobot().getNrOfLives());

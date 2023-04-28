@@ -59,7 +59,6 @@ public class LCardMovementProgramming extends AbCardProgramming {
         boolean isTileOccupiedByAnotherRobot = gameBrain.getGameboard().isTileOccupiedByRobot(newPos.x, newPos.y);
         if (isTileOccupiedByAnotherRobot){
             LRobot robotAtCoordinate = gameBrain.getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
-            // push robotAtCoordinate
             switch (directionOfRobot){
                 case NORTH -> gameBrain.pushRobot(robotAtCoordinate, EnumDirection.SOUTH);
                 case SOUTH -> gameBrain.pushRobot(robotAtCoordinate, EnumDirection.NORTH);
@@ -76,7 +75,6 @@ public class LCardMovementProgramming extends AbCardProgramming {
 
     protected int getSteps(){return steps;}
     protected int getStepsMade(){return stepsMade;}
-
     @Override
     public String toString() {
         return "MOVEMENT CARD, steps: " + this.steps;
