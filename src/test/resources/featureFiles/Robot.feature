@@ -19,23 +19,23 @@ Feature: Robot Movement on the board
     Given the game board is set up with robots at positions
     And robot1 is facing NORTH and robot2 is facing EAST
     When robot1 uses a movement card with 2 steps
-    Then robot1 should be at (2,1) facing NORTH and robot2 should be at (2,2) facing EAST
+    Then robot1 should be at X=2 Y=2 facing NORTH and robot2 should be at X=2 Y=3 facing EAST
 
   Scenario: Robot falls off the board due to its own movementCard
     Given a game board with difficulty Easy
-    And Robot1 at position (7,7) facing EAST with 4 lives
+    And Robot1 at position X=7 Y=7 facing EAST with 4 lives
     When Robot1 moves forward 3 step
     Then Robot1 has 3 lives left
     And Robot1 should be restored to a random start point position on the board
 
   Scenario: Robot pushed off the board
     Given a game board with difficulty EASY
-    And Robot1 at position (6,4) and Robot2 at position (6,5)
+    And Robot1 at position X=2 Y=0 and Robot2 at position X=2 Y=1
     And Robot1 is facing NORTH and Robot2 is facing SOUTH
     And Robot1 has 2 lives and Robot2 has 5 lives
     When Robot1 moves forward one step
     Then Robot2 is at a random start point position and facing NORTH with 4 lives
-    And Robot1 should be at the Robot2's previous position(6,5) and facing NORTH
+    And Robot1 should be at the Robot2's previous position X=6 Y=5 and facing NORTH
 
   Scenario: Robot is deleted from the game
     Given Robot has one life

@@ -1,4 +1,5 @@
 package CucumberTests;
+
 import App.RoborallyApplication.Model.*;
 import Utils.Tuple;
 import io.cucumber.java.en.Given;
@@ -10,6 +11,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
+
 public class stepdef_Robot {
 
     private LCardMovementProgramming movementProgramming;
@@ -23,6 +25,11 @@ public class stepdef_Robot {
     private LPlayer player0,player1;
     private LGameConfiguration gameConfiguration;
     private int t_no_of_players;
+
+
+    /*
+        Tests for Robot
+    */
 
     @Before
     public void setup(){
@@ -60,6 +67,7 @@ public class stepdef_Robot {
 
     }
 
+    // Robot turns direction successfully according to the TURN card
     @Given("the robot's initial direction as NORTH")
     public void the_robot_s_initial_direction_as_north() {
         setup();
@@ -75,6 +83,7 @@ public class stepdef_Robot {
         assertEquals(EnumDirection.WEST,robot.getCurrentDirection());
     }
 
+    // Robot moves according to the MOVEMENT card
     @Given("a robot placed at position and direction SOUTH")
     public void a_robot_placed_at_position_and_direction_south() {
         setup();
@@ -91,6 +100,7 @@ public class stepdef_Robot {
         assertEquals(new Point(2,1),robot.getCords());
     }
 
+    // Robot repeats its previous movement according to the AGAIN card
     @Given("the robot is at point and facing WEST and the card used previously is U-TURN card")
     public void the_robot_is_at_point_and_facing_west_and_the_card_used_previously_is_u_turn_card(){
         setup();
@@ -114,6 +124,7 @@ public class stepdef_Robot {
         assertEquals(EnumDirection.WEST, robot.getCurrentDirection());
     }
 
+    // Robot pushes another robot
     @Given("the game board is set up with robots at positions")
     public void the_game_board_is_set_up_with_robots_at_positions() {
         setup2();
@@ -130,23 +141,24 @@ public class stepdef_Robot {
         movementProgramming = new LCardMovementProgramming(int1);
         movementProgramming.useCard(robot1,gamebrain);
     }
-    @Then("robot1 should be at \\({double}) facing NORTH and robot2 should be at \\({double}) facing EAST")
-    public void robot1_should_be_at_facing_north_and_robot2_should_be_at_facing_east(Double double1, Double double2) {
-        assertEquals(new Point(2,2),robot1.getCords());
-        assertEquals(new Point(2,3),robot2.getCords());
+    @Then("robot1 should be at X={int} Y={int} facing NORTH and robot2 should be at X={int} Y={int} facing EAST")
+    public void robot1_should_be_at_facing_north_and_robot2_should_be_at_facing_east(int r1_x, int r1_y,int r2_x, int r2_y) {
+        assertEquals(new Point(r1_x, r1_y),robot1.getCords());
+        assertEquals(new Point(r2_x, r2_y),robot2.getCords());
         assertEquals(EnumDirection.NORTH,robot1.getCurrentDirection());
         assertEquals(EnumDirection.EAST,robot2.getCurrentDirection());
     }
 
+    //  Robot falls off the board due to its own movementCard
     @Given("a game board with difficulty Easy")
     public void a_game_board_with_difficulty_easy_fall() {
         setup();
     }
-    @Given("Robot1 at position \\({double}) facing EAST with {int} lives")
-    public void robot1_at_position_facing_east_with_lives(Double double1, Integer int1) {
-        robot.setCords(new Point(7,7));
+    @Given("Robot1 at position X={int} Y={int} facing EAST with {int} lives")
+    public void robot1_at_position_facing_east_with_lives(int x, int y, int l) {
+        robot.setCords(new Point(x, y));
         robot.setDirection(EnumDirection.EAST);
-        robot.setNrOfLives(int1);
+        robot.setNrOfLives(l);
     }
     @When("Robot1 moves forward {int} step")
     public void robot1_moves_forward_step(Integer int1) {
@@ -162,14 +174,15 @@ public class stepdef_Robot {
 
     }
 
+    // Robot pushed off the board
     @Given("a game board with difficulty EASY")
     public void a_game_board_with_difficulty_easy() {
         setup2();
     }
-    @Given("Robot1 at position \\({double}) and Robot2 at position \\({double})")
-    public void robot1_at_position_and_robot2_at_position(Double double1, Double double2) {
-        robot1.setCords(new Point(2,0));
-        robot2.setCords(new Point(2,1));
+    @Given("Robot1 at position X={int} Y={int} and Robot2 at position X={int} Y={int}")
+    public void robot1_at_position_and_robot2_at_position(int r1_x, int r1_y, int r2_x, int r2_y) {
+        robot1.setCords(new Point(r1_x, r1_y));
+        robot2.setCords(new Point(r2_x, r2_y));
     }
     @Given("Robot1 is facing NORTH and Robot2 is facing SOUTH")
     public void robot1_is_facing_north_and_robot2_is_facing_south() {
@@ -177,7 +190,7 @@ public class stepdef_Robot {
         robot2.setDirection(EnumDirection.SOUTH);
     }
     @Given("Robot1 has {int} lives and Robot2 has {int} lives")
-    public void robot1_has_lives_and_robot2_has_lives(Integer int1, Integer int2) {
+    public void robot1_has_lives_and_robot2_has_lives(Integer l1, Integer l2) {
 
     }
     @When("Robot1 moves forward one step")
@@ -188,11 +201,12 @@ public class stepdef_Robot {
     public void robot2_is_at_a_random_start_point_position_and_facing_north_with_lives(Integer int1) {
 
     }
-    @Then("Robot1 should be at the Robot2's previous position\\({double}) and facing NORTH")
-    public void robot1_should_be_at_the_robot2_s_previous_position_and_facing_north(Double double1) {
+    @Then("Robot1 should be at the Robot2's previous position X={int} Y={int} and facing NORTH")
+    public void robot1_should_be_at_the_robot2_s_previous_position_and_facing_north(int x, int y) {
 
     }
 
+    // Robot is deleted from the game
     @Given("Robot has one life")
     public void robot_has_one_life() {
         setup();
@@ -226,4 +240,5 @@ public class stepdef_Robot {
     public void the_robot_execute_the_cards_in_the_given_order() {
 
     }
+
 }
