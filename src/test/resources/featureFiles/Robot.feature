@@ -48,5 +48,5 @@ Feature: Robot Movement on the board
   Scenario: Robot1 push robot2 and robot2 suffer one damage
     Given robot1 is at x=1 y=7 with 4 lives facing North and robot2 is at x=1 y=6 with 3 lives facing West
     When robot1 use his programming card which is Movementcard for 1 steps
-    Then robot1 goes to x=1 y=6 with 4 lives facing North
-    And robot2 is at x=1 y=5 with 2 lives facing West
+    Then robot1 goes to x=1 y=6 with same lives facing North
+    And robot2 is at x=1 y=5 and suffered one damage
