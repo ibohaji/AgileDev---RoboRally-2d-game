@@ -17,6 +17,9 @@ public class stepdef_Obstacle {
     private LGameBrain t_gamebrain;
     private LPlayer t_player;
     private LRobot t_robot;
+    private int robotLives;
+
+    private LObstacleRegular obstacleRegular;
 
     @Given("a tile with explosive known obstacle and default floor tiles surrounding it")
     public void aTileWithExplosiveKnownObstacleAndDefaultFloorTilesSurroundingIt() {
@@ -102,14 +105,20 @@ public class stepdef_Obstacle {
     public void aTileWithAKnownRegularObstacle() {
         setup();
         t_robot = t_gamebrain.getPlayers().get(0).getRobot();
+        robotLives = t_robot.getNrOfLives();
+        obstacleRegular = (LObstacleRegular)t_gamebrain.getObstacleFromCoordinateNEW(11, 6);
     }
 
     @When("robot steps on the obstacle")
     public void robotStepsOnTheObstacle() {
+        t_robot.setCords(new Point(11, 7));
+        t_robot.setDirection(EnumDirection.NORTH);
+        t_gamebrain.makeMovement();
     }
 
     @Then("robot gets the damage from the obstacle")
     public void robotGetsTheDamageFromTheObstacle() {
+        assertEquals(robotLives + obstacleRegular.getObstacleType().getDamage(), t_robot.getNrOfLives());
     }
 
     public void setup(){
