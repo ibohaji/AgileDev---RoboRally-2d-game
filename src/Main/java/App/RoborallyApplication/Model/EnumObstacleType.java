@@ -6,7 +6,6 @@ public enum EnumObstacleType {
     HEALING(2),
     PIT(-1);
     private int damage;
-
     public int getDamage(){
         return this.damage;
     }
