@@ -390,8 +390,8 @@ public class stepdef_GameBrain {
         t_tile = null;
     }
 
-    // GameBrain determines loser and winner
-    @Given("a GameBrain with medium difficulty")
+    // GameBrain ends a game
+    @Given("a GameBrain with easy difficulty")
     public void a_GameBrain_with_medium_difficulty() {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
@@ -405,8 +405,8 @@ public class stepdef_GameBrain {
         t_gamebrain = new LGameBrain(t_gameconfiguration);
     }
 
-    @When("one robot dead while the other still alive")
-    public void one_robot_dead_while_the_other_still_alive() {
+    @When("the only robot dies")
+    public void the_only_robot_dies() {
         LPlayer t_player1 = t_gamebrain.getPlayers().get(0);
         LRobot t_robot1 = t_player1.getRobot();
         t_robot1.setNrOfLives(0);
@@ -415,12 +415,46 @@ public class stepdef_GameBrain {
         assertFalse(t_gamebrain.areThereMovementsLeftInThisRound());
     }
 
-    @Then("GameBrain determines winner and loser")
+    @Then("GameBrain ends the game")
     public void GameBrain_determines_winner_and_loser() {
         assertFalse(t_gamebrain.canGameContinue());
-        assertNull(t_gamebrain.getPlayerWhoWon());
+
+        t_gamebrain = null;
     }
 
+    // GameBrain determines a winner
+    @Given("a GameBrain with easy difficulty_")
+    public void a_GameBrain_with_easy_difficulty_() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+    }
+
+    @When("a robot gets to the finish point")
+    public void a_robot_gets_to_the_finish_pont() {
+        LPlayer t_player1 = t_gamebrain.getPlayers().get(0);
+        LRobot t_robot1 = t_player1.getRobot();
+        t_robot1.setCords(new Point(3, 1));
+        t_robot1.setDirection(EnumDirection.EAST);
+        LCardSequence t_cards = new LCardSequence(t_player1);
+        t_cards.addCard(new LCardMovementProgramming(1));
+        t_player1.setOrderedCardSequence(t_cards);
+        t_gamebrain.makeMovement();
+    }
+
+    @Then("GameBrain shows a winner")
+    public void GameBrain_shows_a_winner() {
+        assertNotEquals("", t_gamebrain.getPlayerWhoWon());
+
+        t_gamebrain = null;
+    }
 
     //TODO
     // 1) get damage test from EnumObstacleType

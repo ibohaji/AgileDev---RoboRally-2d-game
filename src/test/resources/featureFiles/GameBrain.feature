@@ -55,7 +55,12 @@ Feature: GameBrain
     When a robot stands on an unknown explosive tile
     Then GameBrain set the unknown explosive tile to a known one
 
-  Scenario: GameBrain determines loser and winner
-    Given a GameBrain with medium difficulty
-    When one robot dead while the other still alive
-    Then GameBrain determines winner and loser
+  Scenario: GameBrain ends a game
+    Given a GameBrain with easy difficulty
+    When the only robot dies
+    Then GameBrain ends the game
+
+  Scenario: GameBrain determines a winner
+    Given a GameBrain with easy difficulty_
+    When a robot gets to the finish point
+    Then GameBrain shows a winner
