@@ -16,8 +16,8 @@ public class LCardMovementProgramming extends AbCardProgramming {
             this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.MOVEMENT_CARD_2);
         } else if (steps == 3) {
             this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.MOVEMENT_CARD_3);
-        }    }
-
+        }
+    }
 
     @Override
     public void useCard(LRobot robot, LGameBrain gameBrain) {
@@ -35,7 +35,6 @@ public class LCardMovementProgramming extends AbCardProgramming {
             robot.decreaseNumberOfLives();
             if(robot.getNrOfLives() < 1){
                 gameBrain.removeRobot(robot);
-                //gameBrain.removePlayer(gameBrain.findPlayerByRobot(robot));
             } else {
                 gameBrain.putRobotToRandomStartPoint(robot);
             }
@@ -49,7 +48,6 @@ public class LCardMovementProgramming extends AbCardProgramming {
             } else {
                 robot.setCords(newPos);
             }
-
         }
         if(stepsMade == steps){
             robot.getPlayer().addCardToUsedSequence(this);
@@ -73,13 +71,6 @@ public class LCardMovementProgramming extends AbCardProgramming {
     public ImageIcon getCardImageIcon() {
         return this.graphicalElement.getImage();
     }
-
     protected int getSteps(){return steps;}
     protected int getStepsMade(){return stepsMade;}
-    @Override
-    public String toString() {
-        return "MOVEMENT CARD, steps: " + this.steps;
-    }
-
-
 }

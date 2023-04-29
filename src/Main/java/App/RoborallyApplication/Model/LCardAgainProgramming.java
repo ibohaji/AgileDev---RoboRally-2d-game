@@ -27,11 +27,6 @@ public class LCardAgainProgramming extends AbCardProgramming {
     public ImageIcon getCardImageIcon() {
         return this.graphicalElement.getImage();
     }
-
-    @Override
-    public String toString() {
-        return "Again card";
-    }
 }
 
 

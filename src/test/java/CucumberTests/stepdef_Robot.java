@@ -66,6 +66,25 @@ public class stepdef_Robot {
         player1 = gamebrain.getPlayers().get(1);
 
     }
+    public void setup3(){
+        t_no_of_players = 2;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        gamebrain = new LGameBrain(t_gameconfiguration);
+
+        robot1 = gamebrain.getPlayers().get(0).getRobot();
+        robot2 = gamebrain.getPlayers().get(1).getRobot();
+
+        player0 = gamebrain.getPlayers().get(0);
+        player1 = gamebrain.getPlayers().get(1);
+
+    }
 
     // Robot turns direction successfully according to the TURN card
     @Given("the robot's initial direction as NORTH")
@@ -182,7 +201,7 @@ public class stepdef_Robot {
     }
     @Then("Robot1 has {int} lives left")
     public void robot1_has_lives_left(Integer int1) {
-
+        assertEquals(3,robot.getNrOfLives());
     }
     @Then("Robot1 should be restored to a random start point position on the board")
     public void robot1_should_be_restored_to_a_random_start_point_position_on_the_board() {
@@ -203,22 +222,6 @@ public class stepdef_Robot {
     public void robot1_is_facing_north_and_robot2_is_facing_south() {
         robot1.setDirection(EnumDirection.NORTH);
         robot2.setDirection(EnumDirection.SOUTH);
-    }
-    @Given("Robot1 has {int} lives and Robot2 has {int} lives")
-    public void robot1_has_lives_and_robot2_has_lives(Integer l1, Integer l2) {
-
-    }
-    @When("Robot1 moves forward one step")
-    public void robot1_moves_forward_one_step() {
-
-    }
-    @Then("Robot2 is at a random start point position and facing NORTH with {int} lives")
-    public void robot2_is_at_a_random_start_point_position_and_facing_north_with_lives(Integer int1) {
-
-    }
-    @Then("Robot1 should be at the Robot2's previous position X={int} Y={int} and facing NORTH")
-    public void robot1_should_be_at_the_robot2_s_previous_position_and_facing_north(int x, int y) {
-
     }
 
     // Robot is deleted from the game
@@ -261,9 +264,65 @@ public class stepdef_Robot {
             gamebrain.makeMovement();
         }
     }
+
     @Then("the robot execute the cards in the given order")
     public void the_robot_execute_the_cards_in_the_given_order() {
         assertEquals(new Point(7,1),robot.getCords());
         assertEquals(EnumDirection.SOUTH,robot.getCurrentDirection());
+    }
+
+    @Given("a game board with difficulty Medium")
+    public void a_game_board_with_difficulty_medium() {
+        setup3();
+        robot1.setCords(new Point(0,4));
+        robot1.setDirection(EnumDirection.EAST);
+        robot2.setCords(new Point(0,5));
+        robot2.setDirection(EnumDirection.NORTH);
+    }
+    @When("Robot1 encounter a checkpoint")
+    public void robot1_encounter_a_checkpoint() {
+        movementProgramming = new LCardMovementProgramming(1);
+        cardSequence = new LCardSequence(player0);
+        cardSequence.addCard(movementProgramming);
+        player0.setOrderedCardSequence(cardSequence);
+        while(player0.getCardSequence().getSize() != 0){
+            gamebrain.makeMovement();
+        }
+    }
+    @When("Robot2 encounter the same checkpoint")
+    public void robot2_encounter_the_same_checkpoint() {
+        cardSequence = new LCardSequence(player0);
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        cardSequence.addCard(new LCardChangeDirectionProgramming(EnumTurnType.RIGHT));
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        player1.setOrderedCardSequence(cardSequence);
+        while(player0.getCardSequence().getSize() != 0){
+            gamebrain.makeMovement();
+        }
+    }
+    @Then("Robot1 have this check point")
+    public void robot1_have_this_check_point() {
+        assertEquals(new Point(1,4),robot1.getCheckpointsDone().get(0));
+    }
+    @Then("Robot2 will not get this check point")
+    public void robot2_will_not_get_this_check_point() {
+        assertEquals(true,robot2.getCheckpointsDone().isEmpty());
+    }
+
+    @Given("robot1 is at x={int} y={int} with {int} lives facing North and robot2 is at x={int} y={int} with {int} lives facing West")
+    public void robot1_is_at_x_y_with_lives_facing_north_and_robot2_is_at_x_y_with_lives_facing_west(Integer int1, Integer int2, Integer int3, Integer int4, Integer int5, Integer int6) {
+
+    }
+    @When("robot1 use his programming card which is Movementcard for {int} steps")
+    public void robot1_use_his_programming_card_which_is_movementcard_for_steps(Integer int1) {
+
+    }
+    @Then("robot1 goes to x={int} y={int} with {int} lives facing North")
+    public void robot1_goes_to_x_y_with_lives_facing_north(Integer int1, Integer int2, Integer int3) {
+
+    }
+    @Then("robot2 is at x={int} y={int} with {int} lives facing West")
+    public void robot2_is_at_x_y_with_lives_facing_west(Integer int1, Integer int2, Integer int3) {
+
     }
 }

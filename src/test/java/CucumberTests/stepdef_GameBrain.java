@@ -12,7 +12,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import Utils.Tuple;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -55,6 +54,7 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain shuffle and assign cards to players")
     public void GameBrain_shuffle_and_assign_cards_to_players() {
+        assertEquals(EnumGamePhase.ROUND_START, t_gamebrain.getCurrentGamePhase());
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
         for (LPlayer t_currentplayer : t_players) {
@@ -97,7 +97,12 @@ public class stepdef_GameBrain {
 
         for (LPlayer t_player : t_players) {
             t_gamebrain.putRobotToRandomStartPoint(t_player.getRobot());
-//            assertEquals(StartPointEnum.Point1.getCoordinates(), t_player.getRobot().getCords());
+            assertTrue(
+                    t_robot.getCords().equals(new Point(1, 7)) ||
+                    t_robot.getCords().equals(new Point(3, 7)) ||
+                    t_robot.getCords().equals(new Point(5, 7)) ||
+                    t_robot.getCords().equals(new Point(6, 7))
+            );
         }
 
     }
@@ -236,12 +241,20 @@ public class stepdef_GameBrain {
             }
         }
         t_tile = t_checkpoints.get(t_rndInt(0, t_checkpoints.size()-1));
-        t_robot.setCords(t_tile.getCoordinates());
+        t_robot.setCords(new Point(1, 3));
+        t_robot.setDirection(EnumDirection.SOUTH);
+        LCardSequence t_cards = new LCardSequence(t_player);
+        t_cards.addCard(new LCardMovementProgramming(1));
+        t_player.setOrderedCardSequence(t_cards);
+        assertTrue(t_gamebrain.areThereMovementsLeftInThisRound());
+        t_gamebrain.makeMovement();
     }
 
     @Then("GameBrain check how many checkpoints a robot has reached")
     public void GameBrain_check_how_many_checkpoints_a_robot_has_reached() {
-        //t_gamebrain.setRobotCheckpointDone(t_robot);
+        assertEquals(1, t_robot.getCords().x);
+        assertEquals(4, t_robot.getCords().y);
+        assertEquals(1, t_robot.getCheckpointsDone().size());
         assertTrue(t_robot.getCheckpointsDone().contains(t_tile.getCoordinates()));
 
         t_robot = null;
@@ -377,7 +390,36 @@ public class stepdef_GameBrain {
         t_tile = null;
     }
 
+    // GameBrain determines loser and winner
+    @Given("a GameBrain with medium difficulty")
+    public void a_GameBrain_with_medium_difficulty() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+    }
 
+    @When("one robot dead while the other still alive")
+    public void one_robot_dead_while_the_other_still_alive() {
+        LPlayer t_player1 = t_gamebrain.getPlayers().get(0);
+        LRobot t_robot1 = t_player1.getRobot();
+        t_robot1.setNrOfLives(0);
+        t_player1.setOrderedCardSequence(new LCardSequence(t_player1));
+        t_gamebrain.makeMovement();
+        assertFalse(t_gamebrain.areThereMovementsLeftInThisRound());
+    }
+
+    @Then("GameBrain determines winner and loser")
+    public void GameBrain_determines_winner_and_loser() {
+        assertFalse(t_gamebrain.canGameContinue());
+        assertNull(t_gamebrain.getPlayerWhoWon());
+    }
 
 
     //TODO

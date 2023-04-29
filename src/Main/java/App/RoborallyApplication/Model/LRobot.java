@@ -57,10 +57,6 @@ public class LRobot{
         return this.checkpointsDone;
     }
 
-    public void setCheckpointsDone(ArrayList<Point> checkpointsDone) {
-        this.checkpointsDone = checkpointsDone;
-    }
-
     public Point getCords(){
         return cords;
     }

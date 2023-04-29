@@ -33,9 +33,4 @@ public class LCardChangeDirectionProgramming extends AbCardProgramming {
     public ImageIcon getCardImageIcon() {
         return this.graphicalElement.getImage();
     }
-
-    @Override
-    public String toString() {
-        return "Turn card. Turn:" + this.turn.toString();
-    }
 }

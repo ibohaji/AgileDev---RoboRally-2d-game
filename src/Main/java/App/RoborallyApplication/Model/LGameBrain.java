@@ -1,6 +1,5 @@
 package App.RoborallyApplication.Model;
 
-import Utils.JsonHelper;
 import Utils.MapGenerator;
 import Utils.MusicPlayer;
 import Utils.Waiter;
@@ -8,22 +7,14 @@ import Utils.Waiter;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class LGameBrain{
-    private LGameConfiguration gameConfig;
+    private final LGameConfiguration gameConfig;
     private LGameboard gameboard = null;
-    private ArrayList<LPlayer> players;
+    private final ArrayList<LPlayer> players;
     private EnumGamePhase currentEnumGamePhase;
     public LPlayer winner;
-    /**
-     * Constructor for restoring
-     */
-    public LGameBrain(){
-
-    }
-
     /**
      * @param gameConfiguration game configuration
      * Constructor for starting game from lobby
@@ -80,10 +71,6 @@ public class LGameBrain{
             }
         }
     }
-
-    /**
-     * @return returns the card that was used for movement
-     */
     public void makeMovement(){
         if(this.gameboard.getRobots().isEmpty()){
             setCurrentGamePhase(EnumGamePhase.GAME_OVER);
@@ -143,11 +130,7 @@ public class LGameBrain{
             return false;
         } else if (isThereAWinner()) {
             return false;
-        } else if (this.gameboard.getRobots().isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        } else return !this.gameboard.getRobots().isEmpty();
     }
 
     public boolean canRobotCollectCheckpoint(LPlayer player){
@@ -161,13 +144,12 @@ public class LGameBrain{
                 for (int i = 0; i < robotsCheckpoints.size(); i++) {
                     boolean xCheck = robotsCheckpoints.get(i).x == gameBrainCheckpoints.get(i).x;
                     boolean yCheck = robotsCheckpoints.get(i).y == gameBrainCheckpoints.get(i).y;
-                    if(!xCheck || !yCheck){
+                    if (!xCheck || !yCheck) {
                         orderCorrect = false;
+                        break;
                     }
                 }
-                if(orderCorrect){
-                    return true;
-                }
+                return orderCorrect;
             }
         }
         return false;
@@ -198,8 +180,9 @@ public class LGameBrain{
     public boolean haveAllPlayersSubmittedSequence(){
         boolean haveSubmitted = true;
         for (LPlayer player: players) {
-            if(player.getCardSequence() == null){
+            if (player.getCardSequence() == null) {
                 haveSubmitted = false;
+                break;
             }
         }
         return haveSubmitted;
@@ -253,7 +236,7 @@ public class LGameBrain{
         }
     }
 
-    protected void updateGraphicalElementOnTile(LTile tileToUpdate){
+    private void updateGraphicalElementOnTile(LTile tileToUpdate){
         LObstacleRegular obs = (LObstacleRegular)tileToUpdate.getNewObstacle();
         EnumDifficulty diff = gameConfig.getDifficulty();
         if(obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE) ||
@@ -444,17 +427,6 @@ public class LGameBrain{
         robot.setDirection(EnumDirection.NORTH);
     }
     // -------------------------------------------------------------------------//
-    // GAMESTATE METHODS
-    public void restoreGameboard(LGameConfiguration gameConfig, ArrayList<LPlayer> players,
-                                 EnumGamePhase enumGamePhase, LGameboard gameboard,
-                                 ArrayList<LRobot> robots, ArrayList<LTile> tiles){
-        this.gameConfig = gameConfig;
-        this.gameboard = gameboard;
-        this.currentEnumGamePhase = enumGamePhase;
-        this.players = players;
-        gameboard.setRobots(robots);
-        gameboard.setTiles(tiles);
-    }
     public EnumGamePhase getCurrentGamePhase(){
         return this.currentEnumGamePhase;
     }

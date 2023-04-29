@@ -7,8 +7,7 @@ public enum EnumObstacleType {
     PIT(-1);
     private int damage;
 
-    public int getDamage(){
-        return this.damage;
+    public int getDamage() {return this.damage;
     }
     private EnumObstacleType(int damage) {
         this.damage = damage;
