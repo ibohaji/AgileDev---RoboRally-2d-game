@@ -372,4 +372,28 @@ public class stepdef_GameBrain {
         t_tile = null;
     }
 
+
+
+
+    //TODO
+    // 1) get damage test from EnumObstacleType
+    // 2) graphicalElement getImage test -> check that image not null
+    // 3) againcCard class useCard method test all if cases
+    // 4) CardChangeDirection test getTurnType correct
+    // 5) CardMovement test pushIfOccupied method works
+    // 6) CardMovement test getSteps and getStepsMade -> create new MovementCard and check if getStepsMade == 0 and getSteps != 0
+    // 7) GameBrain
+    //      7.1) Test makeMovement
+    //      7.2) Test areThereMovementsLeft -> Start round, give players cards, setSequences and check if there are movements left
+    //      7.3) Test endRound -> check gamePhase is ROUND_END
+    //      7.4) Test canGameContinue ->
+    //      7.5) Test all winner methods -> Set a random player to winner, see if isThereAWinner() and getPlayerWhoWon are correct
+    //      7.6) Test haveAllPlayersSubmittedSequences()
+    //      7.7) Test setCardSequencesForAi -> Create game with 1 real, 1 AI player, give them cards and call this method,
+    //                                          AI should have a sequence after setCardSequenceForAi()
+    //      7.8) Test getRandomObstacleTypeToExplode() -> do a for loop (maybe 10 loops) where you and check that you
+    //                                          can get both ACID and RADIATION
+    //      7.9) Test pushRobot
+    //      7.10) Test moveRobotWithCard
+    //      7.11)
 }
