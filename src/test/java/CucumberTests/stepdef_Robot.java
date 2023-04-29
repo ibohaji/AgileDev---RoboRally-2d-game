@@ -182,11 +182,11 @@ public class stepdef_Robot {
     }
     @Then("Robot1 has {int} lives left")
     public void robot1_has_lives_left(Integer int1) {
-
+        assertEquals(3,robot.getNrOfLives());
     }
     @Then("Robot1 should be restored to a random start point position on the board")
     public void robot1_should_be_restored_to_a_random_start_point_position_on_the_board() {
-
+        assertEquals(7,robot.getCords().y);
     }
 
     // Robot pushed off the board
@@ -203,22 +203,6 @@ public class stepdef_Robot {
     public void robot1_is_facing_north_and_robot2_is_facing_south() {
         robot1.setDirection(EnumDirection.NORTH);
         robot2.setDirection(EnumDirection.SOUTH);
-    }
-    @Given("Robot1 has {int} lives and Robot2 has {int} lives")
-    public void robot1_has_lives_and_robot2_has_lives(Integer l1, Integer l2) {
-
-    }
-    @When("Robot1 moves forward one step")
-    public void robot1_moves_forward_one_step() {
-
-    }
-    @Then("Robot2 is at a random start point position and facing NORTH with {int} lives")
-    public void robot2_is_at_a_random_start_point_position_and_facing_north_with_lives(Integer int1) {
-
-    }
-    @Then("Robot1 should be at the Robot2's previous position X={int} Y={int} and facing NORTH")
-    public void robot1_should_be_at_the_robot2_s_previous_position_and_facing_north(int x, int y) {
-
     }
 
     // Robot is deleted from the game
