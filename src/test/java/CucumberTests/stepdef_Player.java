@@ -96,18 +96,18 @@ stepdef_Player {
     @Given("A player has already reordered his cards")
     public void a_player_has_already_reordered_his_cards() {
         setup();
-        player.getRobot().setCords(new Point(7,7));
+        player.getRobot().setCords(new Point(7,0));
         player.getRobot().setDirection(EnumDirection.SOUTH);
-        cardSequence = new LCardSequence(player);
-        cardSequence.addCard(new LCardMovementProgramming(1));
-        player.setOrderedCardSequence(cardSequence);
     }
     @When("start activation phase")
     public void start_activation_phase() {
-        player.useProgrammingCard(player.getCardSequence().getCardSequence().get(0), t_gamebrain);
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        player.setOrderedCardSequence(cardSequence);
+        t_gamebrain.makeMovement();
     }
     @Then("the robot follow the card instruction")
     public void the_robot_follow_the_card_instruction() {
-        assertEquals(new Point(7,6),player.getRobot().getCords());
+        assertEquals(new Point(7,1),player.getRobot().getCords());
     }
 }
