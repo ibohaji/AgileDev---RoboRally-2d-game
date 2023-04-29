@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class stepdef_GameBoard {
     private LGameboard gameboard;
@@ -146,4 +145,25 @@ public class stepdef_GameBoard {
 
 
     }
+    @Given("a robot with initial position at x={int} and y ={int}")
+    public void a_robot_with_initial_position_at_x_and_y(Integer int1, Integer int2) {
+        setup();
+        robot = gameboard.getRobots().get(0);
+    }
+    @Given("The robot has {int} life left")
+    public void the_robot_has_life_left(Integer int1) {
+        robot.setNrOfLives(1);
+    }
+    @When("the robot steps on an obstacle")
+    public void the_robot_steps_on_an_obstacle() {
+       LObstacleRegular obstacle = new LObstacleRegular(EnumObstacleType.ACID,EnumObstacleClassification.KNOWN_OBSTACLE);
+       obstacle.applyEffect(robot,gamebrain);
+    }
+    @When("the GameBrain should succesfully requst the gameBoard to remove the robot")
+    public void the_game_brain_should_succesfully_requst_the_game_board_to_remove_the_robot() {
+        robots = gameboard.getRobots(); // this is an ArrayList<robot>
+        assertFalse(robots.contains(robot));
+    }
+
+
 }

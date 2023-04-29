@@ -18,3 +18,10 @@ Feature: GameBoard function
     And an explosive obstacle at coordinate x=3 and y =2
     When the robot steps on the obstacle at the coordinate x=3 and y=2
     Then the obstacle explodes and infectes all the surrodning tiles
+
+  Scenario: Remove a robot from the game
+    Given  an initialized game
+    And a robot with initial position at x=3 and y =4
+    And The robot has 1 life left
+    When the robot steps on an obstacle
+    And the GameBrain should succesfully requst the gameBoard to remove the robot
