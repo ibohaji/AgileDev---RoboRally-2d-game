@@ -338,9 +338,26 @@ public class LGameBrain implements IToDTO {
         } else if(isPositionOnBoard(pos)){
             if(gameboard.isTileOccupiedByRobot(pos.x, pos.y)){
                 LRobot robot2 = gameboard.getRobotFromCoordinate(pos.x, pos.y);
-                pushRobot(robot2, directionOfPushOrigin);
+                if(!robot2.equals(robotBeingPushed)){
+                    pushRobot(robot2, directionOfPushOrigin);
+                }
             } else {
                 robotBeingPushed.setCords(pos);
+            }
+            int x = robotBeingPushed.getCords().x;
+            int y = robotBeingPushed.getCords().y;
+            AbObstacle obs = getObstacleFromCoordinateNEW(x, y);
+            if(obs != null){
+                obs.applyEffect(robotBeingPushed, this);
+            } else if (gameboard.getTileFromCoordinate(x, y).isTileFinishPoint()){
+                if(robotBeingPushed.getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
+                    setWinner(robotBeingPushed.getPlayer());
+                    setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                }
+            } else if (gameboard.getTileFromCoordinate(x, y).doesTileHaveCheckpoint()) {
+                if(canRobotCollectCheckpoint(robotBeingPushed.getPlayer())){
+                    robotBeingPushed.addCheckpoint(new Point(x, y));
+                }
             }
         }
     }
