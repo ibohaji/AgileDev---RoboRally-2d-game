@@ -54,6 +54,7 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain shuffle and assign cards to players")
     public void GameBrain_shuffle_and_assign_cards_to_players() {
+        assertEquals(EnumGamePhase.ROUND_START, t_gamebrain.getCurrentGamePhase());
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
         for (LPlayer t_currentplayer : t_players) {
