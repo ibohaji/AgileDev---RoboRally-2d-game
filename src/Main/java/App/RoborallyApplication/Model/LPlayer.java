@@ -1,10 +1,9 @@
 package App.RoborallyApplication.Model;
-import App.DTO.PlayerDTO;
 import Utils.JsonHelper;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LPlayer implements IToDTO {
+public class LPlayer{
     private UUID id;
     private String displayName;
     private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
@@ -46,15 +45,6 @@ public class LPlayer implements IToDTO {
             return true;
         }
         return false;
-    }
-    @Override
-    public String DTOasJson() {
-        PlayerDTO playerDTO = new PlayerDTO(this);
-        return JsonHelper.serializeObjectToJson(playerDTO);
-    }
-    @Override
-    public UUID getID() {
-        return this.id;
     }
 
     public LRobot getRobot(){

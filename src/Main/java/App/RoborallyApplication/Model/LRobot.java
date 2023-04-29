@@ -1,16 +1,12 @@
 package App.RoborallyApplication.Model;
 
-
-import App.DTO.RobotDTO;
 import Utils.JsonHelper;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LRobot implements IToDTO {
-
-    private UUID id;
+public class LRobot{
     private Point cords = new Point();
     private GraphicalElementRobot graphicalElement;
     private ArrayList<Point> checkpointsDone;
@@ -19,7 +15,6 @@ public class LRobot implements IToDTO {
     private LPlayer player;
 
     public LRobot(){
-        this.id = UUID.randomUUID();
         this.currentDirection = null;
         this.checkpointsDone =  new ArrayList<>();
         this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
@@ -98,23 +93,6 @@ public class LRobot implements IToDTO {
     }
     public LPlayer getPlayer(){
         return player;
-    }
-
-    @Override
-    public String toString() {
-        return "Robot. Direction: " + this.currentDirection.name() + ". X: " + this.cords.x + " Y: " + this.cords.y +
-                ". Lives: " + this.lifeCount;
-    }
-
-    @Override
-    public String DTOasJson() {
-        RobotDTO robotDTO = new RobotDTO(this);
-        return JsonHelper.serializeObjectToJson(robotDTO);
-    }
-
-    @Override
-    public UUID getID() {
-        return null;
     }
 }
 

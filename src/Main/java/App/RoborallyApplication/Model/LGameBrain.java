@@ -1,6 +1,5 @@
 package App.RoborallyApplication.Model;
 
-import App.DTO.GameBrainDTO;
 import Utils.JsonHelper;
 import Utils.MapGenerator;
 import Utils.MusicPlayer;
@@ -12,8 +11,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class LGameBrain implements IToDTO {
-    private UUID id;
+public class LGameBrain{
     private LGameConfiguration gameConfig;
     private LGameboard gameboard = null;
     private ArrayList<LPlayer> players;
@@ -31,7 +29,6 @@ public class LGameBrain implements IToDTO {
      * Constructor for starting game from lobby
      */
     public LGameBrain(LGameConfiguration gameConfiguration){
-        this.id = UUID.randomUUID();
         gameConfig = gameConfiguration;
         createGameboard(gameConfig.getDifficulty());
         this.players = gameConfiguration.getPlayers();
@@ -461,13 +458,6 @@ public class LGameBrain implements IToDTO {
     public EnumGamePhase getCurrentGamePhase(){
         return this.currentEnumGamePhase;
     }
-    @Override
-    public String DTOasJson() {
-        GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentEnumGamePhase, this);
-        return JsonHelper.serializeObjectToJson(gameBrainDTO);
-    }
-
-
     // -------------------------------------------------------------------------//
     // GETTERS
     public LGameConfiguration getGameConfig(){
@@ -479,8 +469,5 @@ public class LGameBrain implements IToDTO {
     public LGameboard getGameboard(){
         return this.gameboard;
     }
-    @Override
-    public UUID getID() {
-        return this.id;
-    }
+
 }

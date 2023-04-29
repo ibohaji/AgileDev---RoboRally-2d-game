@@ -1,6 +1,5 @@
 package App.RoborallyApplication.Model;
 
-import App.DTO.GameboardDTO;
 import Utils.JsonHelper;
 import Utils.Tuple;
 
@@ -8,9 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class LGameboard implements IToDTO {
-    private UUID id;
-    private UUID gameBrainId;
+public class LGameboard{
     private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
     private ArrayList<AbObstacle> obstacles = new ArrayList<>();
@@ -18,12 +15,7 @@ public class LGameboard implements IToDTO {
     private LGameBrain gameBrain;
 
     public LGameboard(LGameBrain brain){
-        id = UUID.randomUUID();
         gameBrain = brain;
-        gameBrainId = gameBrain.getID();
-    }
-    public UUID getGameBrainId(){
-        return this.gameBrain.getID();
     }
 
     public void setRobots(ArrayList<LRobot> robots){this.robots = robots;}
@@ -124,17 +116,6 @@ public class LGameboard implements IToDTO {
         } else {
             throw new RuntimeException("Problem with getting difficulty in gameboard method addCheckpoint()");
         }
-    }
-
-    @Override
-    public String DTOasJson() {
-        GameboardDTO gameboardDTO = new GameboardDTO(this);
-        return JsonHelper.serializeObjectToJson(gameboardDTO);
-    }
-
-    @Override
-    public UUID getID() {
-        return id;
     }
     public LGameBrain getGameBrain() {
         return gameBrain;

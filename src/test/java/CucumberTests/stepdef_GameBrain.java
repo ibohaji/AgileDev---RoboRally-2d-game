@@ -395,5 +395,4 @@ public class stepdef_GameBrain {
     //                                          can get both ACID and RADIATION
     //      7.9) Test pushRobot
     //      7.10) Test moveRobotWithCard
-    //      7.11)
 }
