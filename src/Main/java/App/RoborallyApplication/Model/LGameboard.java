@@ -1,18 +1,12 @@
 package App.RoborallyApplication.Model;
 
-import Utils.JsonHelper;
-import Utils.Tuple;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.UUID;
-
 public class LGameboard{
     private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
-    private ArrayList<AbObstacle> obstacles = new ArrayList<>();
-    private ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
-    private LGameBrain gameBrain;
+    private final ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
+    private final LGameBrain gameBrain;
 
     public LGameboard(LGameBrain brain){
         gameBrain = brain;

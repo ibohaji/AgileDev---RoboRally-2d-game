@@ -1,13 +1,9 @@
 package App.RoborallyApplication.Model;
 
-import Utils.JsonHelper;
-
 import java.awt.*;
-import java.util.UUID;
-
 public class LTile{
-    private Integer xCoordinate;
-    private Integer yCoordinate;
+    private final Integer xCoordinate;
+    private final Integer yCoordinate;
     private GraphicalElementTile graphicalElement;
     protected EnumTileType enumTileType;
     private AbObstacle newObstacle;
