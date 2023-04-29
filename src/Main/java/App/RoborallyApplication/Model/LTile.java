@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.UUID;
 
 public class LTile{
-    private UUID id;
     private Integer xCoordinate;
     private Integer yCoordinate;
     private GraphicalElementTile graphicalElement;
@@ -14,12 +13,10 @@ public class LTile{
     private AbObstacle newObstacle;
 
     public LTile(int xCoordinate, int yCoordinate, EnumTileType enumTileType){
-        this.id = UUID.randomUUID();
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new GraphicalElementTile();
         this.enumTileType = enumTileType;
-        this.id = UUID.randomUUID();
     }
 
     public Point getCoordinates(){
