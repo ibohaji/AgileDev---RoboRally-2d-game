@@ -12,7 +12,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import Utils.Tuple;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -97,7 +96,12 @@ public class stepdef_GameBrain {
 
         for (LPlayer t_player : t_players) {
             t_gamebrain.putRobotToRandomStartPoint(t_player.getRobot());
-//            assertEquals(StartPointEnum.Point1.getCoordinates(), t_player.getRobot().getCords());
+            assertTrue(
+                    t_robot.getCords().equals(new Point(1, 7)) ||
+                    t_robot.getCords().equals(new Point(3, 7)) ||
+                    t_robot.getCords().equals(new Point(5, 7)) ||
+                    t_robot.getCords().equals(new Point(6, 7))
+            );
         }
 
     }
@@ -236,12 +240,20 @@ public class stepdef_GameBrain {
             }
         }
         t_tile = t_checkpoints.get(t_rndInt(0, t_checkpoints.size()-1));
-        t_robot.setCords(t_tile.getCoordinates());
+        t_robot.setCords(new Point(1, 3));
+        t_robot.setDirection(EnumDirection.SOUTH);
+        LCardSequence t_cards = new LCardSequence(t_player);
+        t_cards.addCard(new LCardMovementProgramming(1));
+        t_player.setOrderedCardSequence(t_cards);
+        t_gamebrain.makeMovement();
+        //t_player.useProgrammingCard(new LCardMovementProgramming(1), t_gamebrain);
     }
 
     @Then("GameBrain check how many checkpoints a robot has reached")
     public void GameBrain_check_how_many_checkpoints_a_robot_has_reached() {
-        //t_gamebrain.setRobotCheckpointDone(t_robot);
+        assertEquals(1, t_robot.getCords().x);
+        assertEquals(4, t_robot.getCords().y);
+        assertEquals(1, t_robot.getCheckpointsDone().size());
         assertTrue(t_robot.getCheckpointsDone().contains(t_tile.getCoordinates()));
 
         t_robot = null;
