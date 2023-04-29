@@ -131,7 +131,7 @@ public class stepdef_GameBrain {
 
         AbObstacle t_obstacle = t_gamebrain.getObstacleFromCoordinateNEW(x, y);
 
-        assertEquals(t_gameboard.getObstacleFromCoordinate(x, y), t_obstacle);
+        assertEquals(t_gameboard.getObstacleFromCoordinateNEW(x, y), t_obstacle);
     }
 
     // GameBrain gets the relative position of a robot and an obstacle

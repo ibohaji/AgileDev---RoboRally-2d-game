@@ -23,11 +23,13 @@ public class LObstacleRegular extends AbObstacle{
     @Override
     public void applyEffect(LRobot robot, LGameBrain gameBrain) {
         if(this.obstacleClassification.equals(EnumObstacleClassification.KNOWN_OBSTACLE)){
-            System.out.println(this.obstacleType.name());
-            System.out.println("Lives before: " + robot.getNrOfLives());
-            System.out.println(this.obstacleType.getDamage());
+            int x = robot.getCords().x;
+            int y = robot.getCords().y;
+            System.out.println(x + " & " + y + " " + gameBrain.getGameboard().getObstacleFromCoordinateNEW(x, y));
+            System.out.print(x + " & " + y + " " + this.obstacleType.name() + ".Lives before: " + robot.getNrOfLives() +
+                    ". Damage done: " + this.obstacleType.getDamage());
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
-            System.out.println("Lives after: " + robot.getNrOfLives());
+            System.out.println(". Lives after: " + robot.getNrOfLives());
             if(this.obstacleType.equals(EnumObstacleType.PIT)){
                 gameBrain.putRobotToRandomStartPoint(robot);
             }
@@ -52,8 +54,11 @@ public class LObstacleRegular extends AbObstacle{
             } else {
                 graphic = EnumImageGraphics.OBSTACLE_ACID;
             }
-            gameBrain.getGameboard().getTileFromCoordinate(robot.getCords().x, robot.getCords().y)
+            int x = robot.getCords().x;
+            int y = robot.getCords().y;
+            gameBrain.getGameboard().getTileFromCoordinate(x, y)
                     .setGraphicalElement(graphic,gameBrain.getGameConfig().getDifficulty());
+            // THIS WORKS
             applyEffect(robot, gameBrain);
         }
     }

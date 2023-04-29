@@ -113,9 +113,6 @@ public class LGameBrain implements IToDTO {
             }
         }
     }
-    public void removeFirstCardForPlayer(LPlayer player){
-        player.removeFirstCardFromOrderedSequence();
-    }
 
     /**
      * This method is to ensure that the game logic knows when to stop making movements
@@ -247,17 +244,12 @@ public class LGameBrain implements IToDTO {
     public void explodeObstacleToTilesNEW(ArrayList<LTile> tiles, EnumObstacleType obstacleType){
         for (LTile tile: tiles) {
             if(!tile.doesTileHaveObstacle()){
-                tile.setNewObstacle(new LObstacleRegular(obstacleType, EnumObstacleClassification.KNOWN_OBSTACLE));
                 if(obstacleType.getDeclaringClass().isInstance(EnumObstacleType.ACID)){
+                    tile.setNewObstacle(new LObstacleRegular(obstacleType, EnumObstacleClassification.KNOWN_OBSTACLE));
                     tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, gameConfig.getDifficulty());
-                } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.HEALING)) {
-                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, gameConfig.getDifficulty());
-                } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.PIT)) {
-                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_PIT, gameConfig.getDifficulty());
                 } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.RADIATION)) {
+                    tile.setNewObstacle(new LObstacleRegular(obstacleType, EnumObstacleClassification.KNOWN_OBSTACLE));
                     tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_RADIATION, gameConfig.getDifficulty());
-                } else {
-                    throw new RuntimeException("Problem in explodeObstacleToTiles() with obstacle type. Should never happen");
                 }
                 updateGraphicalElementOnTile(tile);
             }
@@ -279,10 +271,6 @@ public class LGameBrain implements IToDTO {
                 }
             } else if (obs.getObstacleType().equals(EnumObstacleType.HEALING)) {
                 if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
-                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
-                } else {
-                    //TODO
-                    // graphics for explosive healing missing?
                     tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
                 }
             } else { // ACID

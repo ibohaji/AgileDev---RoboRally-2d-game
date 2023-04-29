@@ -11,17 +11,27 @@ public class LObstacleTreadmill extends AbObstacle{
     @Override
     public void applyEffect(LRobot robot, LGameBrain gameBrain) {
         EnumDirection start = robot.getCurrentDirection();
+        int x = robot.getCords().x;
+        int y = robot.getCords().y;
         switch (direction){
-            case NORTH -> robot.setDirection(EnumDirection.NORTH);
-            case SOUTH -> robot.setDirection(EnumDirection.SOUTH);
-            case EAST -> robot.setDirection(EnumDirection.EAST);
-            case WEST -> robot.setDirection(EnumDirection.WEST);
+            case NORTH ->{
+                robot.setDirection(EnumDirection.NORTH);
+                y -= 1;
+            }
+            case SOUTH -> {
+                robot.setDirection(EnumDirection.SOUTH);
+                y += 1;
+            }
+            case EAST -> {
+                robot.setDirection(EnumDirection.EAST);
+                x += 1;
+            }
+            case WEST -> {
+                robot.setDirection(EnumDirection.WEST);
+                x -= 1;
+            }
         }
         robot.useProgrammingCard(new LCardMovementProgramming(1), gameBrain);
         robot.setDirection(start);
-        Point cords = robot.getCords();
-        if(gameBrain.getGameboard().getObstacleFromCoordinate(cords.x, cords.y) != null){
-            gameBrain.getGameboard().getObstacleFromCoordinateNEW(cords.x, cords.y).applyEffect(robot, gameBrain);
-        }
     }
 }
