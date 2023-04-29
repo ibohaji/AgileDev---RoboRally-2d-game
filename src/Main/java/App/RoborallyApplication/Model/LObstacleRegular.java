@@ -7,6 +7,7 @@ public class LObstacleRegular extends AbObstacle{
     private EnumObstacleClassification obstacleClassification;
     private EnumObstacleType obstacleType;
     private GraphicalElement graphicalElement;
+
     public LObstacleRegular(EnumObstacleType obstacleType, EnumObstacleClassification obstacleClassification){
         super();
         this.obstacleType = obstacleType;
@@ -20,6 +21,8 @@ public class LObstacleRegular extends AbObstacle{
         this.obstacleClassification = obstacleClassification;
         this.graphicalElement = new GraphicalElement();
     }
+
+
     @Override
     public void applyEffect(LRobot robot, LGameBrain gameBrain) {
         if(this.obstacleClassification.equals(EnumObstacleClassification.KNOWN_OBSTACLE)){
@@ -71,5 +74,17 @@ public class LObstacleRegular extends AbObstacle{
     }
     protected void setObstacleClassification(EnumObstacleClassification classification){
         this.obstacleClassification = classification;
+    }
+
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LObstacleRegular that = (LObstacleRegular) o;
+        return obstacleType == that.obstacleType &&
+                obstacleClassification == that.obstacleClassification;
     }
 }

@@ -40,6 +40,7 @@ public class LGameboard{
     public ArrayList<LRobot> getRobots(){
         return this.robots;
     }
+
     public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
         for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
@@ -55,8 +56,8 @@ public class LGameboard{
         ArrayList<LTile> surroundingTilesFinal = new ArrayList<>();
         surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate - 1));
-        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate -1, yCoordinate));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate + 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate + 1));
@@ -98,6 +99,7 @@ public class LGameboard{
     protected void removeRobot(LRobot robot){
         this.robots.remove(robot);
     }
+
     public void addCheckpoint(LTile checkpointTile){
         if(this.gameBrain.getGameConfig().getDifficulty().equals(EnumDifficulty.EASY)){
             throw new RuntimeException("Problem in gameboard method addCheckpoint(). Can't add checkpoints to EASY difficulty");
