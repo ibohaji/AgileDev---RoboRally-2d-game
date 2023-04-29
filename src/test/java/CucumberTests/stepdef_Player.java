@@ -10,7 +10,7 @@ import org.junit.Before;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class
 stepdef_Player {
@@ -33,7 +33,7 @@ stepdef_Player {
         t_gamebrain = new LGameBrain(t_gameconfig);
 
         player = t_gamebrain.getPlayers().get(0);
-    }
+        }
     // Player receives 5 cards in programming phase
     @Given("a player waiting to receive programming cards")
     public void a_player_waiting_to_receive_programming_cards() {
@@ -109,5 +109,17 @@ stepdef_Player {
     @Then("the robot follow the card instruction")
     public void the_robot_follow_the_card_instruction() {
         assertEquals(new Point(7,1),player.getRobot().getCords());
+    }
+    @Given("one AI player and one human player")
+    public void one_AI_player_and_one_human_player() {
+        setup();
+    }
+    @When("Check if the player is human")
+    public void Check_if_the_player_is_human() {
+
+    }
+    @Then("The result should be one true and one false")
+    public void The_result_should_be_one_true_and_one_false() {
+        assertFalse(player.isHuman());
     }
 }

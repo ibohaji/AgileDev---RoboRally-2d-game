@@ -19,3 +19,8 @@ Feature: Player
     Given A player has already reordered his cards
     When start activation phase
     Then the robot follow the card instruction
+
+    Scenario: Check if the player is human
+      Given one AI player and one human player
+      When Check if the player is human
+      Then The result should be one true and one false
