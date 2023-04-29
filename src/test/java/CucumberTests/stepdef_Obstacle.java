@@ -10,8 +10,7 @@ import io.cucumber.java.en.When;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class stepdef_Obstacle {
     private LGameBrain t_gamebrain;
@@ -135,5 +134,25 @@ public class stepdef_Obstacle {
         LCardSequence movementSequence = new LCardSequence(t_player);
         movementSequence.addCard(new LCardMovementProgramming(1));
         t_player.setOrderedCardSequence(movementSequence);
+    }
+
+    @Given("a sequence of treadmills")
+    public void aSequenceOfTreadmills() {
+        setup();
+    }
+
+    @When("robot that has an initial direction of SOUTH moves onto a sequence of treadmills")
+    public void robotThatHasAnInitialDirectionOfSOUTHMovesOntoASequenceOfTreadmills() {
+        t_robot = t_gamebrain.getPlayers().get(0).getRobot();
+        t_robot.setDirection(EnumDirection.SOUTH);
+        t_robot.setCords(new Point(1,1));
+        t_gamebrain.makeMovement();
+    }
+
+    @Then("the robot will get moved by the treadmill to the end of the treadmill sequence and the the robots direction will remain SOUTH")
+    public void theRobotWillGetMovedByTheTreadmillToTheEndOfTheTreadmillSequenceAndTheTheRobotsDirectionWillRemainSOUTH() {
+        assertEquals(EnumDirection.SOUTH, t_robot.getCurrentDirection());
+        assertEquals(3, t_robot.getCords().x);
+        assertEquals(5, t_robot.getCords().y);
     }
 }

@@ -20,3 +20,8 @@ Feature: Obstacle actions
     When robot that has an initial direction of SOUTH steps on the treadmill
     Then the robot will get moved by the treadmill and the the robots direction will remain SOUTH
 
+  Scenario: Multiple treadmills move the robot to the end of the line of treadmills
+    Given a sequence of treadmills
+    When robot that has an initial direction of SOUTH moves onto a sequence of treadmills
+    Then the robot will get moved by the treadmill to the end of the treadmill sequence and the the robots direction will remain SOUTH
+
