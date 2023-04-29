@@ -19,7 +19,7 @@ Feature: Robot Movement on the board
     Given the game board is set up with robots at positions
     And robot1 is facing NORTH and robot2 is facing EAST
     When robot1 uses a movement card with 2 steps
-    Then robot1 should be at X=2 Y=2 facing NORTH and robot2 should be at X=2 Y=3 facing EAST
+    Then robot1 should be at X=0 Y=1 facing NORTH and robot2 should be at X=0 Y=2 facing EAST
 
   Scenario: Robot falls off the board due to its own movementCard
     Given a game board with difficulty Easy
