@@ -331,6 +331,9 @@ public class stepdef_GameBrain {
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
         t_robot.setCords(new Point(4, 9));
+        t_gamebrain.explodeObstacleToTilesNEW(
+                t_gamebrain.getGameboard().getTilesSurroundingCoordinate(t_robot.getCords().x, t_robot.getCords().y),
+                EnumObstacleType.ACID);
     }
 
     @Then("GameBrain make a bomb obstacle explode")
@@ -356,16 +359,20 @@ public class stepdef_GameBrain {
 
     @When("a robot stands on an unknown explosive tile")
     public void a_robot_stands_on_an_unknown_explosive_tile() {
-        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
         t_robot.setCords(new Point(2, 7));
+        t_tile = t_gamebrain.getGameboard().getTileFromCoordinate(t_robot.getCords().x, t_robot.getCords().y);
+        LObstacleRegular t_obstacle = (LObstacleRegular)t_tile.getNewObstacle();
+        t_obstacle.applyEffect(t_robot, t_gamebrain);
     }
 
     @Then("GameBrain set the unknown explosive tile to a known one")
     public void GameBrain_set_the_unknown_explosive_tile_a_known_one() {
-
-
+        assertEquals(
+                EnumObstacleClassification.KNOWN_OBSTACLE,
+                ((LObstacleRegular)(t_gamebrain.getGameboard().getTileFromCoordinate(t_robot.getCords().x, t_robot.getCords().y).getNewObstacle())).getObstacleClassification()
+                );
         t_robot = null;
         t_tile = null;
     }
