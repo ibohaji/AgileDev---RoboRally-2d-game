@@ -17,7 +17,6 @@ public class LGameBrain{
     private ArrayList<LPlayer> players;
     private EnumGamePhase currentEnumGamePhase;
     public LPlayer winner;
-    ArrayList<LRobot> robots;
     /**
      * Constructor for restoring
      */
@@ -33,7 +32,7 @@ public class LGameBrain{
         gameConfig = gameConfiguration;
         createGameboard(gameConfig.getDifficulty());
         this.players = gameConfiguration.getPlayers();
-        robots = createRobots(players);
+        ArrayList<LRobot> robots = createRobots(players);
         this.gameboard.setRobots(robots);
         currentEnumGamePhase = EnumGamePhase.ROUND_START;
         startGame();
@@ -302,7 +301,7 @@ public class LGameBrain{
     // -------------------------------------------------------------------------//
     // ROBOT METHODS
     private ArrayList<LRobot> createRobots(ArrayList<LPlayer> players){
-        robots = new ArrayList<>();
+        ArrayList<LRobot> robots = new ArrayList<>();
         for (LPlayer player: players) {
             LRobot newRobot = new LRobot();
             newRobot.setDirection(EnumDirection.NORTH);

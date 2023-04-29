@@ -357,8 +357,6 @@ public class stepdef_GameBrain {
     @When("a robot stands on an unknown explosive tile")
     public void a_robot_stands_on_an_unknown_explosive_tile() {
         ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
-
-
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
         t_robot.setCords(new Point(2, 7));
