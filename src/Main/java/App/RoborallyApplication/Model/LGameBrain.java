@@ -236,7 +236,7 @@ public class LGameBrain{
         }
     }
 
-    protected void updateGraphicalElementOnTile(LTile tileToUpdate){
+    private void updateGraphicalElementOnTile(LTile tileToUpdate){
         LObstacleRegular obs = (LObstacleRegular)tileToUpdate.getNewObstacle();
         EnumDifficulty diff = gameConfig.getDifficulty();
         if(obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE) ||

@@ -245,8 +245,8 @@ public class stepdef_GameBrain {
         LCardSequence t_cards = new LCardSequence(t_player);
         t_cards.addCard(new LCardMovementProgramming(1));
         t_player.setOrderedCardSequence(t_cards);
+        assertTrue(t_gamebrain.areThereMovementsLeftInThisRound());
         t_gamebrain.makeMovement();
-        //t_player.useProgrammingCard(new LCardMovementProgramming(1), t_gamebrain);
     }
 
     @Then("GameBrain check how many checkpoints a robot has reached")
