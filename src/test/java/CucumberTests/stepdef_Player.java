@@ -110,16 +110,16 @@ stepdef_Player {
     public void the_robot_follow_the_card_instruction() {
         assertEquals(new Point(7,1),player.getRobot().getCords());
     }
-    @Given("one AI player and one human player")
-    public void one_AI_player_and_one_human_player() {
+    @Given("Two AI players")
+    public void Two_AI_players() {
         setup();
     }
     @When("Check if the player is human")
     public void Check_if_the_player_is_human() {
 
     }
-    @Then("The result should be one true and one false")
-    public void The_result_should_be_one_true_and_one_false() {
+    @Then("The result should be false")
+    public void The_result_should_be_false() {
         assertFalse(player.isHuman());
     }
 }

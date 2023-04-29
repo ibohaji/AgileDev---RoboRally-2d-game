@@ -21,6 +21,6 @@ Feature: Player
     Then the robot follow the card instruction
 
     Scenario: Check if the player is human
-      Given one AI player and one human player
+      Given Two_AI_players
       When Check if the player is human
-      Then The result should be one true and one false
+      Then The result should be false
