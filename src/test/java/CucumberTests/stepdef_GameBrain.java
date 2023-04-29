@@ -389,7 +389,36 @@ public class stepdef_GameBrain {
         t_tile = null;
     }
 
+    // GameBrain determines loser and winner
+    @Given("a GameBrain with medium difficulty")
+    public void a_GameBrain_with_medium_difficulty() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+    }
 
+    @When("one robot dead while the other still alive")
+    public void one_robot_dead_while_the_other_still_alive() {
+        LPlayer t_player1 = t_gamebrain.getPlayers().get(0);
+        LRobot t_robot1 = t_player1.getRobot();
+        t_robot1.setNrOfLives(0);
+        t_player1.setOrderedCardSequence(new LCardSequence(t_player1));
+        t_gamebrain.makeMovement();
+        assertFalse(t_gamebrain.areThereMovementsLeftInThisRound());
+    }
+
+    @Then("GameBrain determines winner and loser")
+    public void GameBrain_determines_winner_and_loser() {
+        assertFalse(t_gamebrain.canGameContinue());
+        assertNull(t_gamebrain.getPlayerWhoWon());
+    }
 
 
     //TODO
