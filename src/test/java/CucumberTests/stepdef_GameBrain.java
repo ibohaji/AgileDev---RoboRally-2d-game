@@ -343,7 +343,7 @@ public class stepdef_GameBrain {
     @Given("a GameBrain with {string} difficulty")
     public void a_GameBrain_with_specified_difficulty(String string) {
         int t_no_of_players = 1;
-        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.HARD, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
         Tuple<String, Boolean> t_info;;
         for (int i = 0; i < t_no_of_players; i++) {
@@ -356,36 +356,20 @@ public class stepdef_GameBrain {
 
     @When("a robot stands on an unknown explosive tile")
     public void a_robot_stands_on_an_unknown_explosive_tile() {
-        /*ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
-        int t_x = 0;
-        int t_y = 0;
-        for (LTile t__tile : t_tiles) {
-            if (!t__tile.doesTileHaveObstacle()) {
-                if (t__tile.getObstacle().getObstacleClassification() == EnumObstacleClassification.EXPLOSIVE_UNKNOWN) {
-                    t_x = t__tile.getCoordinates().x;
-                    t_y = t__tile.getCoordinates().y;
-                    t_tile = t__tile;
-                }
-            }
-        }
+        ArrayList<LTile> t_tiles = t_gamebrain.getGameboard().getTiles();
+
 
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         t_robot = t_players.get(t_rndInt(0, t_players.size()-1)).getRobot();
-        t_robot.setCords(new Point(t_x, t_y));*/
+        t_robot.setCords(new Point(2, 7));
     }
 
-    /*@Then("GameBrain set the unknown explosive tile to a known one")
+    @Then("GameBrain set the unknown explosive tile to a known one")
     public void GameBrain_set_the_unknown_explosive_tile_a_known_one() {
-        t_gamebrain.chooseUnknownObstacle(t_tile);
-        assertTrue(
-                t_tile.getObstacle().getObstacleClassification() == EnumObstacleClassification.EXPLOSIVE_KNOWN &&
-                        ( t_tile.getObstacle().getObstacleEnum() == EnumObstacleType.ACID ||
-                          t_tile.getObstacle().getObstacleEnum() == EnumObstacleType.RADIATION ||
-                          t_tile.getObstacle().getObstacleEnum() == EnumObstacleType.PIT )
-        );
+
 
         t_robot = null;
         t_tile = null;
-    }*/
+    }
 
 }
