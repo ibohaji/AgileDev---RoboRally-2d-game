@@ -39,16 +39,7 @@ public class LRobot{
     }
 
     public void addCheckpoint(Point point){
-        boolean isAlreadyChecked = false;
-        for (Point pointDone : checkpointsDone) {
-            if (pointDone.x == point.x && pointDone.y == point.y) {
-                isAlreadyChecked = true;
-                break;
-            }
-        }
-        if(!isAlreadyChecked){
             checkpointsDone.add(point);
-        }
     }
 
     public ArrayList<Point> getCheckpointsDone(){

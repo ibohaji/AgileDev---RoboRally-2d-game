@@ -5,7 +5,6 @@ import Utils.Tuple;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Before;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -15,15 +14,12 @@ import static org.junit.Assert.*;
 public class stepdef_Robot {
 
     private LCardMovementProgramming movementProgramming;
-    private LCardChangeDirectionProgramming changeDirectionProgramming;
-    private LCardAgainProgramming againProgramming;
     private LGameBrain gamebrain;
     private LCardSequence cardSequence;
     private LRobot robot;
     private LRobot robot1;
     private LRobot robot2;
     private LPlayer player0,player1;
-    private LGameConfiguration gameConfiguration;
     private int t_no_of_players;
 
 
@@ -31,12 +27,11 @@ public class stepdef_Robot {
         Tests for Robot
     */
 
-    @Before
-    public void setup(){
+    private void setup(){
         t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -47,11 +42,11 @@ public class stepdef_Robot {
 
         player0 = gamebrain.getPlayers().get(0);
     }
-    public void setup2(){
+    private void setup2(){
         t_no_of_players = 2;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -66,11 +61,11 @@ public class stepdef_Robot {
         player1 = gamebrain.getPlayers().get(1);
 
     }
-    public void setup3(){
+    private void setup3(){
         t_no_of_players = 2;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -83,6 +78,23 @@ public class stepdef_Robot {
 
         player0 = gamebrain.getPlayers().get(0);
         player1 = gamebrain.getPlayers().get(1);
+
+    }
+
+    private void setup4(){
+        t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.HARD, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        gamebrain = new LGameBrain(t_gameconfiguration);
+
+        robot1 = gamebrain.getPlayers().get(0).getRobot();
+        player1 = gamebrain.getPlayers().get(0);
 
     }
 
@@ -94,7 +106,7 @@ public class stepdef_Robot {
     }
     @When("the robot get the LEFT direction card")
     public void the_robot_get_the_left_direction_card() {
-        changeDirectionProgramming = new LCardChangeDirectionProgramming(EnumTurnType.LEFT);
+        LCardChangeDirectionProgramming changeDirectionProgramming = new LCardChangeDirectionProgramming(EnumTurnType.LEFT);
         cardSequence = new LCardSequence(player0);
         cardSequence.addCard(changeDirectionProgramming);
         player0.setOrderedCardSequence(cardSequence);
@@ -251,7 +263,7 @@ public class stepdef_Robot {
     }
     @Then("Robot is deleted")
     public void robot_is_deleted() {
-        assertEquals(false,gamebrain.getPlayers().contains(player0));
+        assertFalse(gamebrain.getPlayers().contains(player0));
     }
 
     // Robot execute programming cards in order in activation phase
@@ -318,7 +330,7 @@ public class stepdef_Robot {
     }
     @Then("Robot2 will not get this check point")
     public void robot2_will_not_get_this_check_point() {
-        assertEquals(true,robot2.getCheckpointsDone().isEmpty());
+        assertTrue(robot2.getCheckpointsDone().isEmpty());
     }
 
     @Given("robot1 is at x={int} y={int} with {int} lives facing North and robot2 is at x={int} y={int} with {int} lives facing West")
@@ -374,8 +386,35 @@ public class stepdef_Robot {
             gamebrain.makeMovement();
         }
     }
+
     @Then("robot2 was pushed off the board by robot1 and reborn at a random start point")
     public void robot2_was_pushed_off_the_board_by_robot1_and_reborn_at_a_random_start_point() {
-        assertEquals(false,gamebrain.getPlayers().contains(player1));
+        assertFalse(gamebrain.getPlayers().contains(player1));
     }
+
+    // Robot can only collect checkpoints once
+    @Given("a game board with difficulty hard")
+    public void a_game_board_with_difficulty_hard() {
+        setup4();
+    }
+
+    @When("robot collects checkpoints")
+    public void robot_collects_checkpoints() {
+        robot1.setCords(new Point(7, 6));
+        LCardSequence cards = new LCardSequence(player1);
+        cards.addCard(new LCardMovementProgramming(1));
+        player1.setOrderedCardSequence(cards);
+        gamebrain.makeMovement();
+
+        robot1.setCords(new Point(7, 6));
+        player1.setOrderedCardSequence(cards);
+        gamebrain.makeMovement();
+
+    }
+
+    @Then("the order is checked automatically")
+    public void the_order_is_checked_automatically() {
+        assertEquals(1, robot1.getCheckpointsDone().size());
+    }
+
 }
