@@ -80,8 +80,8 @@ public class LobbyAiView extends LobbyView {
             gameConfiguration.createPlayersFromLobby(info);
             lobbyController.userClickStartGame(gameConfiguration);
         });
-        add(Button,  new GridBagConstraintsBuilder(0,1).gridWidth(gameConfiguration.getNrOfPlayers()).build());
-        add(exitLobbyButton(),  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+        add(Button,  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+        add(exitLobbyButton(),  new GridBagConstraintsBuilder(0,3).gridWidth(gameConfiguration.getNrOfPlayers()).build());
 
     }
     private  JButton exitLobbyButton(){
