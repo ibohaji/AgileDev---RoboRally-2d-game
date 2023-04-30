@@ -6,6 +6,7 @@ import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 import App.RoborallyApplication.Views.Menus.LobbyAiView;
 import App.RoborallyApplication.Views.Menus.LobbyRegularView;
 import App.RoborallyApplication.Views.Menus.LobbyView;
+import App.RoborallyApplication.Views.Menus.MainMenuView;
 
 public class LobbyController {
 
@@ -27,6 +28,10 @@ public class LobbyController {
         LGameBrain gameBrain = new LGameBrain(gameConfiguration);
         GameController gameController = new GameController(applicationController, gameBrain);
         this.t_gameController = gameController;
+    }
+
+    public void userClickExit(){
+        this.applicationController.changePanel(new MainMenuView(new MainMenuController(this.applicationController)));
     }
 
     // Test purpose only

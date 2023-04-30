@@ -45,7 +45,7 @@ public class UserCardDeckView extends GameView {
         JLabel nameForDeck = new JLabel("Player Deck", SwingConstants.CENTER);
         nameForDeck.setFont(Fonts.LARGE);
         add(nameForDeck, new GridBagConstraintsBuilder(0, 0).weightX(1).inset(0, 50, 0, 50).fill(GridBagConstraints.HORIZONTAL).build());
-        add(cardPanel, new GridBagConstraintsBuilder(0, 1).weightX(1).inset(20, 50, 0, 50).fill(GridBagConstraints.HORIZONTAL).build());
+        add(cardPanel, new GridBagConstraintsBuilder(0, 1).weightX(1).weightY(1).inset(20, 50, 0, 50).fill(GridBagConstraints.HORIZONTAL).build());
     }
 
     public void removeCard(AbCardProgramming card) {
@@ -87,10 +87,10 @@ public class UserCardDeckView extends GameView {
         for (AbCardProgramming card : cards) {
             CardButton cardButton =  new CardButton(card, cardDeckController);
             this.cardButtons.add(cardButton);
-            this.cardPanel.add(cardButton.getButton(), new GridBagConstraintsBuilder(0, counter).weightX(1).inset(0, 0, 10, 0).fill(GridBagConstraints.BOTH).build());
+            this.cardPanel.add(cardButton.getButton(), new GridBagConstraintsBuilder(0, counter).weightX(1).inset(0, 0, 5, 0).fill(GridBagConstraints.BOTH).build());
             counter += 1;
         }
-        add(cardPanel, new GridBagConstraintsBuilder(0, 1).weightX(1).inset(20, 50, 0, 50).fill(GridBagConstraints.HORIZONTAL).build());
+        add(cardPanel, new GridBagConstraintsBuilder(0, 1).weightY(1).inset(20, 50, 0, 50).fill(GridBagConstraints.HORIZONTAL).build());
     }
 }
 

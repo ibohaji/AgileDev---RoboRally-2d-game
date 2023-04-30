@@ -1,5 +1,4 @@
 package App.RoborallyApplication.Model;
-import Utils.JsonHelper;
 import java.util.ArrayList;
 import java.util.UUID;
 

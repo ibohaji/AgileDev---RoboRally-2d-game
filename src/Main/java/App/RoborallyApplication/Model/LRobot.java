@@ -1,12 +1,7 @@
 package App.RoborallyApplication.Model;
 
-import Utils.JsonHelper;
-import Utils.MusicPlayer;
-import Utils.Waiter;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class LRobot{
     private Point cords = new Point();

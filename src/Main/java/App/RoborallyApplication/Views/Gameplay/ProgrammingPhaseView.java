@@ -46,10 +46,9 @@ public class ProgrammingPhaseView extends GameView{
         this.userDeckView = new UserCardDeckView(cardDeckController, gameBrain, userOrderedDeckView);
         this.userOrderedDeckView = new UserOrderedCardDeckView(cardDeckController, gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
-        add(options, new GridBagConstraintsBuilder(1, 2).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
-        add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(0,0,0,50).fill(GridBagConstraints.BOTH).build());
+        add(this.cardDeckController.getUserOrderedDeckView(), new GridBagConstraintsBuilder(0, 0).inset(100,0,0,50).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
-        add(this.cardDeckController.getUserDeckView(), new GridBagConstraintsBuilder(2, 0).inset(0,50,0,0).fill(GridBagConstraints.BOTH).build());
+        add(this.cardDeckController.getUserDeckView(), new GridBagConstraintsBuilder(2, 0).inset(100,50,0,0).weightY(1).anchor(GridBagConstraints.NORTH).fill(GridBagConstraints.BOTH).build());
 
         // Submit button
         JButton submitButton = new JButton("SUBMIT SEQUENCE");
@@ -59,6 +58,7 @@ public class ProgrammingPhaseView extends GameView{
             submitButton.setEnabled(false);
         });
         add(submitButton, new GridBagConstraintsBuilder(1, 1).inset(50,0,0,0).fill(GridBagConstraints.BOTH).build());
+        add(options, new GridBagConstraintsBuilder(1, 2).inset(0,0,0,0).fill(GridBagConstraints.BOTH).build());
 
 
     }

@@ -2,6 +2,7 @@ package App.RoborallyApplication.Views.Menus;
 
 import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Model.LGameConfiguration;
+import App.RoborallyApplication.Views.Gameplay.Options;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.Tuple;
@@ -56,7 +57,17 @@ public class LobbyRegularView extends LobbyView {
             gameConfiguration.createPlayersFromLobby(playersInformation);
             lobbyController.userClickStartGame(gameConfiguration);
         });
-        add(startGameButton);
+        add(startGameButton,  new GridBagConstraintsBuilder(0,1).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+        add(exitLobbyButton(),  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+    }
+
+    private  JButton exitLobbyButton(){
+        JButton exitGame = new JButton("Exit");
+        exitGame.setFont(Fonts.LARGE);
+        exitGame.addActionListener(e -> {
+            lobbyController.userClickExit();
+        });
+        return exitGame;
     }
 
 
