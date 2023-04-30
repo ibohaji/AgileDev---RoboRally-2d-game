@@ -51,11 +51,12 @@ public class LobbyAiView extends LobbyView {
                 checkBox.addActionListener(actionListener);
             }
         }
-
+        JButton exitButton = exitLobbyButton();
         JButton Button = new JButton("START GAME");
         Button.setFont(Fonts.LARGE);
         Button.addActionListener(e -> {
             Button.setEnabled(false);
+            exitButton.setEnabled(false);
             Component[] components = getComponents();
             isAI.add(new Tuple<>(null, true));
             for(Component component: components){
@@ -81,11 +82,11 @@ public class LobbyAiView extends LobbyView {
             lobbyController.userClickStartGame(gameConfiguration);
         });
         add(Button,  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
-        add(exitLobbyButton(),  new GridBagConstraintsBuilder(0,3).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+        add(exitButton,  new GridBagConstraintsBuilder(0,3).gridWidth(gameConfiguration.getNrOfPlayers()).build());
 
     }
     private  JButton exitLobbyButton(){
-        JButton exitGame = new JButton("Exit");
+        JButton exitGame = new JButton("EXIT");
         exitGame.setFont(Fonts.LARGE);
         exitGame.addActionListener(e -> {
             lobbyController.userClickExit();
