@@ -47,6 +47,8 @@ public class LObstacleRegular extends AbObstacle{
                 this.setObstacleType(type);
             }
             affectedTiles = affectedTiles.stream().filter(x -> !x.doesTileHaveObstacle()).collect(Collectors.toCollection(ArrayList::new));
+            affectedTiles = affectedTiles.stream().filter(x -> !x.doesTileHaveCheckpoint()).collect(Collectors.toCollection(ArrayList::new));
+            affectedTiles = affectedTiles.stream().filter(x -> !x.isTileFinishPoint()).collect(Collectors.toCollection(ArrayList::new));
             gameBrain.explodeObstacleToTilesNEW(affectedTiles, obstacleType);
             setObstacleClassification(EnumObstacleClassification.KNOWN_OBSTACLE);
             EnumImageGraphics graphic;

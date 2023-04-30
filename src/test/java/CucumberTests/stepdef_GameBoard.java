@@ -125,7 +125,9 @@ public class stepdef_GameBoard {
        while(iterator.hasNext()){
            Point point = iterator.next();
            AbObstacle obs = gameboard.getObstacleFromCoordinateNEW(point.x,point.y);
-           if(obs != null){
+           boolean isCheck = gameboard.getTileFromCoordinate(point.x, point.y).doesTileHaveCheckpoint();
+           boolean isFinish = gameboard.getTileFromCoordinate(point.x, point.y).isTileFinishPoint();
+           if(obs != null || isCheck || isFinish){
                iterator.remove();
            }
        }
