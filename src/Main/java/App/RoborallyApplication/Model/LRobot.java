@@ -14,7 +14,7 @@ public class LRobot{
     public LRobot(){
         this.currentDirection = null;
         this.checkpointsDone =  new ArrayList<>();
-        this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
+        this.graphicalElement = new GraphicalElementRobot(null);
         this.graphicalElement.setTileGraphicalElement(EnumImageGraphics.ROBOT_NORTH, EnumDifficulty.HARD);
     }
 

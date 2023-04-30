@@ -8,20 +8,17 @@ import java.util.stream.Collectors;
 public class LObstacleRegular extends AbObstacle{
     private EnumObstacleClassification obstacleClassification;
     private EnumObstacleType obstacleType;
-    private final GraphicalElement graphicalElement;
 
     public LObstacleRegular(EnumObstacleType obstacleType, EnumObstacleClassification obstacleClassification){
         super();
         this.obstacleType = obstacleType;
         this.obstacleClassification = obstacleClassification;
-        this.graphicalElement = new GraphicalElement();
     }
 
     public LObstacleRegular(EnumObstacleClassification obstacleClassification){
         super();
         this.obstacleType = null;
         this.obstacleClassification = obstacleClassification;
-        this.graphicalElement = new GraphicalElement();
     }
 
 
