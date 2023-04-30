@@ -271,6 +271,7 @@ public class LGameBrain{
     // -------------------------------------------------------------------------//
     // PLAYER METHODS
     public void removePlayer(LPlayer playerToRemove) {
+        MusicPlayer.getInstance().playDieSound();
         this.players.remove(playerToRemove);
     }
     public LPlayer getPlayerWhoIsCurrentlyMoving(){
