@@ -91,6 +91,13 @@ public class MusicPlayer {
         this.play(filepath);
     }
 
+    public void playDieSound() {
+        Random rnd = new Random();
+        int i = (rnd.nextInt(5) + 1);
+        String filepath = "App/Resources/Music/die" + i + ".wav";
+        this.play(filepath);
+    }
+
     public boolean checkLoopPlay() {
        return (sourceDataLine == null);
     }
