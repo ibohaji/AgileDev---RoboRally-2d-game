@@ -221,4 +221,21 @@ stepdef_Player {
     public void The_result_should_be_false() {
         assertFalse(player.isHuman());
     }
+
+    @Given("A player who decided to submit an empty sequence in programming phase")
+    public void aPlayerWhoDecidedToSubmitAnEmptySequenceInProgrammingPhase() {
+        setup();
+        LCardSequence cardSequence = new LCardSequence(player);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @When("The player tries to get cards from his sequence")
+    public void thePlayerTriesToGetCardsFromHisSequence() {
+        card = player.getCardSequence().getFirstCard();
+    }
+
+    @Then("The player should not get a card because there aren't any")
+    public void thePlayerShouldNotGetACardBecauseThereArenTAny() {
+        assertEquals(0, player.getCardSequence().getSize());
+        assertNull(card);
+    }
 }
