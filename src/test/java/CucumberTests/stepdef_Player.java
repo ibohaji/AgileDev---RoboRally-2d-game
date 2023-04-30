@@ -19,6 +19,8 @@ stepdef_Player {
     private LGameConfiguration t_gameconfig;
     private LCardSequence cardSequence;
     private AbCardProgramming card;
+    private AbCardProgramming card2;
+
     @Before
     private void setup(){
         t_gameconfig = new LGameConfiguration(1, EnumDifficulty.EASY, true);
@@ -77,6 +79,103 @@ stepdef_Player {
     }
 
     // Player watch the activation progress on the game board
+    @Given("a player with an empty card sequence")
+    public void a_player_with_an_empty_card_sequence (){
+        setup();
+    }
+    @When("the player add a card to the sequence")
+    public void the_player_add_a_card_to_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(player.getProgrammingCards().get(4));
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the size of the sequence should be 1")
+    public void the_size_of_the_sequence_should_be_1() {
+        assertEquals(1, player.getCardSequence().getSize());
+    }
+    @When("the player remove a card from the sequence")
+    public void the_player_remove_a_card_from_the_sequence() {
+        cardSequence.removeCard();
+    }
+    @Then("the size of the sequence should be 0")
+    public void the_size_of_the_sequence_should_be_0() {
+        assertEquals(0, player.getCardSequence().getSize());
+    }
+
+    @Given("a player with a card sequence with two cards")
+    public void a_player_with_a_card_sequence_with_two_cards() {
+        setup();
+    }
+    @When("the player get the first card in the sequence")
+    public void the_player_get_the_first_card_in_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        card = new LCardMovementProgramming(1);
+        cardSequence.addCard(card);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the card should be the first card added")
+    public void the_card_should_be_the_first_card_added() {
+        assertEquals(card, player.getCardSequence().getFirstCard());
+    }
+    @When("the player get the last card in the sequence")
+    public void the_player_get_the_last_card_in_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        card = new LCardMovementProgramming(2);
+        cardSequence.addCard(card);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the card should be the last card added")
+    public void the_card_should_be_the_last_card_added() {
+        assertEquals(card, player.getCardSequence().getFirstCard());
+    }
+
+    @Given("a player with a card sequence")
+    public void a_player_with_a_card_sequence() {
+        setup();
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        cardSequence.addCard(new LCardMovementProgramming(2));
+        player.setOrderedCardSequence(cardSequence);
+    }
+
+    @Given("a player have no card in the sequence")
+    public void the_player_have_no_cards_in_the_sequence() {
+        setup();
+        cardSequence = new LCardSequence(player);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @When("the player wand to remove the last card")
+    public void the_player_want_to_remove_the_last_card() {
+        AbCardProgramming lastCard = cardSequence.getLastCardInSequence();
+    }
+    @Then("the result return null")
+    public void the_result_return_null() {
+        assertEquals(null,cardSequence.getLastCardInSequence());
+    }
+
+    @Given("a player want to remove the last card")
+    public void a_player_want_to_remove_the_last_card() {
+        setup();
+    }
+    @When("the player have 5 cards in the sequence")
+    public void the_player_have_5_cards_in_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(player.getProgrammingCards().get(4));
+        cardSequence.addCard(player.getProgrammingCards().get(3));
+        cardSequence.addCard(player.getProgrammingCards().get(2));
+        cardSequence.addCard(player.getProgrammingCards().get(1));
+        cardSequence.addCard(player.getProgrammingCards().get(0));
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the 5th card is removed")
+    public void the_5th_card_is_removed() {
+        AbCardProgramming lastCard = cardSequence.getLastCardInSequence();
+        player.getCardSequence().removeCard();
+        AbCardProgramming newLastCard = cardSequence.getLastCardInSequence();
+        assertNotEquals(lastCard, newLastCard);
+    }
+
+
     @Given("a player and its robot")
     public void a_player_and_its_robot() {
         setup();

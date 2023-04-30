@@ -5,10 +5,35 @@ Feature: Player
     When the programming phase starts
     Then the player receive 5 cards
 
+
   Scenario: Player reorder cards in programming phase
     Given a player has received 5 cards
     When the player reorders the cards
     Then the order of the cards change accordingly
+
+
+
+  Scenario: Add and remove cards from the sequence
+    Given a player with an empty card sequence
+    When the player add a card to the sequence
+    Then the size of the sequence should be 1
+    When the player remove a card from the sequence
+    Then the size of the sequence should be 0
+
+
+
+  Scenario: Get the first and last card in the sequence
+    Given a player with a card sequence with two cards
+    When the player get the first card in the sequence
+    Then the card should be the first card added
+    When the player get the last card in the sequence
+    Then the card should be the last card added
+
+
+
+
+
+
 
   Scenario: Player watch the activation progress on the game board
     Given a player and its robot
