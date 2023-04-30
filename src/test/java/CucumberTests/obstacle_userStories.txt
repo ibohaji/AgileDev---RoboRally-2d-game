@@ -1,0 +1,8 @@
+//TODO
+// 1) As a gamebrain I want a robot's lifecount to change when it steps on a obstacle
+// 2) As a gamebrain I want an explosive known obstacle tile to explode to the surrounding tiles that don't have an obstacle
+// 3 )As a gamebrain I want an unknown explosive obstacle tile to randomly choose the obstacle type and to explode it
+        onto nearby tiles
+// 4) As a gamebrain I want a robot to be moved by a treadmill if it steps on a tile with a treadmill obstacle
+// 5) As a gamebrain I want a robot to be moved over a sequence of treadmills when a robot steps on a tile that
+        is part of a sequence of treadmills
