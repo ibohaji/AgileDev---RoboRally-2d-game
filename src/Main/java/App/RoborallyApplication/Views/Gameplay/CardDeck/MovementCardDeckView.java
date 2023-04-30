@@ -2,25 +2,19 @@ package App.RoborallyApplication.Views.Gameplay.CardDeck;
 
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Model.AbCardProgramming;
-import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
- * @author: Zoe Liu
- */
 public class MovementCardDeckView extends GameView {
-    private ArrayList<AbCardProgramming> cards;
-    private LGameBrain gameBrain;
-    private CardDeckController cardDeckController;
+    private final ArrayList<AbCardProgramming> cards;
+    private final LGameBrain gameBrain;
 
     private JPanel cardSlotsPanel;
 

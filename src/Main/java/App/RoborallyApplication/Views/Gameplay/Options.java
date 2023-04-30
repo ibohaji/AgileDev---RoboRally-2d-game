@@ -2,11 +2,8 @@ package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.LGameBrain;
-import App.RoborallyApplication.Views.Gameplay.CardDeck.UserCardDeckView;
-import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
-
 import javax.swing.*;
 import java.awt.*;
 

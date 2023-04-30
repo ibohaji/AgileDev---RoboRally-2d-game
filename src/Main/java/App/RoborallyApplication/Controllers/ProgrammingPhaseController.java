@@ -4,21 +4,18 @@ import App.RoborallyApplication.Model.EnumGamePhase;
 import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
-import App.RoborallyApplication.Views.Gameplay.GameBoardView;
-import App.RoborallyApplication.Views.Gameplay.GameView;
 import App.RoborallyApplication.Views.Gameplay.ProgrammingPhaseView;
 
 public class ProgrammingPhaseController extends AbPhaseController{
 
-    private ProgrammingPhaseView view;
-    private GameController gameController;
-    private LGameBrain gameBrain;
+    private final GameController gameController;
+    private final LGameBrain gameBrain;
 
     public ProgrammingPhaseController(GameController gameController, LGameBrain gameBrain){
         this.gameController = gameController;
         this.gameBrain = gameBrain;
-        this.view = new ProgrammingPhaseView(this, gameBrain);
-        this.gameController.updateView(this.view);
+        ProgrammingPhaseView view = new ProgrammingPhaseView(this, gameBrain);
+        this.gameController.updateView(view);
     }
     public void setPlayerCardSequence(LPlayer player, LCardSequence cardSequence){
         gameBrain.setCardSequenceForPlayer(player, cardSequence);

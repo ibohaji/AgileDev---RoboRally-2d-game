@@ -1,34 +1,22 @@
 package App.RoborallyApplication.Views.Gameplay.CardDeck;
 
 import App.RoborallyApplication.Controllers.CardDeckController;
-import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.EnumGamePhase;
-import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
-import Utils.ImageUtils;
-
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class UserCardDeckView extends GameView {
-    private ArrayList<AbCardProgramming> cards;
+    private final ArrayList<AbCardProgramming> cards;
     private JPanel cardPanel;
     private ArrayList<CardButton> cardButtons;
     private UserOrderedCardDeckView userOrderedDeckView;
-    private CardDeckController cardDeckController;
+    private final CardDeckController cardDeckController;
 
     public UserCardDeckView(CardDeckController cardDeckController, LGameBrain gameBrain, UserOrderedCardDeckView userOrderedDeckView) {
         super(cardDeckController.getGameController(), gameBrain);

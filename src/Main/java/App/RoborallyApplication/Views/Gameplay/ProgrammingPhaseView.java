@@ -3,33 +3,30 @@ package App.RoborallyApplication.Views.Gameplay;
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Controllers.ProgrammingPhaseController;
-import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserCardDeckView;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class ProgrammingPhaseView extends GameView{
 
-    private GameController gameController;
-    private LGameBrain gameBrain;
+    private final GameController gameController;
+    private final LGameBrain gameBrain;
 
     private UserCardDeckView userDeckView;
 
     private UserOrderedCardDeckView userOrderedDeckView;
 
-    private CardDeckController cardDeckController;
+    private final CardDeckController cardDeckController;
 
     private GameBoardView gameBoardView;
-    private LPlayer player;
+    private final LPlayer player;
 
-    private ProgrammingPhaseController controller;
+    private final ProgrammingPhaseController controller;
     public ProgrammingPhaseView(ProgrammingPhaseController controller, LGameBrain gameBrain) {
         super(controller.getGameController(), gameBrain);
         this.gameBrain = gameBrain;

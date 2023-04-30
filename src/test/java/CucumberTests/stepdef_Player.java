@@ -5,7 +5,6 @@ import Utils.Tuple;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Before;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ stepdef_Player {
     private AbCardProgramming card;
     private AbCardProgramming card2;
 
-    @Before
     private void setup(){
         t_gameconfig = new LGameConfiguration(1, EnumDifficulty.EASY, true);
         int t_norplayers = 1;
@@ -150,7 +148,7 @@ stepdef_Player {
     }
     @Then("the result return null")
     public void the_result_return_null() {
-        assertEquals(null,cardSequence.getLastCardInSequence());
+        assertNull(cardSequence.getLastCardInSequence());
     }
 
     @Given("a player want to remove the last card")

@@ -17,7 +17,6 @@ import static org.junit.Assert.*;
 public class stepdef_GameBoard {
     private LGameboard gameboard;
     private LGameBrain gamebrain;
-    private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
     AbObstacle obstacle;
     Point coordinates;
@@ -109,7 +108,7 @@ public class stepdef_GameBoard {
     public void the_obstacle_explodes_and_infectes_all_the_surrodning_tiles() {
 
         // Define the surrounding tiles
-        ArrayList<Point> surroundingTiles = new ArrayList<Point>(Arrays.asList(
+        ArrayList<Point> surroundingTiles = new ArrayList<>(Arrays.asList(
                 new Point(coordinates.x - 1, coordinates.y - 1),
                 new Point(coordinates.x - 1, coordinates.y),
                 new Point(coordinates.x, coordinates.y - 1),
@@ -117,7 +116,7 @@ public class stepdef_GameBoard {
                 new Point(coordinates.x, coordinates.y + 1),
                 new Point(coordinates.x + 1, coordinates.y - 1),
                 new Point(coordinates.x - 1, coordinates.y + 1),
-                new Point(coordinates.x +1,coordinates.y)
+                new Point(coordinates.x + 1, coordinates.y)
         ));
 
         //filtering the tiles that already contains obstacles

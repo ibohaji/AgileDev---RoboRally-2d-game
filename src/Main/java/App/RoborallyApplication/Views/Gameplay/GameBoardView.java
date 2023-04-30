@@ -7,8 +7,6 @@ import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class GameBoardView extends GameView{
@@ -78,27 +76,25 @@ public class GameBoardView extends GameView{
             }
         }
         // PLAYER INFO
-        if(true){
-            LPlayer player;
-            if(this.gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
-                player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
-            } else {
-                player = this.gameBrain.getPlayerWithoutCardSequence();
-            }
-            JLabel playerName = new JLabel(player.getDisplayName());
-            playerName.setFont(Fonts.BOLDMEDIUM);
-            JLabel robotLives = new JLabel("Number of lives: " + player.getRobot().getNrOfLives());
-            robotLives.setFont(Fonts.BOLDMEDIUM);
-            JPanel infoPanel = new JPanel();
-            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
-            infoPanel.add(Box.createHorizontalGlue());
-            infoPanel.add(playerName);
-            infoPanel.add(Box.createRigidArea(new Dimension(20, 0)));
-            infoPanel.add(robotLives);
-            infoPanel.add(Box.createHorizontalGlue());
-
-            add(infoPanel, new GridBagConstraintsBuilder(0, gridSize + 1).inset(25, 0, 0, 0).gridWidth(gridSize).fill(GridBagConstraints.HORIZONTAL).build());
+        LPlayer player;
+        if(this.gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
+            player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
+        } else {
+            player = this.gameBrain.getPlayerWithoutCardSequence();
         }
+        JLabel playerName = new JLabel(player.getDisplayName());
+        playerName.setFont(Fonts.BOLDMEDIUM);
+        JLabel robotLives = new JLabel("Number of lives: " + player.getRobot().getNrOfLives());
+        robotLives.setFont(Fonts.BOLDMEDIUM);
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.X_AXIS));
+        infoPanel.add(Box.createHorizontalGlue());
+        infoPanel.add(playerName);
+        infoPanel.add(Box.createRigidArea(new Dimension(20, 0)));
+        infoPanel.add(robotLives);
+        infoPanel.add(Box.createHorizontalGlue());
+
+        add(infoPanel, new GridBagConstraintsBuilder(0, gridSize + 1).inset(25, 0, 0, 0).gridWidth(gridSize).fill(GridBagConstraints.HORIZONTAL).build());
 
     }
 }

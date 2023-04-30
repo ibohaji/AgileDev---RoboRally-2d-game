@@ -2,7 +2,6 @@ package CucumberTests;
 
 import App.RoborallyApplication.Model.*;
 import Utils.Tuple;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -123,7 +122,7 @@ public class stepdef_Obstacle {
     public void setup(){
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(1, EnumDifficulty.HARD, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < 1; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);

@@ -4,15 +4,12 @@ import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserCardDeckView;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
-import App.RoborallyApplication.Views.Gameplay.GameView;
-
-import java.util.ArrayList;
 
 public class CardDeckController {
 
-    private GameController gameController;
-    private UserOrderedCardDeckView userOrderedDeckView;
-    private UserCardDeckView userDeckView;
+    private final GameController gameController;
+    private final UserOrderedCardDeckView userOrderedDeckView;
+    private final UserCardDeckView userDeckView;
 
     public CardDeckController(GameController gameController){
         this.gameController = gameController;

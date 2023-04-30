@@ -2,17 +2,14 @@ package App.RoborallyApplication.Views.Gameplay.CardDeck;
 
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Model.AbCardProgramming;
-
 import javax.swing.*;
-import java.awt.*;
 import Utils.ImageUtils;
-
 
 public class CardButton extends JPanel {
 
-    private AbCardProgramming card;
+    private final AbCardProgramming card;
     private JButton buttonWithImage;
-    private CardDeckController cardDeckController;
+    private final CardDeckController cardDeckController;
     public CardButton(AbCardProgramming card, CardDeckController cardDeckController){
         this.cardDeckController = cardDeckController;
         this.card = card;

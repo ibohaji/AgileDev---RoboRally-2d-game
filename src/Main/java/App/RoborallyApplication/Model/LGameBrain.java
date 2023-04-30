@@ -2,7 +2,6 @@ package App.RoborallyApplication.Model;
 
 import Utils.MapGenerator;
 import Utils.MusicPlayer;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -271,7 +270,6 @@ public class LGameBrain{
     // -------------------------------------------------------------------------//
     // PLAYER METHODS
     public void removePlayer(LPlayer playerToRemove) {
-        MusicPlayer.getInstance().playDieSound();
         this.players.remove(playerToRemove);
     }
     public LPlayer getPlayerWhoIsCurrentlyMoving(){

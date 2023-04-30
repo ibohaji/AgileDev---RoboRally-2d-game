@@ -4,21 +4,18 @@ import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Model.LGameBrain;
-import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
-
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class UserOrderedCardDeckView extends GameView {
 
-    private LCardSequence cardSequence;
+    private final LCardSequence cardSequence;
 
-    private CardDeckController cardDeckController;
+    private final CardDeckController cardDeckController;
 
     private JPanel cardSlotsPanel;
 
@@ -82,9 +79,4 @@ public class UserOrderedCardDeckView extends GameView {
         return buttonToRemove;
     }
 
-    public void clearCardSlots() {
-        cardSlotsPanel.removeAll();
-        revalidate();
-        repaint();
-    }
 }

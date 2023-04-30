@@ -2,30 +2,22 @@ package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
-import App.RoborallyApplication.Model.EnumDifficulty;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.MovementCardDeckView;
-import App.RoborallyApplication.Views.Gameplay.CardDeck.UserOrderedCardDeckView;
-import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
-import static javax.swing.JOptionPane.showMessageDialog;
+import Utils.MusicPlayer;
 
-import javax.swing.*;
+import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.*;
 
-/**
- * @author: Zoe Liu
- */
-
-
 public class MovementPhaseView extends GameView {
-    private GameController gameController;
-    private LGameBrain gameBrain;
+    private final GameController gameController;
+    private final LGameBrain gameBrain;
     private GameBoardView gameBoardView;
     private LPlayer player;
     private MovementCardDeckView movementCardDeckView;
-    private CardDeckController cardDeckController;
+    private final CardDeckController cardDeckController;
 
     public MovementPhaseView(GameController gameController, LGameBrain gameBrain) {
         super(gameController, gameBrain);
@@ -47,6 +39,7 @@ public class MovementPhaseView extends GameView {
     }
 
     public void addPlayerRemovedPopup(LPlayer player){
+        MusicPlayer.getInstance().playDieSound();
         showMessageDialog(null, player.getDisplayName() + " removed.");
     }
 }

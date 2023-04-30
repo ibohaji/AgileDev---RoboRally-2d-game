@@ -39,7 +39,7 @@ public class stepdef_GameBrain {
     public void create_players(Integer t_no_of_players) {
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         nrOfPlayers = t_no_of_players;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
@@ -117,7 +117,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -149,7 +149,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -185,7 +185,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -223,7 +223,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -272,7 +272,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -305,7 +305,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -335,7 +335,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.MEDIUM, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -366,7 +366,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.HARD, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -403,7 +403,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -436,7 +436,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -471,7 +471,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 2;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, false);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -500,7 +500,7 @@ public class stepdef_GameBrain {
         int t_no_of_players = 1;
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
-        Tuple<String, Boolean> t_info;;
+        Tuple<String, Boolean> t_info;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);

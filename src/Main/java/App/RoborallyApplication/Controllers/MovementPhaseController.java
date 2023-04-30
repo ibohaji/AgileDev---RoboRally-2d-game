@@ -3,7 +3,6 @@ package App.RoborallyApplication.Controllers;
 import App.RoborallyApplication.Model.EnumGamePhase;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
-import App.RoborallyApplication.Views.Gameplay.GameBoardView;
 import App.RoborallyApplication.Views.Gameplay.MovementPhaseView;
 import Utils.Waiter;
 
@@ -11,8 +10,8 @@ import javax.swing.*;
 
 public class MovementPhaseController extends AbPhaseController{
 
-    private LGameBrain gameBrain;
-    private GameController gameController;
+    private final LGameBrain gameBrain;
+    private final GameController gameController;
     private MovementPhaseView view;
 
     public MovementPhaseController(GameController controller, LGameBrain gameBrain){
@@ -55,16 +54,14 @@ public class MovementPhaseController extends AbPhaseController{
                             if(player.getCardSequence().getSize() == 0){
                                 player.setCardSequenceToNull();
                             }
-                            if(player != null){
-                                if(!gameBrain.areThereMovementsLeftInThisRound()){
-                                    timer.stop();
-                                    gameBrain.endRound();
-                                    gameController.updateControllerState();
-                                } else {
-                                    this.view = new MovementPhaseView(this.gameController, gameBrain);
-                                    gameController.updateView(this.view);
-                                    Waiter.getInstance().waitForXMilliseconds(1000);
-                                }
+                            if(!gameBrain.areThereMovementsLeftInThisRound()){
+                                timer.stop();
+                                gameBrain.endRound();
+                                gameController.updateControllerState();
+                            } else {
+                                this.view = new MovementPhaseView(this.gameController, gameBrain);
+                                gameController.updateView(this.view);
+                                Waiter.getInstance().waitForXMilliseconds(1000);
                             }
                         }
                     }

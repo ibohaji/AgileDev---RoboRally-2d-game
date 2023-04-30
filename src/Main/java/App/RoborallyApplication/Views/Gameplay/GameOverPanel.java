@@ -2,11 +2,7 @@ package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.GameController;
 import App.RoborallyApplication.Model.*;
-import Utils.Fonts;
-import Utils.GridBagConstraintsBuilder;
-import Utils.ImageUtils;
 import Utils.MusicPlayer;
-
 import javax.swing.*;
 import java.awt.*;
 
