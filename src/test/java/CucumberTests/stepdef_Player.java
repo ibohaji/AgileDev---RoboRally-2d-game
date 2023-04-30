@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -257,6 +258,50 @@ stepdef_Player {
         for (AbCardProgramming card: player.getCardSequence().getCardSequence()) {
             assertNotNull(card.getCardImageIcon());
         }
+    }
+
+    @Given("A player choose 4 players in main view")
+    public void A_player_choose_4_players_in_main_view() {
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(4, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;
+
+        t_info = new Tuple<>("player1", true);
+        t_playerInfo.add(t_info);
+        t_info = new Tuple<>("player2", true);
+        t_playerInfo.add(t_info);
+        t_info = new Tuple<>("player3", false);
+        t_playerInfo.add(t_info);
+        t_info = new Tuple<>("player4", false);
+        t_playerInfo.add(t_info);
+
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+    }
+    @When("The player want to choose 2 AI players")
+    public void The_player_want_too_choose_2_AI_players() {
+
+    }
+    @Then("Two human players and two AI players are confirmed")
+    public void Two_human_players_and_two_AI_players_are_confirmed() {
+        ArrayList<LPlayer> players = t_gamebrain.getPlayers();
+        ArrayList<LPlayer> AIPlayers = new ArrayList<>();
+        ArrayList<LPlayer> HumanPlayers = new ArrayList<>();
+
+        for (LPlayer value : players) {
+            if (value.isHuman()) {
+                HumanPlayers.add(value);
+            }
+        }
+
+        for (LPlayer lPlayer : players) {
+            if (!lPlayer.isHuman()) {
+                AIPlayers.add(lPlayer);
+            }
+        }
+
+        assertEquals(2, HumanPlayers.size());
+        assertEquals(2, AIPlayers.size());
     }
 
     //

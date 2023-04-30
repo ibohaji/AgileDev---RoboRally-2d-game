@@ -55,8 +55,18 @@ Feature: Player
     When The player tries to get cards from his sequence
     Then The player should not get a card because there aren't any
 
+
+    Scenario: Player choose the number of AI
+      Given  A player choose 4 players in main view
+      When The player want to choose 2 AI players
+      Then Two human players and two AI players are confirmed
+
   Scenario: Player can see card images
     Given A player with all existing different card types
     Then The cards should all have imageicons
 
 
+Scenario: A player choose 4 players to creat the game
+  Given A player choose 4 players in main view
+  When The player want to choose 2 AI players
+  Then Two human players and two AI players are confirmed
