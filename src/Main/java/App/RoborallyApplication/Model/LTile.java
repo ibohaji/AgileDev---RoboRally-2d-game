@@ -4,7 +4,7 @@ import java.awt.*;
 public class LTile{
     private final Integer xCoordinate;
     private final Integer yCoordinate;
-    private GraphicalElementTile graphicalElement;
+    private final GraphicalElementTile graphicalElement;
     protected EnumTileType enumTileType;
     private AbObstacle newObstacle;
 

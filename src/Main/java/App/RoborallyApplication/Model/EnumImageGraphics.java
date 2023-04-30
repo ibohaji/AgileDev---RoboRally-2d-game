@@ -28,10 +28,8 @@ public enum EnumImageGraphics {
     BOTTOMLEFT_TURN_TREADMILL("App" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "BottomleftTurnTreadmill.png"),
     BOTTOMRIGHT_TURN_TREADMILL("App" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "bottomrightTurnTreadmill.png"),
     UPRIGHT_REVERSE_TREADMILL("App" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "UprightReverseTreadmill.png"),
-    BOTTOMRIGHT_REVERSE_TREADMILL("App" +File.separator + "Resources" + File.separator + "Tiles" + File.separator + "BottomrightReverseTreadmill.png"),
     AGAIN_CARD("App" +File.separator + "Resources" + File.separator + "Cards" + File.separator + "AgainCard.png"),
     LEFT_TURN_CARD("App" +File.separator + "Resources" + File.separator + "Cards" + File.separator + "LeftTurnCard.png"),
-    MOVE_BACK_CARD("App" +File.separator + "Resources" + File.separator + "Cards" + File.separator + "MoveBackCard.png"),
     MOVEMENT_CARD_1("App" +File.separator + "Resources" + File.separator + "Cards" + File.separator + "MovementCard_1.png"),
 
     MOVEMENT_CARD_2("App" +File.separator + "Resources" + File.separator + "Cards" + File.separator + "MovementCard_2.png"),
@@ -40,9 +38,9 @@ public enum EnumImageGraphics {
     U_TURN_CARD("App" +File.separator + "Resources" + File.separator + "Cards" + File.separator + "UTurnCard.png");
 
 
-    private String pictureFile;
+    private final String pictureFile;
 
-    private EnumImageGraphics(String pictureFile) {
+    EnumImageGraphics(String pictureFile) {
         this.pictureFile = pictureFile;
     }
 

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class LRobot{
     private Point cords = new Point();
-    private GraphicalElementRobot graphicalElement;
-    private ArrayList<Point> checkpointsDone;
+    private final GraphicalElementRobot graphicalElement;
+    private final ArrayList<Point> checkpointsDone;
     private EnumDirection currentDirection;
     private int lifeCount = 5;
     private LPlayer player;
@@ -14,7 +14,7 @@ public class LRobot{
     public LRobot(){
         this.currentDirection = null;
         this.checkpointsDone =  new ArrayList<>();
-        this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
+        this.graphicalElement = new GraphicalElementRobot(null);
         this.graphicalElement.setTileGraphicalElement(EnumImageGraphics.ROBOT_NORTH, EnumDifficulty.HARD);
     }
 
@@ -41,8 +41,9 @@ public class LRobot{
     public void addCheckpoint(Point point){
         boolean isAlreadyChecked = false;
         for (Point pointDone : checkpointsDone) {
-            if(pointDone.x == point.x && pointDone.y == point.y){
+            if (pointDone.x == point.x && pointDone.y == point.y) {
                 isAlreadyChecked = true;
+                break;
             }
         }
         if(!isAlreadyChecked){

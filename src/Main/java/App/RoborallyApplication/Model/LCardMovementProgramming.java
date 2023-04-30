@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LCardMovementProgramming extends AbCardProgramming {
-    private int steps;
+    private final int steps;
     private int stepsMade;
-    private GraphicalElement graphicalElement = new GraphicalElement();
+    private final GraphicalElement graphicalElement = new GraphicalElement();
     public LCardMovementProgramming(int steps){
         this.steps = steps;
         this.stepsMade = 0;

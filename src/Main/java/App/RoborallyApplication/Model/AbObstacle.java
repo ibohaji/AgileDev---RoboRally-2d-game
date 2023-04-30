@@ -1,7 +1,5 @@
 package App.RoborallyApplication.Model;
 
-import javax.swing.*;
-
 public abstract class AbObstacle {
     public AbObstacle(){
     }

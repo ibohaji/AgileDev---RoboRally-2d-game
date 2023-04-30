@@ -3,11 +3,9 @@ package App.RoborallyApplication.Model;
 import java.util.ArrayList;
 
 public class LCardSequence {
-    private LPlayer player;
-    private ArrayList<AbCardProgramming> cardSequence;
+    private final ArrayList<AbCardProgramming> cardSequence;
 
     public LCardSequence(LPlayer player){
-        this.player = player;
         this.cardSequence = new ArrayList<>();
     }
 
@@ -19,9 +17,6 @@ public class LCardSequence {
         cardSequence.add(card);
     }
 
-    /**
-     * @return called when player removes card from ordered deck to unordered deck
-     */
     public void removeCard() {
         if (!this.cardSequence.isEmpty()) {
             cardSequence.remove(cardSequence.size() - 1);

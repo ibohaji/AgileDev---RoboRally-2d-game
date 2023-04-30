@@ -3,7 +3,6 @@ package App.RoborallyApplication.Model;
 import Utils.ImageUtils;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GraphicalElement {
 

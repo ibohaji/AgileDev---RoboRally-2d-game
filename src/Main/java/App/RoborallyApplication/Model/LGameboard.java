@@ -26,8 +26,7 @@ public class LGameboard{
         LTile tile = getTileFromCoordinate(xCoordinate, yCoordinate);
         for (int i = 0; i < tiles.size(); i++) {
             if (tiles.get(i).equals(tile)){
-                tiles.remove(i);
-                tiles.add(i, newTile);
+                tiles.set(i, newTile);
             }
         }
     }
