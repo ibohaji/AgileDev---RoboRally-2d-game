@@ -257,7 +257,7 @@ stepdef_Player {
     @Then("The cards should all have imageicons")
     public void theCardsShouldAllHaveImageicons() {
         for (AbCardProgramming card: player.getCardSequence().getCardSequence()) {
-            assertNotNull(card);
+            assertNotNull(card.getCardImageIcon());
         }
     }
 
