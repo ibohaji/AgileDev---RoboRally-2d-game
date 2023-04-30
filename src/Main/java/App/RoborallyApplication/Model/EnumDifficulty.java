@@ -7,12 +7,10 @@ public enum EnumDifficulty {
     MEDIUM(12,12),
     HARD(12,12);
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
-    private int tileSizeInPixels;
-
-    private EnumDifficulty(int width, int height) {
+    EnumDifficulty(int width, int height) {
         this.width = width;
         this.height = height;
     }

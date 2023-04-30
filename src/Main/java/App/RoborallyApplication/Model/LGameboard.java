@@ -1,30 +1,15 @@
 package App.RoborallyApplication.Model;
 
-import App.DTO.GameboardDTO;
-import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
-import Utils.JsonHelper;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.UUID;
-
-public class LGameboard implements IToDTO {
-    private UUID id;
-    private UUID gameBrainId;
+public class LGameboard{
     private ArrayList<LTile> tiles = new ArrayList<>();
     private ArrayList<LRobot> robots = new ArrayList<>();
-    private ArrayList<Obstacles> obstacles = new ArrayList<>();
-    private ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
-    private LGameBrain gameBrain;
+    private final ArrayList<LTile> checkpointsInOrder = new ArrayList<>();
+    private final LGameBrain gameBrain;
 
     public LGameboard(LGameBrain brain){
-        id = UUID.randomUUID();
         gameBrain = brain;
-        gameBrainId = gameBrain.getID();
-    }
-
-    public UUID getGameBrainId(){
-        return this.gameBrain.getID();
     }
 
     public void setRobots(ArrayList<LRobot> robots){this.robots = robots;}
@@ -41,23 +26,19 @@ public class LGameboard implements IToDTO {
         LTile tile = getTileFromCoordinate(xCoordinate, yCoordinate);
         for (int i = 0; i < tiles.size(); i++) {
             if (tiles.get(i).equals(tile)){
-                tiles.remove(i);
-                tiles.add(i, newTile);
+                tiles.set(i, newTile);
             }
         }
     }
-
     public ArrayList<LRobot> getRobots(){
         return this.robots;
     }
 
-    public ArrayList<Obstacles> getObstacles(){return this.obstacles;}
-
-    public Obstacles getObstacleFromCoordinate(int xCoordinate, int yCoordinate){
+    public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
         for(LTile tile: tiles){
             if(tile.doesTileHaveObstacle()){
-                if(tile.getCoordinates().x == xCoordinate && tile.getCoordinates().y == yCoordinate){
-                    return tile.getObstacle();
+                if(tile.getCoordinates().x == x && tile.getCoordinates().y == y){
+                    return tile.getNewObstacle();
                 }
             }
         }
@@ -68,8 +49,8 @@ public class LGameboard implements IToDTO {
         ArrayList<LTile> surroundingTilesFinal = new ArrayList<>();
         surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate - 1));
-        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate -1, yCoordinate));
+        surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate - 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate + 1, yCoordinate));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate - 1, yCoordinate + 1));
         surroundingTiles.add(getTileFromCoordinate(xCoordinate, yCoordinate + 1));
@@ -89,8 +70,6 @@ public class LGameboard implements IToDTO {
         }
         return null;
     }
-
-
     public LRobot getRobotFromCoordinate(Integer x, Integer y){
         for (LRobot robot: robots) {
             if(robot.getCords().x == x && robot.getCords().y == y){
@@ -132,17 +111,6 @@ public class LGameboard implements IToDTO {
         } else {
             throw new RuntimeException("Problem with getting difficulty in gameboard method addCheckpoint()");
         }
-    }
-
-    @Override
-    public String DTOasJson() {
-        GameboardDTO gameboardDTO = new GameboardDTO(this);
-        return JsonHelper.serializeObjectToJson(gameboardDTO);
-    }
-
-    @Override
-    public UUID getID() {
-        return id;
     }
     public LGameBrain getGameBrain() {
         return gameBrain;

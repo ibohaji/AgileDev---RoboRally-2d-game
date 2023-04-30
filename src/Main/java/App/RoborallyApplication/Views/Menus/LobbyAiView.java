@@ -2,6 +2,9 @@ package App.RoborallyApplication.Views.Menus;
 
 import App.RoborallyApplication.Controllers.LobbyController;
 import App.RoborallyApplication.Model.LGameConfiguration;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.Tuple;
@@ -10,66 +13,84 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class LobbyAiView extends LobbyView{
+public class LobbyAiView extends LobbyView {
 
     private final LGameConfiguration gameConfiguration;
     private final LobbyController lobbyController;
-    ArrayList<Tuple<String, Boolean>> playersInformation;
+    private ArrayList<Tuple<String,Boolean>> isAI = new ArrayList<>();
+    private ArrayList<Tuple<String,String>> playName = new ArrayList<>();
+    private ArrayList<Tuple<String,Boolean>> info = new ArrayList<>();
     JPanel namePanel;
 
-    public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration){
-        //TODO
-        // need checkbox after every namepanel to check whether AI player or not
-
+    public LobbyAiView(LobbyController lobbyController, LGameConfiguration gameConfiguration) {
         this.lobbyController = lobbyController;
         this.gameConfiguration = gameConfiguration;
         createView();
     }
 
-    private void createView() {
-        playersInformation = new ArrayList<>();
-        JPanel namePanel;
-        int nrOfPlayers = gameConfiguration.getNrOfPlayers();
+    private void createView(){
+        for (int i = 0; i < gameConfiguration.getNrOfPlayers(); i++) {
+            JPanel namePanel = new JPanel(new BorderLayout());
+            namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
+            namePanel.setPreferredSize(new Dimension(100, 50));
+            namePanel.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+            JTextField playerNameField = new JTextField("player" +" "+ String.valueOf(i+1));
+            namePanel.add(playerNameField,new GridBagConstraintsBuilder(1,i).build());
+            add(namePanel, new GridBagConstraintsBuilder(i,0).build());
 
-        namePanel = new JPanel(new BorderLayout());
-        namePanel.setLayout(new BoxLayout(namePanel,BoxLayout.X_AXIS));
-        namePanel.setPreferredSize(new Dimension(100, 50));
-        namePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        // namePanel.add(new JLabel(String.valueOf(i)), new GridBagConstraintsBuilder(i,0).build());
-        JTextField aiNameField = new JTextField("Player" +" "+ String.valueOf(1));
-        namePanel.add(aiNameField,new GridBagConstraintsBuilder(1,1).build());
-        add(namePanel, new GridBagConstraintsBuilder(1,0).build());
-
-
-
-        JButton startGameButton = new JButton("START GAME");
-        startGameButton.setFont(Fonts.LARGE);
-
-        startGameButton.addActionListener(e -> {
-            //i want to retrive the userInput names from the namePanel above
+            if (i != 0){
+                JCheckBox checkBox = new JCheckBox("is AI");
+                checkBox.setBounds(100,100, 50,50);
+                add(checkBox, new GridBagConstraintsBuilder(i,1).build());
+                ActionListener actionListener = new ActionListener() {
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+                        boolean selected = abstractButton.getModel().isSelected();
+                    }
+                };
+                checkBox.addActionListener(actionListener);
+            }
+        }
+        JButton exitButton = exitLobbyButton();
+        JButton Button = new JButton("START GAME");
+        Button.setFont(Fonts.LARGE);
+        Button.addActionListener(e -> {
+            Button.setEnabled(false);
+            exitButton.setEnabled(false);
             Component[] components = getComponents();
+            isAI.add(new Tuple<>(null, true));
             for(Component component: components){
+                if (component instanceof JCheckBox){
+                    JCheckBox checkBox = (JCheckBox) component;
+                    isAI.add(new Tuple<>(null, !checkBox.isSelected()));
+                }
                 if(component instanceof JPanel){
                     JPanel panel = (JPanel) component;
                     Component[] subComponents = panel.getComponents();
                     for(Component subComponent: subComponents){
                         if(subComponent instanceof JTextField){
                             JTextField textField = (JTextField) subComponent;
-                            // TODO fix this to say true/false
-                            playersInformation.add(new Tuple<>(textField.getText(), true));
-
+                            playName.add(new Tuple<>(textField.getText(), null));
                         }
                     }
                 }
             }
-            gameConfiguration.createPlayersFromLobby(playersInformation);
+            for (int i = 0;i < gameConfiguration.getNrOfPlayers();i++){
+                info.add(new Tuple<>(playName.get(i).first(),isAI.get(i).second()));
+            }
+            gameConfiguration.createPlayersFromLobby(info);
             lobbyController.userClickStartGame(gameConfiguration);
         });
+        add(Button,  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+        add(exitButton,  new GridBagConstraintsBuilder(0,3).gridWidth(gameConfiguration.getNrOfPlayers()).build());
 
-
-        add(startGameButton);
     }
-
-
-
+    private  JButton exitLobbyButton(){
+        JButton exitGame = new JButton("EXIT");
+        exitGame.setFont(Fonts.LARGE);
+        exitGame.addActionListener(e -> {
+            lobbyController.userClickExit();
+        });
+        return exitGame;
+    }
 }

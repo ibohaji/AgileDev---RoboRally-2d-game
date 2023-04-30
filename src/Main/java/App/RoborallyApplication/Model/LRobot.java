@@ -1,28 +1,21 @@
 package App.RoborallyApplication.Model;
 
-
-import App.DTO.RobotDTO;
-import Utils.JsonHelper;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.UUID;
 
-public class LRobot implements IToDTO {
-
-    private UUID id;
+public class LRobot{
     private Point cords = new Point();
-    private GraphicalElementRobot graphicalElement;
-    private ArrayList<Point> checkpointsDone = new ArrayList<>();
+    private final GraphicalElementRobot graphicalElement;
+    private final ArrayList<Point> checkpointsDone;
     private EnumDirection currentDirection;
     private int lifeCount = 5;
     private LPlayer player;
 
     public LRobot(){
-        this.id = UUID.randomUUID();
         this.currentDirection = null;
-        this.graphicalElement = new GraphicalElementRobot("PLAYER", null);
-        this.graphicalElement.setTileGraphicalElement(EnumGraphicalElementMain.ROBOT_NORTH, EnumDifficulty.HARD);
+        this.checkpointsDone =  new ArrayList<>();
+        this.graphicalElement = new GraphicalElementRobot(null);
+        this.graphicalElement.setTileGraphicalElement(EnumImageGraphics.ROBOT_NORTH, EnumDifficulty.HARD);
     }
 
     public void setDirection(EnumDirection direction) {
@@ -46,23 +39,11 @@ public class LRobot implements IToDTO {
     }
 
     public void addCheckpoint(Point point){
-        boolean isAlreadyChecked = false;
-        for (Point pointDone : checkpointsDone) {
-            if(pointDone.x == point.x && pointDone.y == point.y){
-                isAlreadyChecked = true;
-            }
-        }
-        if(!isAlreadyChecked){
             checkpointsDone.add(point);
-        }
     }
 
     public ArrayList<Point> getCheckpointsDone(){
         return this.checkpointsDone;
-    }
-
-    public void setCheckpointsDone(ArrayList<Point> checkpointsDone) {
-        this.checkpointsDone = checkpointsDone;
     }
 
     public Point getCords(){
@@ -70,8 +51,7 @@ public class LRobot implements IToDTO {
     }
 
     public void setCords(Point newCords){
-        cords.x = newCords.x;
-        cords.y = newCords.y;
+        cords = newCords;
     }
 
     public int getNrOfLives(){
@@ -86,35 +66,18 @@ public class LRobot implements IToDTO {
      * @param gameBrain gamebrain reference
      */
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain){
-        card.useCard(this, gameBrain);
+        if(card != null){
+            card.useCard(this, gameBrain);
+        }
     }
-
     public void decreaseNumberOfLives(){
         lifeCount-=1;
     }
-
     public void assignPlayer(LPlayer player){
         this.player = player;
     }
     public LPlayer getPlayer(){
         return player;
-    }
-
-    @Override
-    public String toString() {
-        return "Robot. Direction: " + this.currentDirection.name() + ". X: " + this.cords.x + " Y: " + this.cords.y +
-                ". Lives: " + this.lifeCount;
-    }
-
-    @Override
-    public String DTOasJson() {
-        RobotDTO robotDTO = new RobotDTO(this);
-        return JsonHelper.serializeObjectToJson(robotDTO);
-    }
-
-    @Override
-    public UUID getID() {
-        return null;
     }
 }
 

@@ -1,11 +1,7 @@
 package App.RoborallyApplication.Model;
-import App.DTO.PlayerDTO;
-import Utils.JsonHelper;
 import java.util.ArrayList;
-import java.util.UUID;
 
-public class LPlayer implements IToDTO {
-    private UUID id;
+public class LPlayer{
     private String displayName;
     private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
     private boolean isHumanPlayer;
@@ -16,7 +12,6 @@ public class LPlayer implements IToDTO {
     public LPlayer(){}
     public LPlayer(String displayName, boolean isHumanPlayer){
         this.isHumanPlayer = isHumanPlayer;
-        this.id = UUID.randomUUID();
         this.displayName = displayName;
     }
     public void assignCardToPlayer(AbCardProgramming card){
@@ -24,40 +19,25 @@ public class LPlayer implements IToDTO {
     }
     public void useProgrammingCard(AbCardProgramming card, LGameBrain gameBrain) {
         robot.useProgrammingCard(card, gameBrain);
-        this.usedCardSequence.addCard(card);
     }
 
     protected void addCardToUsedSequence(AbCardProgramming card){
         this.usedCardSequence.addCard(card);
     }
 
-    protected void removeFirstCardFromOrderedSequence(){
+    public void removeFirstCardFromOrderedSequence(){
         this.orderedCardSequence.removeFirstCard();
     }
 
     /**
      * Robot can only be assigned to player if he previously doesn't have a robot assigned to them
      * @param robotToAssign robot object to assign to the player
-     * @return boolean value whether robot could be assigned
      */
-    public boolean assignRobot(LRobot robotToAssign){
+    public void assignRobot(LRobot robotToAssign){
         if(robot == null){
             robot = robotToAssign;
             robot.assignPlayer(this);
-            return true;
         }
-        return false;
-    }
-
-
-    @Override
-    public String DTOasJson() {
-        PlayerDTO playerDTO = new PlayerDTO(this);
-        return JsonHelper.serializeObjectToJson(playerDTO);
-    }
-    @Override
-    public UUID getID() {
-        return this.id;
     }
 
     public LRobot getRobot(){
@@ -78,35 +58,38 @@ public class LPlayer implements IToDTO {
      * At the end of the players turn, card sequence should be null.
      * At the end of the round, all players should have cardsequence as null.
      */
-    protected void setCardSequenceToNull(){
+    public void setCardSequenceToNull(){
         this.orderedCardSequence = null;
         this.usedCardSequence = null;
+        this.programmingCards = new ArrayList<>();
     }
     public void setOrderedCardSequence(LCardSequence orderedSequence){
         this.orderedCardSequence = orderedSequence;
         this.usedCardSequence = new LCardSequence(this);
     }
-
-    protected boolean doesPlayerHaveMovesLeft(){
-        return this.usedCardSequence.getSize() != 5;
+    public boolean doesPlayerHaveMovesLeft(){
+        return this.orderedCardSequence != null;
     }
-
     public LCardSequence getCardSequence(){
         return this.orderedCardSequence;
     }
-
     protected AbCardProgramming getLastCard(){
         return this.usedCardSequence.getLastMovementCard();
     }
-
-
     protected AbCardProgramming getNextCardFromOrderedDeck(){
-        return this.orderedCardSequence.getFirstCard();
+        if(this.orderedCardSequence.getSize() != 0){
+            return this.orderedCardSequence.getFirstCard();
+        } else {
+            return null;
+        }
     }
 
     public boolean isHuman(){
         return this.isHumanPlayer;
     }
 
+    public void addCardFromAgain(AbCardProgramming card) {
+        this.orderedCardSequence.addCardToSecondPosition(card);
+    }
 }
 

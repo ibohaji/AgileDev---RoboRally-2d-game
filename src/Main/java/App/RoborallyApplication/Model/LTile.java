@@ -1,27 +1,18 @@
 package App.RoborallyApplication.Model;
 
-import App.DTO.TileDTO;
-import App.RoborallyApplication.Model.ObstaclesFolder.Obstacles;
-import Utils.JsonHelper;
-
 import java.awt.*;
-import java.util.UUID;
-
-public class LTile implements IToDTO {
-    private UUID id;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
-    private GraphicalElementTile graphicalElement;
+public class LTile{
+    private final Integer xCoordinate;
+    private final Integer yCoordinate;
+    private final GraphicalElementTile graphicalElement;
     protected EnumTileType enumTileType;
-    private Obstacles obstacle;
+    private AbObstacle newObstacle;
 
     public LTile(int xCoordinate, int yCoordinate, EnumTileType enumTileType){
-        this.id = UUID.randomUUID();
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.graphicalElement = new GraphicalElementTile();
         this.enumTileType = enumTileType;
-        this.id = UUID.randomUUID();
     }
 
     public Point getCoordinates(){
@@ -36,23 +27,13 @@ public class LTile implements IToDTO {
         return graphicalElement;
     }
 
-    public void setGraphicalElement(String path, EnumDifficulty difficulty){
-        this.graphicalElement.setTileGraphicalElement(path, difficulty);
-    }
-
-    public void setGraphicalElement(EnumGraphicalElementMain element, EnumDifficulty difficulty){
-
-        this.graphicalElement.setTileGraphicalElement(element.getElementLocation(), difficulty);
-    }
-
-    public void setGraphicalElement(GraphicalElementTile graphicalElementTile) {
-        this.graphicalElement = graphicalElementTile;
+    public void setGraphicalElement(EnumImageGraphics enumImageGraphics, EnumDifficulty difficulty){
+        this.graphicalElement.setTileGraphicalElement(enumImageGraphics, difficulty);
     }
 
     public boolean doesTileHaveObstacle(){
-        return this.obstacle != null;
+        return this.newObstacle != null;
     }
-
     public boolean doesTileHaveCheckpoint(){
         return this.enumTileType.equals(EnumTileType.CHECKPOINT);
     }
@@ -64,30 +45,11 @@ public class LTile implements IToDTO {
     public boolean isTileStartPoint(){
         return this.enumTileType.equals(EnumTileType.START);
     }
-
-    @Override
-    public String toString() {
-        return "Tile object. X coordinate: " + this.xCoordinate + " Y coordinate: " + this.yCoordinate +
-                ". Graphical element on tile: " + this.graphicalElement.getElementName();
+    public void setNewObstacle(AbObstacle obstacle){
+        this.newObstacle = obstacle;
     }
-
-    @Override
-    public String DTOasJson() {
-        TileDTO tileDTO = new TileDTO(this);
-        return JsonHelper.serializeObjectToJson(tileDTO);
-    }
-
-    @Override
-    public UUID getID() {
-        return null;
-    }
-
-    public Obstacles getObstacle() {
-        return obstacle;
-    }
-
-    public void setObstacle(Obstacles obstacle) {
-        this.obstacle = obstacle;
+    public AbObstacle getNewObstacle(){
+        return this.newObstacle;
     }
 
 

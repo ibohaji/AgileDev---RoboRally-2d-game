@@ -19,30 +19,44 @@ Feature: Robot Movement on the board
     Given the game board is set up with robots at positions
     And robot1 is facing NORTH and robot2 is facing EAST
     When robot1 uses a movement card with 2 steps
-    Then robot1 should be at (2,1) facing NORTH and robot2 should be at (2,2) facing EAST
+    Then robot1 should be at X=0 Y=1 facing NORTH and robot2 should be at X=0 Y=2 facing EAST
 
   Scenario: Robot falls off the board due to its own movementCard
     Given a game board with difficulty Easy
-    And Robot1 at position (7,7) facing EAST with 4 lives
-    When Robot1 moves forward 3 step
+    And Robot1 at position X=7 Y=0 facing EAST with 4 lives
+    When Robot1 moves forward 1 step
     Then Robot1 has 3 lives left
     And Robot1 should be restored to a random start point position on the board
-
-  Scenario: Robot pushed off the board
-    Given a game board with difficulty EASY
-    And Robot1 at position (6,4) and Robot2 at position (6,5)
-    And Robot1 is facing NORTH and Robot2 is facing SOUTH
-    And Robot1 has 2 lives and Robot2 has 5 lives
-    When Robot1 moves forward one step
-    Then Robot2 is at a random start point position and facing NORTH with 4 lives
-    And Robot1 should be at the Robot2's previous position(6,5) and facing NORTH
 
   Scenario: Robot is deleted from the game
     Given Robot has one life
     When Robot suffer a damage
     Then Robot is deleted
 
-    Scenario: Robot execute programming cards in order in activation phase
-      Given a game board with a robot and 5 ordered cards
-      When the activation phase starts
-      Then the robot execute the cards in the given order
+  Scenario: Robot execute programming cards in order in activation phase
+    Given a game board with a robot and 5 ordered cards
+    When the activation phase starts
+    Then the robot execute the cards in the given order
+
+  Scenario: Robot gets Check Point
+    Given a game board with difficulty Medium
+    When Robot1 encounter a checkpoint
+    And Robot2 encounter the same checkpoint
+    Then Robot1 have this check point
+    And Robot2 will not get this check point
+
+  Scenario: Robot1 push robot2 and robot2 suffer one damage
+    Given robot1 is at x=1 y=7 with 4 lives facing North and robot2 is at x=1 y=6 with 3 lives facing West
+    When robot1 use his programming card which is Movementcard for 1 steps
+    Then robot1 goes to x=1 y=6 with same lives facing North
+    And robot2 is at x=1 y=5 and suffered one damage
+
+  Scenario: Robot can only collect checkpoints once
+    Given a game board with difficulty hard
+    When robot collects checkpoints
+    Then the order is checked automatically
+
+  Scenario: Robot1 push robot2 off the board
+    Given robot1 is at x=6 y=0 with 4 lives facing EAST and robot2 is at x=7 y=0 with 1 lives facing NORTH
+    When robot1 make one step movement
+    Then robot2 was pushed off the board by robot1 and reborn at a random start point

@@ -4,6 +4,7 @@ import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Model.AbCardProgramming;
 import App.RoborallyApplication.Model.LCardSequence;
 import App.RoborallyApplication.Model.LGameBrain;
+import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.GameView;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
@@ -33,26 +34,27 @@ public class UserOrderedCardDeckView extends GameView {
     private void createView() {
         setLayout(new GridBagLayout());
 
-        JLabel nameForDeck = new JLabel("Ordered Deck");
+        JLabel nameForDeck = new JLabel("Ordered Deck", SwingConstants.CENTER);
         nameForDeck.setFont(Fonts.LARGE);
-        add(nameForDeck, new GridBagConstraintsBuilder(0,0).weightX(1).inset(50).fill(GridBagConstraints.HORIZONTAL).build());
+        add(nameForDeck, new GridBagConstraintsBuilder(0,0).weightX(1).inset(0).fill(GridBagConstraints.HORIZONTAL).build());
 
         // Create a JPanel to hold the card slots
         this.cardSlotsPanel = new JPanel();
-        // this.cardSlotsPanel.setBorder(new LineBorder(Color.BLACK, 5));
-        cardSlotsPanel.setLayout(new BoxLayout(cardSlotsPanel, BoxLayout.Y_AXIS));
+        cardSlotsPanel.setLayout(new GridBagLayout());
         cardSlotsPanel.setOpaque(false);
         add(cardSlotsPanel, new GridBagConstraintsBuilder(0, 1).weightY(1)
                 .inset(10, 10, 10, 10).fill(GridBagConstraints.BOTH).build());
-        add(getRemoveButton(), new GridBagConstraintsBuilder(0, 2).weightY(1)
+        add(getRemoveButton(), new GridBagConstraintsBuilder(0, 2)
                 .inset(30, 10, 0, 10).fill(GridBagConstraints.HORIZONTAL).build());
     }
 
     public void addCard(AbCardProgramming card) {
         cardSequence.addCard(card);
         cardDeckController.updateCardDecks();
-        ImageIcon img = ImageUtils.scaledImageWithPercent(card.getCardImageIcon(), 30);
-        cardSlotsPanel.add(new JLabel(img), new GridBagConstraintsBuilder(0, cardSequence.getSize() - 1).inset(20,50,0,50).build());
+        ImageIcon img = ImageUtils.scaledImageWithPercent(card.getCardImageIcon(), 35);
+        cardSlotsPanel.add(new JLabel(img), new GridBagConstraintsBuilder(0, cardSequence.getSize() - 1)
+                .anchor(GridBagConstraints.CENTER)
+                .inset(0,30,5,30).build());
     }
 
 
@@ -78,5 +80,11 @@ public class UserOrderedCardDeckView extends GameView {
             removeLastCard();
         });
         return buttonToRemove;
+    }
+
+    public void clearCardSlots() {
+        cardSlotsPanel.removeAll();
+        revalidate();
+        repaint();
     }
 }

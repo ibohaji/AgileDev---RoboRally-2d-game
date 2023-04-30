@@ -7,6 +7,8 @@ import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class GameBoardView extends GameView{
@@ -19,12 +21,13 @@ public class GameBoardView extends GameView{
         setLayout(new GridBagLayout());
         int gridSize = super.gameConfiguration.getBoardDimensions().first();
         // GAME NAME
-        add(generateGameNameLabel(), new GridBagConstraintsBuilder(0, 0).inset(0,0,20,0).gridWidth(gridSize).fill(GridBagConstraints.BOTH).build());
+        JLabel nameLabel = generateGameNameLabel();
+        add(nameLabel, new GridBagConstraintsBuilder(0, 0).inset(0,0,20,0).gridWidth(gridSize).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
 
         // GRID
         int scaling = gameConfiguration.getScalingSizeForTile();
         ImageIcon scaledDefaultFloor = ImageUtils.scaledImageIcon(new ImageIcon(
-                        ImageUtils.getImage(EnumGraphicalElementMain.DEFAULT_FLOOR.getElementLocation())),
+                ImageUtils.getImage(EnumImageGraphics.DEFAULT_FLOOR.getElementLocation())),
                 scaling,
                 scaling);
 
@@ -33,23 +36,40 @@ public class GameBoardView extends GameView{
                 try{
                     LTile tileAtCoordinate = super.gameBrain.getGameboard().getTileFromCoordinate(x, y);
                     if(gameBrain.getGameboard().isTileOccupiedByRobot(x, y)){ // ROBOT ON TILE
-                        if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()){
+                        LRobot robot = gameBrain.getGameboard().getRobotFromCoordinate(x, y);
+                        if(gameBrain.getGameboard().getTileFromCoordinate(x,y).doesTileHaveObstacle()) {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
-                            EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            EnumDirection directionOfRobot = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
-                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
-                        } else {
+                            robotWithTile = ImageUtils.addTextToImage(robotWithTile, Fonts.BOLD_SMALL, robot.getPlayer().getDisplayName());
+                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x, y + 1).build());
+                        } else if (gameBrain.getGameboard().getTileFromCoordinate(x,y).isTileFinishPoint()) {
+                            EnumDirection directionOfRobot = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
+                            ImageIcon finishImg = tileAtCoordinate.getGraphicalElement().getImage();
+                            finishImg = ImageUtils.mergeTwoImages(scaledDefaultFloor,finishImg);
+                            ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(finishImg, directionOfRobot);
+                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x, y + 1).build());
+                    } else {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                             EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
-                            add(new JLabel(GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                            ImageIcon robotImage = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
+                            robotImage = ImageUtils.addTextToImage(robotImage, Fonts.BOLD_SMALL ,robot.getPlayer().getDisplayName());
+                            add(new JLabel(robotImage), new GridBagConstraintsBuilder(x, y + 1).build());
                         }
                     } else if(tileAtCoordinate.doesTileHaveObstacle()) {
                         ImageIcon img2 = ImageUtils.scaledImageIcon(tileAtCoordinate.getGraphicalElement().getImage(), gameBrain.getGameConfig().getScalingSizeForTile(), gameConfiguration.getScalingSizeForTile());
-                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,img2)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,img2)), new GridBagConstraintsBuilder(x, y + 1).build());
 
                     } else {
-                        add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
-                                new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        if(tileAtCoordinate.isTileFinishPoint()){
+                            ImageIcon finishImg = tileAtCoordinate.getGraphicalElement().getImage();
+                            finishImg = ImageUtils.mergeTwoImages(scaledDefaultFloor,finishImg);
+                            add(new JLabel(finishImg),new GridBagConstraintsBuilder(x, y + 1).build());
+                        } else {
+                            add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
+                                    new GridBagConstraintsBuilder(x, y + 1).build());
+                        }
+
                     }
 
                 } catch (NullPointerException exception){
@@ -58,8 +78,13 @@ public class GameBoardView extends GameView{
             }
         }
         // PLAYER INFO
-        if(this.gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
-            LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
+        if(true){
+            LPlayer player;
+            if(this.gameBrain.getCurrentGamePhase().equals(EnumGamePhase.MOVEMENT_PHASE)){
+                player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
+            } else {
+                player = this.gameBrain.getPlayerWithoutCardSequence();
+            }
             JLabel playerName = new JLabel(player.getDisplayName());
             playerName.setFont(Fonts.BOLDMEDIUM);
             JLabel robotLives = new JLabel("Number of lives: " + player.getRobot().getNrOfLives());

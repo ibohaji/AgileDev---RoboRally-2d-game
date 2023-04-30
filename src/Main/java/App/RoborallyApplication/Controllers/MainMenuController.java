@@ -11,13 +11,14 @@ public class MainMenuController {
 
     private final ApplicationController applicationController;
     private final MainMenuView view;
-    // Test purpose only
-    private LobbyController t_lobbyController;
 
     public MainMenuController(ApplicationController applicationController) {
         this.applicationController = applicationController;
         this.view = new MainMenuView(this);
-        MusicPlayer.getInstance().playLoop("App/Resources/Music/Eric-Cartman-Poker-Face.wav");
+        MusicPlayer.getInstance().openLoop();
+        if(MusicPlayer.getInstance().checkLoopPlay()) {
+            MusicPlayer.getInstance().playLoop("App/Resources/Music/lobbyMusic.wav");
+        }
     }
 
     public void userClickPlay(EnumDifficulty difficulty, int nrOfPlayers, boolean isRegular){
@@ -28,16 +29,10 @@ public class MainMenuController {
         } else {
             applicationController.changePanel(new LobbyAiView(lobbyController, gameConf));
         }
-        // Test purpose only
-        this.t_lobbyController = lobbyController;
     }
 
     public void display() {
         applicationController.changePanel(view);
     }
 
-    // Test purpose only
-    public LobbyController getLobbyController() {
-        return this.t_lobbyController;
-    }
 }

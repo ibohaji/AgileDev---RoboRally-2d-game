@@ -3,11 +3,9 @@ package App.RoborallyApplication.Model;
 import java.util.ArrayList;
 
 public class LCardSequence {
-    private LPlayer player;
-    private ArrayList<AbCardProgramming> cardSequence;
+    private final ArrayList<AbCardProgramming> cardSequence;
 
     public LCardSequence(LPlayer player){
-        this.player = player;
         this.cardSequence = new ArrayList<>();
     }
 
@@ -19,9 +17,6 @@ public class LCardSequence {
         cardSequence.add(card);
     }
 
-    /**
-     * @return called when player removes card from ordered deck to unordered deck
-     */
     public void removeCard() {
         if (!this.cardSequence.isEmpty()) {
             cardSequence.remove(cardSequence.size() - 1);
@@ -36,7 +31,6 @@ public class LCardSequence {
      */
     public AbCardProgramming getLastMovementCard(){
         if(this.cardSequence.isEmpty()){
-            System.out.println("Card sequence is empty");
             return null;
         }
         for (int i = this.cardSequence.size(); i > 0; i--) {
@@ -56,24 +50,27 @@ public class LCardSequence {
         return this.cardSequence;
     }
 
-    public void setCardSequence(ArrayList<AbCardProgramming> cardSequence) {
-        this.cardSequence = cardSequence;
-    }
-
     public AbCardProgramming getFirstCard() {
+        if(this.cardSequence.isEmpty()){
+            return null;
+        }
         return this.cardSequence.get(0);
     }
-
     public void removeFirstCard(){
         if(!this.cardSequence.isEmpty()){
             this.cardSequence.remove(getFirstCard());
         }
     }
-
     public AbCardProgramming getLastCardInSequence() {
         if(this.cardSequence.isEmpty()){
             return null;
         }
         return this.cardSequence.get(this.cardSequence.size() - 1);
+    }
+    public void addCardToSecondPosition(AbCardProgramming card) {
+        if(this.cardSequence.size() >= 1){
+            this.cardSequence.add(1, card);
+        }
+
     }
 }

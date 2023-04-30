@@ -52,5 +52,25 @@ Feature: GameBrain
 
   Scenario: GameBrain determine an unknown explosive tile
     Given a GameBrain with "HARD" difficulty
-    When a robot stands on an explosive tile
-    Then GameBrain make a bomb obstacle explode
+    When a robot stands on an unknown explosive tile
+    Then GameBrain set the unknown explosive tile to a known one
+
+  Scenario: GameBrain ends a game
+    Given a GameBrain with easy difficulty
+    When the only robot dies
+    Then GameBrain ends the game
+
+  Scenario: GameBrain determines a winner
+    Given a GameBrain with easy difficulty_
+    When a robot gets to the finish point
+    Then GameBrain shows a winner
+
+  Scenario: GameBrain check card sequence for players
+    Given a GameBrain with easy difficulty__
+    When in programming phase
+    Then GameBrain check card sequence for players
+
+  Scenario: GameBrain set tile size
+    Given a GameBrain with easy difficulty__
+    When during game initialization
+    Then GameBrain set tile size

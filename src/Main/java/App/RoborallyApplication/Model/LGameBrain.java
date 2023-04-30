@@ -1,35 +1,24 @@
 package App.RoborallyApplication.Model;
 
-import App.DTO.GameBrainDTO;
-import App.RoborallyApplication.Model.ObstaclesFolder.*;
-import Utils.JsonHelper;
 import Utils.MapGenerator;
+import Utils.MusicPlayer;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class LGameBrain implements IToDTO {
-    private UUID id;
-    private LGameConfiguration gameConfig;
+public class LGameBrain{
+    private final LGameConfiguration gameConfig;
     private LGameboard gameboard = null;
-    private ArrayList<LPlayer> players;
+    private final ArrayList<LPlayer> players;
     private EnumGamePhase currentEnumGamePhase;
-
-    /**
-     * Constructor for restoring
-     */
-    public LGameBrain(){
-
-    }
-
+    public LPlayer winner;
     /**
      * @param gameConfiguration game configuration
      * Constructor for starting game from lobby
      */
     public LGameBrain(LGameConfiguration gameConfiguration){
-        this.id = UUID.randomUUID();
         gameConfig = gameConfiguration;
         createGameboard(gameConfig.getDifficulty());
         this.players = gameConfiguration.getPlayers();
@@ -57,22 +46,22 @@ public class LGameBrain implements IToDTO {
         Random rnd = new Random();
         for (LPlayer player : players) {
             for (int i = 0; i < 5; i++) {
-                int choiceForCard = rnd.nextInt(12);
-                int choiceForSpecific = rnd.nextInt(3);
-                if(choiceForCard < 2){ // againCard
+                int choiceForCard = rnd.nextInt(10);
+                int choiceForSpecific = rnd.nextInt(10);
+                if(choiceForCard < 1){ // againCard
                     player.assignCardToPlayer(new LCardAgainProgramming());
-                } else if (choiceForCard < 7) { // movementCard
-                    if(choiceForSpecific == 0) {
+                } else if (choiceForCard < 6) { // movementCard
+                    if(choiceForSpecific <5) {
                         player.assignCardToPlayer(new LCardMovementProgramming(1));
-                    } else if (choiceForSpecific == 1) {
+                    } else if (choiceForSpecific < 8) {
                         player.assignCardToPlayer(new LCardMovementProgramming(2));
                     } else {
                         player.assignCardToPlayer(new LCardMovementProgramming(3));
                     }
                 } else { // turn
-                    if(choiceForSpecific == 0) { // LEFT
+                    if(choiceForSpecific < 4) { // LEFT
                         player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.LEFT));
-                    } else if (choiceForSpecific == 1) { // RIGHT
+                    } else if (choiceForSpecific < 8) { // RIGHT
                         player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.RIGHT));
                     } else { // U-TURN
                         player.assignCardToPlayer(new LCardChangeDirectionProgramming(EnumTurnType.U_TURN));
@@ -82,24 +71,33 @@ public class LGameBrain implements IToDTO {
         }
     }
     public void makeMovement(){
-        LPlayer player = getPlayerWhoIsCurrentlyMoving();
-        AbCardProgramming card = player.getNextCardFromOrderedDeck();
-        moveRobotWithCard(player, card);
-        Point newPos = player.getRobot().getCords();
-        if(this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).doesTileHaveCheckpoint()){
-            //TODO
-            // ordering of checkpoints before assigning a checkpoint to the robot
-            //
-        } else if (this.gameboard.getTileFromCoordinate(newPos.x, newPos.y).isTileFinishPoint()) {
-            if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
-                setCurrentGamePhase(EnumGamePhase.GAME_OVER);
-                // SOMEBODY WON <-------
+        if(this.gameboard.getRobots().isEmpty()){
+            setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+        } else {
+            LPlayer player = getPlayerWhoIsCurrentlyMoving();
+            AbCardProgramming card = player.getNextCardFromOrderedDeck();
+            moveRobotWithCard(player, card);
+            if(player.getRobot().getNrOfLives() < 1){
+                removePlayer(player);
+                removeRobot(player.getRobot());
+                if(!areThereMovementsLeftInThisRound()){
+                    endRound();
+                }
+            } else {
+                Point newPos = player.getRobot().getCords();
+                LTile tile = this.gameboard.getTileFromCoordinate(newPos.x, newPos.y);
+                if(tile.doesTileHaveCheckpoint()){
+                    if(canRobotCollectCheckpoint(player)){
+                        player.getRobot().addCheckpoint(new Point(tile.getCoordinates().x, tile.getCoordinates().y));
+                    }
+                } else if (tile.isTileFinishPoint()) {
+                    if(player.getRobot().getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
+                        setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                        setWinner(player);
+                    }
+                }
             }
         }
-
-    }
-    public void removeFirstCardForPlayer(LPlayer player){
-        player.removeFirstCardFromOrderedSequence();
     }
 
     /**
@@ -108,7 +106,7 @@ public class LGameBrain implements IToDTO {
      */
     public boolean areThereMovementsLeftInThisRound(){
         for (LPlayer player : players) {
-            if (!(player.getCardSequence() == null)){
+            if(player.doesPlayerHaveMovesLeft()){
                 return true;
             }
         }
@@ -120,12 +118,61 @@ public class LGameBrain implements IToDTO {
      */
     public void endRound(){
         currentEnumGamePhase = EnumGamePhase.ROUND_END;
-    }
-    public LPlayer getPlayerWhoWon(){
-        // TODO
-        return null;
+        if(!canGameContinue()){
+            currentEnumGamePhase = EnumGamePhase.GAME_OVER;
+        } else {
+            for (LPlayer player: players) {
+                player.setCardSequenceToNull();
+            }
+        }
     }
 
+    public boolean canGameContinue(){
+        if(this.currentEnumGamePhase.equals(EnumGamePhase.GAME_OVER)){
+            return false;
+        } else if (isThereAWinner()) {
+            return false;
+        } else return !this.gameboard.getRobots().isEmpty();
+    }
+
+    public boolean canRobotCollectCheckpoint(LPlayer player){
+        ArrayList<Point> robotsCheckpoints = player.getRobot().getCheckpointsDone();
+        ArrayList<Point> gameBrainCheckpoints = gameboard.getCheckpointsInOrder().stream()
+                .map(x -> new Point(x.getCoordinates().x, x.getCoordinates().y)).collect(Collectors
+                        .toCollection(ArrayList::new));
+        if (!gameBrainCheckpoints.isEmpty()) {
+            if (robotsCheckpoints.size() != gameBrainCheckpoints.size()){
+                boolean orderCorrect = true;
+                for (int i = 0; i < robotsCheckpoints.size(); i++) {
+                    boolean xCheck = robotsCheckpoints.get(i).x == gameBrainCheckpoints.get(i).x;
+                    boolean yCheck = robotsCheckpoints.get(i).y == gameBrainCheckpoints.get(i).y;
+                    if (!xCheck || !yCheck) {
+                        orderCorrect = false;
+                        break;
+                    }
+                }
+                return orderCorrect;
+            }
+        }
+        return false;
+    }
+
+
+// -> Winner methods <-
+
+// ---------------------------------------
+    public void setWinner(LPlayer player){
+        this.winner = player;
+    }
+    public String getPlayerWhoWon(){
+        return winner.getDisplayName();
+    }
+
+    public boolean isThereAWinner(){
+        return winner != null;
+    }
+
+// ---------------------------------------
 
     // -------------------------------------------------------------------------//
     // CARD SEQUENCE LOGIC
@@ -135,8 +182,9 @@ public class LGameBrain implements IToDTO {
     public boolean haveAllPlayersSubmittedSequence(){
         boolean haveSubmitted = true;
         for (LPlayer player: players) {
-            if(player.getCardSequence() == null){
+            if (player.getCardSequence() == null) {
                 haveSubmitted = false;
+                break;
             }
         }
         return haveSubmitted;
@@ -162,86 +210,70 @@ public class LGameBrain implements IToDTO {
 
     // -------------------------------------------------------------------------//
     // OBSTACLE METHODS
-    public Obstacles chooseUnknownObstacle(LTile tile){   // <--- Very weird method???
-        boolean robot_on_unknown = false;
-        for (LPlayer player : this.players) {
-            if (player.getRobot().getCords().equals(tile.getCoordinates())) {
-                robot_on_unknown = true;
-            }
-        }
-
-        if (robot_on_unknown) {
-            Random rnd = new Random();
-            float chance = rnd.nextFloat(1);
-            if (chance < 0.6) { // acid
-                Acid acid = new Acid(true);
-                return acid;
-            } else if (chance < 0.8) { // radiation
-                Radiation radiation = new Radiation(true);
-                return radiation;
-            } else { // pit
-                Pit pit = new Pit(true);
-                return pit;
-            }
-        }
-
-        return tile.getObstacle();
-    }
-
-    public Obstacles getRandomObstacle(){
+    public EnumObstacleType getRandomObstacleTypeToExplode(){
         Random rnd = new Random();
         float val = rnd.nextFloat(1);
-        if (val < 0.3) { // ACID
-            Acid acid = new Acid(true);
-            return acid;
-        } else if (val < 0.6) { // RADIATION
-            Radiation radiation = new Radiation(true);
-            return radiation;
-        } else if (val < 0.8 ){ // PIT
-            Pit pit = new Pit(true);
-            return pit;
+        if (val < 0.5) { // ACID
+            return EnumObstacleType.ACID;
         } else {
-            Healing healing = new Healing(true);
-            return healing;
+            return EnumObstacleType.RADIATION;
         }
     }
-
-    public Obstacles getObstacleFromCoordinate(Integer x, Integer y) {
-        return this.gameboard.getObstacleFromCoordinate(x, y);
+    public AbObstacle getObstacleFromCoordinateNEW(Integer x, Integer y) {
+        return this.gameboard.getObstacleFromCoordinateNEW(x, y);
     }
 
-    public void explodeObstacleToTiles(ArrayList<LTile> tiles, Obstacles obstacle){
+    public void explodeObstacleToTilesNEW(ArrayList<LTile> tiles, EnumObstacleType obstacleType){
         for (LTile tile: tiles) {
             if(!tile.doesTileHaveObstacle()){
-                tile.setObstacle(obstacle);
-                tile.setGraphicalElement(obstacle.getGraphicalElement(),gameConfig.getDifficulty());
+                if(obstacleType.getDeclaringClass().isInstance(EnumObstacleType.ACID)){
+                    tile.setNewObstacle(new LObstacleRegular(obstacleType, EnumObstacleClassification.KNOWN_OBSTACLE));
+                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, gameConfig.getDifficulty());
+                } else if (obstacleType.getDeclaringClass().isInstance(EnumObstacleType.RADIATION)) {
+                    tile.setNewObstacle(new LObstacleRegular(obstacleType, EnumObstacleClassification.KNOWN_OBSTACLE));
+                    tile.setGraphicalElement(EnumImageGraphics.OBSTACLE_RADIATION, gameConfig.getDifficulty());
+                }
+                updateGraphicalElementOnTile(tile);
             }
-            updateGraphicalElementOnTile(tile);
         }
     }
 
-    protected void updateGraphicalElementOnTile(LTile tileToUpdate){
-        Obstacles obs = tileToUpdate.getObstacle();
+    private void updateGraphicalElementOnTile(LTile tileToUpdate){
+        LObstacleRegular obs = (LObstacleRegular)tileToUpdate.getNewObstacle();
         EnumDifficulty diff = gameConfig.getDifficulty();
-        tileToUpdate.setGraphicalElement(obs.getGraphicalElement(),diff);
-
+        if(obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE) ||
+                obs.getObstacleClassification().equals(EnumObstacleClassification.EXPLOSIVE_KNOWN)){ // Known and Explosive known
+            if(obs.getObstacleType().equals(EnumObstacleType.PIT)){
+                tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_PIT, diff);
+            } else if (obs.getObstacleType().equals(EnumObstacleType.RADIATION)) {
+                if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_RADIATION, diff);
+                } else {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_RADIATION, diff);
+                }
+            } else if (obs.getObstacleType().equals(EnumObstacleType.HEALING)) {
+                if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_HEALING, diff);
+                }
+            } else { // ACID
+                if (obs.getObstacleClassification().equals(EnumObstacleClassification.KNOWN_OBSTACLE)) {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_ACID, diff);
+                } else {
+                    tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_EXPLOSIVE_ACID, diff);
+                }
+            }
+        } else{ // Explosive unknown
+            tileToUpdate.setGraphicalElement(EnumImageGraphics.OBSTACLE_UNKNOWN_EXPLOSIVE, gameConfig.getDifficulty());
+        }
     }
 
 
     // -------------------------------------------------------------------------//
     // PLAYER METHODS
     public void removePlayer(LPlayer playerToRemove) {
+        MusicPlayer.getInstance().playDieSound();
         this.players.remove(playerToRemove);
     }
-    public LPlayer findPlayerByRobot(LRobot robot){
-        for (LPlayer player: players) {
-            if (player.getRobot().equals(robot)){
-                return player;
-            }
-        }
-        return null;
-    }
-
     public LPlayer getPlayerWhoIsCurrentlyMoving(){
         for (LPlayer player: players) {
             if (player.doesPlayerHaveMovesLeft()){
@@ -266,6 +298,9 @@ public class LGameBrain implements IToDTO {
     }
     public void removeRobot(LRobot robot){
         this.gameboard.removeRobot(robot);
+        if(this.gameboard.getRobots().isEmpty()){
+            setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+        }
     }
     public void pushRobot(LRobot robotBeingPushed, EnumDirection directionOfPushOrigin){
         Point pos = robotBeingPushed.getCords();
@@ -278,21 +313,37 @@ public class LGameBrain implements IToDTO {
         if(!isPositionOnBoard(pos)){
             robotBeingPushed.setNrOfLives(robotBeingPushed.getNrOfLives() - 1);
             if(robotBeingPushed.getNrOfLives() < 1){
-                removeRobot(robotBeingPushed);
                 removePlayer(robotBeingPushed.getPlayer());
+                removeRobot(robotBeingPushed);
             } else {
                 putRobotToRandomStartPoint(robotBeingPushed);
             }
         } else if(isPositionOnBoard(pos)){
             if(gameboard.isTileOccupiedByRobot(pos.x, pos.y)){
                 LRobot robot2 = gameboard.getRobotFromCoordinate(pos.x, pos.y);
-                pushRobot(robot2, directionOfPushOrigin);
+                if(!robot2.equals(robotBeingPushed)){
+                    pushRobot(robot2, directionOfPushOrigin);
+                }
             } else {
                 robotBeingPushed.setCords(pos);
             }
+            int x = robotBeingPushed.getCords().x;
+            int y = robotBeingPushed.getCords().y;
+            AbObstacle obs = getObstacleFromCoordinateNEW(x, y);
+            if(obs != null){
+                obs.applyEffect(robotBeingPushed, this);
+            } else if (gameboard.getTileFromCoordinate(x, y).isTileFinishPoint()){
+                if(robotBeingPushed.getCheckpointsDone().size() == gameboard.getCheckpointsInOrder().size()){
+                    setWinner(robotBeingPushed.getPlayer());
+                    setCurrentGamePhase(EnumGamePhase.GAME_OVER);
+                }
+            } else if (gameboard.getTileFromCoordinate(x, y).doesTileHaveCheckpoint()) {
+                if(canRobotCollectCheckpoint(robotBeingPushed.getPlayer())){
+                    robotBeingPushed.addCheckpoint(new Point(x, y));
+                }
+            }
         }
     }
-
     private void setupRobots(){
         ArrayList<LTile> availableStartPoints = getAllStartPoints();
         for (int i = 0; i < this.players.size(); i++) {
@@ -302,29 +353,23 @@ public class LGameBrain implements IToDTO {
     private void moveRobotWithCard(LPlayer player, AbCardProgramming card){
         if (player.getRobot().getNrOfLives() > 0){
             player.useProgrammingCard(card, this);
+            if(card instanceof LCardMovementProgramming){
+                if(((LCardMovementProgramming) card).getSteps() == ((LCardMovementProgramming) card).getStepsMade()){
+                    player.addCardToUsedSequence(card);
+                    player.removeFirstCardFromOrderedSequence();
+                }
+            } else {
+                player.addCardToUsedSequence(card);
+                player.removeFirstCardFromOrderedSequence();
+            }
         } else {
             player.setCardSequenceToNull();
+            removePlayer(player);
+            removeRobot(player.getRobot());
         }
     }
-
-    protected void robotStepOnObstacle(LRobot robot, Obstacles obstacle, Point pos){
-        if(obstacle.isKnown() & !(obstacle.isExplosive())){
-            obstacle.applyEffect(robot);
-        } else if (obstacle.isExplosive() & obstacle.isKnown()) {
-            obstacle.applyEffect(robot);
-            explodeObstacleToTiles(gameboard.getTilesSurroundingCoordinate(pos.x, pos.y), obstacle);
-        } else if (!(obstacle.isKnown()) & obstacle.isExplosive()) {
-            Obstacles newObs = getRandomObstacle();
-            LTile tile = gameboard.getTileFromCoordinate(pos.x, pos.y);
-            tile.setObstacle(newObs);
-            // change obstacle properties
-            obstacle.applyEffect(robot);
-            explodeObstacleToTiles(gameboard.getTilesSurroundingCoordinate(pos.x, pos.y), obstacle);
-        }
-        if(robot.getNrOfLives() < 1){
-            removePlayer(robot.getPlayer());
-            removeRobot(robot);
-        }
+    protected void robotStepOnObstacleNEW(AbObstacle obstacle, LRobot robot){
+        obstacle.applyEffect(robot, this);
     }
 
     // -------------------------------------------------------------------------//
@@ -373,34 +418,17 @@ public class LGameBrain implements IToDTO {
         return availableStartPoints;
     }
     public void putRobotToRandomStartPoint(LRobot robot){
+        MusicPlayer.getInstance().play("App/Resources/Music/offBoardSound.wav");
         ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
         Random rnd = new Random();
         int index = rnd.nextInt(available_startpoints.size());
         robot.setCords(available_startpoints.get(index).getCoordinates());
+        robot.setDirection(EnumDirection.NORTH);
     }
-
     // -------------------------------------------------------------------------//
-    // GAMESTATE METHODS
-    public void restoreGameboard(LGameConfiguration gameConfig, ArrayList<LPlayer> players,
-                                 EnumGamePhase enumGamePhase, LGameboard gameboard,
-                                 ArrayList<LRobot> robots, ArrayList<LTile> tiles){
-        this.gameConfig = gameConfig;
-        this.gameboard = gameboard;
-        this.currentEnumGamePhase = enumGamePhase;
-        this.players = players;
-        gameboard.setRobots(robots);
-        gameboard.setTiles(tiles);
-    }
     public EnumGamePhase getCurrentGamePhase(){
         return this.currentEnumGamePhase;
     }
-    @Override
-    public String DTOasJson() {
-        GameBrainDTO gameBrainDTO = new GameBrainDTO(this.gameboard, this.gameConfig, this.currentEnumGamePhase, this);
-        return JsonHelper.serializeObjectToJson(gameBrainDTO);
-    }
-
-
     // -------------------------------------------------------------------------//
     // GETTERS
     public LGameConfiguration getGameConfig(){
@@ -412,59 +440,5 @@ public class LGameBrain implements IToDTO {
     public LGameboard getGameboard(){
         return this.gameboard;
     }
-    @Override
-    public UUID getID() {
-        return this.id;
-    }
 
-    // -------------------------------------------------------------------------//
-    // RANDOM, TO BE DELETED?
-    private void push(Point newPos, EnumDirection directionOfRobot) {
-        LRobot robotAtCoordinate = getGameboard().getRobotFromCoordinate(newPos.x, newPos.y);
-        // push robotAtCoordinate
-        switch (directionOfRobot){
-            case NORTH -> pushRobot(robotAtCoordinate, EnumDirection.SOUTH);
-            case SOUTH -> pushRobot(robotAtCoordinate, EnumDirection.NORTH);
-            case EAST -> pushRobot(robotAtCoordinate, EnumDirection.WEST);
-            case WEST -> pushRobot(robotAtCoordinate, EnumDirection.EAST);
-        }
-    }
-    public void setRobotChekcpointDone(LRobot robot){
-        if (this.getGameboard().getTileFromCoordinate(
-                robot.getCords().x, robot.getCords().y).getTileTypeEnum() ==
-                EnumTileType.CHECKPOINT) {
-            //TODO
-            // check ordering of checkpoints
-            robot.addCheckpoint(robot.getCords());
-        }
-    }
-    public boolean checkRobotposition(LRobot robot) {
-        //TODO
-        // use isTileOccupiedByRobot from gameboard
-        int pos_x = robot.getCords().x;
-        int pos_y = robot.getCords().y;
-        LTile tile = this.gameboard.getTileFromCoordinate(pos_x, pos_y);
-        return !tile.doesTileHaveObstacle();
-    }
-    public void activateExplosive(LTile tile) {
-        boolean robot_on_explosive = false;
-        for (LPlayer player : this.players) {
-            if (player.getRobot().getCords().equals(tile.getCoordinates())) {
-                robot_on_explosive = true;
-            }
-        }
-
-        ArrayList<LTile> acidpool = this.gameboard.getTilesSurroundingCoordinate(tile.getCoordinates().x, tile.getCoordinates().y);
-        if (robot_on_explosive) {
-            for (LTile tilepool : acidpool) {
-                tilepool.setObstacle(new Acid(true));
-                tilepool.setGraphicalElement(EnumGraphicalElementMain.OBSTACLE_ACID, this.gameConfig.getDifficulty());
-            }
-        }
-    }
-
-    public boolean isThereAWinner(){
-        //TODO
-        return false;
-    }
 }

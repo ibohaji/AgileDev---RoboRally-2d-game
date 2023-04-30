@@ -10,7 +10,7 @@ import org.junit.Before;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class
 stepdef_Player {
@@ -19,6 +19,8 @@ stepdef_Player {
     private LGameConfiguration t_gameconfig;
     private LCardSequence cardSequence;
     private AbCardProgramming card;
+    private AbCardProgramming card2;
+
     @Before
     private void setup(){
         t_gameconfig = new LGameConfiguration(1, EnumDifficulty.EASY, true);
@@ -33,7 +35,7 @@ stepdef_Player {
         t_gamebrain = new LGameBrain(t_gameconfig);
 
         player = t_gamebrain.getPlayers().get(0);
-    }
+        }
     // Player receives 5 cards in programming phase
     @Given("a player waiting to receive programming cards")
     public void a_player_waiting_to_receive_programming_cards() {
@@ -77,6 +79,103 @@ stepdef_Player {
     }
 
     // Player watch the activation progress on the game board
+    @Given("a player with an empty card sequence")
+    public void a_player_with_an_empty_card_sequence (){
+        setup();
+    }
+    @When("the player add a card to the sequence")
+    public void the_player_add_a_card_to_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(player.getProgrammingCards().get(4));
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the size of the sequence should be 1")
+    public void the_size_of_the_sequence_should_be_1() {
+        assertEquals(1, player.getCardSequence().getSize());
+    }
+    @When("the player remove a card from the sequence")
+    public void the_player_remove_a_card_from_the_sequence() {
+        cardSequence.removeCard();
+    }
+    @Then("the size of the sequence should be 0")
+    public void the_size_of_the_sequence_should_be_0() {
+        assertEquals(0, player.getCardSequence().getSize());
+    }
+
+    @Given("a player with a card sequence with two cards")
+    public void a_player_with_a_card_sequence_with_two_cards() {
+        setup();
+    }
+    @When("the player get the first card in the sequence")
+    public void the_player_get_the_first_card_in_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        card = new LCardMovementProgramming(1);
+        cardSequence.addCard(card);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the card should be the first card added")
+    public void the_card_should_be_the_first_card_added() {
+        assertEquals(card, player.getCardSequence().getFirstCard());
+    }
+    @When("the player get the last card in the sequence")
+    public void the_player_get_the_last_card_in_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        card = new LCardMovementProgramming(2);
+        cardSequence.addCard(card);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the card should be the last card added")
+    public void the_card_should_be_the_last_card_added() {
+        assertEquals(card, player.getCardSequence().getFirstCard());
+    }
+
+    @Given("a player with a card sequence")
+    public void a_player_with_a_card_sequence() {
+        setup();
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        cardSequence.addCard(new LCardMovementProgramming(2));
+        player.setOrderedCardSequence(cardSequence);
+    }
+
+    @Given("a player have no card in the sequence")
+    public void the_player_have_no_cards_in_the_sequence() {
+        setup();
+        cardSequence = new LCardSequence(player);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @When("the player wand to remove the last card")
+    public void the_player_want_to_remove_the_last_card() {
+        AbCardProgramming lastCard = cardSequence.getLastCardInSequence();
+    }
+    @Then("the result return null")
+    public void the_result_return_null() {
+        assertEquals(null,cardSequence.getLastCardInSequence());
+    }
+
+    @Given("a player want to remove the last card")
+    public void a_player_want_to_remove_the_last_card() {
+        setup();
+    }
+    @When("the player have 5 cards in the sequence")
+    public void the_player_have_5_cards_in_the_sequence() {
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(player.getProgrammingCards().get(4));
+        cardSequence.addCard(player.getProgrammingCards().get(3));
+        cardSequence.addCard(player.getProgrammingCards().get(2));
+        cardSequence.addCard(player.getProgrammingCards().get(1));
+        cardSequence.addCard(player.getProgrammingCards().get(0));
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @Then("the 5th card is removed")
+    public void the_5th_card_is_removed() {
+        AbCardProgramming lastCard = cardSequence.getLastCardInSequence();
+        player.getCardSequence().removeCard();
+        AbCardProgramming newLastCard = cardSequence.getLastCardInSequence();
+        assertNotEquals(lastCard, newLastCard);
+    }
+
+
     @Given("a player and its robot")
     public void a_player_and_its_robot() {
         setup();
@@ -96,18 +195,71 @@ stepdef_Player {
     @Given("A player has already reordered his cards")
     public void a_player_has_already_reordered_his_cards() {
         setup();
-        player.getRobot().setCords(new Point(7,7));
+        player.getRobot().setCords(new Point(7,0));
         player.getRobot().setDirection(EnumDirection.SOUTH);
-        cardSequence = new LCardSequence(player);
-        cardSequence.addCard(new LCardMovementProgramming(1));
-        player.setOrderedCardSequence(cardSequence);
     }
     @When("start activation phase")
     public void start_activation_phase() {
-        player.useProgrammingCard(player.getCardSequence().getCardSequence().get(0), t_gamebrain);
+        cardSequence = new LCardSequence(player);
+        cardSequence.addCard(new LCardMovementProgramming(1));
+        player.setOrderedCardSequence(cardSequence);
+        t_gamebrain.makeMovement();
     }
     @Then("the robot follow the card instruction")
     public void the_robot_follow_the_card_instruction() {
-        assertEquals(new Point(7,6),player.getRobot().getCords());
+        assertEquals(new Point(7,1),player.getRobot().getCords());
     }
+
+    // Check if the player is human
+    @Given("Two AI players")
+    public void Two_AI_players() {
+        setup();
+    }
+
+    @When("Check if the player is human")
+    public void Check_if_the_player_is_human() {
+
+    }
+    @Then("The result should be false")
+    public void The_result_should_be_false() {
+        assertFalse(player.isHuman());
+    }
+
+    @Given("A player who decided to submit an empty sequence in programming phase")
+    public void aPlayerWhoDecidedToSubmitAnEmptySequenceInProgrammingPhase() {
+        setup();
+        LCardSequence cardSequence = new LCardSequence(player);
+        player.setOrderedCardSequence(cardSequence);
+    }
+    @When("The player tries to get cards from his sequence")
+    public void thePlayerTriesToGetCardsFromHisSequence() {
+        card = player.getCardSequence().getFirstCard();
+        card2 = player.getCardSequence().getLastCardInSequence();
+    }
+
+    @Then("The player should not get a card because there aren't any")
+    public void thePlayerShouldNotGetACardBecauseThereArenTAny() {
+        assertEquals(0, player.getCardSequence().getSize());
+        assertNull(card);
+        assertNull(card2);
+    }
+
+    @Given("A player with all existing different card types")
+    public void aPlayerWithAllExistingDifferentCardTypes() {
+        setup();
+        LCardSequence seq = new LCardSequence(player);
+        seq.addCard(new LCardMovementProgramming(1));
+        seq.addCard(new LCardChangeDirectionProgramming(EnumTurnType.LEFT));
+        seq.addCard(new LCardAgainProgramming());
+        player.setOrderedCardSequence(seq);
+    }
+
+    @Then("The cards should all have imageicons")
+    public void theCardsShouldAllHaveImageicons() {
+        for (AbCardProgramming card: player.getCardSequence().getCardSequence()) {
+            assertNotNull(card.getCardImageIcon());
+        }
+    }
+
+    //
 }
