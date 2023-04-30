@@ -51,11 +51,10 @@ Feature: Robot Movement on the board
     Then robot1 goes to x=1 y=6 with same lives facing North
     And robot2 is at x=1 y=5 and suffered one damage
 
-#  Scenario: Robot cannot add the same check point twice
-#    Given a game board with difficulty Medium
-#    When Robot encounter a checkpoint
-#    And Robot encounter the same checkpoint
-#    Then Robot will not get this check point again
+  Scenario: Robot can only collect checkpoints once
+    Given a game board with difficulty hard
+    When robot collects checkpoints
+    Then the order is checked automatically
 
   Scenario: Robot1 push robot2 off the board
     Given robot1 is at x=6 y=0 with 4 lives facing EAST and robot2 is at x=7 y=0 with 1 lives facing NORTH
