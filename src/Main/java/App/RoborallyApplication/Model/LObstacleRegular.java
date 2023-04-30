@@ -31,9 +31,6 @@ public class LObstacleRegular extends AbObstacle{
         if(this.obstacleClassification.equals(EnumObstacleClassification.KNOWN_OBSTACLE)){
             int x = robot.getCords().x;
             int y = robot.getCords().y;
-            System.out.println(x + " & " + y + " " + gameBrain.getGameboard().getObstacleFromCoordinateNEW(x, y));
-            System.out.print(x + " & " + y + " " + this.obstacleType.name() + ".Lives before: " + robot.getNrOfLives() +
-                    ". Damage done: " + this.obstacleType.getDamage());
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
             if(this.obstacleType.getDamage() < 0) {
                 if(this.obstacleType.equals(EnumObstacleType.PIT)) {

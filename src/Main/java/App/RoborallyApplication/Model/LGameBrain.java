@@ -81,6 +81,9 @@ public class LGameBrain{
             if(player.getRobot().getNrOfLives() < 1){
                 removePlayer(player);
                 removeRobot(player.getRobot());
+                if(!areThereMovementsLeftInThisRound()){
+                    endRound();
+                }
             } else {
                 Point newPos = player.getRobot().getCords();
                 LTile tile = this.gameboard.getTileFromCoordinate(newPos.x, newPos.y);

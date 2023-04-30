@@ -86,19 +86,16 @@ public class MainMenuView extends JPanel {
                 for(Component component : components) {
                     if(component.getClass().equals(JButton.class)) {
                         button = component;
-                        System.out.println("get something");
                         AddButton = false;
                     }
                 }
 
                 if(!norplayers.equals("1") && AddButton) {
-                    System.out.println("show");
                     leftPanel.add(playAiButton, new GridBagConstraintsBuilder(0, 5).gridWidth(2).weightX(1).inset(0, 0, 20, 0).fill(GridBagConstraints.HORIZONTAL).build());
                     leftPanel.setBorder(BorderFactory.createEmptyBorder(10, horizontalInset / 2, 10, horizontalInset));
                     leftPanel.validate();
                     leftPanel.repaint();
                 } else if(norplayers.equals("1")){
-                    System.out.println("remove");
                     leftPanel.remove(button);
                     leftPanel.validate();
                     leftPanel.repaint();

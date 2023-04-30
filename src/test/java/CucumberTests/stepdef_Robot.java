@@ -130,14 +130,16 @@ public class stepdef_Robot {
     @Given("the robot is at point and facing WEST and the card used previously is U-TURN card")
     public void the_robot_is_at_point_and_facing_west_and_the_card_used_previously_is_u_turn_card(){
         setup();
-        robot.setCords(new Point(7,0));
-        robot.setDirection(EnumDirection.WEST);
+        robot.setCords(new Point(7,2));
+        robot.setDirection(EnumDirection.NORTH);
         robot.setNrOfLives(4);
     }
     @When("an AGAIN card is played")
     public void an_again_card_is_played(){
         cardSequence = new LCardSequence(player0);
         cardSequence.addCard(new LCardChangeDirectionProgramming(EnumTurnType.U_TURN));
+        cardSequence.addCard(new LCardAgainProgramming());
+        cardSequence.addCard(new LCardMovementProgramming(1));
         cardSequence.addCard(new LCardAgainProgramming());
         player0.setOrderedCardSequence(cardSequence);
         while(player0.getCardSequence().getSize() != 0){
@@ -147,7 +149,7 @@ public class stepdef_Robot {
     @Then("the robot should be at point and facing EAST after using Again card")
     public void the_robot_should_be_at_point_and_facing_east_after_using_again_card() {
         assertEquals(new Point(7,0),robot.getCords());
-        assertEquals(EnumDirection.WEST, robot.getCurrentDirection());
+        assertEquals(EnumDirection.NORTH, robot.getCurrentDirection());
     }
 
     // Robot pushes another robot
@@ -303,6 +305,7 @@ public class stepdef_Robot {
     @Then("Robot1 have this check point")
     public void robot1_have_this_check_point() {
         assertEquals(new Point(1,4),robot1.getCheckpointsDone().get(0));
+
     }
     @Then("Robot2 will not get this check point")
     public void robot2_will_not_get_this_check_point() {
@@ -311,18 +314,35 @@ public class stepdef_Robot {
 
     @Given("robot1 is at x={int} y={int} with {int} lives facing North and robot2 is at x={int} y={int} with {int} lives facing West")
     public void robot1_is_at_x_y_with_lives_facing_north_and_robot2_is_at_x_y_with_lives_facing_west(Integer int1, Integer int2, Integer int3, Integer int4, Integer int5, Integer int6) {
-
+        setup2();
+        robot1.setCords(new Point(int1,int2));
+        robot1.setDirection(EnumDirection.NORTH);
+        robot1.setNrOfLives(int3);
+        robot2.setCords(new Point(int4,int5));
+        robot2.setDirection(EnumDirection.WEST);
+        robot2.setNrOfLives(int6);
     }
     @When("robot1 use his programming card which is Movementcard for {int} steps")
     public void robot1_use_his_programming_card_which_is_movementcard_for_steps(Integer int1) {
-
+        movementProgramming = new LCardMovementProgramming(1);
+        cardSequence = new LCardSequence(player0);
+        cardSequence.addCard(movementProgramming);
+        player0.setOrderedCardSequence(cardSequence);
+        while(player0.getCardSequence().getSize() != 0){
+            gamebrain.makeMovement();
+        }
     }
-    @Then("robot1 goes to x={int} y={int} with {int} lives facing North")
-    public void robot1_goes_to_x_y_with_lives_facing_north(Integer int1, Integer int2, Integer int3) {
-
+    @Then("robot1 goes to x={int} y={int} with same lives facing North")
+    public void robot1_goes_to_x_y_with_same_lives_facing_north(Integer int1, Integer int2) {
+        assertEquals(new Point(int1,int2),robot1.getCords());
+        assertEquals(4,robot1.getNrOfLives());
+        assertEquals(EnumDirection.NORTH,robot1.getCurrentDirection());
     }
-    @Then("robot2 is at x={int} y={int} with {int} lives facing West")
-    public void robot2_is_at_x_y_with_lives_facing_west(Integer int1, Integer int2, Integer int3) {
-
+    @Then("robot2 is at x={int} y={int} and suffered one damage")
+    public void robot2_is_at_x_y_and_suffered_one_damage(Integer int1, Integer int2) {
+        assertEquals(new Point(int1,int2),robot2.getCords());
+        assertEquals(2,robot2.getNrOfLives());
+        assertEquals(EnumDirection.WEST,robot2.getCurrentDirection());
     }
+
 }
