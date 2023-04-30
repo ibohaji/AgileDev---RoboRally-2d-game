@@ -35,11 +35,12 @@ public class LobbyRegularView extends LobbyView {
             namePanel.add(playerNameField,new GridBagConstraintsBuilder(1,i).build());
             add(namePanel, new GridBagConstraintsBuilder(i,0).build());
         }
-
+        JButton exitButton = exitLobbyButton();
         JButton startGameButton = new JButton("START GAME");
         startGameButton.setFont(Fonts.LARGE);
         startGameButton.addActionListener(e -> {
             startGameButton.setEnabled(false);
+            exitButton.setEnabled(false);
             //i want to retrive the userInput names from the namePanel above
                 Component[] components = getComponents();
                 for(Component component: components){
@@ -58,11 +59,11 @@ public class LobbyRegularView extends LobbyView {
             lobbyController.userClickStartGame(gameConfiguration);
         });
         add(startGameButton,  new GridBagConstraintsBuilder(0,1).gridWidth(gameConfiguration.getNrOfPlayers()).build());
-        add(exitLobbyButton(),  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
+        add(exitButton,  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
     }
 
     private  JButton exitLobbyButton(){
-        JButton exitGame = new JButton("Exit");
+        JButton exitGame = new JButton("EXIT");
         exitGame.setFont(Fonts.LARGE);
         exitGame.addActionListener(e -> {
             lobbyController.userClickExit();

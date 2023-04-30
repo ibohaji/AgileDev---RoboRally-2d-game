@@ -19,6 +19,7 @@ public class MovementPhaseController extends AbPhaseController{
         this.gameController = controller;
         this.gameBrain = gameBrain;
         this.view = new MovementPhaseView(controller, gameBrain);
+        this.gameController.updateView(this.view);
         makeMovements();
     }
     private void makeMovements() {
@@ -37,9 +38,9 @@ public class MovementPhaseController extends AbPhaseController{
                     gameController.updateControllerState();
                 } else {
                     LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
+                    this.gameBrain.makeMovement();
                     this.view = new MovementPhaseView(this.gameController, gameBrain);
                     this.gameController.updateView(this.view);
-                    this.gameBrain.makeMovement();
                     if(!gameBrain.canGameContinue()){
                         timer.stop();
                         gameController.updateControllerState();
@@ -61,6 +62,10 @@ public class MovementPhaseController extends AbPhaseController{
                                     timer.stop();
                                     gameBrain.endRound();
                                     gameController.updateControllerState();
+                                } else {
+                                    this.view = new MovementPhaseView(this.gameController, gameBrain);
+                                    gameController.updateView(this.view);
+                                    Waiter.getInstance().waitForXMilliseconds(1000);
                                 }
                             }
                         }
