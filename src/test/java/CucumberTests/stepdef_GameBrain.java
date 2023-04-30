@@ -283,6 +283,7 @@ public class stepdef_GameBrain {
     @When("a robot falls into a pit")
     public void a_robot_falls_into_a_pit() {
         t_robot.setCords(new Point(4, 2));
+        t_gamebrain.endRound();
     }
 
     @Then("GameBrain remove a robot from the game")

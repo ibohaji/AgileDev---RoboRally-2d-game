@@ -209,10 +209,13 @@ stepdef_Player {
     public void the_robot_follow_the_card_instruction() {
         assertEquals(new Point(7,1),player.getRobot().getCords());
     }
+
+    // Check if the player is human
     @Given("Two AI players")
     public void Two_AI_players() {
         setup();
     }
+
     @When("Check if the player is human")
     public void Check_if_the_player_is_human() {
 
@@ -240,4 +243,6 @@ stepdef_Player {
         assertNull(card);
         assertNull(card2);
     }
+
+    //
 }

@@ -9,12 +9,10 @@ public class LGameConfiguration {
     private final int nrOfPlayers;
     private final Tuple<Integer, Integer> boardDimensions;
     private final EnumDifficulty difficulty;
-    private boolean isRegular;
-    private ArrayList<LPlayer> players = new ArrayList<>();
+    private final ArrayList<LPlayer> players = new ArrayList<>();
 
 
     public LGameConfiguration(int nrOfPlayers, EnumDifficulty difficulty, boolean isRegular){
-        this.isRegular = isRegular;
         this.nrOfPlayers = nrOfPlayers;
         this.difficulty = difficulty;
         boardDimensions = difficulty.getDimensions();

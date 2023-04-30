@@ -2,7 +2,6 @@ package App.RoborallyApplication.Model;
 
 import Utils.MapGenerator;
 import Utils.MusicPlayer;
-import Utils.Waiter;
 
 import java.awt.*;
 import java.util.ArrayList;

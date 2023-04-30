@@ -7,14 +7,10 @@ public enum EnumTileType {
     OBSTACLE,
     DEFAULT_FLOOR;
 
-    private EnumTileType(){}
+    EnumTileType(){}
 
     public boolean equals(EnumTileType typeEnum){
-        if(this.ordinal() == typeEnum.ordinal()){
-            return true;
-        } else {
-            return false;
-        }
+        return this.ordinal() == typeEnum.ordinal();
     }
 
 }

@@ -1,7 +1,6 @@
 package App.RoborallyApplication.Model;
 
 import Utils.MusicPlayer;
-import Utils.Waiter;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -9,7 +8,7 @@ import java.util.stream.Collectors;
 public class LObstacleRegular extends AbObstacle{
     private EnumObstacleClassification obstacleClassification;
     private EnumObstacleType obstacleType;
-    private GraphicalElement graphicalElement;
+    private final GraphicalElement graphicalElement;
 
     public LObstacleRegular(EnumObstacleType obstacleType, EnumObstacleClassification obstacleClassification){
         super();
@@ -29,8 +28,6 @@ public class LObstacleRegular extends AbObstacle{
     @Override
     public void applyEffect(LRobot robot, LGameBrain gameBrain) {
         if(this.obstacleClassification.equals(EnumObstacleClassification.KNOWN_OBSTACLE)){
-            int x = robot.getCords().x;
-            int y = robot.getCords().y;
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
             if(this.obstacleType.getDamage() < 0) {
                 if(this.obstacleType.equals(EnumObstacleType.PIT)) {
@@ -49,9 +46,7 @@ public class LObstacleRegular extends AbObstacle{
             }
         } else {
             ArrayList<LTile> affectedTiles = gameBrain.getGameboard().getTilesSurroundingCoordinate(robot.getCords().x, robot.getCords().y);
-            if (this.obstacleClassification.equals(EnumObstacleClassification.EXPLOSIVE_KNOWN)){
-                // Explosive known
-            } else if (this.obstacleClassification.equals(EnumObstacleClassification.EXPLOSIVE_UNKNOWN)){
+            if (this.obstacleClassification.equals(EnumObstacleClassification.EXPLOSIVE_UNKNOWN)){
                 EnumObstacleType type = gameBrain.getRandomObstacleTypeToExplode();
                 this.setObstacleType(type);
             }
@@ -79,7 +74,7 @@ public class LObstacleRegular extends AbObstacle{
     public EnumObstacleClassification getObstacleClassification() {
         return obstacleClassification;
     }
-    protected void setObstacleClassification(EnumObstacleClassification classification){
+    public void setObstacleClassification(EnumObstacleClassification classification){
         this.obstacleClassification = classification;
     }
 

@@ -5,5 +5,5 @@ public enum EnumGamePhase {
     PROGRAMMING_PHASE,
     MOVEMENT_PHASE,
     ROUND_END,
-    GAME_OVER;
+    GAME_OVER
 }

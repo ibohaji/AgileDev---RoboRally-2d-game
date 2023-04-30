@@ -1,17 +1,12 @@
 package App.RoborallyApplication.Model;
 
-import Utils.JsonHelper;
-import Utils.MusicPlayer;
-import Utils.Waiter;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class LRobot{
     private Point cords = new Point();
-    private GraphicalElementRobot graphicalElement;
-    private ArrayList<Point> checkpointsDone;
+    private final GraphicalElementRobot graphicalElement;
+    private final ArrayList<Point> checkpointsDone;
     private EnumDirection currentDirection;
     private int lifeCount = 5;
     private LPlayer player;
@@ -46,8 +41,9 @@ public class LRobot{
     public void addCheckpoint(Point point){
         boolean isAlreadyChecked = false;
         for (Point pointDone : checkpointsDone) {
-            if(pointDone.x == point.x && pointDone.y == point.y){
+            if (pointDone.x == point.x && pointDone.y == point.y) {
                 isAlreadyChecked = true;
+                break;
             }
         }
         if(!isAlreadyChecked){

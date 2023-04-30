@@ -1,10 +1,7 @@
 package App.RoborallyApplication.Model;
-import Utils.JsonHelper;
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class LPlayer{
-    private UUID id;
     private String displayName;
     private ArrayList<AbCardProgramming> programmingCards = new ArrayList<>();
     private boolean isHumanPlayer;
@@ -15,7 +12,6 @@ public class LPlayer{
     public LPlayer(){}
     public LPlayer(String displayName, boolean isHumanPlayer){
         this.isHumanPlayer = isHumanPlayer;
-        this.id = UUID.randomUUID();
         this.displayName = displayName;
     }
     public void assignCardToPlayer(AbCardProgramming card){
@@ -29,22 +25,19 @@ public class LPlayer{
         this.usedCardSequence.addCard(card);
     }
 
-    protected void removeFirstCardFromOrderedSequence(){
+    public void removeFirstCardFromOrderedSequence(){
         this.orderedCardSequence.removeFirstCard();
     }
 
     /**
      * Robot can only be assigned to player if he previously doesn't have a robot assigned to them
      * @param robotToAssign robot object to assign to the player
-     * @return boolean value whether robot could be assigned
      */
-    public boolean assignRobot(LRobot robotToAssign){
+    public void assignRobot(LRobot robotToAssign){
         if(robot == null){
             robot = robotToAssign;
             robot.assignPlayer(this);
-            return true;
         }
-        return false;
     }
 
     public LRobot getRobot(){
@@ -74,11 +67,8 @@ public class LPlayer{
         this.orderedCardSequence = orderedSequence;
         this.usedCardSequence = new LCardSequence(this);
     }
-    protected boolean doesPlayerHaveMovesLeft(){
-        if(this.orderedCardSequence == null){
-            return false;
-        }
-        return true;
+    public boolean doesPlayerHaveMovesLeft(){
+        return this.orderedCardSequence != null;
     }
     public LCardSequence getCardSequence(){
         return this.orderedCardSequence;

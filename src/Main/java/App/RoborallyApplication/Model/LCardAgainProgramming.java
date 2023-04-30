@@ -3,7 +3,7 @@ package App.RoborallyApplication.Model;
 import javax.swing.*;
 
 public class LCardAgainProgramming extends AbCardProgramming {
-    private GraphicalElement graphicalElement = new GraphicalElement();
+    private final GraphicalElement graphicalElement = new GraphicalElement();
 
     public LCardAgainProgramming(){
         this.graphicalElement.setCardGraphicalElement(EnumImageGraphics.AGAIN_CARD);
