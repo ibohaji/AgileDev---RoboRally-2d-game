@@ -17,7 +17,7 @@ public class MainMenuController {
         this.view = new MainMenuView(this);
         MusicPlayer.getInstance().openLoop();
         if(MusicPlayer.getInstance().checkLoopPlay()) {
-            MusicPlayer.getInstance().playLoop("App/Resources/Music/lobbyMusic.wav");
+            MusicPlayer.getInstance().playLoop("lobbyMusic.wav");
         }
     }
 

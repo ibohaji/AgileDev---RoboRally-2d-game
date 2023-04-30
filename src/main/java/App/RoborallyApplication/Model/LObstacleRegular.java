@@ -28,7 +28,7 @@ public class LObstacleRegular extends AbObstacle{
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
             if(this.obstacleType.getDamage() < 0) {
                 if(this.obstacleType.equals(EnumObstacleType.PIT)) {
-                    MusicPlayer.getInstance().play("App/Resources/Music/pit.wav");
+                    MusicPlayer.getInstance().play("pit.wav");
                 } else {
                     MusicPlayer.getInstance().playDamageSound();
                 }

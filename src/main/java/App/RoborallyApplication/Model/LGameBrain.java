@@ -416,7 +416,7 @@ public class LGameBrain{
         return availableStartPoints;
     }
     public void putRobotToRandomStartPoint(LRobot robot){
-        MusicPlayer.getInstance().play("App/Resources/Music/offBoardSound.wav");
+        MusicPlayer.getInstance().play("offBoardSound.wav");
         ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
         Random rnd = new Random();
         if(available_startpoints.size() == 0){

@@ -3,6 +3,7 @@ package App.RoborallyApplication.Views.Menus;
 import App.RoborallyApplication.Controllers.ApplicationController;
 import App.RoborallyApplication.Controllers.MainMenuController;
 import App.RoborallyApplication.Model.EnumDifficulty;
+import App.RoborallyApplication.RoboRally;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.Tuple;
@@ -120,7 +121,7 @@ public class MainMenuView extends JPanel {
     private JLabel generateLogoLabel() {
         JLabel logoLabel = new JLabel();
         try {
-            BufferedImage logoImage = ImageIO.read(new File("src/main/java/App/Resources/RoboRallyLogo/logo.png"));
+            BufferedImage logoImage = ImageIO.read(RoboRally.class.getResourceAsStream("/RoboRallyLogo/logo.png"));
             logoLabel.setIcon(new ImageIcon(logoImage));
         } catch (IOException e) {
             e.printStackTrace();
@@ -176,28 +177,6 @@ public class MainMenuView extends JPanel {
         gameNameLabel.setFont(Fonts.TITLE);
         return gameNameLabel;
     }
-
-    /*/ <-- should be on lobby
-    private JPanel generateDisplayNamePanel(){
-        // INPUT DISPLAYNAME FIELD
-        JPanel namePanel = new JPanel();
-        namePanel.setLayout(new GridBagLayout());
-
-        JLabel displayNameLabel = new JLabel("Display name");
-        displayNameLabel.setFont(Fonts.LARGE);
-        namePanel.add(displayNameLabel, new GridBagConstraintsBuilder(0, 0).gridWidth(3).inset(5).build());
-
-        displayNameField = new JTextField();
-        displayNameField.setFont(Fonts.LARGE);
-        displayNameField.setText(defaultName);
-
-        namePanel.add(Box.createGlue(), new GridBagConstraintsBuilder(0, 1).weightX(1).build());
-        namePanel.add(displayNameField, new GridBagConstraintsBuilder(1, 1).weightX(1).fill(GridBagConstraints.HORIZONTAL).inset(5).build());
-        namePanel.add(Box.createGlue(), new GridBagConstraintsBuilder(2, 1).weightX(1).build());
-        return namePanel;
-    }
-*/
-
 
     private JComboBox<String> getDifficultyDropdown(){
         JComboBox<String> difficultyDropdown = new JComboBox<>();

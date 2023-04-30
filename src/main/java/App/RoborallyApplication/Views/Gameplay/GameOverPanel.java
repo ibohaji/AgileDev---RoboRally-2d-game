@@ -33,10 +33,10 @@ public class GameOverPanel extends GameView {
 
         if(winner == null){
             scoreLabel = new JLabel("NO WINNER");
-            MusicPlayer.getInstance().play("App/Resources/Music/lose.wav");
+            MusicPlayer.getInstance().play("lose.wav");
         } else {
             scoreLabel = new JLabel("Winner is : " + winner);
-            MusicPlayer.getInstance().play("App/Resources/Music/win.wav");
+            MusicPlayer.getInstance().play("win.wav");
         }
 
         scoreLabel.setFont(new Font("Serif", Font.PLAIN, 24));

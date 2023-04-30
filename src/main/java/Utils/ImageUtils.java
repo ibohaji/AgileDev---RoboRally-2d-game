@@ -1,5 +1,7 @@
 package Utils;
 
+import App.RoborallyApplication.RoboRally;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.AttributedString;
 import java.util.Objects;
 
@@ -47,7 +50,7 @@ public class ImageUtils {
         //if (filepath.charAt(0) != '/') filepath = "/" + filepath;
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File(filepath));
+            img = ImageIO.read(RoboRally.class.getResourceAsStream(filepath));
         } catch (IOException e) {
             e.printStackTrace();
         }
