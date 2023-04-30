@@ -4,7 +4,6 @@ Feature: Obstacle actions
     Given a tile with a known regular obstacle
     When robot steps on the obstacle
     Then robot gets the damage from the obstacle
-
   Scenario: Known Explosive obstacle explodes to surrounding tiles
     Given a tile with explosive known obstacle and default floor tiles surrounding it
     When robot steps on the explosive obstacle

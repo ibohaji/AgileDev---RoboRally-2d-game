@@ -49,3 +49,8 @@ Feature: Player
       Given Two AI players
       When Check if the player is human
       Then The result should be false
+
+  Scenario: Player with empty sequence
+    Given A player who decided to submit an empty sequence in programming phase
+    When The player tries to get cards from his sequence
+    Then The player should not get a card because there aren't any

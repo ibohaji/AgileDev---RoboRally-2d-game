@@ -1,0 +1,2 @@
+//TODO
+// 1) As a player I want to get no cards in the movement phase when I submitted no cards in the programming phase
