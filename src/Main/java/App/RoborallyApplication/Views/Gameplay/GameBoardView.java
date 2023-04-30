@@ -7,6 +7,8 @@ import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class GameBoardView extends GameView{
@@ -19,7 +21,8 @@ public class GameBoardView extends GameView{
         setLayout(new GridBagLayout());
         int gridSize = super.gameConfiguration.getBoardDimensions().first();
         // GAME NAME
-        add(generateGameNameLabel(), new GridBagConstraintsBuilder(0, 0).inset(0,0,20,0).gridWidth(gridSize).fill(GridBagConstraints.BOTH).build());
+        JLabel nameLabel = generateGameNameLabel();
+        add(nameLabel, new GridBagConstraintsBuilder(0, 0).inset(0,0,20,0).gridWidth(gridSize).weightX(1).fill(GridBagConstraints.HORIZONTAL).build());
 
         // GRID
         int scaling = gameConfiguration.getScalingSizeForTile();
@@ -39,32 +42,32 @@ public class GameBoardView extends GameView{
                             EnumDirection directionOfRobot = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
                             robotWithTile = ImageUtils.addTextToImage(robotWithTile, Fonts.BOLD_SMALL, robot.getPlayer().getDisplayName());
-                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x, y + 1).build());
                         } else if (gameBrain.getGameboard().getTileFromCoordinate(x,y).isTileFinishPoint()) {
                             EnumDirection directionOfRobot = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon finishImg = tileAtCoordinate.getGraphicalElement().getImage();
                             finishImg = ImageUtils.mergeTwoImages(scaledDefaultFloor,finishImg);
                             ImageIcon robotWithTile = GameViewHelper.generateImageWithRobot(finishImg, directionOfRobot);
-                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                            add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor, robotWithTile)), new GridBagConstraintsBuilder(x, y + 1).build());
                     } else {
                             ImageIcon tileImage = tileAtCoordinate.getGraphicalElement().getImage();
                             EnumDirection directionOfRobot  = gameBrain.getGameboard().getRobotFromCoordinate(x, y).getCurrentDirection();
                             ImageIcon robotImage = GameViewHelper.generateImageWithRobot(tileImage, directionOfRobot);
                             robotImage = ImageUtils.addTextToImage(robotImage, Fonts.BOLD_SMALL ,robot.getPlayer().getDisplayName());
-                            add(new JLabel(robotImage), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                            add(new JLabel(robotImage), new GridBagConstraintsBuilder(x, y + 1).build());
                         }
                     } else if(tileAtCoordinate.doesTileHaveObstacle()) {
                         ImageIcon img2 = ImageUtils.scaledImageIcon(tileAtCoordinate.getGraphicalElement().getImage(), gameBrain.getGameConfig().getScalingSizeForTile(), gameConfiguration.getScalingSizeForTile());
-                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,img2)), new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                        add(new JLabel(ImageUtils.mergeTwoImages(scaledDefaultFloor,img2)), new GridBagConstraintsBuilder(x, y + 1).build());
 
                     } else {
                         if(tileAtCoordinate.isTileFinishPoint()){
                             ImageIcon finishImg = tileAtCoordinate.getGraphicalElement().getImage();
                             finishImg = ImageUtils.mergeTwoImages(scaledDefaultFloor,finishImg);
-                            add(new JLabel(finishImg),new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                            add(new JLabel(finishImg),new GridBagConstraintsBuilder(x, y + 1).build());
                         } else {
                             add(new JLabel(tileAtCoordinate.getGraphicalElement().getImage()),
-                                    new GridBagConstraintsBuilder(x + 1, y + 1).build());
+                                    new GridBagConstraintsBuilder(x, y + 1).build());
                         }
 
                     }

@@ -40,13 +40,11 @@ public class UserOrderedCardDeckView extends GameView {
 
         // Create a JPanel to hold the card slots
         this.cardSlotsPanel = new JPanel();
-        // this.cardSlotsPanel.setBorder(new LineBorder(Color.BLACK, 5));
-        //cardSlotsPanel.setLayout(new BoxLayout(cardSlotsPanel, BoxLayout.Y_AXIS));
         cardSlotsPanel.setLayout(new GridBagLayout());
         cardSlotsPanel.setOpaque(false);
         add(cardSlotsPanel, new GridBagConstraintsBuilder(0, 1).weightY(1)
                 .inset(10, 10, 10, 10).fill(GridBagConstraints.BOTH).build());
-        add(getRemoveButton(), new GridBagConstraintsBuilder(0, 2).weightY(1)
+        add(getRemoveButton(), new GridBagConstraintsBuilder(0, 2)
                 .inset(30, 10, 0, 10).fill(GridBagConstraints.HORIZONTAL).build());
     }
 
@@ -56,7 +54,7 @@ public class UserOrderedCardDeckView extends GameView {
         ImageIcon img = ImageUtils.scaledImageWithPercent(card.getCardImageIcon(), 35);
         cardSlotsPanel.add(new JLabel(img), new GridBagConstraintsBuilder(0, cardSequence.getSize() - 1)
                 .anchor(GridBagConstraints.CENTER)
-                .inset(10,30,0,30).build());
+                .inset(0,30,5,30).build());
     }
 
 

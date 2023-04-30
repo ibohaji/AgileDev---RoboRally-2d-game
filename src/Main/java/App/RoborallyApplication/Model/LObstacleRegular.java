@@ -33,7 +33,6 @@ public class LObstacleRegular extends AbObstacle{
                     MusicPlayer.getInstance().playDamageSound();
                 }
             }
-            System.out.println(". Lives after: " + robot.getNrOfLives());
             if(this.obstacleType.equals(EnumObstacleType.PIT)){
                 gameBrain.putRobotToRandomStartPoint(robot);
             }
@@ -60,7 +59,6 @@ public class LObstacleRegular extends AbObstacle{
             int y = robot.getCords().y;
             gameBrain.getGameboard().getTileFromCoordinate(x, y)
                     .setGraphicalElement(graphic,gameBrain.getGameConfig().getDifficulty());
-            // THIS WORKS
             applyEffect(robot, gameBrain);
         }
     }
@@ -74,9 +72,6 @@ public class LObstacleRegular extends AbObstacle{
     public void setObstacleClassification(EnumObstacleClassification classification){
         this.obstacleClassification = classification;
     }
-
-
-
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,7 @@ package App.RoborallyApplication.Views.Gameplay;
 
 import App.RoborallyApplication.Controllers.CardDeckController;
 import App.RoborallyApplication.Controllers.GameController;
+import App.RoborallyApplication.Model.EnumDifficulty;
 import App.RoborallyApplication.Model.LGameBrain;
 import App.RoborallyApplication.Model.LPlayer;
 import App.RoborallyApplication.Views.Gameplay.CardDeck.MovementCardDeckView;
@@ -40,8 +41,7 @@ public class MovementPhaseView extends GameView {
         Options options = new Options(gameController,gameBrain);
         this.gameBoardView = new GameBoardView(gameController, gameBrain);
         this.movementCardDeckView = new MovementCardDeckView(cardDeckController,gameBrain);
-
-        add(options, new GridBagConstraintsBuilder(1, 1).inset(75,0,0,0).fill(GridBagConstraints.BOTH).build());
+        add(options, new GridBagConstraintsBuilder(1, 2).inset(10,0,0,0).fill(GridBagConstraints.BOTH).build());
         add(gameBoardView, new GridBagConstraintsBuilder(1, 0).fill(GridBagConstraints.BOTH).build());
         add(movementCardDeckView, new GridBagConstraintsBuilder(2, 0).fill(GridBagConstraints.BOTH).build());
     }

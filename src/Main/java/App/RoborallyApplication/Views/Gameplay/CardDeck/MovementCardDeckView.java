@@ -43,7 +43,6 @@ public class MovementCardDeckView extends GameView {
         cardSlotsPanel.setOpaque(false);
         add(cardSlotsPanel, new GridBagConstraintsBuilder(0, 1).weightY(1)
                 .inset(10, 10, 10, 10).fill(GridBagConstraints.BOTH).build());
-
         createCardDeckView(gameBrain.getPlayerWhoIsCurrentlyMoving());
     }
 

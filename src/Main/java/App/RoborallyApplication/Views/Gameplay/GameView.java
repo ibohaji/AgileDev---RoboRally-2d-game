@@ -23,10 +23,8 @@ public abstract class GameView extends JPanel {
 
     }
     protected JLabel generateGameNameLabel(){
-        JLabel gameNameLabel = new JLabel("ROBORALLY");
-        gameNameLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        JLabel gameNameLabel = new JLabel("ROBORALLY", SwingConstants.CENTER);
         gameNameLabel.setFont(Fonts.TITLE);
-        gameNameLabel.setBorder(new LineBorder(Color.BLACK));
         return gameNameLabel;
     }
 
