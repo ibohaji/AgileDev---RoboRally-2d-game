@@ -23,8 +23,8 @@ Feature: Robot Movement on the board
 
   Scenario: Robot falls off the board due to its own movementCard
     Given a game board with difficulty Easy
-    And Robot1 at position X=7 Y=7 facing EAST with 4 lives
-    When Robot1 moves forward 3 step
+    And Robot1 at position X=7 Y=0 facing EAST with 4 lives
+    When Robot1 moves forward 1 step
     Then Robot1 has 3 lives left
     And Robot1 should be restored to a random start point position on the board
 
@@ -50,3 +50,9 @@ Feature: Robot Movement on the board
     When robot1 use his programming card which is Movementcard for 1 steps
     Then robot1 goes to x=1 y=6 with same lives facing North
     And robot2 is at x=1 y=5 and suffered one damage
+
+#  Scenario: Robot cannot add the same check point twice
+#    Given a game board with difficulty Medium
+#    When Robot encounter a checkpoint
+#    And Robot encounter the same checkpoint
+#    Then Robot will not get this check point again

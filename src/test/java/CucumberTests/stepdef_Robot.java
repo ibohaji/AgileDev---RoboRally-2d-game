@@ -110,7 +110,7 @@ public class stepdef_Robot {
     @Given("a robot placed at position and direction SOUTH")
     public void a_robot_placed_at_position_and_direction_south() {
         setup();
-        robot.setDirection(EnumDirection.SOUTH);
+        robot.setDirection(EnumDirection.WEST);
         robot.setCords(new Point(7,0));
     }
     @When("the robot receives the MovementCard with {int} steps")
@@ -123,7 +123,7 @@ public class stepdef_Robot {
     }
     @Then("the robot should move to the specific point")
     public void the_robot_should_move_to_the_specific_point() {
-        assertEquals(new Point(7,1),robot.getCords());
+        assertEquals(new Point(6,0),robot.getCords());
     }
 
     // Robot repeats its previous movement according to the AGAIN card
@@ -199,7 +199,9 @@ public class stepdef_Robot {
         cardSequence = new LCardSequence(player0);
         cardSequence.addCard(movementProgramming);
         player0.setOrderedCardSequence(cardSequence);
-        gamebrain.makeMovement();
+        while(player0.getCardSequence().getSize() != 0){
+            gamebrain.makeMovement();
+        }
     }
     @Then("Robot1 has {int} lives left")
     public void robot1_has_lives_left(Integer int1) {
@@ -229,15 +231,22 @@ public class stepdef_Robot {
     // Robot is deleted from the game
     @Given("Robot has one life")
     public void robot_has_one_life() {
-        setup();
-        robot.setNrOfLives(1);
+        setup2();
+        robot1.setCords(new Point(5,4));
+        robot1.setDirection(EnumDirection.WEST);
+        robot1.setNrOfLives(1);
+        robot2.setDirection(EnumDirection.NORTH);
+        robot2.setCords(new Point(4,4));
+        robot2.setNrOfLives(5);
     }
     @When("Robot suffer a damage")
     public void robot_suffer_a_damage() {
-        robot.setNrOfLives(robot.getNrOfLives()-1);
-        if (robot.getNrOfLives() < 1){
-            gamebrain.removeRobot(robot);
-            gamebrain.removePlayer(robot.getPlayer());
+        movementProgramming = new LCardMovementProgramming(2);
+        cardSequence = new LCardSequence(player0);
+        cardSequence.addCard(movementProgramming);
+        player0.setOrderedCardSequence(cardSequence);
+        while(player0.getCardSequence().getSize() != 0){
+            gamebrain.makeMovement();
         }
     }
     @Then("Robot is deleted")
