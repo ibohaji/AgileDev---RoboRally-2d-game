@@ -56,3 +56,8 @@ Feature: Robot Movement on the board
 #    When Robot encounter a checkpoint
 #    And Robot encounter the same checkpoint
 #    Then Robot will not get this check point again
+
+  Scenario: Robot1 push robot2 off the board
+    Given robot1 is at x=6 y=0 with 4 lives facing EAST and robot2 is at x=7 y=0 with 1 lives facing NORTH
+    When robot1 make one step movement
+    Then robot2 was pushed off the board by robot1 and reborn at a random start point
