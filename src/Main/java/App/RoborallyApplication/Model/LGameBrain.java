@@ -419,9 +419,14 @@ public class LGameBrain{
         MusicPlayer.getInstance().play("App/Resources/Music/offBoardSound.wav");
         ArrayList<LTile> available_startpoints = this.getAllFreeStartPoints();
         Random rnd = new Random();
-        int index = rnd.nextInt(available_startpoints.size());
-        robot.setCords(available_startpoints.get(index).getCoordinates());
+        if(available_startpoints.size() == 0){
+            robot.setCords(robot.getCords());
+        } else {
+            int index = rnd.nextInt(available_startpoints.size());
+            robot.setCords(available_startpoints.get(index).getCoordinates());
+        }
         robot.setDirection(EnumDirection.NORTH);
+
     }
     // -------------------------------------------------------------------------//
     public EnumGamePhase getCurrentGamePhase(){
