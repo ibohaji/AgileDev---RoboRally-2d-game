@@ -39,8 +39,6 @@ public class MovementPhaseController extends AbPhaseController{
                 } else {
                     LPlayer player = this.gameBrain.getPlayerWhoIsCurrentlyMoving();
                     this.gameBrain.makeMovement();
-                    this.view = new MovementPhaseView(this.gameController, gameBrain);
-                    this.gameController.updateView(this.view);
                     if(!gameBrain.canGameContinue()){
                         timer.stop();
                         gameController.updateControllerState();
