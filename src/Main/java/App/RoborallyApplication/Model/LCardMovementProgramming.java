@@ -49,7 +49,7 @@ public class LCardMovementProgramming extends AbCardProgramming {
                 robot.setCords(newPos);
             }
         }
-        if(stepsMade == steps){
+        if(stepsMade == steps && robot.getPlayer().getCardSequence() != null){
             robot.getPlayer().addCardToUsedSequence(this);
         }
     }
