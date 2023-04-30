@@ -27,6 +27,8 @@ public class stepdef_GameBrain {
     private LRobot t_robot;
     private LTile t_tile;
 
+    private int nrOfPlayers;
+
     private int t_rndInt(int min, int max) {
         Random t_rnd = new Random();
         return t_rnd.nextInt((max - min) + 1) + min;
@@ -38,6 +40,7 @@ public class stepdef_GameBrain {
         LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
         ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
         Tuple<String, Boolean> t_info;;
+        nrOfPlayers = t_no_of_players;
         for (int i = 0; i < t_no_of_players; i++) {
             t_info = new Tuple<>("player" + i, false);
             t_playerInfo.add(t_info);
@@ -57,6 +60,7 @@ public class stepdef_GameBrain {
         assertEquals(EnumGamePhase.ROUND_START, t_gamebrain.getCurrentGamePhase());
         ArrayList<LPlayer> t_players = t_gamebrain.getPlayers();
         assertEquals(1, t_players.size());
+        assertEquals(nrOfPlayers, t_gamebrain.getGameConfig().getNrOfPlayers());
         for (LPlayer t_currentplayer : t_players) {
             ArrayList<AbCardProgramming> t_playerscards = t_currentplayer.getProgrammingCards();
             assertEquals(5, t_playerscards.size());
@@ -369,6 +373,7 @@ public class stepdef_GameBrain {
         }
         t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
         t_gamebrain = new LGameBrain(t_gameconfiguration);
+
     }
 
     @When("a robot stands on an unknown explosive tile")
@@ -387,6 +392,7 @@ public class stepdef_GameBrain {
                 EnumObstacleClassification.KNOWN_OBSTACLE,
                 ((LObstacleRegular)(t_gamebrain.getGameboard().getTileFromCoordinate(t_robot.getCords().x, t_robot.getCords().y).getNewObstacle())).getObstacleClassification()
                 );
+        assertEquals(45, t_gamebrain.getGameConfig().getScalingSizeForTile());
         t_robot = null;
         t_tile = null;
     }
