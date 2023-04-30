@@ -61,7 +61,6 @@ public class LobbyRegularView extends LobbyView {
         add(startGameButton,  new GridBagConstraintsBuilder(0,1).gridWidth(gameConfiguration.getNrOfPlayers()).build());
         add(exitButton,  new GridBagConstraintsBuilder(0,2).gridWidth(gameConfiguration.getNrOfPlayers()).build());
     }
-
     private  JButton exitLobbyButton(){
         JButton exitGame = new JButton("EXIT");
         exitGame.setFont(Fonts.LARGE);
@@ -70,6 +69,4 @@ public class LobbyRegularView extends LobbyView {
         });
         return exitGame;
     }
-
-
 }

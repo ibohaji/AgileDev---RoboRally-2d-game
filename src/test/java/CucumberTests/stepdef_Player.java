@@ -244,5 +244,22 @@ stepdef_Player {
         assertNull(card2);
     }
 
+    @Given("A player with all existing different card types")
+    public void aPlayerWithAllExistingDifferentCardTypes() {
+        setup();
+        LCardSequence seq = new LCardSequence(player);
+        seq.addCard(new LCardMovementProgramming(1));
+        seq.addCard(new LCardChangeDirectionProgramming(EnumTurnType.LEFT));
+        seq.addCard(new LCardAgainProgramming());
+        player.setOrderedCardSequence(seq);
+    }
+
+    @Then("The cards should all have imageicons")
+    public void theCardsShouldAllHaveImageicons() {
+        for (AbCardProgramming card: player.getCardSequence().getCardSequence()) {
+            assertNotNull(card);
+        }
+    }
+
     //
 }

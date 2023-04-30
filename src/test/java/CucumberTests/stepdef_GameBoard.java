@@ -33,7 +33,6 @@ public class stepdef_GameBoard {
         configuration.createPlayersFromLobby(playerInfo);
         gamebrain = new LGameBrain(configuration);
         gameboard = gamebrain.getGameboard();
-
     }
 
     @Given("an initialized gameboard with difficulty set to easy")
@@ -166,4 +165,15 @@ public class stepdef_GameBoard {
     }
 
 
+    @Given("a Gamebrain with a random configuration")
+    public void aGamebrainWithARandomConfiguration() {
+        setup();
+    }
+
+    @Then("the imageicon will exist and not be null")
+    public void theImageiconWillExistAndNotBeNull() {
+        for (LTile tile: gameboard.getTiles()) {
+            assertNotNull(tile.getGraphicalElement());
+        }
+    }
 }

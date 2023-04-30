@@ -25,3 +25,7 @@ Feature: GameBoard function
     And The robot has 1 life left
     When the robot steps on an obstacle
     And the GameBrain should succesfully requst the gameBoard to remove the robot
+
+  Scenario: Gameboard needs image of tile to exist
+    Given a Gamebrain with a random configuration
+    Then the imageicon will exist and not be null

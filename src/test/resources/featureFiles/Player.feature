@@ -54,3 +54,9 @@ Feature: Player
     Given A player who decided to submit an empty sequence in programming phase
     When The player tries to get cards from his sequence
     Then The player should not get a card because there aren't any
+
+  Scenario: Player can see card images
+    Given A player with all existing different card types
+    Then The cards should all have imageicons
+
+
