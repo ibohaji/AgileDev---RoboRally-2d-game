@@ -27,7 +27,7 @@ public class stepdef_GameBrain {
     private LRobot t_robot;
     private LTile t_tile;
 
-    private static int t_rndInt(int min, int max) {
+    private int t_rndInt(int min, int max) {
         Random t_rnd = new Random();
         return t_rnd.nextInt((max - min) + 1) + min;
     }
@@ -413,6 +413,7 @@ public class stepdef_GameBrain {
         t_player1.setOrderedCardSequence(new LCardSequence(t_player1));
         t_gamebrain.makeMovement();
         assertFalse(t_gamebrain.areThereMovementsLeftInThisRound());
+        t_gamebrain.endRound();
     }
 
     @Then("GameBrain ends the game")
@@ -451,7 +452,64 @@ public class stepdef_GameBrain {
 
     @Then("GameBrain shows a winner")
     public void GameBrain_shows_a_winner() {
+        assertTrue(t_gamebrain.isThereAWinner());
         assertNotEquals("", t_gamebrain.getPlayerWhoWon());
+
+        t_gamebrain = null;
+    }
+
+    // GameBrain check card sequence for players
+    @Given("a GameBrain with easy difficulty__")
+    public void a_GameBrain_with_easy_difficulty__() {
+        int t_no_of_players = 2;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, false);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+    }
+
+    @When("in programming phase")
+    public void in_programming_phase() {
+        t_gamebrain.setCardSequencesForAi();
+    }
+
+    @Then("GameBrain check card sequence for players")
+    public void GameBrain_check_card_sequence_for_players() {
+        for (int i = 0; i < t_gamebrain.getPlayers().size(); i++) {
+            assertEquals(5, t_gamebrain.getPlayers().get(i).getCardSequence().getSize());
+        }
+
+        t_gamebrain = null;
+    }
+
+    // GameBrain set tile size
+    @Given("a GameBrain with easy difficulty___")
+    public void a_GameBrain_with_easy_difficulty___() {
+        int t_no_of_players = 1;
+        LGameConfiguration t_gameconfiguration = new LGameConfiguration(t_no_of_players, EnumDifficulty.EASY, true);
+        ArrayList<Tuple<String, Boolean>> t_playerInfo = new ArrayList<>();
+        Tuple<String, Boolean> t_info;;
+        for (int i = 0; i < t_no_of_players; i++) {
+            t_info = new Tuple<>("player" + i, false);
+            t_playerInfo.add(t_info);
+        }
+        t_gameconfiguration.createPlayersFromLobby(t_playerInfo);
+        t_gamebrain = new LGameBrain(t_gameconfiguration);
+    }
+
+    @When("during game initialization")
+    public void during_game_initialization() {
+
+    }
+
+    @Then("GameBrain set tile size")
+    public void GameBrain_set_tile_size() {
+        assertEquals(60, t_gamebrain.getGameConfig().getScalingSizeForTile());
 
         t_gamebrain = null;
     }
@@ -464,16 +522,6 @@ public class stepdef_GameBrain {
     // 5) CardMovement test pushIfOccupied method works
     // 6) CardMovement test getSteps and getStepsMade -> create new MovementCard and check if getStepsMade == 0 and getSteps != 0
     // 7) GameBrain
-    //      7.1) Test makeMovement
-    //      7.2) Test areThereMovementsLeft -> Start round, give players cards, setSequences and check if there are movements left
-    //      7.3) Test endRound -> check gamePhase is ROUND_END
-    //      7.4) Test canGameContinue ->
-    //      7.5) Test all winner methods -> Set a random player to winner, see if isThereAWinner() and getPlayerWhoWon are correct
-    //      7.6) Test haveAllPlayersSubmittedSequences()
-    //      7.7) Test setCardSequencesForAi -> Create game with 1 real, 1 AI player, give them cards and call this method,
-    //                                          AI should have a sequence after setCardSequenceForAi()
-    //      7.8) Test getRandomObstacleTypeToExplode() -> do a for loop (maybe 10 loops) where you and check that you
-    //                                          can get both ACID and RADIATION
     //      7.9) Test pushRobot
     //      7.10) Test moveRobotWithCard
 }

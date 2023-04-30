@@ -64,3 +64,13 @@ Feature: GameBrain
     Given a GameBrain with easy difficulty_
     When a robot gets to the finish point
     Then GameBrain shows a winner
+
+  Scenario: GameBrain check card sequence for players
+    Given a GameBrain with easy difficulty__
+    When in programming phase
+    Then GameBrain check card sequence for players
+
+  Scenario: GameBrain set tile size
+    Given a GameBrain with easy difficulty__
+    When during game initialization
+    Then GameBrain set tile size

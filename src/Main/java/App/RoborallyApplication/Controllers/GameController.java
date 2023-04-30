@@ -79,6 +79,6 @@ public class GameController {
     }
 
     public void quitGame() {
-        applicationController.changePanel(new MainMenuView(new MainMenuController(applicationController)));
+        applicationController.initiate();
     }
 }

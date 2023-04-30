@@ -1,55 +1,98 @@
 package Utils;
 
-import App.RoborallyApplication.Views.Menus.MainMenuView;
-
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.Random;
 
 public class MusicPlayer {
+
     private MusicPlayer() {}
-
+    private SourceDataLine sourceDataLine;
     private static final MusicPlayer instance = new MusicPlayer();
-
+    private final byte[] EmptyBuffer = {0};
     public static MusicPlayer getInstance() {
         return instance;
     }
+    private static final int BUFFER_SIZE = 4096;
+    private AudioInputStream ais;
+    private boolean vFlag = false;
 
-
-    private final Clip clip;
-
-    private String currentlyPlaying = null;
-
-    {
-        try {
-            clip = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
+    private String findfile(String filepath) {
+        if (filepath.charAt(0) != '/') filepath = "/" + filepath;
+        filepath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java" + filepath;
+        return filepath;
     }
 
     public void playLoop(String filepath) {
-        if (filepath.charAt(0) != '/') filepath = "/" + filepath;
-        if (filepath.equals(currentlyPlaying)) return;
-        else currentlyPlaying = filepath;
-        filepath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "Main" + File.separator + "java" + filepath;
-        AudioInputStream ais;
+        new Thread(() -> {
+
+                do {
+                    try {
+                        ais = AudioSystem.getAudioInputStream(new File(findfile(filepath)));
+                        AudioFormat audioFormat = ais.getFormat();
+                        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+                        sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+                        if (!vFlag) {
+                            sourceDataLine.open(audioFormat);
+                            sourceDataLine.start();
+                            byte[] bufferBytes = new byte[BUFFER_SIZE];
+                            int readBytes;
+                            while ((readBytes = ais.read(bufferBytes)) != -1) {
+                                sourceDataLine.write(bufferBytes, 0, readBytes);
+                            }
+                        }
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                        throw new RuntimeException(e);
+                    }
+                } while (true);
+
+
+        }).start();
+    }
+
+    public void play(String filepath) {
         try {
-            ais = AudioSystem.getAudioInputStream(new File(filepath));
-            if (clip.isOpen()) clip.close();
-            clip.open(ais);
+            AudioInputStream snd = AudioSystem.getAudioInputStream(new File(findfile(filepath)));
+            AudioFormat audioFormat = snd.getFormat();
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+            SourceDataLine sndLine = (SourceDataLine) AudioSystem.getLine(info);
+            sndLine.open(audioFormat);
+            sndLine.start();
+            byte[] bufferBytes = new byte[BUFFER_SIZE];
+            int readBytes;
+            while ((readBytes = snd.read(bufferBytes)) != -1) {
+                sndLine.write(bufferBytes, 0, readBytes);
+            }
+            sndLine.drain();
+            sndLine.flush();
+            sndLine.close();
+            snd.close();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);
         }
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void stopPlaying() {
-        currentlyPlaying = null;
-        clip.stop();
+    public void closeLoop() {
+        sourceDataLine.close();
+        this.vFlag = true;
+
     }
 
+    public void openLoop() {
+        this.vFlag = false;
+
+    }
+
+    public void playDamageSound() {
+        Random rnd = new Random();
+        int i = (rnd.nextInt(9) + 1);
+        String filepath = "App/Resources/Music/damage" + i + ".wav";
+        this.play(filepath);
+    }
+
+    public boolean checkLoopPlay() {
+       return (sourceDataLine == null);
+    }
 
 }
-

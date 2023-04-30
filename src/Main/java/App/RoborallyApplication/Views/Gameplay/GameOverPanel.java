@@ -5,6 +5,7 @@ import App.RoborallyApplication.Model.*;
 import Utils.Fonts;
 import Utils.GridBagConstraintsBuilder;
 import Utils.ImageUtils;
+import Utils.MusicPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class GameOverPanel extends GameView {
     }
 
     public void createView() {
+        MusicPlayer.getInstance().closeLoop();
         JLabel scoreLabel;
         setLayout(new GridBagLayout());
         //Game over Label
@@ -35,8 +37,10 @@ public class GameOverPanel extends GameView {
 
         if(winner == null){
             scoreLabel = new JLabel("NO WINNER");
+            MusicPlayer.getInstance().play("App/Resources/Music/lose.wav");
         } else {
             scoreLabel = new JLabel("Winner is : " + winner);
+            MusicPlayer.getInstance().play("App/Resources/Music/win.wav");
         }
 
         scoreLabel.setFont(new Font("Serif", Font.PLAIN, 24));
@@ -46,7 +50,9 @@ public class GameOverPanel extends GameView {
         add(scoreLabel, constraints);
 
         JButton closeButton = new JButton("Close Game");
-        closeButton.addActionListener(e -> controller.quitGame());
+        closeButton.addActionListener(e -> {
+                    controller.quitGame();
+                });
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 2;

@@ -1,5 +1,8 @@
 package App.RoborallyApplication.Model;
 
+import Utils.MusicPlayer;
+import Utils.Waiter;
+
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,13 @@ public class LObstacleRegular extends AbObstacle{
             System.out.print(x + " & " + y + " " + this.obstacleType.name() + ".Lives before: " + robot.getNrOfLives() +
                     ". Damage done: " + this.obstacleType.getDamage());
             robot.setNrOfLives(robot.getNrOfLives() + this.obstacleType.getDamage());
+            if(this.obstacleType.getDamage() < 0) {
+                if(this.obstacleType.equals(EnumObstacleType.PIT)) {
+                    MusicPlayer.getInstance().play("App/Resources/Music/pit.wav");
+                } else {
+                    MusicPlayer.getInstance().playDamageSound();
+                }
+            }
             System.out.println(". Lives after: " + robot.getNrOfLives());
             if(this.obstacleType.equals(EnumObstacleType.PIT)){
                 gameBrain.putRobotToRandomStartPoint(robot);
