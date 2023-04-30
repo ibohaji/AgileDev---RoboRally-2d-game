@@ -231,11 +231,13 @@ stepdef_Player {
     @When("The player tries to get cards from his sequence")
     public void thePlayerTriesToGetCardsFromHisSequence() {
         card = player.getCardSequence().getFirstCard();
+        card2 = player.getCardSequence().getLastCardInSequence();
     }
 
     @Then("The player should not get a card because there aren't any")
     public void thePlayerShouldNotGetACardBecauseThereArenTAny() {
         assertEquals(0, player.getCardSequence().getSize());
         assertNull(card);
+        assertNull(card2);
     }
 }
